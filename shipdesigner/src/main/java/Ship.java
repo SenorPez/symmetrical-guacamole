@@ -1,8 +1,10 @@
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 class Ship {
     // Inputs
@@ -41,6 +43,23 @@ class Ship {
                     logger.error("Set hull size before finding ship class.");
                     return new NoSuchElementException("Set hull size before finding ship class.");
                 });
+    }
+
+    Integer getBuildTime() {
+        double baseTime = (
+                0.00000000003d * Math.pow(this.getHullSize(), 3)
+                        - 0.0000002d * Math.pow(this.getHullSize(), 2)
+                        + 0.0002d * this.getHullSize()
+                        + 1.0363d)
+                * (
+                0.00000000003d * Math.pow(this.getHullSize(), 4)
+                        - 0.0000001d * Math.pow(this.getHullSize(), 3)
+                        + 0.0001d * Math.pow(this.getHullSize(), 2)
+                        + 0.0711d * this.getHullSize()
+                        + 1.687d);
+        double rawBuildTime = baseTime * this.getBuildMode().getBuildTimeModifier();
+        double ceilBuildTime = Math.ceil(rawBuildTime);
+        return Double.valueOf(ceilBuildTime).intValue();
     }
 
     public String getName() {

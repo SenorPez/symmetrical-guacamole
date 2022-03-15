@@ -1,9 +1,8 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.NoSuchElementException;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ShipTest {
     private int getRandomNumber(int min, int max) {
@@ -161,5 +160,23 @@ class ShipTest {
         Ship instance = new Ship();
         String expectedValue = "Titan";
         assertEquals(expectedValue, instance.setHullSize(hullSize).getShipClass());
+    }
+
+    @Test
+    void getBuildTime_Standard() {
+        Ship instance = new Ship();
+        instance.setHullSize(275);
+        instance.setBuildMode(BuildMode.STANDARD);
+        Integer expectedValue = 29;
+        assertEquals(expectedValue, instance.getBuildTime());
+    }
+
+    @Test
+    void getBuildTime_Quick() {
+        Ship instance = new Ship();
+        instance.setHullSize(125);
+        instance.setBuildMode(BuildMode.QUICK);
+        Integer expectedValue = 7;
+        assertEquals(expectedValue, instance.getBuildTime());
     }
 }
