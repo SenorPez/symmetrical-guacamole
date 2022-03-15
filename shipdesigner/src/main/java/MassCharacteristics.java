@@ -5,12 +5,24 @@ class MassCharacteristics {
         this.ship = ship;
     }
 
+    int getHullMass() {
+        return getHullSpaces() * 25;
+    }
+
     int getHullArmorMass() {
         return getHullArmorSpaces() * 25;
     }
 
+    int getDriveSpaces() {
+        return 10; // Placeholder
+    }
+
     int getHullArmorSpaces() {
         return ship.getHullArmor();
+    }
+
+    int getHullSpaces() {
+        return ship.getHullSize() - getHullArmorSpaces() - getDriveSpaces();
     }
 
 //    int getMastCombinedMass() {
