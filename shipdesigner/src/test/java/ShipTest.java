@@ -11,4 +11,15 @@ class ShipTest {
 
         assertEquals(expectedValue, instance.getName());
     }
+
+    @Test
+    void fieldOrigin() {
+        Nation expectedValue = Nation.OLYMPIAN_REPUBLIC;
+        String expectedNationName = "Olympian Republic";
+        Ship instance = new Ship();
+        instance.setOrigin(Nation.OLYMPIAN_REPUBLIC);
+
+        assertEquals(expectedValue, instance.getOrigin());
+        assertEquals(expectedNationName, instance.getOrigin().getNationName());
+    }
 }
