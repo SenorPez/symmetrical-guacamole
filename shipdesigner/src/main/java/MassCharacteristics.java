@@ -102,8 +102,7 @@ class MassCharacteristics {
     }
 
     double getMainHullLength() {
-        // TODO: Placeholder
-        return 32.84850d;
+        return ship.getShape().getHullLength();
     }
 
     double getLanternDiameter() {

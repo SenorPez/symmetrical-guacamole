@@ -154,4 +154,13 @@ class MassCharacteristicsTest {
         double expectedValue = 0.1871737d;
         assertEquals(expectedValue, instance.getActualDriveFraction(), 0.01);
     }
+
+    @Test
+    void getMainHullLength() {
+        Ship ship = new Ship().setShape(Shape.ELLIPSOID);
+        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
+        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
+        double expectedValue = 32.84850d;
+        assertEquals(expectedValue, instance.getMainHullLength());
+    }
 }
