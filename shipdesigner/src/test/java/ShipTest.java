@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.annotation.Testable;
 
 import java.util.Random;
 
@@ -181,5 +180,29 @@ class ShipTest {
         Ship instance = new Ship().setBuildMode(BuildMode.QUICK);
         Double expectedValue = 76.25d;
         assertEquals(expectedValue, instance.getMonetaryCost());
+    }
+
+    @Test
+    void fieldPercentOfficers() {
+        int percentOfficers = getRandomNumber(10, 22);
+        Ship instance = new Ship().setPercentOfficers(percentOfficers);
+        Integer expectedValue = percentOfficers;
+        assertEquals(expectedValue, instance.getPercentOfficers());
+    }
+
+    @Test
+    void fieldPercentOfficers_Low() {
+        int percentOfficers = getRandomNumber(1, 10);
+        Ship instance = new Ship().setPercentOfficers(percentOfficers);
+        Integer expectedValue = 10;
+        assertEquals(expectedValue, instance.getPercentOfficers());
+    }
+
+    @Test
+    void fieldPercentOfficers_High() {
+        int percentOfficers = getRandomNumber(23, 100);
+        Ship instance = new Ship().setPercentOfficers(percentOfficers);
+        Integer expectedValue = 22;
+        assertEquals(expectedValue, instance.getPercentOfficers());
     }
 }

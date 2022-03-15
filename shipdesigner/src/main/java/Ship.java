@@ -16,6 +16,7 @@ class Ship {
 
     private Integer laidDown = 2215;
     private BuildMode buildMode = BuildMode.STANDARD;
+    private Integer percentOfficers = 20;
 
     private static final Logger logger = LogManager.getLogger(Ship.class);
     private static final Map<Integer, String> shipClasses = new HashMap<>();
@@ -140,6 +141,24 @@ class Ship {
 
     Ship setBuildMode(BuildMode buildMode) {
         this.buildMode = buildMode;
+        return this;
+    }
+
+    public Integer getPercentOfficers() {
+        return percentOfficers;
+    }
+
+    public Ship setPercentOfficers(Integer percentOfficers) {
+        if (percentOfficers < 10) {
+            logger.error("Officer percentage less than 10%; setting to 10%");
+            this.percentOfficers = 10;
+        } else if (percentOfficers > 22) {
+            logger.error("Officer percentage greater than 22%; setting to 22%");
+            this.percentOfficers = 22;
+        } else {
+            logger.info(String.format("Setting hull size to %d%%", percentOfficers));
+            this.percentOfficers = percentOfficers;
+        }
         return this;
     }
 }
