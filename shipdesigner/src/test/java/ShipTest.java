@@ -1,8 +1,16 @@
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.NoSuchElementException;
+import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class ShipTest {
+    private int getRandomNumber(int min, int max) {
+        Random random = new Random();
+        return random.nextInt(max - min) + min;
+    }
+
     @Test
     void fieldName() {
         String expectedValue = "Ship Name";
@@ -50,5 +58,96 @@ class ShipTest {
         instance.setHullSize(11);
 
         assertEquals(expectedValue, instance.getHullSize());
+    }
+
+    @Test
+    void fieldSheetFormat() {
+        SheetFormat expectedValue = SheetFormat.FOUR_UP;
+        String expectedFormat = "4-Up";
+        Ship instance = new Ship();
+        instance.setSheetFormat(SheetFormat.FOUR_UP);
+
+        assertEquals(expectedValue, instance.getSheetFormat());
+        assertEquals(expectedFormat, instance.getSheetFormat().getFormat());
+    }
+
+    @Test
+    void getShipClass_NotSet() {
+        Ship instance = new Ship();
+        Exception exception = assertThrows(NoSuchElementException.class, instance::getShipClass);
+        String expectedMessage = "Set hull size before finding ship class.";
+        assertTrue(exception.getMessage().contains(expectedMessage));
+    }
+
+    @Test
+    void getShipClass_Gunboat() {
+        int hullSize = getRandomNumber(25, 51);
+        Ship instance = new Ship();
+        String expectedValue = "Gunboat";
+        assertEquals(expectedValue, instance.setHullSize(hullSize).getShipClass());
+    }
+
+    @Test
+    void getShipClass_Corvette() {
+        int hullSize = getRandomNumber(51, 151);
+        Ship instance = new Ship();
+        String expectedValue = "Corvette";
+        assertEquals(expectedValue, instance.setHullSize(hullSize).getShipClass());
+    }
+
+    @Test
+    void getShipClass_Frigate() {
+        int hullSize = getRandomNumber(151, 251);
+        Ship instance = new Ship();
+        String expectedValue = "Frigate";
+        assertEquals(expectedValue, instance.setHullSize(hullSize).getShipClass());
+    }
+
+    @Test
+    void getShipClass_Light_Cruiser() {
+        int hullSize = getRandomNumber(251, 351);
+        Ship instance = new Ship();
+        String expectedValue = "Light Cruiser";
+        assertEquals(expectedValue, instance.setHullSize(hullSize).getShipClass());
+    }
+
+    @Test
+    void getShipClass_Heavy_Cruiser() {
+        int hullSize = getRandomNumber(351, 501);
+        Ship instance = new Ship();
+        String expectedValue = "Heavy Cruiser";
+        assertEquals(expectedValue, instance.setHullSize(hullSize).getShipClass());
+    }
+
+    @Test
+    void getShipClass_Battlecruiser() {
+        int hullSize = getRandomNumber(501, 701);
+        Ship instance = new Ship();
+        String expectedValue = "Battlecruiser";
+        assertEquals(expectedValue, instance.setHullSize(hullSize).getShipClass());
+    }
+
+    @Test
+    void getShipClass_Battleship() {
+        int hullSize = getRandomNumber(701, 1001);
+        Ship instance = new Ship();
+        String expectedValue = "Battleship";
+        assertEquals(expectedValue, instance.setHullSize(hullSize).getShipClass());
+    }
+
+    @Test
+    void getShipClass_Leviathan() {
+        int hullSize = getRandomNumber(1001, 1801);
+        Ship instance = new Ship();
+        String expectedValue = "Leviathan";
+        assertEquals(expectedValue, instance.setHullSize(hullSize).getShipClass());
+    }
+
+    @Test
+    void getShipClass_Titan() {
+        int hullSize = getRandomNumber(1801, 2500);
+        Ship instance = new Ship();
+        String expectedValue = "Titan";
+        assertEquals(expectedValue, instance.setHullSize(hullSize).getShipClass());
     }
 }
