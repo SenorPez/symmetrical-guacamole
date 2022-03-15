@@ -19,7 +19,7 @@ class Ship {
     private static final Logger logger = LogManager.getLogger(Ship.class);
     private static final Map<Integer, String> shipClasses = new HashMap<>();
 
-    public Ship() {
+    Ship() {
         // Initialize ship classes
         shipClasses.put(25, "Gunboat");
         shipClasses.put(51, "Corvette");
@@ -32,7 +32,7 @@ class Ship {
         shipClasses.put(1801, "Titan");
     }
 
-    public String getShipClass() {
+    String getShipClass() {
         return shipClasses.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey() <= this.getHullSize())
@@ -62,71 +62,71 @@ class Ship {
         return Double.valueOf(ceilBuildTime).intValue();
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public Ship setName(String name) {
+    Ship setName(String name) {
         logger.info(String.format("Setting origin to %s", name));
         this.name = name;
         return this;
     }
 
-    public Nation getOrigin() {
+    Nation getOrigin() {
         return origin;
     }
 
-    public Ship setOrigin(Nation origin) {
+    Ship setOrigin(Nation origin) {
         logger.info(String.format("Setting origin to %s", origin.name()));
         this.origin = origin;
         return this;
     }
 
-    public Shape getShape() {
+    Shape getShape() {
         return shape;
     }
 
-    public Ship setShape(Shape shape) {
+    Ship setShape(Shape shape) {
         logger.info(String.format("Setting shape to %s", shape.name()));
         this.shape = shape;
         return this;
     }
 
-    public Integer getHullSize() {
+    Integer getHullSize() {
         return hullSize;
     }
 
-    public Ship setHullSize(Integer hullSize) {
+    Ship setHullSize(Integer hullSize) {
         if (hullSize < 25) logger.error("Hull size under 25; setting to 25");
         logger.info(String.format("Setting hull size to %d", hullSize));
         this.hullSize = Math.max(hullSize, 25);
         return this;
     }
 
-    public SheetFormat getSheetFormat() {
+    SheetFormat getSheetFormat() {
         return sheetFormat;
     }
 
-    public Ship setSheetFormat(SheetFormat sheetFormat) {
+    Ship setSheetFormat(SheetFormat sheetFormat) {
         logger.info(String.format("Setting sheet format to %s", sheetFormat.name()));
         this.sheetFormat = sheetFormat;
         return this;
     }
 
-    public Integer getLaidDown() {
+    Integer getLaidDown() {
         return laidDown;
     }
 
-    public Ship setLaidDown(Integer laidDown) {
+    Ship setLaidDown(Integer laidDown) {
         this.laidDown = laidDown;
         return this;
     }
 
-    public BuildMode getBuildMode() {
+    BuildMode getBuildMode() {
         return buildMode;
     }
 
-    public Ship setBuildMode(BuildMode buildMode) {
+    Ship setBuildMode(BuildMode buildMode) {
         this.buildMode = buildMode;
         return this;
     }
