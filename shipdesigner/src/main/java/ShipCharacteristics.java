@@ -3,33 +3,33 @@ class ShipCharacteristics {
     private int shipMass;
     private double shipAcceleration;
 
-    public ShipCharacteristics(Ship ship) {
+    ShipCharacteristics(Ship ship) {
         this.ship = ship;
         this.shipMass = ship.getHullSize() * 25;
         this.shipAcceleration = ship.getMaximumThrust() / 4d;
     }
 
-    public int getShipMass() {
+    int getShipMass() {
         return shipMass;
     }
 
-    public double getShipAcceleration() {
+    double getShipAcceleration() {
         return shipAcceleration;
     }
 
-    public int getMainHullArmor() {
-        return ship.getMainHullArmor();
+    int getMainHullArmor() {
+        return ship.getHullArmor();
     }
 
-    public int getMastArmor() {
+    int getMastArmor() {
         return ship.getMastArmor();
     }
 
-    public int getEngineArmor() {
+    int getEngineArmor() {
         return ship.getEngineArmor();
     }
 
-    public int getArmorShrink() {
+    int getArmorShrink() {
         return ship.getArmorShrink();
     }
 }

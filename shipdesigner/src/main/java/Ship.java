@@ -151,9 +151,9 @@ class Ship {
         return 4;
     }
 
-    int getMainHullArmor() {
+    int getHullArmor() {
         // TODO: Probably move into a 'Systems' object. Exists now only to support
-        // ShipCharacteristics.getMainHullArmor
+        // ShipCharacteristics.getHullArmor
         return 1;
     }
 
