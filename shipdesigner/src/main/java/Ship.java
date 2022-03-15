@@ -70,11 +70,17 @@ class Ship {
         return baseCost + surcharge;
     }
 
+    int getDuelCost() {
+        // TODO: Compute duel cost
+        return 644;
+    }
+
     int getEconomicCost() {
         // TODO: Compute economic cost
         return 610;
     }
 
+    // GETTERS & SETTERS
     String getName() {
         return name;
     }

@@ -205,4 +205,18 @@ class ShipTest {
         Integer expectedValue = 22;
         assertEquals(expectedValue, instance.getPercentOfficers());
     }
+
+    @Test
+    void getDuelCost() {
+        Ship instance = new Ship();
+        Integer expectedValue = 644;
+        assertEquals(expectedValue, instance.getDuelCost());
+    }
+
+    @Test
+    void getEconomicCost() {
+        Ship instance = new Ship();
+        Integer expectedValue = 610;
+        assertEquals(expectedValue, instance.getEconomicCost());
+    }
 }
