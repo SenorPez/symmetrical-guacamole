@@ -1,6 +1,7 @@
 class Ship {
     private String name;
     private Nation origin;
+    private Shape shape;
 
     public String getName() {
         return name;
@@ -17,6 +18,15 @@ class Ship {
 
     public Ship setOrigin(Nation origin) {
         this.origin = origin;
+        return this;
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
+
+    public Ship setShape(Shape shape) {
+        this.shape = shape;
         return this;
     }
 }

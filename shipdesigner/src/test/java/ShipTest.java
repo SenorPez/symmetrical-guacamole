@@ -22,4 +22,15 @@ class ShipTest {
         assertEquals(expectedValue, instance.getOrigin());
         assertEquals(expectedNationName, instance.getOrigin().getNationName());
     }
+
+    @Test
+    void fieldShape() {
+        Shape expectedValue = Shape.SPHEROID;
+        String expectedShapeName = "Spheroid";
+        Ship instance = new Ship();
+        instance.setShape(Shape.SPHEROID);
+
+        assertEquals(expectedValue, instance.getShape());
+        assertEquals(expectedShapeName, instance.getShape().getShapeName());
+    }
 }
