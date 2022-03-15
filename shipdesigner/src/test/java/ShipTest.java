@@ -247,4 +247,11 @@ class ShipTest {
         Integer expectedValue = 5;
         assertEquals(expectedValue, instance.getOfficers());
     }
+
+    @Test
+    void getEnlisted() {
+        Ship instance = new Ship().setPercentOfficers(20);
+        Integer expectedValue = 21;
+        assertEquals(expectedValue, instance.getEnlisted());
+    }
 }

@@ -101,6 +101,10 @@ class Ship {
         ).intValue();
     }
 
+    int getEnlisted() {
+        return this.getMinimumCrew() - this.getOfficers();
+    }
+
     // GETTERS & SETTERS
     String getName() {
         return name;
