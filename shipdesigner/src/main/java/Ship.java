@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.util.*;
 
 class Ship {
+    // Inputs
     private String name;
     private Nation origin;
     private Shape shape;
     private Integer hullSize = 0;
     private SheetFormat sheetFormat;
+    private Integer laidDown;
 
     private static final Logger logger = LogManager.getLogger(Ship.class);
     private static final Map<Integer, String> shipClasses = new HashMap<>();
@@ -88,6 +90,15 @@ class Ship {
     public Ship setSheetFormat(SheetFormat sheetFormat) {
         logger.info(String.format("Setting sheet format to %s", sheetFormat.name()));
         this.sheetFormat = sheetFormat;
+        return this;
+    }
+
+    public Integer getLaidDown() {
+        return laidDown;
+    }
+
+    public Ship setLaidDown(Integer laidDown) {
+        this.laidDown = laidDown;
         return this;
     }
 }

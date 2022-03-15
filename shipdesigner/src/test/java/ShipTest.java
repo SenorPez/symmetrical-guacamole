@@ -72,6 +72,15 @@ class ShipTest {
     }
 
     @Test
+    void fieldLaidDown() {
+        Integer expectedValue = 2259;
+        Ship instance = new Ship();
+        instance.setLaidDown(2259);
+
+        assertEquals(expectedValue, instance.getLaidDown());
+    }
+
+    @Test
     void getShipClass_NotSet() {
         Ship instance = new Ship();
         Exception exception = assertThrows(NoSuchElementException.class, instance::getShipClass);
