@@ -1,20 +1,72 @@
 class MassCharacteristics {
     private Ship ship;
+    private ShipCharacteristics characteristics;
 
-    MassCharacteristics(Ship ship) {
+    MassCharacteristics(Ship ship, ShipCharacteristics characteristics) {
         this.ship = ship;
+        this.characteristics = characteristics;
     }
 
-    int getHullMass() {
-        return getHullSpaces() * 25;
+    double getDriveMass() {
+        return Math.floor(getMastMass() + 199);
     }
 
-    int getHullArmorMass() {
-        return getHullArmorSpaces() * 25;
+    double getHullMass() {
+        return getHullSpaces_Double() * 25d;
     }
 
-    int getDriveSpaces() {
-        return 10; // Placeholder
+    double getHullArmorMass() {
+        return getHullArmorSpaces() * 25d;
+    }
+
+    double getMastMass() {
+        return getMastStructuralMass() + getMastArmorMass() + getMastShieldMass();
+    }
+
+    double getMastArmorMass() {
+        return ((1d / 15d) * Math.PI * Math.pow(getMastLength(), 2)) * characteristics.getMastArmor() * 50 / (1000 + 50 * characteristics.getArmorShrink());
+    }
+
+    double getMastShieldMass() {
+        return (getTenXRadReduction() * (Math.log10(getNeutronFlux_MR_yr()) + 6) - Math.log10(getRadReductionDueToMast())) * getShieldCrossSection();
+    }
+
+    double getMastStructuralMass() {
+        return (((characteristics.getShipMass() * characteristics.getShipAcceleration()) / 70000) * 7.8) * getMastLength() * getMastMassModifier();
+    }
+
+    double getMastLength() {
+        // TODO: Placeholder
+        return 34.36277d;
+    }
+
+    double getMastMassModifier() {
+        // TODO: Placeholder
+        return 1.25d;
+    }
+
+    double getNeutronFlux_MR_yr() {
+        // TODO: Placeholder
+        return 71987.6451d;
+    }
+
+    double getTenXRadReduction() {
+        // TODO: Placeholder
+        return 0.63d;
+    }
+
+    double getRadReductionDueToMast() {
+        // TODO: Placeholder
+        return 17.006457d;
+    }
+
+    double getShieldCrossSection() {
+        // TODO: Placeholder
+        return 7.225657d;
+    }
+
+    double getDriveSpaces() {
+        return getDriveMass() / 25d;
     }
 
     int getHullArmorSpaces() {
@@ -22,32 +74,10 @@ class MassCharacteristics {
     }
 
     int getHullSpaces() {
-        return ship.getHullSize() - getHullArmorSpaces() - getDriveSpaces();
+        return Long.valueOf(Math.round(getHullSpaces_Double())).intValue();
     }
 
-//    int getMastCombinedMass() {
-//        return getMastStructuralMass() + getMastArmorMass() + getBaseShieldMass();
-//    }
-//
-//    int getMainHullMass() {
-//        return getMainHullSpaces();
-//    }
-//
-//    int getTotalDriveMass() {
-//        return getMastCombinedMass() + getLanternMass() + getEngineArmorMass();
-//    }
-//
-//    int getMainHullSpaces() {
-//        return ship.getHullSize()
-//                - getMainArmorSpaces()
-//                - Double.valueOf(getTotalDriveSpaces_Armor()).intValue();
-//    }
-//
-//    int getMainArmorSpaces() {
-//        return ship.getHullArmor();
-//    }
-//
-//    double getTotalDriveSpaces_Armor() {
-//        return getTotalDriveMass() / 25d;
-//    }
+    private double getHullSpaces_Double() {
+        return ship.getHullSize() - getHullArmorSpaces() - getDriveSpaces();
+    }
 }
