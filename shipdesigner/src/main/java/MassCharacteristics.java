@@ -98,8 +98,7 @@ class MassCharacteristics {
     }
 
     double getActualDriveFraction() {
-        // TODO: Placeholder
-        return 0.1871737d;
+        return getDriveMass() / characteristics.getShipMass();
     }
 
     double getMainHullLength() {
