@@ -151,6 +151,18 @@ class Ship {
         return 4;
     }
 
+    int getMainHullArmor() {
+        // TODO: Probably move into a 'Systems' object. Exists now only to support
+        // ShipCharacteristics.getMainHullArmor
+        return 1;
+    }
+
+    int getArmorShrink() {
+        // TODO: Probably move into a 'Systems' object. Exists now only to support
+        // ShipCharacteristics.getArmorShrink
+        return 0;
+    }
+
     // GETTERS & SETTERS
     String getName() {
         return name;
