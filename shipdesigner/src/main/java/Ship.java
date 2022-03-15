@@ -85,6 +85,22 @@ class Ship {
         return 185;
     }
 
+    int getBoxes() {
+        // TODO: Compute boxes
+        return 61;
+    }
+
+    int getMinimumCrew() {
+        // TODO: Compute minimum crew
+        return 26;
+    }
+
+    int getOfficers() {
+        return Long.valueOf(
+                Math.round(this.getMinimumCrew() * this.getPercentOfficers() / 100d)
+        ).intValue();
+    }
+
     // GETTERS & SETTERS
     String getName() {
         return name;
