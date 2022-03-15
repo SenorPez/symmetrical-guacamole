@@ -303,4 +303,18 @@ class ShipTest {
         Double expectedValue = 4.5d;
         assertEquals(expectedValue, instance.getMaximumThrust());
     }
+
+    @Test
+    void fieldEngineArmor() {
+        Ship instance = new Ship().setEngineArmor(4);
+        Integer expectedValue = 4;
+        assertEquals(expectedValue, instance.getEngineArmor());
+    }
+
+    @Test
+    void fieldMastArmor() {
+        Ship instance = new Ship().setMastArmor(4);
+        Integer expectedValue = 4;
+        assertEquals(expectedValue, instance.getMastArmor());
+    }
 }

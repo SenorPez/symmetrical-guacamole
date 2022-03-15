@@ -21,6 +21,9 @@ class Ship {
     private Double engineGeneration = 3.0d;
     private Double maximumThrust = 11d;
 
+    private Integer engineArmor = 0;
+    private Integer mastArmor = 0;
+
     private static final Logger logger = LogManager.getLogger(Ship.class);
     private static final Map<Integer, String> shipClasses = new HashMap<>();
 
@@ -251,6 +254,24 @@ class Ship {
 
     public Ship setMaximumThrust(Double maximumThrust) {
         this.maximumThrust = Math.round(maximumThrust * 2d) / 2d;
+        return this;
+    }
+
+    public Integer getEngineArmor() {
+        return engineArmor;
+    }
+
+    public Ship setEngineArmor(Integer engineArmor) {
+        this.engineArmor = engineArmor;
+        return this;
+    }
+
+    public Integer getMastArmor() {
+        return mastArmor;
+    }
+
+    public Ship setMastArmor(Integer mastArmor) {
+        this.mastArmor = mastArmor;
         return this;
     }
 }
