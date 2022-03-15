@@ -268,4 +268,11 @@ class ShipTest {
         Integer expectedValue = 4;
         assertEquals(expectedValue, instance.getExtraBerths());
     }
+
+    @Test
+    void getCruiseDuration() {
+        Ship instance = new Ship();
+        Integer expectedValue = 4;
+        assertEquals(expectedValue, instance.getCruiseDuration());
+    }
 }

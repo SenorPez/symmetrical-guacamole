@@ -105,6 +105,22 @@ class Ship {
         return this.getMinimumCrew() - this.getOfficers();
     }
 
+    int getGunboatCrew() {
+        return getGunboatDocks() * 10;
+    }
+
+    int getExtraBerths() {
+        int extraQuarters = this.getQuartersSystems() * 10 - this.getMinimumCrew() - getGunboatCrew();
+        int extraLifeSupport = this.getLifeSupportSystems() * 200 - this.getMinimumCrew() - getGunboatCrew();
+        int extraBerths = Math.min(extraQuarters, extraLifeSupport);
+        return Math.max(0, extraBerths);
+    }
+
+    int getCruiseDuration() {
+        // TODO: Indefinite duration doesn't seem to work in spreadsheet?
+        return getEnduranceSystems();
+    }
+
     int getGunboatDocks() {
         // TODO: Probably move into a 'Weapons' object. Exists now only to support
         //  this.getGunboatCrew() and this.getExtraBerths()
@@ -123,15 +139,10 @@ class Ship {
         return 5;
     }
 
-    int getGunboatCrew() {
-        return getGunboatDocks() * 10;
-    }
-
-    int getExtraBerths() {
-        int extraQuarters = this.getQuartersSystems() * 10 - this.getMinimumCrew() - getGunboatCrew();
-        int extraLifeSupport = this.getLifeSupportSystems() * 200 - this.getMinimumCrew() - getGunboatCrew();
-        int extraBerths = Math.min(extraQuarters, extraLifeSupport);
-        return Math.max(0, extraBerths);
+    int getEnduranceSystems() {
+        // TODO: Probably move into a 'Systems' object. Exists now only to support
+        // this.getCruiseDuration()
+        return 4;
     }
 
     // GETTERS & SETTERS
