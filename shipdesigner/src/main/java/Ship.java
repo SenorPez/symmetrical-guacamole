@@ -13,6 +13,7 @@ class Ship {
     private Shape shape = Shape.SPHEROID;
     private Integer hullSize = 25;
     private SheetFormat sheetFormat = SheetFormat.ONE_UP;
+
     private Integer laidDown = 2215;
     private BuildMode buildMode = BuildMode.STANDARD;
 
@@ -45,7 +46,7 @@ class Ship {
                 });
     }
 
-    Integer getBuildTime() {
+    int getBuildTime() {
         double baseTime = (
                 0.00000000003d * Math.pow(this.getHullSize(), 3)
                         - 0.0000002d * Math.pow(this.getHullSize(), 2)
@@ -57,9 +58,20 @@ class Ship {
                         + 0.0001d * Math.pow(this.getHullSize(), 2)
                         + 0.0711d * this.getHullSize()
                         + 1.687d);
-        double rawBuildTime = baseTime * this.getBuildMode().getBuildTimeModifier();
-        double ceilBuildTime = Math.ceil(rawBuildTime);
-        return Double.valueOf(ceilBuildTime).intValue();
+        double modifiedBuildTime = baseTime * this.getBuildMode().getBuildTimeModifier();
+        double ceilingBuildTime = Math.ceil(modifiedBuildTime);
+        return Double.valueOf(ceilingBuildTime).intValue();
+    }
+
+    double getMonetaryCost() {
+        double baseCost = this.getEconomicCost() * 0.1;
+        double surcharge = this.getBuildMode() == BuildMode.QUICK ? this.getEconomicCost() * 0.025 : 0;
+        return baseCost + surcharge;
+    }
+
+    int getEconomicCost() {
+        // TODO: Compute economic cost
+        return 610;
     }
 
     String getName() {

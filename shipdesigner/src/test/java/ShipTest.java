@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.annotation.Testable;
 
 import java.util.Random;
 
@@ -166,5 +167,19 @@ class ShipTest {
                 .setBuildMode(BuildMode.QUICK);
         Integer expectedValue = 7;
         assertEquals(expectedValue, instance.getBuildTime());
+    }
+
+    @Test
+    void getMonetaryCost_Standard() {
+        Ship instance = new Ship().setBuildMode(BuildMode.STANDARD);
+        Double expectedValue = 61d;
+        assertEquals(expectedValue, instance.getMonetaryCost());
+    }
+
+    @Test
+    void getMonetaryCost_Quick() {
+        Ship instance = new Ship().setBuildMode(BuildMode.QUICK);
+        Double expectedValue = 76.25d;
+        assertEquals(expectedValue, instance.getMonetaryCost());
     }
 }
