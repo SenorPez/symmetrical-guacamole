@@ -105,6 +105,15 @@ class Ship {
         return this.getMinimumCrew() - this.getOfficers();
     }
 
+    int getGunboatDocks() {
+        // TODO: Probably move into a 'Weapons' object. Exists now only to support this.getGunboatCrew()
+        return 1;
+    }
+
+    int getGunboatCrew() {
+        return getGunboatDocks() * 10;
+    }
+
     // GETTERS & SETTERS
     String getName() {
         return name;

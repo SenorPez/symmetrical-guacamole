@@ -254,4 +254,11 @@ class ShipTest {
         Integer expectedValue = 21;
         assertEquals(expectedValue, instance.getEnlisted());
     }
+
+    @Test
+    void getGunboatCrew() {
+        Ship instance = new Ship();
+        Integer expectedValue = 10;
+        assertEquals(expectedValue, instance.getGunboatCrew());
+    }
 }
