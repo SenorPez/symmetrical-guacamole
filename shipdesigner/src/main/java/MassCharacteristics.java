@@ -74,6 +74,7 @@ class MassCharacteristics {
     }
 
     double getMastLength() {
+        // TODO: Placeholder
         if (ship.getHullSize() < 100) mastLength = 25;
         else if (ship.getHullSize() < 400) mastLength = 50;
         else if (ship.getHullSize() < 1000) mastLength = 75;
@@ -88,7 +89,32 @@ class MassCharacteristics {
     }
 
     double getPivotAccel() {
-        return 14.61515d;
+        return (getThrust() * 1000) * ((1 - getActualDriveFraction()) * (getMastLength() + getMainHullLength() / 2) - (getActualDriveFraction()) * (getLanternDiameter() / 2d)) / (getMomentOfInertia() * 1000) * ((3 / Math.PI) * 128 * 16);
+    }
+
+    double getThrust() {
+        // TODO: Placeholder
+        return 177.04301d;
+    }
+
+    double getActualDriveFraction() {
+        // TODO: Placeholder
+        return 0.1871737d;
+    }
+
+    double getMainHullLength() {
+        // TODO: Placeholder
+        return 32.84850d;
+    }
+
+    int getLanternDiameter() {
+        // TODO: Placeholder
+        return 22;
+    }
+
+    double getMomentOfInertia() {
+        // TODO: Placeholder
+        return 9.29197e5;
     }
 
     int getPivotAccelPower() {

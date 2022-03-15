@@ -122,4 +122,13 @@ class MassCharacteristicsTest {
         double expectedValue = 56.79d;
         assertEquals(expectedValue, instance.getFigureOfMerit(), 0.01);
     }
+
+    @Test
+    void getPivotAccel() {
+        Ship ship = new Ship();
+        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
+        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
+        double expectedValue = 14.61515d;
+        assertEquals(expectedValue, instance.getPivotAccel(), 0.01);
+    }
 }
