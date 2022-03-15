@@ -33,4 +33,22 @@ class ShipTest {
         assertEquals(expectedValue, instance.getShape());
         assertEquals(expectedShapeName, instance.getShape().getShapeName());
     }
+
+    @Test
+    void fieldHullSize() {
+        Integer expectedValue = 50;
+        Ship instance = new Ship();
+        instance.setHullSize(50);
+
+        assertEquals(expectedValue, instance.getHullSize());
+    }
+
+    @Test
+    void fieldHullSize_Minimum() {
+        Integer expectedValue = 25;
+        Ship instance = new Ship();
+        instance.setHullSize(11);
+
+        assertEquals(expectedValue, instance.getHullSize());
+    }
 }
