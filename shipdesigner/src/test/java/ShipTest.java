@@ -237,21 +237,21 @@ class ShipTest {
     @Test
     void getMinimumCrew() {
         Ship instance = new Ship();
-        Integer expectedValue = 26;
+        Integer expectedValue = 36;
         assertEquals(expectedValue, instance.getMinimumCrew());
     }
 
     @Test
     void getOfficers() {
         Ship instance = new Ship().setPercentOfficers(20);
-        Integer expectedValue = 5;
+        Integer expectedValue = 7;
         assertEquals(expectedValue, instance.getOfficers());
     }
 
     @Test
     void getEnlisted() {
         Ship instance = new Ship().setPercentOfficers(20);
-        Integer expectedValue = 21;
+        Integer expectedValue = 29;
         assertEquals(expectedValue, instance.getEnlisted());
     }
 
@@ -260,5 +260,12 @@ class ShipTest {
         Ship instance = new Ship();
         Integer expectedValue = 10;
         assertEquals(expectedValue, instance.getGunboatCrew());
+    }
+
+    @Test
+    void getExtraBerths() {
+        Ship instance = new Ship();
+        Integer expectedValue = 4;
+        assertEquals(expectedValue, instance.getExtraBerths());
     }
 }

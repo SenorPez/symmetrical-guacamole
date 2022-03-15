@@ -92,7 +92,7 @@ class Ship {
 
     int getMinimumCrew() {
         // TODO: Compute minimum crew
-        return 26;
+        return 36;
     }
 
     int getOfficers() {
@@ -106,12 +106,32 @@ class Ship {
     }
 
     int getGunboatDocks() {
-        // TODO: Probably move into a 'Weapons' object. Exists now only to support this.getGunboatCrew()
+        // TODO: Probably move into a 'Weapons' object. Exists now only to support
+        //  this.getGunboatCrew() and this.getExtraBerths()
         return 1;
+    }
+
+    int getLifeSupportSystems() {
+        // TODO: Probably move into a 'Systems' object. Exists now only to support
+        //  this.getExtraBerths()
+        return 1;
+    }
+
+    int getQuartersSystems() {
+        // TODO: Probably move into a 'Systems' object. Exists now only to support
+        // this.getExtraBerths()
+        return 5;
     }
 
     int getGunboatCrew() {
         return getGunboatDocks() * 10;
+    }
+
+    int getExtraBerths() {
+        int extraQuarters = this.getQuartersSystems() * 10 - this.getMinimumCrew() - getGunboatCrew();
+        int extraLifeSupport = this.getLifeSupportSystems() * 200 - this.getMinimumCrew() - getGunboatCrew();
+        int extraBerths = Math.min(extraQuarters, extraLifeSupport);
+        return Math.max(0, extraBerths);
     }
 
     // GETTERS & SETTERS
