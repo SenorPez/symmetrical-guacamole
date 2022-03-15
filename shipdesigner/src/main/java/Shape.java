@@ -12,7 +12,7 @@ enum Shape {
         this.shapeName = shapeName;
     }
 
-    public String getShapeName() {
+    String getShapeName() {
         return shapeName;
     }
 }

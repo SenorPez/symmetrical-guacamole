@@ -9,7 +9,7 @@ enum SheetFormat {
         this.format = format;
     }
 
-    public String getFormat() {
+    String getFormat() {
         return format;
     }
 }

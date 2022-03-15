@@ -81,11 +81,14 @@ class ShipTest {
     }
 
     @Test
-    void getShipClass_NotSet() {
+    void fieldBuildMode() {
+        BuildMode expectedValue = BuildMode.QUICK;
+        String expectedBuildModeName = "Quick and Dirty";
         Ship instance = new Ship();
-        Exception exception = assertThrows(NoSuchElementException.class, instance::getShipClass);
-        String expectedMessage = "Set hull size before finding ship class.";
-        assertTrue(exception.getMessage().contains(expectedMessage));
+        instance.setBuildMode(BuildMode.QUICK);
+
+        assertEquals(expectedValue, instance.getBuildMode());
+        assertEquals(expectedBuildModeName, instance.getBuildMode().getBuildModeName());
     }
 
     @Test

@@ -78,7 +78,7 @@ enum Nation {
         this.nationName = nationName;
     }
 
-    public String getNationName() {
+    String getNationName() {
         return nationName;
     }
 }

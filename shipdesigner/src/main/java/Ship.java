@@ -6,12 +6,13 @@ import java.util.*;
 
 class Ship {
     // Inputs
-    private String name;
-    private Nation origin;
-    private Shape shape;
-    private Integer hullSize = 0;
-    private SheetFormat sheetFormat;
-    private Integer laidDown;
+    private String name = "Class Name";
+    private Nation origin = Nation.OLYMPIAN_REPUBLIC;
+    private Shape shape = Shape.SPHEROID;
+    private Integer hullSize = 25;
+    private SheetFormat sheetFormat = SheetFormat.ONE_UP;
+    private Integer laidDown = 2215;
+    private BuildMode buildMode = BuildMode.STANDARD;
 
     private static final Logger logger = LogManager.getLogger(Ship.class);
     private static final Map<Integer, String> shipClasses = new HashMap<>();
@@ -32,7 +33,7 @@ class Ship {
     public String getShipClass() {
         return shipClasses.entrySet()
                 .stream()
-                .filter(entry -> entry.getKey() < this.getHullSize())
+                .filter(entry -> entry.getKey() <= this.getHullSize())
                 .max(Comparator.comparingInt(Map.Entry::getKey))
                 .map(Map.Entry::getValue)
                 .stream().findFirst()
@@ -99,6 +100,15 @@ class Ship {
 
     public Ship setLaidDown(Integer laidDown) {
         this.laidDown = laidDown;
+        return this;
+    }
+
+    public BuildMode getBuildMode() {
+        return buildMode;
+    }
+
+    public Ship setBuildMode(BuildMode buildMode) {
+        this.buildMode = buildMode;
         return this;
     }
 }
