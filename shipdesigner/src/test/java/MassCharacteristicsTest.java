@@ -49,6 +49,15 @@ class MassCharacteristicsTest {
     }
 
     @Test
+    void getMastMassModifier() {
+        Ship ship = new Ship().setShape(Shape.ELLIPSOID);
+        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
+        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
+        double expectedValue = 1.25d;
+        assertEquals(expectedValue, instance.getMastMassModifier());
+    }
+
+    @Test
     void getMastShieldMass() {
         Ship ship = new Ship().setHullSize(55);
         ShipCharacteristics characteristics = new ShipCharacteristics(ship);
