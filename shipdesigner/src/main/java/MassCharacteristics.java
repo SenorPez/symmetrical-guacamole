@@ -107,9 +107,8 @@ class MassCharacteristics {
         return 32.84850d;
     }
 
-    int getLanternDiameter() {
-        // TODO: Placeholder
-        return 22;
+    double getLanternDiameter() {
+        return ((Math.sqrt((characteristics.getShipMass() * characteristics.getShipAcceleration()) / 125)) * 20) / Math.sqrt(100 / (100d - getRadiantDeflection()));
     }
 
     double getMomentOfInertia() {
@@ -123,6 +122,10 @@ class MassCharacteristics {
 
     int getDriveMassPower() {
         return 1; // TODO: Allow as input?
+    }
+
+    int getRadiantDeflection() {
+        return 96; // TODO: Allow as input?
     }
 
     private double getHullSpaces_Double() {

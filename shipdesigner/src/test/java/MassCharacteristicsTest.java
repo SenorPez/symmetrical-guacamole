@@ -125,10 +125,21 @@ class MassCharacteristicsTest {
 
     @Test
     void getPivotAccel() {
-        Ship ship = new Ship();
+        Ship ship = new Ship()
+                .setHullSize(55);
         ShipCharacteristics characteristics = new ShipCharacteristics(ship);
         MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
         double expectedValue = 14.61515d;
         assertEquals(expectedValue, instance.getPivotAccel(), 0.01);
+    }
+
+    @Test
+    void getLanternDiameter() {
+        Ship ship = new Ship()
+                .setHullSize(55);
+        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
+        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
+        double expectedValue = 22d;
+        assertEquals(expectedValue, instance.getLanternDiameter());
     }
 }
