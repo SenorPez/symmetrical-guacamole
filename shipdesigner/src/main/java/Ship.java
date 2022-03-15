@@ -80,6 +80,11 @@ class Ship {
         return 610;
     }
 
+    int getMaintenanceCost() {
+        // TODO: Compute maintenance cost
+        return 185;
+    }
+
     // GETTERS & SETTERS
     String getName() {
         return name;

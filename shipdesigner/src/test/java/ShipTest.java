@@ -219,4 +219,11 @@ class ShipTest {
         Integer expectedValue = 610;
         assertEquals(expectedValue, instance.getEconomicCost());
     }
+
+    @Test
+    void getMaintenanceCost() {
+        Ship instance = new Ship();
+        Integer expectedValue = 185;
+        assertEquals(expectedValue, instance.getMaintenanceCost());
+    }
 }
