@@ -275,4 +275,32 @@ class ShipTest {
         Integer expectedValue = 4;
         assertEquals(expectedValue, instance.getCruiseDuration());
     }
+
+    @Test
+    void fieldEngineGeneration() {
+        Ship instance = new Ship().setEngineGeneration(3.0d);
+        Double expectedValue = 3d;
+        assertEquals(expectedValue, instance.getEngineGeneration());
+    }
+
+    @Test
+    void fieldEngineGeneration_Round() {
+        Ship instance = new Ship().setEngineGeneration(2.34d);
+        Double expectedValue = 2.3d;
+        assertEquals(expectedValue, instance.getEngineGeneration());
+    }
+
+    @Test
+    void fieldMaximumThrust() {
+        Ship instance = new Ship().setMaximumThrust(11d);
+        Double expectedValue = 11d;
+        assertEquals(expectedValue, instance.getMaximumThrust());
+    }
+
+    @Test
+    void fieldMaximumThrust_Round() {
+        Ship instance = new Ship().setMaximumThrust(4.7d);
+        Double expectedValue = 4.5d;
+        assertEquals(expectedValue, instance.getMaximumThrust());
+    }
 }

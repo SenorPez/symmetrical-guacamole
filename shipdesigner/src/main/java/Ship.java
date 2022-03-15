@@ -18,6 +18,9 @@ class Ship {
     private BuildMode buildMode = BuildMode.STANDARD;
     private Integer percentOfficers = 20;
 
+    private Double engineGeneration = 3.0d;
+    private Double maximumThrust = 11d;
+
     private static final Logger logger = LogManager.getLogger(Ship.class);
     private static final Map<Integer, String> shipClasses = new HashMap<>();
 
@@ -215,11 +218,11 @@ class Ship {
         return this;
     }
 
-    public Integer getPercentOfficers() {
+    Integer getPercentOfficers() {
         return percentOfficers;
     }
 
-    public Ship setPercentOfficers(Integer percentOfficers) {
+    Ship setPercentOfficers(Integer percentOfficers) {
         if (percentOfficers < 10) {
             logger.error("Officer percentage less than 10%; setting to 10%");
             this.percentOfficers = 10;
@@ -230,6 +233,24 @@ class Ship {
             logger.info(String.format("Setting hull size to %d%%", percentOfficers));
             this.percentOfficers = percentOfficers;
         }
+        return this;
+    }
+
+    public Double getEngineGeneration() {
+        return engineGeneration;
+    }
+
+    public Ship setEngineGeneration(Double engineGeneration) {
+        this.engineGeneration = Math.round(engineGeneration * 10d) / 10d;
+        return this;
+    }
+
+    public Double getMaximumThrust() {
+        return maximumThrust;
+    }
+
+    public Ship setMaximumThrust(Double maximumThrust) {
+        this.maximumThrust = Math.round(maximumThrust * 2d) / 2d;
         return this;
     }
 }
