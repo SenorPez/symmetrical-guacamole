@@ -174,4 +174,13 @@ class MassCharacteristicsTest {
         double expectedValue = 177.04301d;
         assertEquals(expectedValue, instance.getPivotThrust(), 0.00001);
     }
+
+    @Test
+    void getNeutronFlux_MR_year() {
+        Ship ship = new Ship();
+        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
+        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
+        double expectedValue = 71987.64505d;
+        assertEquals(expectedValue, instance.getNeutronFlux_MR_yr(), 0.0001);
+    }
 }

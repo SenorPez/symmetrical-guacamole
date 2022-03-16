@@ -41,9 +41,13 @@ class MassCharacteristics {
         return ship.getShape().getMastMassModifier();
     }
 
-    double getNeutronFlux_MR_yr() {
+    double getNeutronFlux_KR_hr() {
         // TODO: Placeholder
-        return 71987.6451d;
+        return 8212.14294d;
+    }
+
+    double getNeutronFlux_MR_yr() {
+        return getNeutronFlux_KR_hr() * 24 * 365.25 / 1000;
     }
 
     double getTenXRadReduction() {
