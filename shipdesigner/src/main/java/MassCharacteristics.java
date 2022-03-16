@@ -41,9 +41,13 @@ class MassCharacteristics {
         return ship.getShape().getMastMassModifier();
     }
 
-    double getNeutronFlux_KR_hr() {
+    double getNewCombatPower() {
         // TODO: Placeholder
-        return 8212.14294d;
+        return 1.98734d;
+    }
+
+    double getNeutronFlux_KR_hr() {
+        return getNewCombatPower() * 500000 / Math.pow(getLanternDiameter() / 2, 2);
     }
 
     double getNeutronFlux_MR_yr() {
