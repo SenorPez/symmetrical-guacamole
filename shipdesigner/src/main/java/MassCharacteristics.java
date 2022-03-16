@@ -9,33 +9,167 @@ class MassCharacteristics {
         this.characteristics = characteristics;
     }
 
-    double getDriveMass() {
-        return getMastMass() + 198.733859;
-    }
-
+    // Table Values
     double getHullMass() {
         return getHullSpaces_Double() * 25;
+    }
+
+    double getHullSpaces() {
+        return getHullSpaces_Double();
+    }
+
+    double getHullPercentage() {
+        return getHullSpaces() / ship.getHullSize();
     }
 
     double getHullArmorMass() {
         return getHullArmorSpaces() * 25d;
     }
 
-    double getMastMass() {
-        return getMastStructuralMass() + getMastArmorMass() + getMastShieldMass();
+    double getHullArmorSpaces() {
+        return ship.getHullArmor();
+    }
+
+    double getHullArmorPercentage() {
+        return getHullArmorSpaces() / ship.getHullSize();
+    }
+
+    double getTotalHullMass() {
+        return getHullMass() + getHullArmorMass();
+    }
+
+    double getTotalHullSpaces() {
+        return getHullSpaces() + getHullArmorSpaces();
+    }
+
+    double getTotalHullPercentage() {
+        return getTotalHullSpaces() / ship.getHullSize();
+    }
+
+    double getMastStructureMass() {
+        return (((characteristics.getShipMass() * characteristics.getShipAcceleration()) / 70000) * 7.8) * getMastLength() * getMastMassModifier();
+    }
+
+    double getMastStructureSpaces() {
+        return getMastStructureMass() / 25d;
+    }
+
+    double getMastStructurePercentage() {
+        return getMastStructureSpaces() / ship.getHullSize();
     }
 
     double getMastArmorMass() {
         return ((1d / 15d) * Math.PI * Math.pow(getMastLength(), 2)) * characteristics.getMastArmor() * 50 / (1000 + 50 * characteristics.getArmorShrink());
     }
 
+    double getMastArmorSpaces() {
+        return getMastArmorMass() / 25d;
+    }
+
+    double getMastArmorPercentage() {
+        return getMastArmorSpaces() / ship.getHullSize();
+    }
+
     double getMastShieldMass() {
         return (getTenXRadReduction() * (Math.log10(getNeutronFlux_MR_yr()) + 6) - Math.log10(getRadReductionDueToMast())) * getShieldCrossSection();
     }
 
-    double getMastStructuralMass() {
-        return (((characteristics.getShipMass() * characteristics.getShipAcceleration()) / 70000) * 7.8) * getMastLength() * getMastMassModifier();
+    double getMastShieldSpaces() {
+        return getMastShieldMass() / 25d;
     }
+
+    double getMastShieldPercentage() {
+        return getMastShieldSpaces() / ship.getHullSize();
+    }
+
+    double getDriveMass() {
+        // TODO: Placeholder.
+        return 0;
+    }
+
+    double getDriveSpaces() {
+        return getDriveMass() / 25d;
+    }
+
+    double getDrivePercentage() {
+        return getDriveSpaces() / ship.getHullSize();
+    }
+
+    double getDriveArmorMass() {
+        // TODO: Placeholder.
+        return 0;
+    }
+
+    double getDriveArmorSpaces() {
+        return getDriveArmorMass() / 25d;
+    }
+
+    double getDriveArmorPercentage() {
+        return getDriveArmorSpaces() / ship.getHullSize();
+    }
+
+    double getOverallDriveMass_wArmor() {
+        // TODO: Placeholder values.
+        return getMastMass() + 198.733859;
+    }
+
+    double getOverallDriveSpaces_wArmor() {
+        return getOverallDriveMass_wArmor() / 25d;
+    }
+
+    double getOverallDrivePercentage_wArmor() {
+        return getOverallDriveSpaces_wArmor() / ship.getHullSize();
+    }
+
+    double getOverallDriveMass_noArmor() {
+        return getLanternMass() + getMastStructureMass() + getMastShieldMass();
+    }
+
+    double getOverallDriveSpaces_noArmor() {
+        return getOverallDriveMass_noArmor() / 25d;
+    }
+
+    double getOverallDrivePercentage_noArmor() {
+        return getOverallDriveSpaces_noArmor() / ship.getHullSize();
+    }
+
+    double getTotalShipArmorMass() {
+        return getHullArmorMass() + getOverallDriveMass_wArmor() - getOverallDriveMass_noArmor();
+    }
+
+    double getTotalShipArmorSpaces() {
+        return getHullArmorSpaces() + getOverallDriveSpaces_wArmor() - getOverallDriveSpaces_noArmor();
+    }
+
+    double getTotalShipArmorPercentage() {
+        return getTotalShipArmorSpaces() / ship.getHullSize();
+    }
+
+    double getTotalShipMass() {
+        return getHullMass() + getOverallDriveMass_wArmor();
+    }
+
+    double getTotalShipSpaces() {
+        return getHullSpaces() + getOverallDriveSpaces_wArmor();
+    }
+
+    double getTotalShipPercentage() {
+        return getHullPercentage() + getOverallDrivePercentage_wArmor();
+    }
+
+
+
+
+
+
+
+
+    double getMastMass() {
+        return getMastStructureMass() + getMastArmorMass() + getMastShieldMass();
+    }
+
+
+
 
     double getMastMassModifier() {
         return ship.getShape().getMastMassModifier();
@@ -68,17 +202,13 @@ class MassCharacteristics {
         return 7.225657d;
     }
 
-    double getDriveSpaces() {
-        return getDriveMass() / 25d;
+    double getLanternMass() {
+        // TODO: Placeholder
+        return 199;
     }
 
-    int getHullArmorSpaces() {
-        return ship.getHullArmor();
-    }
 
-    int getHullSpaces() {
-        return Long.valueOf(Math.round(getHullSpaces_Double())).intValue();
-    }
+
 
     double getMastLength() {
         // TODO: Placeholder
@@ -91,7 +221,7 @@ class MassCharacteristics {
     }
 
     double getFigureOfMerit() {
-        return 1000 * Math.pow(getPivotAccel(), getPivotAccelPower()) / (Math.pow(getDriveMass(), getDriveMassPower()));
+        return 1000 * Math.pow(getPivotAccel(), getPivotAccelPower()) / (Math.pow(getOverallDriveMass_wArmor(), getDriveMassPower()));
     }
 
     double getPivotAccel() {
@@ -106,7 +236,7 @@ class MassCharacteristics {
     }
 
     double getActualDriveFraction() {
-        return getDriveMass() / characteristics.getShipMass();
+        return getOverallDriveMass_wArmor() / characteristics.getShipMass();
     }
 
     double getMainHullLength() {
@@ -139,7 +269,7 @@ class MassCharacteristics {
     }
 
     private double getHullSpaces_Double() {
-        return ship.getHullSize() - getHullArmorSpaces() - getDriveSpaces();
+        return ship.getHullSize() - getHullArmorSpaces() - getOverallDriveSpaces_wArmor();
     }
 
 }

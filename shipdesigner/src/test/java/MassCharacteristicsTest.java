@@ -11,7 +11,7 @@ class MassCharacteristicsTest {
         ShipCharacteristics characteristics = new ShipCharacteristics(ship);
         MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
         double expectedValue = 257.363868;
-        assertEquals(expectedValue, instance.getDriveMass(), 0.01);
+        assertEquals(expectedValue, instance.getOverallDriveMass_wArmor(), 0.01);
     }
 
     @Test
@@ -80,7 +80,7 @@ class MassCharacteristicsTest {
         ShipCharacteristics characteristics = new ShipCharacteristics(ship);
         MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
         double expectedValue = 18.10d;
-        assertEquals(expectedValue, instance.getMastStructuralMass(), 0.01);
+        assertEquals(expectedValue, instance.getMastStructureMass(), 0.01);
     }
 
     @Test
@@ -91,7 +91,7 @@ class MassCharacteristicsTest {
         ShipCharacteristics characteristics = new ShipCharacteristics(ship);
         MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
         double expectedValue = 10.29455d;
-        assertEquals(expectedValue, instance.getDriveSpaces(), 0.1);
+        assertEquals(expectedValue, instance.getOverallDriveSpaces_wArmor(), 0.1);
     }
 
     @Test
