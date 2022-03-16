@@ -42,8 +42,7 @@ class MassCharacteristics {
     }
 
     double getNewCombatPower() {
-        // TODO: Placeholder
-        return 1.98734d;
+        return 0.5 * characteristics.getShipMass() * 1000 * characteristics.getShipAcceleration() * 9.765625 * ship.getEngineGeneration() * 34722 / 1e12;
     }
 
     double getNeutronFlux_KR_hr() {

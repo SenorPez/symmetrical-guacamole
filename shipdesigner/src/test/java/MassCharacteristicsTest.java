@@ -177,7 +177,8 @@ class MassCharacteristicsTest {
 
     @Test
     void getNeutronFlux_MR_year() {
-        Ship ship = new Ship();
+        Ship ship = new Ship()
+                .setHullSize(55);
         ShipCharacteristics characteristics = new ShipCharacteristics(ship);
         MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
         double expectedValue = 71987.64505d;
@@ -187,10 +188,23 @@ class MassCharacteristicsTest {
     @Test
     void getNeutronFlux_KR_hour() {
         Ship ship = new Ship()
-                .setHullSize(55);
+                .setHullSize(55)
+                .setMaximumThrust(11d);
         ShipCharacteristics characteristics = new ShipCharacteristics(ship);
         MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
         double expectedValue = 8212.14294d;
         assertEquals(expectedValue, instance.getNeutronFlux_KR_hr(), 0.01);
+    }
+
+    @Test
+    void getNewCombatPower() {
+        Ship ship = new Ship()
+                .setHullSize(55)
+                .setMaximumThrust(11d)
+                .setEngineGeneration(3.1d);
+        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
+        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
+        double expectedValue = 1.98734d;
+        assertEquals(expectedValue, instance.getNewCombatPower(), 0.01);
     }
 }
