@@ -163,4 +163,15 @@ class MassCharacteristicsTest {
         double expectedValue = 32.84850d;
         assertEquals(expectedValue, instance.getMainHullLength());
     }
+
+    @Test
+    void getPivotThrust() {
+        Ship ship = new Ship()
+                .setHullSize(55)
+                .setShape(Shape.ELLIPSOID);
+        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
+        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
+        double expectedValue = 177.04301d;
+        assertEquals(expectedValue, instance.getPivotThrust(), 0.00001);
+    }
 }

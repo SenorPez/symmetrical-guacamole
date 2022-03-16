@@ -85,16 +85,17 @@ class MassCharacteristics {
 
     double getFigureOfMerit() {
         return 1000 * Math.pow(getPivotAccel(), getPivotAccelPower()) / (Math.pow(getDriveMass(), getDriveMassPower()));
-//        return 1000 * Math.pow(getPivotAccel(), getPivotAccelPower()) / Math.pow(getDriveMass(), getDriveMassPower());
     }
 
     double getPivotAccel() {
-        return (getThrust() * 1000) * ((1 - getActualDriveFraction()) * (getMastLength() + getMainHullLength() / 2) - (getActualDriveFraction()) * (getLanternDiameter() / 2d)) / (getMomentOfInertia() * 1000) * ((3 / Math.PI) * 128 * 16);
+        return (getPivotThrust() * 1000) * ((1 - getActualDriveFraction()) * (getMastLength() + getMainHullLength() / 2) - (getActualDriveFraction()) * (getLanternDiameter() / 2d)) / (getMomentOfInertia() * 1000) * ((3 / Math.PI) * 128 * 16);
     }
 
-    double getThrust() {
-        // TODO: Placeholder
-        return 177.04301d;
+    double getPivotThrust() {
+        if (getThrustOverride() != 0) return getThrustOverride();
+        final double scalingFactor = 14.1522458529503; // TODO: Is this actually a constant?
+                                                       // Can't find a place where it's updated in spreadsheet.
+        return scalingFactor * Math.pow(characteristics.getShipMass(), 1d / 3d) * ship.getShape().getPivotModifier();
     }
 
     double getActualDriveFraction() {
@@ -124,6 +125,10 @@ class MassCharacteristics {
 
     int getRadiantDeflection() {
         return 96; // TODO: Allow as input?
+    }
+
+    double getThrustOverride() {
+        return 0d; // TODO: Allow as input?
     }
 
     private double getHullSpaces_Double() {
