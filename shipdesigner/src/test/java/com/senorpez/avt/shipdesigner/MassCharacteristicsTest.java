@@ -132,6 +132,33 @@ class MassCharacteristicsTest {
     }
 
     @Test
+    void getMastArmorMass() {
+        when(characteristics.getMastArmor()).thenReturn(1);
+        when(characteristics.getArmorShrink()).thenReturn(0);
+        doReturn(31.21665d).when(instance).getMastLength();
+        double expectedValue = 10.20473d;
+
+        assertEquals(expectedValue, instance.getMastArmorMass(), tolerance);
+    }
+
+    @Test
+    void getMastArmorSpaces() {
+        doReturn(10.20473d).when(instance).getMastArmorMass();
+        double expectedValue = 0.40819d;
+
+        assertEquals(expectedValue, instance.getMastArmorSpaces(), tolerance);
+    }
+
+    @Test
+    void getMastArmorPercentage() {
+        when(ship.getHullSize()).thenReturn(55);
+        doReturn(0.40819d).when(instance).getMastArmorSpaces();
+        double expectedValue = 0.0074216d;
+
+        assertEquals(expectedValue, instance.getMastArmorPercentage(), tolerance);
+    }
+
+    @Test
     void getDriveMass() {
         Ship ship = new Ship()
                 .setHullSize(55)
@@ -153,14 +180,6 @@ class MassCharacteristicsTest {
         assertEquals(expectedValue, instance.getMastMass(), 0.01);
     }
 
-    @Test
-    void getMastArmorMass() {
-        Ship ship = new Ship();
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 0d;
-        assertEquals(expectedValue, instance.getMastArmorMass(), 0.01);
-    }
 
     @Test
     void getMastMassModifier() {

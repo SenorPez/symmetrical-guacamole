@@ -32,6 +32,7 @@ class ShipCharacteristics {
     }
 
     int getArmorShrink() {
+        //TODO: Seems to always be zero; shrink just adds more armor now.
         return ship.getArmorShrink();
     }
 }
