@@ -11,7 +11,7 @@ class Ship {
     private String name = "Class Name";
     private Nation origin = Nation.OLYMPIAN_REPUBLIC;
     private Shape shape = Shape.SPHEROID;
-    private Integer hullSize = 25;
+    private int hullSize = 25;
     private SheetFormat sheetFormat = SheetFormat.ONE_UP;
 
     private Integer laidDown = 2215;
@@ -151,7 +151,7 @@ class Ship {
         return 4;
     }
 
-    int getHullArmor() {
+    public int getHullArmor() {
         // TODO: Probably move into a 'Systems' object. Exists now only to support
         // ShipCharacteristics.getHullArmor
         return 1;
@@ -194,11 +194,11 @@ class Ship {
         return this;
     }
 
-    Integer getHullSize() {
+    public int getHullSize() {
         return hullSize;
     }
 
-    Ship setHullSize(Integer hullSize) {
+    public Ship setHullSize(int hullSize) {
         if (hullSize < 25) logger.error("Hull size under 25; setting to 25");
         logger.info(String.format("Setting hull size to %d", hullSize));
         this.hullSize = Math.max(hullSize, 25);

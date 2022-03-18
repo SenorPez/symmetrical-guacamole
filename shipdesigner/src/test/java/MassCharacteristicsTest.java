@@ -1,8 +1,79 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class MassCharacteristicsTest {
+    @Mock
+    Ship ship;
+    @Mock
+    ShipCharacteristics characteristics;
+
+    private MassCharacteristics instance;
+    private final double tolerance = 0.001d;
+
+    @BeforeEach
+    void setUp() {
+        instance = spy(new MassCharacteristics(ship, characteristics));
+    }
+
+    @Test
+    void getHullMass() {
+        doReturn(40.10843d).when(instance).getHullSpaces();
+        double expectedValue = 1002.71086d;
+
+        assertEquals(expectedValue, instance.getHullMass(), tolerance);
+    }
+
+    @Test
+    void getHullSpaces() {
+        when(ship.getHullSize()).thenReturn(55);
+        doReturn(1.00000d).when(instance).getHullArmorSpaces();
+        doReturn(13.89157d).when(instance).getOverallDriveSpaces_wArmor();
+        double expectedValue = 40.10843d;
+
+        assertEquals(expectedValue, instance.getHullSpaces(), tolerance);
+    }
+
+    @Test
+    void getHullPercentage() {
+        when(ship.getHullSize()).thenReturn(55);
+        doReturn(40.10843d).when(instance).getHullSpaces();
+        double expectedValue = 0.7292443d;
+
+        assertEquals(expectedValue, instance.getHullPercentage(), tolerance);
+    }
+
+    @Test
+    void getHullArmorMass() {
+        doReturn(1).when(instance).getHullArmorSpaces();
+        double expectedValue = 25.00000d;
+
+        assertEquals(expectedValue, instance.getHullArmorMass(), tolerance);
+    }
+
+    @Test
+    void getHullArmorSpaces() {
+        when(ship.getHullArmor()).thenReturn(1);
+        int expectedValue = 1;
+
+        assertEquals(expectedValue, instance.getHullArmorSpaces());
+    }
+
+    @Test
+    void getHullArmorPercentage() {
+        when(ship.getHullSize()).thenReturn(55);
+        doReturn(1).when(instance).getHullArmorSpaces();
+        double expectedValue = 0.018181818;
+
+        assertEquals(expectedValue, instance.getHullArmorPercentage(), tolerance);
+    }
+
     @Test
     void getDriveMass() {
         Ship ship = new Ship()
@@ -12,26 +83,6 @@ class MassCharacteristicsTest {
         MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
         double expectedValue = 257.363868;
         assertEquals(expectedValue, instance.getOverallDriveMass_wArmor(), 0.01);
-    }
-
-    @Test
-    void getHullMass() {
-        Ship ship = new Ship()
-                .setHullSize(55)
-                .setShape(Shape.ELLIPSOID);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 1092.6361;
-        assertEquals(expectedValue, instance.getHullMass(), 0.1d);
-    }
-
-    @Test
-    void getHullArmorMass() {
-        Ship ship = new Ship();
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        int expectedValue = 25;
-        assertEquals(expectedValue, instance.getHullArmorMass());
     }
 
     @Test
@@ -94,23 +145,14 @@ class MassCharacteristicsTest {
         assertEquals(expectedValue, instance.getOverallDriveSpaces_wArmor(), 0.1);
     }
 
-    @Test
-    void getHullSpaces() {
-        Ship ship = new Ship().setHullSize(55);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        int expectedValue = 44;
-        assertEquals(expectedValue, instance.getHullSpaces());
-    }
-
-    @Test
-    void getHullArmorSpaces() {
-        Ship ship = new Ship();
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        int expectedValue = 1;
-        assertEquals(expectedValue, instance.getHullArmorSpaces());
-    }
+//    @Test
+//    void getHullSpaces() {
+//        Ship ship = new Ship().setHullSize(55);
+//        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
+//        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
+//        int expectedValue = 44;
+//        assertEquals(expectedValue, instance.getHullSpaces());
+//    }
 
     @Test
     void getFigureOfMerit() {

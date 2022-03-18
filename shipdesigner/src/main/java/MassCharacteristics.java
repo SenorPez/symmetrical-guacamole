@@ -10,28 +10,28 @@ class MassCharacteristics {
     }
 
     // Table Values
-    double getHullMass() {
-        return getHullSpaces_Double() * 25;
+    public double getHullMass() {
+        return getHullSpaces() * 25;
     }
 
-    double getHullSpaces() {
-        return getHullSpaces_Double();
+    public double getHullSpaces() {
+        return ship.getHullSize() - getHullArmorSpaces() - getOverallDriveSpaces_wArmor();
     }
 
-    double getHullPercentage() {
+    public double getHullPercentage() {
         return getHullSpaces() / ship.getHullSize();
     }
 
-    double getHullArmorMass() {
+    public double getHullArmorMass() {
         return getHullArmorSpaces() * 25d;
     }
 
-    double getHullArmorSpaces() {
+    public int getHullArmorSpaces() {
         return ship.getHullArmor();
     }
 
-    double getHullArmorPercentage() {
-        return getHullArmorSpaces() / ship.getHullSize();
+    public double getHullArmorPercentage() {
+        return getHullArmorSpaces() / (double) ship.getHullSize();
     }
 
     double getTotalHullMass() {
@@ -113,7 +113,7 @@ class MassCharacteristics {
         return getMastMass() + 198.733859;
     }
 
-    double getOverallDriveSpaces_wArmor() {
+    public double getOverallDriveSpaces_wArmor() {
         return getOverallDriveMass_wArmor() / 25d;
     }
 
@@ -156,7 +156,6 @@ class MassCharacteristics {
     double getTotalShipPercentage() {
         return getHullPercentage() + getOverallDrivePercentage_wArmor();
     }
-
 
 
 
@@ -267,9 +266,4 @@ class MassCharacteristics {
     double getThrustOverride() {
         return 0d; // TODO: Allow as input?
     }
-
-    private double getHullSpaces_Double() {
-        return ship.getHullSize() - getHullArmorSpaces() - getOverallDriveSpaces_wArmor();
-    }
-
 }
