@@ -189,13 +189,26 @@ class MassCharacteristicsTest {
 
     @Test
     void getDriveMass() {
-        Ship ship = new Ship()
-                .setHullSize(55)
-                .setShape(Shape.ELLIPSOID);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 257.363868;
-        assertEquals(expectedValue, instance.getOverallDriveMass_wArmor(), 0.01);
+        double expectedValue = 198.73386d;
+
+        assertEquals(expectedValue, instance.getDriveMass(), tolerance);
+    }
+
+    @Test
+    void getDriveSpaces() {
+        doReturn(198.73386d).when(instance).getDriveMass();
+        double expectedValue = 7.94935d;
+
+        assertEquals(expectedValue, instance.getDriveSpaces(), tolerance);
+    }
+
+    @Test
+    void getDrivePercentage() {
+        when(ship.getHullSize()).thenReturn(55);
+        doReturn(7.94935d).when(instance).getDriveSpaces();
+        double expectedValue = 0.1445337d;
+
+        assertEquals(expectedValue, instance.getDrivePercentage(), tolerance);
     }
 
     @Test
@@ -231,16 +244,6 @@ class MassCharacteristicsTest {
         assertEquals(expectedValue, instance.getMastStructureMass(), 0.01);
     }
 
-    @Test
-    void getDriveSpaces() {
-        Ship ship = new Ship()
-                .setHullSize(55)
-                .setShape(Shape.ELLIPSOID);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 10.29455d;
-        assertEquals(expectedValue, instance.getOverallDriveSpaces_wArmor(), 0.1);
-    }
 
 //    @Test
 //    void getHullSpaces() {
