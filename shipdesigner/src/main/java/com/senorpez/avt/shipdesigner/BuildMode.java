@@ -1,9 +1,11 @@
+package com.senorpez.avt.shipdesigner;
+
 enum BuildMode {
     STANDARD("Standard", 1.0d),
     QUICK("Quick and Dirty", 0.5d);
 
     private final String buildModeName;
-    private final Double buildTimeModifier;
+    private final double buildTimeModifier;
 
     BuildMode(String buildModeName, double buildTimeModifier) {
         this.buildModeName = buildModeName;
@@ -14,7 +16,7 @@ enum BuildMode {
         return buildModeName;
     }
 
-    Double getBuildTimeModifier() {
+    double getBuildTimeModifier() {
         return buildTimeModifier;
     }
 }

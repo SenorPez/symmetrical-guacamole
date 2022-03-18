@@ -1,3 +1,5 @@
+package com.senorpez.avt.shipdesigner;
+
 enum SheetFormat {
     ONE_UP("1-Up"),
     TWO_UP("2-Up"),

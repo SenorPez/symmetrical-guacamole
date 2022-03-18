@@ -1,3 +1,5 @@
+package com.senorpez.avt.shipdesigner;
+
 class MassCharacteristics {
     private Ship ship;
     private ShipCharacteristics characteristics;
@@ -10,39 +12,39 @@ class MassCharacteristics {
     }
 
     // Table Values
-    public double getHullMass() {
+    double getHullMass() {
         return getHullSpaces() * 25;
     }
 
-    public double getHullSpaces() {
+    double getHullSpaces() {
         return ship.getHullSize() - getHullArmorSpaces() - getOverallDriveSpaces_wArmor();
     }
 
-    public double getHullPercentage() {
+    double getHullPercentage() {
         return getHullSpaces() / ship.getHullSize();
     }
 
-    public int getHullArmorMass() {
+    int getHullArmorMass() {
         return getHullArmorSpaces() * 25;
     }
 
-    public int getHullArmorSpaces() {
+    int getHullArmorSpaces() {
         return ship.getHullArmor();
     }
 
-    public double getHullArmorPercentage() {
+    double getHullArmorPercentage() {
         return getHullArmorSpaces() / (double) ship.getHullSize();
     }
 
-    public double getTotalHullMass() {
+    double getTotalHullMass() {
         return getHullMass() + getHullArmorMass();
     }
 
-    public double getTotalHullSpaces() {
+    double getTotalHullSpaces() {
         return getHullSpaces() + getHullArmorSpaces();
     }
 
-    public double getTotalHullPercentage() {
+    double getTotalHullPercentage() {
         return getTotalHullSpaces() / ship.getHullSize();
     }
 
@@ -113,7 +115,7 @@ class MassCharacteristics {
         return getMastMass() + 198.733859;
     }
 
-    public double getOverallDriveSpaces_wArmor() {
+    double getOverallDriveSpaces_wArmor() {
         return getOverallDriveMass_wArmor() / 25d;
     }
 

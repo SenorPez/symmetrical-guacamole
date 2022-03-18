@@ -1,3 +1,5 @@
+package com.senorpez.avt.shipdesigner;
+
 enum Nation {
     ALGERIA("Algeria"),
     ALTIPLANO("Republica de Altiplano"),

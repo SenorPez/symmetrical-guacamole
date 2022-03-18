@@ -1,3 +1,5 @@
+package com.senorpez.avt.shipdesigner;
+
 class ShipCharacteristics {
     private Ship ship;
     private int shipMass;

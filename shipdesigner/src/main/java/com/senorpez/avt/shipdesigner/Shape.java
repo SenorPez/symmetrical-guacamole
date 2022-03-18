@@ -1,3 +1,5 @@
+package com.senorpez.avt.shipdesigner;
+
 enum Shape {
     CYLINDER("Cylinder", 1d, 52.85813d, 1d),
     SPHEROID("Spheroid", 1.5d, 20.69326d, 1.25d),
@@ -26,11 +28,11 @@ enum Shape {
         return mastMassModifier;
     }
 
-    public double getHullLength() {
+    double getHullLength() {
         return hullLength;
     }
 
-    public double getPivotModifier() {
+    double getPivotModifier() {
         return pivotModifier;
     }
 }

@@ -1,3 +1,5 @@
+package com.senorpez.avt.shipdesigner;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +35,7 @@ class MassCharacteristicsTest {
     @Test
     void getHullSpaces() {
         when(ship.getHullSize()).thenReturn(55);
-        doReturn(1.00000d).when(instance).getHullArmorSpaces();
+        doReturn(1).when(instance).getHullArmorSpaces();
         doReturn(13.89157d).when(instance).getOverallDriveSpaces_wArmor();
         double expectedValue = 40.10843d;
 
@@ -174,9 +176,9 @@ class MassCharacteristicsTest {
 
 //    @Test
 //    void getHullSpaces() {
-//        Ship ship = new Ship().setHullSize(55);
-//        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-//        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
+//        com.senorpez.avt.shipdesigner.Ship ship = new com.senorpez.avt.shipdesigner.Ship().setHullSize(55);
+//        com.senorpez.avt.shipdesigner.ShipCharacteristics characteristics = new com.senorpez.avt.shipdesigner.ShipCharacteristics(ship);
+//        com.senorpez.avt.shipdesigner.MassCharacteristics instance = new com.senorpez.avt.shipdesigner.MassCharacteristics(ship, characteristics);
 //        int expectedValue = 44;
 //        assertEquals(expectedValue, instance.getHullSpaces());
 //    }

@@ -1,3 +1,5 @@
+package com.senorpez.avt.shipdesigner;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,15 +16,15 @@ class Ship {
     private int hullSize = 25;
     private SheetFormat sheetFormat = SheetFormat.ONE_UP;
 
-    private Integer laidDown = 2215;
+    private int laidDown = 2215;
     private BuildMode buildMode = BuildMode.STANDARD;
-    private Integer percentOfficers = 20;
+    private int percentOfficers = 20;
 
-    private Double engineGeneration = 3.0d;
-    private Double maximumThrust = 11d;
+    private double engineGeneration = 3.0d;
+    private double maximumThrust = 11d;
 
-    private Integer engineArmor = 0;
-    private Integer mastArmor = 0;
+    private int engineArmor = 0;
+    private int mastArmor = 0;
 
     private static final Logger logger = LogManager.getLogger(Ship.class);
     private static final Map<Integer, String> shipClasses = new HashMap<>();
@@ -151,15 +153,15 @@ class Ship {
         return 4;
     }
 
-    public int getHullArmor() {
+    int getHullArmor() {
         // TODO: Probably move into a 'Systems' object. Exists now only to support
-        // ShipCharacteristics.getHullArmor
+        // com.senorpez.avt.shipdesigner.ShipCharacteristics.getHullArmor
         return 1;
     }
 
     int getArmorShrink() {
         // TODO: Probably move into a 'Systems' object. Exists now only to support
-        // ShipCharacteristics.getArmorShrink
+        // com.senorpez.avt.shipdesigner.ShipCharacteristics.getArmorShrink
         return 0;
     }
 
@@ -194,11 +196,11 @@ class Ship {
         return this;
     }
 
-    public int getHullSize() {
+    int getHullSize() {
         return hullSize;
     }
 
-    public Ship setHullSize(int hullSize) {
+    Ship setHullSize(int hullSize) {
         if (hullSize < 25) logger.error("Hull size under 25; setting to 25");
         logger.info(String.format("Setting hull size to %d", hullSize));
         this.hullSize = Math.max(hullSize, 25);
@@ -215,11 +217,11 @@ class Ship {
         return this;
     }
 
-    Integer getLaidDown() {
+    int getLaidDown() {
         return laidDown;
     }
 
-    Ship setLaidDown(Integer laidDown) {
+    Ship setLaidDown(int laidDown) {
         this.laidDown = laidDown;
         return this;
     }
@@ -233,11 +235,11 @@ class Ship {
         return this;
     }
 
-    Integer getPercentOfficers() {
+    int getPercentOfficers() {
         return percentOfficers;
     }
 
-    Ship setPercentOfficers(Integer percentOfficers) {
+    Ship setPercentOfficers(int percentOfficers) {
         if (percentOfficers < 10) {
             logger.error("Officer percentage less than 10%; setting to 10%");
             this.percentOfficers = 10;
@@ -251,38 +253,38 @@ class Ship {
         return this;
     }
 
-    public Double getEngineGeneration() {
+    double getEngineGeneration() {
         return engineGeneration;
     }
 
-    public Ship setEngineGeneration(Double engineGeneration) {
+    Ship setEngineGeneration(double engineGeneration) {
         this.engineGeneration = Math.round(engineGeneration * 10d) / 10d;
         return this;
     }
 
-    public Double getMaximumThrust() {
+    double getMaximumThrust() {
         return maximumThrust;
     }
 
-    public Ship setMaximumThrust(Double maximumThrust) {
+    Ship setMaximumThrust(double maximumThrust) {
         this.maximumThrust = Math.round(maximumThrust * 2d) / 2d;
         return this;
     }
 
-    public Integer getEngineArmor() {
+    int getEngineArmor() {
         return engineArmor;
     }
 
-    public Ship setEngineArmor(Integer engineArmor) {
+    Ship setEngineArmor(int engineArmor) {
         this.engineArmor = engineArmor;
         return this;
     }
 
-    public Integer getMastArmor() {
+    int getMastArmor() {
         return mastArmor;
     }
 
-    public Ship setMastArmor(Integer mastArmor) {
+    Ship setMastArmor(int mastArmor) {
         this.mastArmor = mastArmor;
         return this;
     }

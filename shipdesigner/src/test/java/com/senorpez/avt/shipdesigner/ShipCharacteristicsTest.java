@@ -1,6 +1,8 @@
+package com.senorpez.avt.shipdesigner;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ShipCharacteristicsTest {
     @Test
