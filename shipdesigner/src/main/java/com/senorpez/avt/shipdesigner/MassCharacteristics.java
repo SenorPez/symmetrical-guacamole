@@ -49,7 +49,7 @@ class MassCharacteristics {
     }
 
     double getMastStructureMass() {
-        return (((characteristics.getShipMass() * characteristics.getShipAcceleration()) / 70000) * 7.8) * getMastLength() * getMastMassModifier();
+        return (characteristics.getShipMass() * characteristics.getShipAcceleration() / 70000) * 7.8 * getMastLength() * getMastMassModifier();
     }
 
     double getMastStructureSpaces() {
