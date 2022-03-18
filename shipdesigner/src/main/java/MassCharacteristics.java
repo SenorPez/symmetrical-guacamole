@@ -22,8 +22,8 @@ class MassCharacteristics {
         return getHullSpaces() / ship.getHullSize();
     }
 
-    public double getHullArmorMass() {
-        return getHullArmorSpaces() * 25d;
+    public int getHullArmorMass() {
+        return getHullArmorSpaces() * 25;
     }
 
     public int getHullArmorSpaces() {
@@ -34,15 +34,15 @@ class MassCharacteristics {
         return getHullArmorSpaces() / (double) ship.getHullSize();
     }
 
-    double getTotalHullMass() {
+    public double getTotalHullMass() {
         return getHullMass() + getHullArmorMass();
     }
 
-    double getTotalHullSpaces() {
+    public double getTotalHullSpaces() {
         return getHullSpaces() + getHullArmorSpaces();
     }
 
-    double getTotalHullPercentage() {
+    public double getTotalHullPercentage() {
         return getTotalHullSpaces() / ship.getHullSize();
     }
 
