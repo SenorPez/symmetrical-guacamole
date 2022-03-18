@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -159,6 +160,34 @@ class MassCharacteristicsTest {
     }
 
     @Test
+    void getMastShieldMass() {
+        doReturn(0.63000d).when(instance).getTenXRadReduction();
+        doReturn(71987.64505d).when(instance).getNeutronFlux_MR_yr();
+        doReturn(14.72931d).when(instance).getRadReductionDueToMast();
+        doReturn(8.08955d).when(instance).getShieldCrossSection();
+        double expectedValue = 45.88301d;
+
+        assertEquals(expectedValue, instance.getMastShieldMass(), tolerance);
+    }
+
+    @Test
+    void getMastShieldSpaces() {
+        doReturn(45.88301d).when(instance).getMastShieldMass();
+        double expectedValue = 1.83532d;
+
+        assertEquals(expectedValue, instance.getMastShieldSpaces(), tolerance);
+    }
+
+    @Test
+    void getMastShieldPercentage() {
+        when(ship.getHullSize()).thenReturn(55);
+        doReturn(1.83532d).when(instance).getMastShieldSpaces();
+        double expectedValue = 0.0333695d;
+
+        assertEquals(expectedValue, instance.getMastShieldPercentage(), tolerance);
+    }
+
+    @Test
     void getDriveMass() {
         Ship ship = new Ship()
                 .setHullSize(55)
@@ -190,14 +219,6 @@ class MassCharacteristicsTest {
         assertEquals(expectedValue, instance.getMastMassModifier());
     }
 
-    @Test
-    void getMastShieldMass() {
-        Ship ship = new Ship();
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 40.53d;
-        assertEquals(expectedValue, instance.getMastShieldMass(), 0.01);
-    }
 
     @Test
     void getMastStructuralMass() {
