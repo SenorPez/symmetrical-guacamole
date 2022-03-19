@@ -163,7 +163,7 @@ class MassCharacteristics {
         return 96; // TODO: Constant? Allow as input?
     }
 
-    double getTenXRadReduction() {
+    private double getTenXRadReduction() {
         return 0.63000d; // TODO: Constant? Allow as input?
     }
 
@@ -187,15 +187,16 @@ class MassCharacteristics {
         return getNeutronFlux_KR_hr() * 24 * 365.25 / 1000;
     }
 
-
-
-
-
-
-    double getRadReductionDueToMast() {
-        // TODO: Placeholder
-        return 0;
+    private double getRadReductionDueToMast() {
+        return Math.pow((getMastLength() + (getLanternDiameter() / 2)) / (getLanternDiameter() / 2), 2);
     }
+
+
+
+
+
+
+
 
     double getShieldCrossSection() {
         // TODO: Placeholder

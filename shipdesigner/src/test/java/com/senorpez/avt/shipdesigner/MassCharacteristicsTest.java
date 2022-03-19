@@ -162,8 +162,8 @@ class MassCharacteristicsTest {
         when(characteristics.getShipAcceleration()).thenReturn(2.75d);
         when(characteristics.getDriveGeneration()).thenReturn(3.1d);
 
+        doReturn(31.21665d).when(instance).getMastLength();
 
-        doReturn(14.72931d).when(instance).getRadReductionDueToMast();
         doReturn(8.08955d).when(instance).getShieldCrossSection();
         double expectedValue = 45.88301d;
 
