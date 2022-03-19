@@ -16,6 +16,12 @@ enum Shape {
         double getHullDiameter(double hullSpaces, double armorFraction, double driveFraction) {
             return Math.pow(3 * 100 * hullSpaces * (1 - armorFraction - driveFraction) / Math.PI, 1 / 3d);
         }
+
+        @Override
+        double getShieldDiameter(double hullSpaces, double armorFraction, double driveFraction, double mastLength, double lanternDiameter) {
+            final double hullDiameter = getHullDiameter(hullSpaces, armorFraction, driveFraction);
+            return Math.pow(Math.pow(hullDiameter, 2) - Math.pow(Math.pow(hullDiameter, 2) / (hullDiameter + mastLength + 0.5 * lanternDiameter), 2), 0.5) * ((lanternDiameter / 2) / ((lanternDiameter / 2) + mastLength + hullDiameter - ((Math.pow(hullDiameter, 2)) / (hullDiameter + mastLength + 0.5 * lanternDiameter))));
+        }
     };
 
     private final String shapeName;
@@ -41,6 +47,10 @@ enum Shape {
     }
 
     double getHullDiameter(double hullSpaces, double armorFraction, double driveFraction) {
+        return 0;
+    }
+
+    double getShieldDiameter(final double hullSpaces, final double armorFraction, final double driveFraction, double mastLength, final double lanternDiameter) {
         return 0;
     }
 

@@ -31,4 +31,18 @@ public class ShapeTest {
                 0.1382455d
         ), tolerance);
     }
+
+    @Test
+    void getShieldDiameter() {
+        instance = Shape.ELLIPSOID;
+        double expectedValue = 3.20935d;
+
+        assertEquals(expectedValue, instance.getShieldDiameter(
+                55,
+                0.0181811d,
+                0.1382455d,
+                31.21665d,
+                22.00000d
+        ), tolerance);
+    }
 }
