@@ -45,4 +45,25 @@ public class ShapeTest {
                 22.00000d
         ), tolerance);
     }
+
+    @Test
+    void getMomentOfInertia() {
+        instance = Shape.ELLIPSOID;
+        double expectedValue = 1.01926e6d;
+
+        assertEquals(expectedValue, instance.getMomentOfInertia(
+                55,
+                0.0181811d,
+                0.1382455d,
+                0.2525739d,
+                1375,
+                31.21665d,
+                22.00000d,
+                16.44100d,
+                10.20473d,
+                198.73386d,
+                76.02654d,
+                72.52874d
+        ), tolerance * 1e4);
+    }
 }
