@@ -1,55 +1,96 @@
 package com.senorpez.avt.shipdesigner;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class ShipCharacteristicsTest {
+    @Mock
+    Ship ship;
+
+    private ShipCharacteristics instance;
+    private final double tolerance = 0.001d;
+
+    @BeforeEach
+    void setUp() {
+        instance = spy(new ShipCharacteristics(ship));
+    }
+
+    @Test
+    void getShipSpaces() {
+        when(ship.getHullSize()).thenReturn(55);
+        int expectedValue = 55;
+
+        assertEquals(expectedValue, instance.getShipSpaces());
+    }
+
     @Test
     void getShipMass() {
-        Ship ship = new Ship().setHullSize(55);
-        ShipCharacteristics instance = new ShipCharacteristics(ship);
-        Integer expectedValue = 1375;
+        doReturn(55).when(instance).getShipSpaces();
+        int expectedValue = 1375;
+
         assertEquals(expectedValue, instance.getShipMass());
     }
 
     @Test
+    void getShipThrust() {
+        when(ship.getMaximumThrust()).thenReturn(11.0d);
+        double expectedValue = 11.0d;
+
+        assertEquals(expectedValue, instance.getShipThrust(), tolerance);
+    }
+
+    @Test
     void getShipAcceleration() {
-        Ship ship = new Ship().setMaximumThrust(11d);
-        ShipCharacteristics instance = new ShipCharacteristics(ship);
-        Double expectedValue = 2.75;
-        assertEquals(expectedValue, instance.getShipAcceleration());
+        doReturn(11.0d).when(instance).getShipThrust();
+        double expectedValue = 2.75d;
+
+        assertEquals(expectedValue, instance.getShipAcceleration(), tolerance);
+    }
+
+    @Test
+    void getDriveGeneration() {
+        when(ship.getEngineGeneration()).thenReturn(3.1);
+        double expectedValue = 3.1d;
+
+        assertEquals(expectedValue, instance.getDriveGeneration(), tolerance);
     }
 
     @Test
     void getMainHullArmor() {
-        Ship ship = new Ship();
-        ShipCharacteristics instance = new ShipCharacteristics(ship);
-        Integer expectedValue = 1;
+        when(ship.getHullArmor()).thenReturn(1);
+        int expectedValue = 1;
+
         assertEquals(expectedValue, instance.getMainHullArmor());
     }
 
     @Test
     void getMastArmor() {
-        Ship ship = new Ship().setMastArmor(4);
-        ShipCharacteristics instance = new ShipCharacteristics(ship);
-        Integer expectedValue = 4;
+        when(ship.getMastArmor()).thenReturn(1);
+        int expectedValue = 1;
+
         assertEquals(expectedValue, instance.getMastArmor());
     }
 
     @Test
     void getEngineArmor() {
-        Ship ship = new Ship().setEngineArmor(4);
-        ShipCharacteristics instance = new ShipCharacteristics(ship);
-        Integer expectedValue = 4;
+        when(ship.getEngineArmor()).thenReturn(2);
+        int expectedValue = 2;
+
         assertEquals(expectedValue, instance.getEngineArmor());
     }
 
     @Test
     void getArmorShrink() {
-        Ship ship = new Ship();
-        ShipCharacteristics instance = new ShipCharacteristics(ship);
-        Integer expectedValue = 0;
+        when(ship.getArmorShrink()).thenReturn(0);
+        int expectedValue = 0;
+
         assertEquals(expectedValue, instance.getArmorShrink());
     }
 }
