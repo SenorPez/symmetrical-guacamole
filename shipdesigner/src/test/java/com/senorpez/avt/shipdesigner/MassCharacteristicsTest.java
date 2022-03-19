@@ -318,6 +318,37 @@ class MassCharacteristicsTest {
     }
 
     @Test
+    void getTotalShipMass() {
+        when(characteristics.getShipMass()).thenReturn(1375);
+        doReturn(1027.71086d).when(instance).getHullMass();
+        doReturn(347.28914d).when(instance).getOverallDriveMass_wArmor();
+        double expectedValue = 1375d;
+
+        assertEquals(expectedValue, instance.getTotalShipMass());
+        assertEquals(characteristics.getShipMass(), instance.getTotalShipMass());
+    }
+
+    @Test
+    void getTotalShipSpaces() {
+        when(ship.getHullSize()).thenReturn(55);
+        doReturn(41.10843d).when(instance).getHullSpaces();
+        doReturn(13.89157d).when(instance).getOverallDriveSpaces_wArmor();
+        double expectedValue = 55d;
+
+        assertEquals(expectedValue, instance.getTotalShipSpaces());
+        assertEquals(ship.getHullSize(), instance.getTotalShipSpaces());
+    }
+
+    @Test
+    void getTotalShipPercentage() {
+        doReturn(0.7474251d).when(instance).getHullPercentage();
+        doReturn(0.2525739d).when(instance).getOverallDrivePercentage_wArmor();
+        double expectedValue = 1d;
+
+        assertEquals(expectedValue, instance.getTotalShipPercentage(), tolerance);
+    }
+
+    @Test
     void getMastMass() {
         Ship ship = new Ship()
                 .setHullSize(55)
