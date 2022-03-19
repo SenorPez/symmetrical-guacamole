@@ -163,6 +163,10 @@ class MassCharacteristics {
         return 96; // TODO: Constant? Allow as input?
     }
 
+    double getTenXRadReduction() {
+        return 0.63000d; // TODO: Constant? Allow as input?
+    }
+
     private double getMastMassModifier() {
         return characteristics.getHullShape().getMastMassModifier();
     }
@@ -187,10 +191,6 @@ class MassCharacteristics {
 
 
 
-    double getTenXRadReduction() {
-        // TODO: Placeholder
-        return 0;
-    }
 
     double getRadReductionDueToMast() {
         // TODO: Placeholder

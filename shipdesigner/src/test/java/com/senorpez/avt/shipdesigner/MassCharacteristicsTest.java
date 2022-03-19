@@ -163,7 +163,6 @@ class MassCharacteristicsTest {
         when(characteristics.getDriveGeneration()).thenReturn(3.1d);
 
 
-        doReturn(0.63000d).when(instance).getTenXRadReduction();
         doReturn(14.72931d).when(instance).getRadReductionDueToMast();
         doReturn(8.08955d).when(instance).getShieldCrossSection();
         double expectedValue = 45.88301d;
