@@ -188,7 +188,9 @@ class MassCharacteristicsTest {
 
     @Test
     void getDriveMass() {
-        doReturn(1.98734d).when(instance).getNewCombatPower();
+        when(characteristics.getShipMass()).thenReturn(1375);
+        when(characteristics.getShipAcceleration()).thenReturn(2.75d);
+        when(characteristics.getDriveGeneration()).thenReturn(3.1d);
         double expectedValue = 198.73386d;
 
         assertEquals(expectedValue, instance.getDriveMass(), tolerance);
@@ -196,16 +198,20 @@ class MassCharacteristicsTest {
 
     @Test
     void getDriveMass_Big() {
-        doReturn(4.20000d).when(instance).getNewCombatPower();
-        double expectedValue = 430.37193d;
+        when(characteristics.getShipMass()).thenReturn(2000);
+        when(characteristics.getShipAcceleration()).thenReturn(4.00d);
+        when(characteristics.getDriveGeneration()).thenReturn(3.1d);
+        double expectedValue = 431.08181d;
 
         assertEquals(expectedValue, instance.getDriveMass(), tolerance);
     }
 
     @Test
     void getDriveMass_Small() {
-        doReturn(0.69000d).when(instance).getNewCombatPower();
-        double expectedValue = 83.06624d;
+        when(characteristics.getShipMass()).thenReturn(1375);
+        when(characteristics.getShipAcceleration()).thenReturn(0.50d);
+        when(characteristics.getDriveGeneration()).thenReturn(3.1d);
+        double expectedValue = 60.11109d;
 
         assertEquals(expectedValue, instance.getDriveMass(), tolerance);
     }
