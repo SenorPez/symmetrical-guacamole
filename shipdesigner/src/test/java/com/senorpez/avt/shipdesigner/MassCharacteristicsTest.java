@@ -235,6 +235,31 @@ class MassCharacteristicsTest {
     }
 
     @Test
+    void getOverallDriveMass_wArmor() {
+        doReturn(72.52874d).when(instance).getMastMass();
+        double expectedValue = 347.28914d;
+
+        assertEquals(expectedValue, instance.getOverallDriveMass_wArmor(), tolerance);
+    }
+
+    @Test
+    void getOverallDriveSpaces_wArmor() {
+        doReturn(347.28914d).when(instance).getOverallDriveMass_wArmor();
+        double expectedValue = 13.89157d;
+
+        assertEquals(expectedValue, instance.getOverallDriveSpaces_wArmor(), tolerance);
+    }
+
+    @Test
+    void getOverallDrivePercentage_wArmor() {
+        when(ship.getHullSize()).thenReturn(55);
+        doReturn(13.89157d).when(instance).getOverallDriveSpaces_wArmor();
+        double expectedValue = 0.2525739d;
+
+        assertEquals(expectedValue, instance.getOverallDrivePercentage_wArmor(), tolerance);
+    }
+
+    @Test
     void getMastMass() {
         Ship ship = new Ship()
                 .setHullSize(55)
