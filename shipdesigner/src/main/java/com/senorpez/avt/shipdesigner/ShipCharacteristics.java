@@ -2,21 +2,29 @@ package com.senorpez.avt.shipdesigner;
 
 class ShipCharacteristics {
     private Ship ship;
-    private int shipMass;
-    private double shipAcceleration;
 
     ShipCharacteristics(Ship ship) {
         this.ship = ship;
-        this.shipMass = ship.getHullSize() * 25;
-        this.shipAcceleration = ship.getMaximumThrust() / 4d;
+    }
+
+    int getShipSpaces() {
+        return ship.getHullSize();
     }
 
     int getShipMass() {
-        return shipMass;
+        return getShipSpaces() * 25;
+    }
+
+    double getShipThrust() {
+        return ship.getMaximumThrust();
     }
 
     double getShipAcceleration() {
-        return shipAcceleration;
+        return getShipThrust() / 4d;
+    }
+
+    double getDriveGeneration() {
+        return ship.getEngineGeneration();
     }
 
     int getMainHullArmor() {
@@ -32,7 +40,7 @@ class ShipCharacteristics {
     }
 
     int getArmorShrink() {
-        //TODO: Seems to always be zero; shrink just adds more armor now.
+        // TODO: Seems to always be zero; shrink just adds more armor now.
         return ship.getArmorShrink();
     }
 }
