@@ -24,7 +24,7 @@ class ShipCharacteristics {
     }
 
     double getDriveGeneration() {
-        return ship.getEngineGeneration();
+        return ship.getDriveGeneration();
     }
 
     int getMainHullArmor() {
@@ -35,8 +35,8 @@ class ShipCharacteristics {
         return ship.getMastArmor();
     }
 
-    int getEngineArmor() {
-        return ship.getEngineArmor();
+    int getDriveArmor() {
+        return ship.getDriveArmor();
     }
 
     int getArmorShrink() {

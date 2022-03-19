@@ -102,7 +102,7 @@ class MassCharacteristics {
     }
 
     double getDriveArmorMass() {
-        return characteristics.getEngineArmor() * 50 * getLanternCoverageSurface() / (1000 + 50 * characteristics.getArmorShrink());
+        return characteristics.getDriveArmor() * 50 * getLanternCoverageSurface() / (1000 + 50 * characteristics.getArmorShrink());
     }
 
     double getDriveArmorSpaces() {
@@ -166,7 +166,7 @@ class MassCharacteristics {
     }
 
     double getNewCombatPower() {
-        return 0.5 * characteristics.getShipMass() * 1000 * characteristics.getShipAcceleration() * 9.765625 * ship.getEngineGeneration() * 34722 / 1e12;
+        return 0.5 * characteristics.getShipMass() * 1000 * characteristics.getShipAcceleration() * 9.765625 * ship.getDriveGeneration() * 34722 / 1e12;
     }
 
     double getNeutronFlux_KR_hr() {

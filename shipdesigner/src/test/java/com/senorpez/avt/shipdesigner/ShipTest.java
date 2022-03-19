@@ -279,17 +279,17 @@ class ShipTest {
     }
 
     @Test
-    void fieldEngineGeneration() {
-        Ship instance = new Ship().setEngineGeneration(3.0d);
+    void fieldDriveGeneration() {
+        Ship instance = new Ship().setDriveGeneration(3.0d);
         Double expectedValue = 3d;
-        assertEquals(expectedValue, instance.getEngineGeneration());
+        assertEquals(expectedValue, instance.getDriveGeneration());
     }
 
     @Test
-    void fieldEngineGeneration_Round() {
-        Ship instance = new Ship().setEngineGeneration(2.34d);
+    void fieldDriveGeneration_Round() {
+        Ship instance = new Ship().setDriveGeneration(2.34d);
         Double expectedValue = 2.3d;
-        assertEquals(expectedValue, instance.getEngineGeneration());
+        assertEquals(expectedValue, instance.getDriveGeneration());
     }
 
     @Test
@@ -307,10 +307,10 @@ class ShipTest {
     }
 
     @Test
-    void fieldEngineArmor() {
-        Ship instance = new Ship().setEngineArmor(4);
+    void fieldDriveArmor() {
+        Ship instance = new Ship().setDriveArmor(4);
         Integer expectedValue = 4;
-        assertEquals(expectedValue, instance.getEngineArmor());
+        assertEquals(expectedValue, instance.getDriveArmor());
     }
 
     @Test

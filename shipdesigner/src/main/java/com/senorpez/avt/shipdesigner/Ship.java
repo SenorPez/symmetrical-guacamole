@@ -20,10 +20,10 @@ class Ship {
     private BuildMode buildMode = BuildMode.STANDARD;
     private int percentOfficers = 20;
 
-    private double engineGeneration = 3.0d;
+    private double driveGeneration = 3.0d;
     private double maximumThrust = 11d;
 
-    private int engineArmor = 0;
+    private int driveArmor = 0;
     private int mastArmor = 0;
 
     private static final Logger logger = LogManager.getLogger(Ship.class);
@@ -253,12 +253,12 @@ class Ship {
         return this;
     }
 
-    double getEngineGeneration() {
-        return engineGeneration;
+    double getDriveGeneration() {
+        return driveGeneration;
     }
 
-    Ship setEngineGeneration(double engineGeneration) {
-        this.engineGeneration = Math.round(engineGeneration * 10d) / 10d;
+    Ship setDriveGeneration(double driveGeneration) {
+        this.driveGeneration = Math.round(driveGeneration * 10d) / 10d;
         return this;
     }
 
@@ -271,12 +271,12 @@ class Ship {
         return this;
     }
 
-    int getEngineArmor() {
-        return engineArmor;
+    int getDriveArmor() {
+        return driveArmor;
     }
 
-    Ship setEngineArmor(int engineArmor) {
-        this.engineArmor = engineArmor;
+    Ship setDriveArmor(int driveArmor) {
+        this.driveArmor = driveArmor;
         return this;
     }
 

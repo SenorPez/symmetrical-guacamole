@@ -56,7 +56,7 @@ class ShipCharacteristicsTest {
 
     @Test
     void getDriveGeneration() {
-        when(ship.getEngineGeneration()).thenReturn(3.1);
+        when(ship.getDriveGeneration()).thenReturn(3.1);
         double expectedValue = 3.1d;
 
         assertEquals(expectedValue, instance.getDriveGeneration(), tolerance);
@@ -79,11 +79,11 @@ class ShipCharacteristicsTest {
     }
 
     @Test
-    void getEngineArmor() {
-        when(ship.getEngineArmor()).thenReturn(2);
+    void getDriveArmor() {
+        when(ship.getDriveArmor()).thenReturn(2);
         int expectedValue = 2;
 
-        assertEquals(expectedValue, instance.getEngineArmor());
+        assertEquals(expectedValue, instance.getDriveArmor());
     }
 
     @Test
