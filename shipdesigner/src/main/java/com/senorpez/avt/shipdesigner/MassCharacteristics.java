@@ -3,7 +3,7 @@ package com.senorpez.avt.shipdesigner;
 class MassCharacteristics {
     private final ShipCharacteristics characteristics;
 
-    private double mastLength;
+    private Double mastLength = null;
 
     MassCharacteristics(ShipCharacteristics characteristics) {
         this.characteristics = characteristics;
@@ -204,21 +204,27 @@ class MassCharacteristics {
     }
 
     double getMastLength() {
-        // TODO: Placeholder
-        if (characteristics.getShipSpaces() < 100) mastLength = 25;
-        else if (characteristics.getShipSpaces() < 400) mastLength = 50;
-        else if (characteristics.getShipSpaces() < 1000) mastLength = 75;
-        else mastLength = 100;
+        // TODO: Placeholder.
+        if (characteristics.getShipSpaces() < 100) mastLength = 25d;
+        else if (characteristics.getShipSpaces() < 400) mastLength = 50d;
+        else if (characteristics.getShipSpaces() < 1000) mastLength = 75d;
+        else mastLength = 100d;
 
         return 0;
     }
 
-    double getFigureOfMerit() {
-        return 1000 * Math.pow(getPivotAccel(), getPivotAccelPower()) / (Math.pow(getOverallDriveMass_wArmor(), getDriveMassPower()));
+    double getDifferenceFunction() {
+        // TODO: Incomplete
+        return 1000000 * getFigureOfMerit(mastLength) - 1000000;
     }
 
-    double getPivotAccel() {
-        return (getPivotThrust() * 1000) * ((1 - getActualDriveFraction()) * (getMastLength() + getMainHullLength() / 2) - (getActualDriveFraction()) * (getLanternDiameter() / 2d)) / (getMomentOfInertia() * 1000) * ((3 / Math.PI) * 128 * 16);
+    double getFigureOfMerit(final double mastLength) {
+        // Different from spreadsheet; removed constant.
+        return Math.pow(getPivotAccel(mastLength), getPivotAccelPower()) / Math.pow(getOverallDriveMass_wArmor(), getDriveMassPower());
+    }
+
+    double getPivotAccel(final double mastLength) {
+        return (getPivotThrust() * 1000) * ((1 - getDriveFraction()) * (mastLength + getMainHullLength() / 2) - (getDriveFraction()) * (getLanternDiameter() / 2d)) / (getMomentOfInertia() * 1000) * ((3 / Math.PI) * 128 * 16);
     }
 
     double getPivotThrust() {
@@ -228,12 +234,17 @@ class MassCharacteristics {
         return scalingFactor * Math.pow(characteristics.getShipMass(), 1d / 3d) * characteristics.getHullShape().getPivotModifier();
     }
 
-    double getActualDriveFraction() {
+    double getDriveFraction() {
         return getOverallDriveMass_wArmor() / characteristics.getShipMass();
     }
 
     double getMainHullLength() {
-        return characteristics.getHullShape().getHullLength();
+        return characteristics.getHullShape().getHullLength(characteristics.getShipSpaces(), getArmorFraction(), getDriveFraction());
+    }
+
+    double getArmorFraction() {
+        // TODO: Placeholder
+        return 0;
     }
 
     double getMomentOfInertia() {
