@@ -11,7 +11,6 @@ class MassCharacteristics {
         this.characteristics = characteristics;
     }
 
-    // Table Values
     double getHullMass() {
         return getHullSpaces() * 25;
     }
@@ -85,8 +84,13 @@ class MassCharacteristics {
     }
 
     double getDriveMass() {
-        // TODO: Placeholder
-        return 0;
+        if (getNewCombatPower() > 4) {
+            return 400 * Math.pow(getNewCombatPower() / 4, 1.5);
+        } else if (getNewCombatPower() < 1) {
+            return 100 * Math.pow(getNewCombatPower(), 0.5);
+        } else {
+            return getNewCombatPower() * 100;
+        }
     }
 
     double getDriveSpaces() {
@@ -158,19 +162,6 @@ class MassCharacteristics {
         return getHullPercentage() + getOverallDrivePercentage_wArmor();
     }
 
-
-
-
-
-
-
-    double getMastMass() {
-        return getMastStructureMass() + getMastArmorMass() + getMastShieldMass();
-    }
-
-
-
-
     double getMastMassModifier() {
         return ship.getShape().getMastMassModifier();
     }
@@ -189,19 +180,18 @@ class MassCharacteristics {
 
     double getTenXRadReduction() {
         // TODO: Placeholder
-        return 0.63d;
+        return 0;
     }
 
     double getRadReductionDueToMast() {
         // TODO: Placeholder
-        return 17.006457d;
+        return 0;
     }
 
     double getShieldCrossSection() {
         // TODO: Placeholder
-        return 7.225657d;
+        return 0;
     }
-
 
     double getMastLength() {
         // TODO: Placeholder
@@ -210,7 +200,7 @@ class MassCharacteristics {
         else if (ship.getHullSize() < 1000) mastLength = 75;
         else mastLength = 100;
 
-        return 34.36277d;
+        return 0;
     }
 
     double getFigureOfMerit() {
@@ -242,7 +232,7 @@ class MassCharacteristics {
 
     double getMomentOfInertia() {
         // TODO: Placeholder
-        return 9.29197e5;
+        return 0;
     }
 
     int getPivotAccelPower() {

@@ -188,7 +188,24 @@ class MassCharacteristicsTest {
 
     @Test
     void getDriveMass() {
+        doReturn(1.98734d).when(instance).getNewCombatPower();
         double expectedValue = 198.73386d;
+
+        assertEquals(expectedValue, instance.getDriveMass(), tolerance);
+    }
+
+    @Test
+    void getDriveMass_Big() {
+        doReturn(4.20000d).when(instance).getNewCombatPower();
+        double expectedValue = 430.37193d;
+
+        assertEquals(expectedValue, instance.getDriveMass(), tolerance);
+    }
+
+    @Test
+    void getDriveMass_Small() {
+        doReturn(0.69000d).when(instance).getNewCombatPower();
+        double expectedValue = 83.06624d;
 
         assertEquals(expectedValue, instance.getDriveMass(), tolerance);
     }
@@ -346,144 +363,5 @@ class MassCharacteristicsTest {
         double expectedValue = 1d;
 
         assertEquals(expectedValue, instance.getTotalShipPercentage(), tolerance);
-    }
-
-    @Test
-    void getMastMass() {
-        Ship ship = new Ship()
-                .setHullSize(55)
-                .setShape(Shape.ELLIPSOID);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 58.63d;
-        assertEquals(expectedValue, instance.getMastMass(), 0.01);
-    }
-
-
-    @Test
-    void getMastMassModifier() {
-        Ship ship = new Ship().setShape(Shape.ELLIPSOID);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 1.25d;
-        assertEquals(expectedValue, instance.getMastMassModifier());
-    }
-
-
-    @Test
-    void getMastStructuralMass() {
-        Ship ship = new Ship()
-                .setHullSize(55)
-                .setShape(Shape.ELLIPSOID);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 18.10d;
-        assertEquals(expectedValue, instance.getMastStructureMass(), 0.01);
-    }
-
-
-//    @Test
-//    void getHullSpaces() {
-//        com.senorpez.avt.shipdesigner.Ship ship = new com.senorpez.avt.shipdesigner.Ship().setHullSize(55);
-//        com.senorpez.avt.shipdesigner.ShipCharacteristics characteristics = new com.senorpez.avt.shipdesigner.ShipCharacteristics(ship);
-//        com.senorpez.avt.shipdesigner.MassCharacteristics instance = new com.senorpez.avt.shipdesigner.MassCharacteristics(ship, characteristics);
-//        int expectedValue = 44;
-//        assertEquals(expectedValue, instance.getHullSpaces());
-//    }
-
-    @Test
-    void getFigureOfMerit() {
-        Ship ship = new Ship()
-                .setHullSize(55)
-                .setShape(Shape.ELLIPSOID);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 56.79d;
-        assertEquals(expectedValue, instance.getFigureOfMerit(), 0.01);
-    }
-
-    @Test
-    void getPivotAccel() {
-        Ship ship = new Ship()
-                .setHullSize(55)
-                .setShape(Shape.ELLIPSOID);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 14.61515d;
-        assertEquals(expectedValue, instance.getPivotAccel(), 0.01);
-    }
-
-    @Test
-    void getLanternDiameter() {
-        Ship ship = new Ship()
-                .setHullSize(55);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 22d;
-        assertEquals(expectedValue, instance.getLanternDiameter());
-    }
-
-    @Test
-    void getActualDriveFraction() {
-        Ship ship = new Ship()
-                .setHullSize(55)
-                .setShape(Shape.ELLIPSOID);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 0.1871737d;
-        assertEquals(expectedValue, instance.getActualDriveFraction(), 0.01);
-    }
-
-    @Test
-    void getMainHullLength() {
-        Ship ship = new Ship().setShape(Shape.ELLIPSOID);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 32.84850d;
-        assertEquals(expectedValue, instance.getMainHullLength());
-    }
-
-    @Test
-    void getPivotThrust() {
-        Ship ship = new Ship()
-                .setHullSize(55)
-                .setShape(Shape.ELLIPSOID);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 177.04301d;
-        assertEquals(expectedValue, instance.getPivotThrust(), 0.00001);
-    }
-
-    @Test
-    void getNeutronFlux_MR_year() {
-        Ship ship = new Ship()
-                .setHullSize(55);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 71987.64505d;
-        assertEquals(expectedValue, instance.getNeutronFlux_MR_yr(), 0.0001);
-    }
-
-    @Test
-    void getNeutronFlux_KR_hour() {
-        Ship ship = new Ship()
-                .setHullSize(55)
-                .setMaximumThrust(11d);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 8212.14294d;
-        assertEquals(expectedValue, instance.getNeutronFlux_KR_hr(), 0.01);
-    }
-
-    @Test
-    void getNewCombatPower() {
-        Ship ship = new Ship()
-                .setHullSize(55)
-                .setMaximumThrust(11d)
-                .setEngineGeneration(3.1d);
-        ShipCharacteristics characteristics = new ShipCharacteristics(ship);
-        MassCharacteristics instance = new MassCharacteristics(ship, characteristics);
-        double expectedValue = 1.98734d;
-        assertEquals(expectedValue, instance.getNewCombatPower(), 0.01);
     }
 }
