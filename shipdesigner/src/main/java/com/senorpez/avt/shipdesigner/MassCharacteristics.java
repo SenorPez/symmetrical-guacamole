@@ -1,8 +1,8 @@
 package com.senorpez.avt.shipdesigner;
 
 class MassCharacteristics {
-    private Ship ship;
-    private ShipCharacteristics characteristics;
+    private final Ship ship;
+    private final ShipCharacteristics characteristics;
 
     private double mastLength;
 
@@ -102,8 +102,7 @@ class MassCharacteristics {
     }
 
     double getDriveArmorMass() {
-        // TODO: Placeholder.
-        return 0;
+        return characteristics.getEngineArmor() * 50 * getLanternCoverageSurface() / (1000 + 50 * characteristics.getArmorShrink());
     }
 
     double getDriveArmorSpaces() {
@@ -233,6 +232,11 @@ class MassCharacteristics {
     double getMomentOfInertia() {
         // TODO: Placeholder
         return 0;
+    }
+
+    double getLanternCoverageSurface() {
+        // TODO: Placeholder
+        return 0d;
     }
 
     int getPivotAccelPower() {

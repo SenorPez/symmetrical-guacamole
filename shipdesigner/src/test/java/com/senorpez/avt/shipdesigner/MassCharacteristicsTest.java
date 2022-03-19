@@ -229,6 +229,9 @@ class MassCharacteristicsTest {
 
     @Test
     void getDriveArmorMass() {
+        when(characteristics.getEngineArmor()).thenReturn(2);
+        when(characteristics.getArmorShrink()).thenReturn(0);
+        doReturn(760.26542d).when(instance).getLanternCoverageSurface();
         double expectedValue = 76.02654d;
         
         assertEquals(expectedValue, instance.getDriveArmorMass(), tolerance);
