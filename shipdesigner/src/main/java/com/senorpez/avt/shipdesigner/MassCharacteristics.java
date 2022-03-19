@@ -85,7 +85,7 @@ class MassCharacteristics {
     }
 
     double getDriveMass() {
-        // TODO: Placeholder.
+        // TODO: Placeholder
         return 0;
     }
 
@@ -111,8 +111,7 @@ class MassCharacteristics {
     }
 
     double getOverallDriveMass_wArmor() {
-        // TODO: Placeholder values.
-        return getMastMass() + 198.733859;
+        return getMastStructureMass() + getMastArmorMass() + getMastShieldMass() + getDriveMass() + getDriveArmorMass();
     }
 
     double getOverallDriveSpaces_wArmor() {
@@ -124,7 +123,7 @@ class MassCharacteristics {
     }
 
     double getOverallDriveMass_noArmor() {
-        return getLanternMass() + getMastStructureMass() + getMastShieldMass();
+        return getMastStructureMass() + getMastShieldMass() + getDriveMass();
     }
 
     double getOverallDriveSpaces_noArmor() {
@@ -202,13 +201,6 @@ class MassCharacteristics {
         // TODO: Placeholder
         return 7.225657d;
     }
-
-    double getLanternMass() {
-        // TODO: Placeholder
-        return 199;
-    }
-
-
 
 
     double getMastLength() {

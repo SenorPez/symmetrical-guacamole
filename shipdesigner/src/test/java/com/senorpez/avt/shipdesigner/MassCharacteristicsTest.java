@@ -236,7 +236,11 @@ class MassCharacteristicsTest {
 
     @Test
     void getOverallDriveMass_wArmor() {
-        doReturn(72.52874d).when(instance).getMastMass();
+        doReturn(16.44100d).when(instance).getMastStructureMass();
+        doReturn(10.20473d).when(instance).getMastArmorMass();
+        doReturn(45.88301d).when(instance).getMastShieldMass();
+        doReturn(198.73386d).when(instance).getDriveMass();
+        doReturn(76.02654d).when(instance).getDriveArmorMass();
         double expectedValue = 347.28914d;
 
         assertEquals(expectedValue, instance.getOverallDriveMass_wArmor(), tolerance);
@@ -257,6 +261,33 @@ class MassCharacteristicsTest {
         double expectedValue = 0.2525739d;
 
         assertEquals(expectedValue, instance.getOverallDrivePercentage_wArmor(), tolerance);
+    }
+
+    @Test
+    void getOverallDriveMass_noArmor() {
+        doReturn(16.44100d).when(instance).getMastStructureMass();
+        doReturn(45.88301d).when(instance).getMastShieldMass();
+        doReturn(198.73386d).when(instance).getDriveMass();
+        double expectedValue = 261.05788d;
+
+        assertEquals(expectedValue, instance.getOverallDriveMass_noArmor(), tolerance);
+    }
+
+    @Test
+    void getOverallDriveSpaces_noArmor() {
+        doReturn(261.05788d).when(instance).getOverallDriveMass_noArmor();
+        double expectedValue = 10.44232d;
+
+        assertEquals(expectedValue, instance.getOverallDriveSpaces_noArmor(), tolerance);
+    }
+
+    @Test
+    void getOverallDrivePercentage_noArmor() {
+        when(ship.getHullSize()).thenReturn(55);
+        doReturn(10.44232d).when(instance).getOverallDriveSpaces_noArmor();
+        double expectedValue = 0.1898603d;
+
+        assertEquals(expectedValue, instance.getOverallDrivePercentage_noArmor(), tolerance);
     }
 
     @Test
