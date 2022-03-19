@@ -159,7 +159,7 @@ class MassCharacteristics {
         return getHullPercentage() + getOverallDrivePercentage_wArmor();
     }
 
-    double getMastMassModifier() {
+    private double getMastMassModifier() {
         return characteristics.getHullShape().getMastMassModifier();
     }
 

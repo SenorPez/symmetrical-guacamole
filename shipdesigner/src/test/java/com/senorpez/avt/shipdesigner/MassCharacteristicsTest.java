@@ -3,7 +3,9 @@ package com.senorpez.avt.shipdesigner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Answers;
 import org.mockito.Mock;
+import org.mockito.internal.stubbing.defaultanswers.ReturnsDeepStubs;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -105,8 +107,8 @@ class MassCharacteristicsTest {
     void getMastStructureMass() {
         when(characteristics.getShipMass()).thenReturn(1375);
         when(characteristics.getShipAcceleration()).thenReturn(2.75d);
+        when(characteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
         doReturn(31.21665d).when(instance).getMastLength();
-        doReturn(1.25d).when(instance).getMastMassModifier();
         double expectedValue = 16.44100d;
 
         assertEquals(expectedValue, instance.getMastStructureMass(), tolerance);
