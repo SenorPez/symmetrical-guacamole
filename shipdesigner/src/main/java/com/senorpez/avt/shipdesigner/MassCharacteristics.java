@@ -135,11 +135,11 @@ class MassCharacteristics {
     }
 
     double getTotalShipArmorMass() {
-        return getHullArmorMass() + getOverallDriveMass_wArmor() - getOverallDriveMass_noArmor();
+        return getHullArmorMass() + getMastArmorMass() + getDriveArmorMass();
     }
 
     double getTotalShipArmorSpaces() {
-        return getHullArmorSpaces() + getOverallDriveSpaces_wArmor() - getOverallDriveSpaces_noArmor();
+        return getTotalShipArmorMass() / 25d;
     }
 
     double getTotalShipArmorPercentage() {
