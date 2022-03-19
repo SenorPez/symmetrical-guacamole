@@ -12,8 +12,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class MassCharacteristicsTest {
     @Mock
-    Ship ship;
-    @Mock
     ShipCharacteristics characteristics;
 
     private MassCharacteristics instance;
@@ -21,7 +19,7 @@ class MassCharacteristicsTest {
 
     @BeforeEach
     void setUp() {
-        instance = spy(new MassCharacteristics(ship, characteristics));
+        instance = spy(new MassCharacteristics(characteristics));
     }
 
     @Test
@@ -34,7 +32,7 @@ class MassCharacteristicsTest {
 
     @Test
     void getHullSpaces() {
-        when(ship.getHullSize()).thenReturn(55);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         doReturn(1).when(instance).getHullArmorSpaces();
         doReturn(13.89157d).when(instance).getOverallDriveSpaces_wArmor();
         double expectedValue = 40.10843d;
@@ -44,7 +42,7 @@ class MassCharacteristicsTest {
 
     @Test
     void getHullPercentage() {
-        when(ship.getHullSize()).thenReturn(55);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         doReturn(40.10843d).when(instance).getHullSpaces();
         double expectedValue = 0.7292443d;
 
@@ -61,7 +59,7 @@ class MassCharacteristicsTest {
 
     @Test
     void getHullArmorSpaces() {
-        when(ship.getHullArmor()).thenReturn(1);
+        when(characteristics.getHullArmor()).thenReturn(1);
         int expectedValue = 1;
 
         assertEquals(expectedValue, instance.getHullArmorSpaces());
@@ -69,7 +67,7 @@ class MassCharacteristicsTest {
 
     @Test
     void getHullArmorPercentage() {
-        when(ship.getHullSize()).thenReturn(55);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         doReturn(1).when(instance).getHullArmorSpaces();
         double expectedValue = 0.018181818;
 
@@ -96,7 +94,7 @@ class MassCharacteristicsTest {
 
     @Test
     void getTotalHullPercentage() {
-        when(ship.getHullSize()).thenReturn(55);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         doReturn(41.10843d).when(instance).getTotalHullSpaces();
         double expectedValue = 0.7474261d;
 
@@ -124,7 +122,7 @@ class MassCharacteristicsTest {
 
     @Test
     void getMastStructurePercentage() {
-        when(ship.getHullSize()).thenReturn(55);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         doReturn(0.65764d).when(instance).getMastStructureSpaces();
         double expectedValue = 0.0119571d;
 
@@ -151,7 +149,7 @@ class MassCharacteristicsTest {
 
     @Test
     void getMastArmorPercentage() {
-        when(ship.getHullSize()).thenReturn(55);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         doReturn(0.40819d).when(instance).getMastArmorSpaces();
         double expectedValue = 0.0074216d;
 
@@ -179,7 +177,7 @@ class MassCharacteristicsTest {
 
     @Test
     void getMastShieldPercentage() {
-        when(ship.getHullSize()).thenReturn(55);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         doReturn(1.83532d).when(instance).getMastShieldSpaces();
         double expectedValue = 0.0333695d;
 
@@ -220,7 +218,7 @@ class MassCharacteristicsTest {
 
     @Test
     void getDrivePercentage() {
-        when(ship.getHullSize()).thenReturn(55);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         doReturn(7.94935d).when(instance).getDriveSpaces();
         double expectedValue = 0.1445337d;
 
@@ -247,7 +245,7 @@ class MassCharacteristicsTest {
 
     @Test
     void getDriveArmorPercentage() {
-        when(ship.getHullSize()).thenReturn(55);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         doReturn(3.04106d).when(instance).getDriveArmorSpaces();
         double expectedValue = 0.0552920d;
 
@@ -276,7 +274,7 @@ class MassCharacteristicsTest {
 
     @Test
     void getOverallDrivePercentage_wArmor() {
-        when(ship.getHullSize()).thenReturn(55);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         doReturn(13.89157d).when(instance).getOverallDriveSpaces_wArmor();
         double expectedValue = 0.2525739d;
 
@@ -303,7 +301,7 @@ class MassCharacteristicsTest {
 
     @Test
     void getOverallDrivePercentage_noArmor() {
-        when(ship.getHullSize()).thenReturn(55);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         doReturn(10.44232d).when(instance).getOverallDriveSpaces_noArmor();
         double expectedValue = 0.1898603d;
 
@@ -330,7 +328,7 @@ class MassCharacteristicsTest {
 
     @Test
     void getTotalShipArmorPercentage() {
-        when(ship.getHullSize()).thenReturn(55);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         doReturn(4.44925d).when(instance).getTotalShipArmorSpaces();
         double expectedValue = .0808955d;
 
@@ -350,13 +348,13 @@ class MassCharacteristicsTest {
 
     @Test
     void getTotalShipSpaces() {
-        when(ship.getHullSize()).thenReturn(55);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         doReturn(41.10843d).when(instance).getHullSpaces();
         doReturn(13.89157d).when(instance).getOverallDriveSpaces_wArmor();
         double expectedValue = 55d;
 
         assertEquals(expectedValue, instance.getTotalShipSpaces());
-        assertEquals(ship.getHullSize(), instance.getTotalShipSpaces());
+        assertEquals(characteristics.getShipSpaces(), instance.getTotalShipSpaces());
     }
 
     @Test

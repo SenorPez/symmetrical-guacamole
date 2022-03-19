@@ -1,13 +1,11 @@
 package com.senorpez.avt.shipdesigner;
 
 class MassCharacteristics {
-    private final Ship ship;
     private final ShipCharacteristics characteristics;
 
     private double mastLength;
 
-    MassCharacteristics(Ship ship, ShipCharacteristics characteristics) {
-        this.ship = ship;
+    MassCharacteristics(ShipCharacteristics characteristics) {
         this.characteristics = characteristics;
     }
 
@@ -16,11 +14,11 @@ class MassCharacteristics {
     }
 
     double getHullSpaces() {
-        return ship.getHullSize() - getHullArmorSpaces() - getOverallDriveSpaces_wArmor();
+        return characteristics.getShipSpaces() - getHullArmorSpaces() - getOverallDriveSpaces_wArmor();
     }
 
     double getHullPercentage() {
-        return getHullSpaces() / ship.getHullSize();
+        return getHullSpaces() / characteristics.getShipSpaces();
     }
 
     int getHullArmorMass() {
@@ -28,11 +26,11 @@ class MassCharacteristics {
     }
 
     int getHullArmorSpaces() {
-        return ship.getHullArmor();
+        return characteristics.getHullArmor();
     }
 
     double getHullArmorPercentage() {
-        return getHullArmorSpaces() / (double) ship.getHullSize();
+        return getHullArmorSpaces() / (double) characteristics.getShipSpaces();
     }
 
     double getTotalHullMass() {
@@ -44,7 +42,7 @@ class MassCharacteristics {
     }
 
     double getTotalHullPercentage() {
-        return getTotalHullSpaces() / ship.getHullSize();
+        return getTotalHullSpaces() / characteristics.getShipSpaces();
     }
 
     double getMastStructureMass() {
@@ -56,7 +54,7 @@ class MassCharacteristics {
     }
 
     double getMastStructurePercentage() {
-        return getMastStructureSpaces() / ship.getHullSize();
+        return getMastStructureSpaces() / characteristics.getShipSpaces();
     }
 
     double getMastArmorMass() {
@@ -68,7 +66,7 @@ class MassCharacteristics {
     }
 
     double getMastArmorPercentage() {
-        return getMastArmorSpaces() / ship.getHullSize();
+        return getMastArmorSpaces() / characteristics.getShipSpaces();
     }
 
     double getMastShieldMass() {
@@ -80,7 +78,7 @@ class MassCharacteristics {
     }
 
     double getMastShieldPercentage() {
-        return getMastShieldSpaces() / ship.getHullSize();
+        return getMastShieldSpaces() / characteristics.getShipSpaces();
     }
 
     double getDriveMass() {
@@ -98,7 +96,7 @@ class MassCharacteristics {
     }
 
     double getDrivePercentage() {
-        return getDriveSpaces() / ship.getHullSize();
+        return getDriveSpaces() / characteristics.getShipSpaces();
     }
 
     double getDriveArmorMass() {
@@ -110,7 +108,7 @@ class MassCharacteristics {
     }
 
     double getDriveArmorPercentage() {
-        return getDriveArmorSpaces() / ship.getHullSize();
+        return getDriveArmorSpaces() / characteristics.getShipSpaces();
     }
 
     double getOverallDriveMass_wArmor() {
@@ -122,7 +120,7 @@ class MassCharacteristics {
     }
 
     double getOverallDrivePercentage_wArmor() {
-        return getOverallDriveSpaces_wArmor() / ship.getHullSize();
+        return getOverallDriveSpaces_wArmor() / characteristics.getShipSpaces();
     }
 
     double getOverallDriveMass_noArmor() {
@@ -134,7 +132,7 @@ class MassCharacteristics {
     }
 
     double getOverallDrivePercentage_noArmor() {
-        return getOverallDriveSpaces_noArmor() / ship.getHullSize();
+        return getOverallDriveSpaces_noArmor() / characteristics.getShipSpaces();
     }
 
     double getTotalShipArmorMass() {
@@ -146,7 +144,7 @@ class MassCharacteristics {
     }
 
     double getTotalShipArmorPercentage() {
-        return getTotalShipArmorSpaces() / ship.getHullSize();
+        return getTotalShipArmorSpaces() / characteristics.getShipSpaces();
     }
 
     double getTotalShipMass() {
@@ -162,11 +160,11 @@ class MassCharacteristics {
     }
 
     double getMastMassModifier() {
-        return ship.getShape().getMastMassModifier();
+        return characteristics.getHullShape().getMastMassModifier();
     }
 
     double getNewCombatPower() {
-        return 0.5 * characteristics.getShipMass() * 1000 * characteristics.getShipAcceleration() * 9.765625 * ship.getDriveGeneration() * 34722 / 1e12;
+        return 0.5 * characteristics.getShipMass() * 1000 * characteristics.getShipAcceleration() * 9.765625 * characteristics.getDriveGeneration() * 34722 / 1e12;
     }
 
     double getNeutronFlux_KR_hr() {
@@ -194,9 +192,9 @@ class MassCharacteristics {
 
     double getMastLength() {
         // TODO: Placeholder
-        if (ship.getHullSize() < 100) mastLength = 25;
-        else if (ship.getHullSize() < 400) mastLength = 50;
-        else if (ship.getHullSize() < 1000) mastLength = 75;
+        if (characteristics.getShipSpaces() < 100) mastLength = 25;
+        else if (characteristics.getShipSpaces() < 400) mastLength = 50;
+        else if (characteristics.getShipSpaces() < 1000) mastLength = 75;
         else mastLength = 100;
 
         return 0;
@@ -214,7 +212,7 @@ class MassCharacteristics {
         if (getThrustOverride() != 0) return getThrustOverride();
         final double scalingFactor = 14.1522458529503; // TODO: Is this actually a constant?
                                                        // Can't find a place where it's updated in spreadsheet.
-        return scalingFactor * Math.pow(characteristics.getShipMass(), 1d / 3d) * ship.getShape().getPivotModifier();
+        return scalingFactor * Math.pow(characteristics.getShipMass(), 1d / 3d) * characteristics.getHullShape().getPivotModifier();
     }
 
     double getActualDriveFraction() {
@@ -222,7 +220,7 @@ class MassCharacteristics {
     }
 
     double getMainHullLength() {
-        return ship.getShape().getHullLength();
+        return characteristics.getHullShape().getHullLength();
     }
 
     double getLanternDiameter() {

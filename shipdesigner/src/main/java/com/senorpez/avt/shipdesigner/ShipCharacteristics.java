@@ -23,11 +23,15 @@ class ShipCharacteristics {
         return getShipThrust() / 4d;
     }
 
+    Shape getHullShape() {
+        return ship.getShape();
+    }
+
     double getDriveGeneration() {
         return ship.getDriveGeneration();
     }
 
-    int getMainHullArmor() {
+    int getHullArmor() {
         return ship.getHullArmor();
     }
 

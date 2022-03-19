@@ -55,6 +55,14 @@ class ShipCharacteristicsTest {
     }
 
     @Test
+    void getHullShape() {
+        when(ship.getShape()).thenReturn(Shape.ELLIPSOID);
+        Shape expectedValue = Shape.ELLIPSOID;
+
+        assertEquals(expectedValue, instance.getHullShape());
+    }
+
+    @Test
     void getDriveGeneration() {
         when(ship.getDriveGeneration()).thenReturn(3.1);
         double expectedValue = 3.1d;
@@ -63,11 +71,11 @@ class ShipCharacteristicsTest {
     }
 
     @Test
-    void getMainHullArmor() {
+    void getHullArmor() {
         when(ship.getHullArmor()).thenReturn(1);
         int expectedValue = 1;
 
-        assertEquals(expectedValue, instance.getMainHullArmor());
+        assertEquals(expectedValue, instance.getHullArmor());
     }
 
     @Test
