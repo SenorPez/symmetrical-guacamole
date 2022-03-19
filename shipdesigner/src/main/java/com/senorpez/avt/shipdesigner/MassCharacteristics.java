@@ -159,6 +159,10 @@ class MassCharacteristics {
         return getHullPercentage() + getOverallDrivePercentage_wArmor();
     }
 
+    private int getRadiantDeflection() {
+        return 96; // TODO: Constant? Allow as input?
+    }
+
     private double getMastMassModifier() {
         return characteristics.getHullShape().getMastMassModifier();
     }
@@ -167,13 +171,21 @@ class MassCharacteristics {
         return 0.5 * characteristics.getShipMass() * 1000 * characteristics.getShipAcceleration() * 9.765625 * characteristics.getDriveGeneration() * 34722 / 1e12;
     }
 
-    double getNeutronFlux_KR_hr() {
+    private double getLanternDiameter() {
+        return ((Math.sqrt((characteristics.getShipMass() * characteristics.getShipAcceleration()) / 125)) * 20) / Math.sqrt(100 / (100d - getRadiantDeflection()));
+    }
+
+    private double getNeutronFlux_KR_hr() {
         return getNewCombatPower() * 500000 / Math.pow(getLanternDiameter() / 2, 2);
     }
 
-    double getNeutronFlux_MR_yr() {
+    private double getNeutronFlux_MR_yr() {
         return getNeutronFlux_KR_hr() * 24 * 365.25 / 1000;
     }
+
+
+
+
 
     double getTenXRadReduction() {
         // TODO: Placeholder
@@ -223,10 +235,6 @@ class MassCharacteristics {
         return characteristics.getHullShape().getHullLength();
     }
 
-    double getLanternDiameter() {
-        return ((Math.sqrt((characteristics.getShipMass() * characteristics.getShipAcceleration()) / 125)) * 20) / Math.sqrt(100 / (100d - getRadiantDeflection()));
-    }
-
     double getMomentOfInertia() {
         // TODO: Placeholder
         return 0;
@@ -243,10 +251,6 @@ class MassCharacteristics {
 
     int getDriveMassPower() {
         return 1; // TODO: Allow as input?
-    }
-
-    int getRadiantDeflection() {
-        return 96; // TODO: Allow as input?
     }
 
     double getThrustOverride() {

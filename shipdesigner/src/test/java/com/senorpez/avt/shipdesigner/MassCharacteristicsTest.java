@@ -3,9 +3,7 @@ package com.senorpez.avt.shipdesigner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Answers;
 import org.mockito.Mock;
-import org.mockito.internal.stubbing.defaultanswers.ReturnsDeepStubs;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -160,8 +158,12 @@ class MassCharacteristicsTest {
 
     @Test
     void getMastShieldMass() {
+        when(characteristics.getShipMass()).thenReturn(1375);
+        when(characteristics.getShipAcceleration()).thenReturn(2.75d);
+        when(characteristics.getDriveGeneration()).thenReturn(3.1d);
+
+
         doReturn(0.63000d).when(instance).getTenXRadReduction();
-        doReturn(71987.64505d).when(instance).getNeutronFlux_MR_yr();
         doReturn(14.72931d).when(instance).getRadReductionDueToMast();
         doReturn(8.08955d).when(instance).getShieldCrossSection();
         double expectedValue = 45.88301d;
