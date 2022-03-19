@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -209,6 +208,30 @@ class MassCharacteristicsTest {
         double expectedValue = 0.1445337d;
 
         assertEquals(expectedValue, instance.getDrivePercentage(), tolerance);
+    }
+
+    @Test
+    void getDriveArmorMass() {
+        double expectedValue = 76.02654d;
+        
+        assertEquals(expectedValue, instance.getDriveArmorMass(), tolerance);
+    }
+
+    @Test
+    void getDriveArmorSpaces() {
+        doReturn(76.02654d).when(instance).getDriveArmorMass();
+        double expectedValue = 3.04106d;
+
+        assertEquals(expectedValue, instance.getDriveArmorSpaces(), tolerance);
+    }
+
+    @Test
+    void getDriveArmorPercentage() {
+        when(ship.getHullSize()).thenReturn(55);
+        doReturn(3.04106d).when(instance).getDriveArmorSpaces();
+        double expectedValue = 0.0552920d;
+
+        assertEquals(expectedValue, instance.getDriveArmorPercentage(), tolerance);
     }
 
     @Test
