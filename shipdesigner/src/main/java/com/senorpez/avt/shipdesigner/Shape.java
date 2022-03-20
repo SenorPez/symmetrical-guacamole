@@ -72,6 +72,7 @@ enum Shape {
     }
 
     double getMomentOfInertia(double hullSpaces, double armorFraction, double typicalDriveFraction, double actualDriveFraction, double shipMass, double mastLength, double lanternDiameter, double mastStructuralMass, double mastArmorMass, double lanternMass, double driveArmorMass, double mastMass) {
+        // TODO: Simplify this signature.
         return 0;
     }
 }
