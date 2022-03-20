@@ -269,7 +269,7 @@ class MassCharacteristics {
         return this;
     }
 
-    double getTypicalDriveFraction() {
+    private double getTypicalDriveFraction() {
         return 0.1421d * Math.exp(-0.0005 * characteristics.getShipSpaces());
     }
 
