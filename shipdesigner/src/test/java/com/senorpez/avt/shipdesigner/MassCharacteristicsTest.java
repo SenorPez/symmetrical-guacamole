@@ -376,16 +376,6 @@ class MassCharacteristicsTest {
     }
 
     @Test
-    void getHullLength() {
-        when(characteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
-        when(characteristics.getShipSpaces()).thenReturn(55);
-        when(characteristics.getHullArmor()).thenReturn(1);
-        double expectedValue = 32.84850d;
-
-        assertEquals(expectedValue, instance.getHullLength(), tolerance);
-    }
-
-    @Test
     void getMomentOfInertia() {
         when(characteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
         when(characteristics.getShipSpaces()).thenReturn(55);

@@ -238,7 +238,7 @@ class MassCharacteristics {
         return getOverallDriveMass_wArmor() / characteristics.getShipMass();
     }
 
-    double getHullLength() {
+    private double getHullLength() {
         return characteristics.getHullShape().getHullLength(characteristics.getShipSpaces(), getArmorFraction(), getTypicalDriveFraction());
     }
 
