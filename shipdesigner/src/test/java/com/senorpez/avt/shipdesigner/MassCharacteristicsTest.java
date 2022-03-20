@@ -383,9 +383,9 @@ class MassCharacteristicsTest {
 
 
         instance.setMastLength(31.21665d);
-        double expectedValue = 3.20935d;
+        double expectedValue = 8.08955d;
 
-        assertEquals(expectedValue, instance.getShieldDiameter(), tolerance);
+        assertEquals(expectedValue, instance.getShieldCrossSection(), tolerance);
     }
 
     @Test

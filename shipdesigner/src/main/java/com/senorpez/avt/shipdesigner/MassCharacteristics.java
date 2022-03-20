@@ -244,11 +244,10 @@ class MassCharacteristics {
     }
 
     double getShieldCrossSection() {
-        // TODO: Placeholder
-        return 0;
+        return 0.25d * Math.PI * Math.pow(getShieldDiameter(), 2);
     }
 
-    double getShieldDiameter() {
+    private double getShieldDiameter() {
         return characteristics.getHullShape().getShieldDiameter(characteristics.getShipSpaces(), getArmorFraction(), getDriveFraction_Typical(), mastLength, getDriveDiameter());
     }
 
