@@ -204,7 +204,7 @@ class MassCharacteristics {
     }
 
     double getMastLength() {
-        // TODO: Placeholder.
+        // TODO: Incomplete.
         if (characteristics.getShipSpaces() < 100) mastLength = 25d;
         else if (characteristics.getShipSpaces() < 400) mastLength = 50d;
         else if (characteristics.getShipSpaces() < 1000) mastLength = 75d;
@@ -248,8 +248,29 @@ class MassCharacteristics {
     }
 
     double getMomentOfInertia() {
-        // TODO: Placeholder
-        return 0;
+        return characteristics.getHullShape().getMomentOfInertia(
+                characteristics.getShipSpaces(),
+                characteristics.getHullArmor() / (double) characteristics.getShipSpaces(),
+                getTypicalDriveFraction(),
+                getOverallDriveMass_wArmor() / characteristics.getShipMass(),
+                characteristics.getShipMass(),
+                mastLength,
+                getLanternDiameter(),
+                getMastStructureMass(),
+                getMastArmorMass(),
+                getDriveMass(),
+                getDriveArmorMass(),
+                getMastStructureMass() + getMastArmorMass() + getMastShieldMass()
+        );
+    }
+
+    public MassCharacteristics setMastLength(Double mastLength) {
+        this.mastLength = mastLength;
+        return this;
+    }
+
+    double getTypicalDriveFraction() {
+        return 0.1421d * Math.exp(-0.0005 * characteristics.getShipSpaces());
     }
 
     double getLanternCoverageSurface() {
