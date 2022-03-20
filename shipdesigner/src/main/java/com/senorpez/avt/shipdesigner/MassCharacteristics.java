@@ -223,6 +223,10 @@ class MassCharacteristics {
         return Math.pow(getPivotAccel(mastLength), getPivotAccelPower()) / Math.pow(getOverallDriveMass_wArmor(), getDriveMassPower());
     }
 
+    double getPivotAccel() {
+        return getPivotAccel(mastLength);
+    }
+
     double getPivotAccel(final double mastLength) {
         return (getPivotThrust() * 1000) * ((1 - getDriveFraction()) * (mastLength + getHullLength() / 2) - (getDriveFraction()) * (getLanternDiameter() / 2d)) / (getMomentOfInertia() * 1000) * ((3 / Math.PI) * 128 * 16);
     }
@@ -246,7 +250,7 @@ class MassCharacteristics {
         return characteristics.getHullArmor() / (double) characteristics.getShipSpaces();
     }
 
-    double getMomentOfInertia() {
+    private double getMomentOfInertia() {
         return getMomentOfInertia(mastLength);
     }
 

@@ -376,23 +376,21 @@ class MassCharacteristicsTest {
     }
 
     @Test
-    void getMomentOfInertia() {
-        when(characteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
-        when(characteristics.getShipSpaces()).thenReturn(55);
+    void getPivotAccel() {
         when(characteristics.getHullArmor()).thenReturn(1);
-        when(characteristics.getShipMass()).thenReturn(1375);
+        when(characteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
         when(characteristics.getShipAcceleration()).thenReturn(2.75d);
-
-        doReturn(347.28914d).when(instance).getOverallDriveMass_wArmor();
+        when(characteristics.getShipMass()).thenReturn(1375);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         doReturn(16.44100d).when(instance).getMastStructureMass();
         doReturn(10.20473d).when(instance).getMastArmorMass();
+        doReturn(45.88301d).when(instance).getMastShieldMass();
         doReturn(198.73386d).when(instance).getDriveMass();
         doReturn(76.02654d).when(instance).getDriveArmorMass();
-        doReturn(45.88301d).when(instance).getMastShieldMass();
-
+        doReturn(347.28914d).when(instance).getOverallDriveMass_wArmor();
         instance.setMastLength(31.21665d);
-        double expectedValue = 1.01926e6d;
+        double expectedValue = 11.15221d;
 
-        assertEquals(expectedValue, instance.getMomentOfInertia(), tolerance * 1e4);
+        assertEquals(expectedValue, instance.getPivotAccel(), tolerance);
     }
 }
