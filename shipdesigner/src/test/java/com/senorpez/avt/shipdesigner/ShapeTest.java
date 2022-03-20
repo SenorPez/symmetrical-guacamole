@@ -15,7 +15,7 @@ public class ShapeTest {
 
         assertEquals(expectedValue, instance.getHullLength(
                 55,
-                0.0181811d,
+                0.0181818d,
                 0.1382455d
         ), tolerance);
     }
