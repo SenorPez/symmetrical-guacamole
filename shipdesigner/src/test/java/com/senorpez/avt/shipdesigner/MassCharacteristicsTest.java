@@ -376,6 +376,15 @@ class MassCharacteristicsTest {
     }
 
     @Test
+    void getDriveFraction() {
+        when(characteristics.getShipMass()).thenReturn(1375);
+        doReturn(347.28914d).when(instance).getOverallDriveMass_wArmor();
+        double expectedValue = 0.2525739d;
+
+        assertEquals(expectedValue, instance.getDriveFraction(), tolerance);
+    }
+
+    @Test
     void getMomentOfInertia() {
         when(characteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
         when(characteristics.getShipSpaces()).thenReturn(55);

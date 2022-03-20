@@ -248,6 +248,10 @@ class MassCharacteristics {
     }
 
     double getMomentOfInertia() {
+        return getMomentOfInertia(mastLength);
+    }
+
+    double getMomentOfInertia(final double mastLength) {
         return characteristics.getHullShape().getMomentOfInertia(
                 characteristics.getShipSpaces(),
                 characteristics.getHullArmor() / (double) characteristics.getShipSpaces(),
