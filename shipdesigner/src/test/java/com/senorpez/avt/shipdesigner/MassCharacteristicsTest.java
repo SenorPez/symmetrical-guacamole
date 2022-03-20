@@ -375,22 +375,22 @@ class MassCharacteristicsTest {
         assertEquals(expectedValue, instance.getTotalShipPercentage(), tolerance);
     }
 
-//    @Test
-//    void getPivotAccel() {
-//        when(characteristics.getHullArmor()).thenReturn(1);
-//        when(characteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
-//        when(characteristics.getShipAcceleration()).thenReturn(2.75d);
-//        when(characteristics.getShipMass()).thenReturn(1375);
-//        when(characteristics.getShipSpaces()).thenReturn(55);
-//        doReturn(16.44100d).when(instance).getMastStructureMass();
-//        doReturn(10.20473d).when(instance).getMastArmorMass();
-//        doReturn(45.88301d).when(instance).getMastShieldMass();
-//        doReturn(198.73386d).when(instance).getDriveMass();
-//        doReturn(76.02654d).when(instance).getDriveArmorMass();
-//        doReturn(347.28914d).when(instance).getOverallDriveMass_wArmor();
-//        instance.setMastLength(31.21665d);
-//        double expectedValue = 11.15221d;
-//
-//        assertEquals(expectedValue, instance.getPivotAccel(), tolerance);
-//    }
+    @Test
+    void getFigureOfMerit() {
+        when(characteristics.getHullArmor()).thenReturn(1);
+        when(characteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(characteristics.getShipAcceleration()).thenReturn(2.75d);
+        when(characteristics.getShipMass()).thenReturn(1375);
+        when(characteristics.getShipSpaces()).thenReturn(55);
+        doReturn(16.44100d).when(instance).getMastStructureMass();
+        doReturn(10.20473d).when(instance).getMastArmorMass();
+        doReturn(45.88301d).when(instance).getMastShieldMass();
+        doReturn(198.73386d).when(instance).getDriveMass();
+        doReturn(76.02654d).when(instance).getDriveArmorMass();
+        doReturn(347.28914d).when(instance).getOverallDriveMass_wArmor();
+        instance.setMastLength(31.21665d);
+        double expectedValue = 0.03211217d;
+
+        assertEquals(expectedValue, instance.getFigureOfMerit(), tolerance);
+    }
 }

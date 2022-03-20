@@ -218,13 +218,13 @@ class MassCharacteristics {
         return 1000000 * getFigureOfMerit(mastLength) - 1000000;
     }
 
+    double getFigureOfMerit() {
+        return getFigureOfMerit(mastLength);
+    }
+
     double getFigureOfMerit(final double mastLength) {
         // Different from spreadsheet; removed constant.
         return Math.pow(getPivotAccel(mastLength), getPivotAccelPower()) / Math.pow(getOverallDriveMass_wArmor(), getDriveMassPower());
-    }
-
-    private double getPivotAccel() {
-        return getPivotAccel(mastLength);
     }
 
     private double getPivotAccel(final double mastLength) {
@@ -281,11 +281,11 @@ class MassCharacteristics {
         return 0d;
     }
 
-    int getPivotAccelPower() {
+    private int getPivotAccelPower() {
         return 1; // TODO: Allow as input?
     }
 
-    int getDriveMassPower() {
+    private int getDriveMassPower() {
         return 1; // TODO: Allow as input?
     }
 
