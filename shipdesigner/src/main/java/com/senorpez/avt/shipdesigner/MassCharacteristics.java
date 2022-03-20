@@ -99,7 +99,7 @@ class MassCharacteristics {
     }
 
     double getDriveArmorMass() {
-        return characteristics.getDriveArmor() * 50 * getLanternCoverageSurface() / (1000 + 50 * characteristics.getArmorShrink());
+        return characteristics.getDriveArmor() * 50 * getDriveCoverageSurface() / (1000 + 50 * characteristics.getArmorShrink());
     }
 
     double getDriveArmorSpaces() {
@@ -182,9 +182,8 @@ class MassCharacteristics {
         return characteristics.getHullArmor() / (double) characteristics.getShipSpaces();
     }
 
-    double getLanternCoverageSurface() {
-        // TODO: Placeholder
-        return 0d;
+    double getDriveCoverageSurface() {
+        return 4 * Math.PI * Math.pow(getDriveDiameter() / 2, 2) / 2;
     }
 
     private double getDriveDiameter() {
@@ -243,7 +242,7 @@ class MassCharacteristics {
         return Math.pow((mastLength + (getDriveDiameter() / 2)) / (getDriveDiameter() / 2), 2);
     }
 
-    double getShieldCrossSection() {
+    private double getShieldCrossSection() {
         return 0.25d * Math.PI * Math.pow(getShieldDiameter(), 2);
     }
 
