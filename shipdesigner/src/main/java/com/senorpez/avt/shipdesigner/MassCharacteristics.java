@@ -234,7 +234,7 @@ class MassCharacteristics {
         return scalingFactor * Math.pow(characteristics.getShipMass(), 1d / 3d) * characteristics.getHullShape().getPivotModifier();
     }
 
-    double getDriveFraction() {
+    private double getDriveFraction() {
         return getOverallDriveMass_wArmor() / characteristics.getShipMass();
     }
 
