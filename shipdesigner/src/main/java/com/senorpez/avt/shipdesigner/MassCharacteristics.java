@@ -227,7 +227,7 @@ class MassCharacteristics {
         return (getPivotThrust() * 1000) * ((1 - getDriveFraction()) * (mastLength + getMainHullLength() / 2) - (getDriveFraction()) * (getLanternDiameter() / 2d)) / (getMomentOfInertia() * 1000) * ((3 / Math.PI) * 128 * 16);
     }
 
-    double getPivotThrust() {
+    private double getPivotThrust() {
         if (getThrustOverride() != 0) return getThrustOverride();
         final double scalingFactor = 14.1522458529503; // TODO: Is this actually a constant?
                                                        // Can't find a place where it's updated in spreadsheet.
@@ -243,8 +243,7 @@ class MassCharacteristics {
     }
 
     double getArmorFraction() {
-        // TODO: Placeholder
-        return 0;
+        return characteristics.getHullArmor() / (double) characteristics.getShipSpaces();
     }
 
     double getMomentOfInertia() {

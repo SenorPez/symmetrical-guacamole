@@ -375,13 +375,20 @@ class MassCharacteristicsTest {
         assertEquals(expectedValue, instance.getTotalShipPercentage(), tolerance);
     }
 
-    @Test
-    void getPivotThrust() {
-        when(characteristics.getShipMass()).thenReturn(1375);
-        when(characteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
-        double expectedValue = 177.04301d;
+//    @Test
+//    void getMainHullLength() {
+//        when(characteristics.getShipSpaces()).thenReturn(55);
+//        doReturn()
+//    }
 
-        assertEquals(expectedValue, instance.getPivotThrust(), tolerance);
+
+    @Test
+    void getArmorFraction() {
+        when(characteristics.getHullArmor()).thenReturn(1);
+        when(characteristics.getShipSpaces()).thenReturn(55);
+        double expectedValue = 0.0181818d;
+
+        assertEquals(expectedValue, instance.getArmorFraction(), tolerance);
     }
 
     @Test
