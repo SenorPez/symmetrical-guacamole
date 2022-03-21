@@ -32,6 +32,7 @@ class DriveCharacteristicsTest {
 
     @Test
     void getDriveFlux() {
+        when(massCharacteristics.getNewCombatPower()).thenReturn(1.98734d);
         double expectedValue = 2.60497d;
 
         assertEquals(expectedValue, instance.getDriveFlux(), tolerance);

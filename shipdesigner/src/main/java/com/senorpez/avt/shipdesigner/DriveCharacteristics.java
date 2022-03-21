@@ -12,8 +12,7 @@ public class DriveCharacteristics {
     }
 
     double getDriveFlux() {
-        // TODO: Placeholder
-        return 0;
+        return massCharacteristics.getNewCombatPower() / 0.7629d;
     }
 
     double getDriveAcceleration_Transit() {
