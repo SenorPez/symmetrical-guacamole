@@ -50,8 +50,11 @@ public class SurfaceCharacteristics {
     }
 
     int getLateralHullDepth() {
-        // TODO: Placeholder
-        return 0;
+        return this.shipCharacteristics.getHullShape().getLateralHullDepth(
+                shipCharacteristics.getShipSpaces(),
+                massCharacteristics.getArmorFraction(),
+                massCharacteristics.getDriveFraction_Typical()
+        );
     }
 
     int getDriveHullDepth() {
