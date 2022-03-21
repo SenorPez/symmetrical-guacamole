@@ -21,7 +21,7 @@ class MassCharacteristics {
     }
 
     double getHullSpaces(final double mastLength) {
-        return characteristics.getShipSpaces() - getHullArmorSpaces(mastLength) - getOverallDriveSpaces_wArmor(mastLength);
+        return characteristics.getShipSpaces() - getHullArmorSpaces() - getOverallDriveSpaces_wArmor(mastLength);
     }
 
     double getHullPercentage() {
@@ -33,27 +33,15 @@ class MassCharacteristics {
     }
 
     int getHullArmorMass() {
-        return getHullArmorMass(mastLength);
-    }
-
-    int getHullArmorMass(final double mastLength) {
-        return getHullArmorSpaces(mastLength) * 25;
+        return getHullArmorSpaces() * 25;
     }
 
     int getHullArmorSpaces() {
-        return getHullArmorSpaces(mastLength);
-    }
-
-    int getHullArmorSpaces(final double mastLength) {
         return characteristics.getHullArmor();
     }
 
     double getHullArmorPercentage() {
-        return getHullArmorPercentage(mastLength);
-    }
-
-    double getHullArmorPercentage(final double mastLength) {
-        return getHullArmorSpaces(mastLength) / (double) characteristics.getShipSpaces();
+        return getHullArmorSpaces() / (double) characteristics.getShipSpaces();
     }
 
     double getTotalHullMass() {
@@ -61,7 +49,7 @@ class MassCharacteristics {
     }
 
     double getTotalHullMass(final double mastLength) {
-        return getHullMass(mastLength) + getHullArmorMass(mastLength);
+        return getHullMass(mastLength) + getHullArmorMass();
     }
 
     double getTotalHullSpaces() {
@@ -69,7 +57,7 @@ class MassCharacteristics {
     }
 
     double getTotalHullSpaces(final double mastLength) {
-        return getHullSpaces(mastLength) + getHullArmorSpaces(mastLength);
+        return getHullSpaces(mastLength) + getHullArmorSpaces();
     }
 
     double getTotalHullPercentage() {
@@ -85,7 +73,7 @@ class MassCharacteristics {
     }
 
     double getMastStructureMass(final double mastLength) {
-        return (characteristics.getShipMass() * characteristics.getShipAcceleration() / 70000) * 7.8 * mastLength * getMastMassModifier(mastLength);
+        return (characteristics.getShipMass() * characteristics.getShipAcceleration() / 70000) * 7.8 * mastLength * getMastMassModifier();
     }
 
     double getMastStructureSpaces() {
@@ -133,7 +121,7 @@ class MassCharacteristics {
     }
 
     double getMastShieldMass(final double mastLength) {
-        return (getTenXRadReduction() * (Math.log10(getNeutronFlux_MR_yr(mastLength)) + 6) - Math.log10(getRadReductionDueToMast(mastLength))) * getShieldCrossSection(mastLength);
+        return (getTenXRadReduction() * (Math.log10(getNeutronFlux_MR_yr()) + 6) - Math.log10(getRadReductionDueToMast(mastLength))) * getShieldCrossSection(mastLength);
     }
 
     double getMastShieldSpaces() {
@@ -153,56 +141,33 @@ class MassCharacteristics {
     }
 
     double getDriveMass() {
-        return getDriveMass(mastLength);
-    }
-    double getDriveMass(final double mastLength) {
-        if (getNewCombatPower(mastLength) > 4) {
-            return 400 * Math.pow(getNewCombatPower(mastLength) / 4, 1.5);
-        } else if (getNewCombatPower(mastLength) < 1) {
-            return 100 * Math.pow(getNewCombatPower(mastLength), 0.5);
+        if (getNewCombatPower() > 4) {
+            return 400 * Math.pow(getNewCombatPower() / 4, 1.5);
+        } else if (getNewCombatPower() < 1) {
+            return 100 * Math.pow(getNewCombatPower(), 0.5);
         } else {
-            return getNewCombatPower(mastLength) * 100;
+            return getNewCombatPower() * 100;
         }
     }
 
     double getDriveSpaces() {
-        return getDriveSpaces(mastLength);
-    }
-
-    double getDriveSpaces(final double mastLength) {
-        return getDriveMass(mastLength) / 25d;
+        return getDriveMass() / 25d;
     }
 
     double getDrivePercentage() {
-        return getDrivePercentage(mastLength);
-    }
-
-    double getDrivePercentage(final double mastLength) {
-        return getDriveSpaces(mastLength) / characteristics.getShipSpaces();
+        return getDriveSpaces() / characteristics.getShipSpaces();
     }
 
     double getDriveArmorMass() {
-        return getDriveArmorMass(mastLength);
-    }
-
-    double getDriveArmorMass(final double mastLength) {
-        return characteristics.getDriveArmor() * 50 * getDriveCoverageSurface(mastLength) / (1000 + 50 * characteristics.getArmorShrink());
+        return characteristics.getDriveArmor() * 50 * getDriveCoverageSurface() / (1000 + 50 * characteristics.getArmorShrink());
     }
 
     double getDriveArmorSpaces() {
-        return getDriveArmorSpaces(mastLength);
-    }
-
-    double getDriveArmorSpaces(final double mastLength) {
-        return getDriveArmorMass(mastLength) / 25d;
+        return getDriveArmorMass() / 25d;
     }
 
     double getDriveArmorPercentage() {
-        return getDriveArmorPercentage(mastLength);
-    }
-
-    double getDriveArmorPercentage(final double mastLength) {
-        return getDriveArmorSpaces(mastLength) / characteristics.getShipSpaces();
+        return getDriveArmorSpaces() / characteristics.getShipSpaces();
     }
 
     double getOverallDriveMass_wArmor() {
@@ -210,7 +175,7 @@ class MassCharacteristics {
     }
 
     double getOverallDriveMass_wArmor(final double mastLength) {
-        return getMastStructureMass(mastLength) + getMastArmorMass(mastLength) + getMastShieldMass(mastLength) + getDriveMass(mastLength) + getDriveArmorMass(mastLength);
+        return getMastStructureMass(mastLength) + getMastArmorMass(mastLength) + getMastShieldMass(mastLength) + getDriveMass() + getDriveArmorMass();
     }
 
     double getOverallDriveSpaces_wArmor() {
@@ -234,7 +199,7 @@ class MassCharacteristics {
     }
 
     double getOverallDriveMass_noArmor(final double mastLength) {
-        return getMastStructureMass(mastLength) + getMastShieldMass(mastLength) + getDriveMass(mastLength);
+        return getMastStructureMass(mastLength) + getMastShieldMass(mastLength) + getDriveMass();
     }
 
     double getOverallDriveSpaces_noArmor() {
@@ -258,7 +223,7 @@ class MassCharacteristics {
     }
 
     double getTotalShipArmorMass(final double mastLength) {
-        return getHullArmorMass(mastLength) + getMastArmorMass(mastLength) + getDriveArmorMass(mastLength);
+        return getHullArmorMass() + getMastArmorMass(mastLength) + getDriveArmorMass();
     }
 
     double getTotalShipArmorSpaces() {
@@ -322,31 +287,15 @@ class MassCharacteristics {
     }
 
     private double getArmorFraction() {
-        return getArmorFraction(mastLength);
-    }
-
-    private double getArmorFraction(final double mastLength) {
         return characteristics.getHullArmor() / (double) characteristics.getShipSpaces();
     }
 
     private double getDriveCoverageSurface() {
-        return getDriveCoverageSurface(mastLength);
-    }
-
-    private double getDriveCoverageSurface(final double mastLength) {
-        return 4 * Math.PI * Math.pow(getDriveDiameter(mastLength) / 2, 2) / 2;
+        return 4 * Math.PI * Math.pow(getDriveDiameter() / 2, 2) / 2;
     }
 
     private double getDriveDiameter() {
-        return getDriveDiameter(mastLength);
-    }
-
-    private double getDriveDiameter(final double mastLength) {
         return ((Math.sqrt((characteristics.getShipMass() * characteristics.getShipAcceleration()) / 125)) * 20) / Math.sqrt(100 / (100d - getRadiantDeflection()));
-    }
-
-    private double getDriveFraction() {
-        return getDriveFraction(mastLength);
     }
 
     private double getDriveFraction(final double mastLength) {
@@ -354,10 +303,6 @@ class MassCharacteristics {
     }
 
     private double getDriveFraction_Typical() {
-        return getDriveFraction_Typical(mastLength);
-    }
-
-    private double getDriveFraction_Typical(final double mastLength) {
         return 0.1421d * Math.exp(-0.0005 * characteristics.getShipSpaces());
     }
 
@@ -371,107 +316,63 @@ class MassCharacteristics {
     }
 
     private double getHullLength() {
-        return getHullLength(mastLength);
-    }
-
-    private double getHullLength(final double mastLength) {
-        return characteristics.getHullShape().getHullLength(characteristics.getShipSpaces(), getArmorFraction(mastLength), getDriveFraction_Typical(mastLength));
+        return characteristics.getHullShape().getHullLength(characteristics.getShipSpaces(), getArmorFraction(), getDriveFraction_Typical());
     }
 
     private double getMastMassModifier() {
-        return getMastMassModifier(mastLength);
-    }
-
-    private double getMastMassModifier(final double mastLength) {
         return characteristics.getHullShape().getMastMassModifier();
-    }
-
-    double getMomentOfInertia() {
-        return getMomentOfInertia(mastLength);
     }
 
     double getMomentOfInertia(final double mastLength) {
         return characteristics.getHullShape().getMomentOfInertia(
                 characteristics.getShipSpaces(),
                 characteristics.getHullArmor() / (double) characteristics.getShipSpaces(),
-                getDriveFraction_Typical(mastLength),
+                getDriveFraction_Typical(),
                 getOverallDriveMass_wArmor(mastLength) / characteristics.getShipMass(),
                 characteristics.getShipMass(),
                 mastLength,
-                getDriveDiameter(mastLength),
+                getDriveDiameter(),
                 getMastStructureMass(mastLength),
                 getMastArmorMass(mastLength),
-                getDriveMass(mastLength),
-                getDriveArmorMass(mastLength),
+                getDriveMass(),
+                getDriveArmorMass(),
                 getMastStructureMass(mastLength) + getMastArmorMass(mastLength) + getMastShieldMass(mastLength)
         );
     }
 
     private double getNeutronFlux_KR_hr() {
-        return getNeutronFlux_KR_hr(mastLength);
-    }
-
-    private double getNeutronFlux_KR_hr(final double mastLength) {
-        return getNewCombatPower(mastLength) * 500000 / Math.pow(getDriveDiameter(mastLength) / 2, 2);
+        return getNewCombatPower() * 500000 / Math.pow(getDriveDiameter() / 2, 2);
     }
 
     private double getNeutronFlux_MR_yr() {
-        return getNeutronFlux_MR_yr(mastLength);
-    }
-
-    private double getNeutronFlux_MR_yr(final double mastLength) {
-        return getNeutronFlux_KR_hr(mastLength) * 24 * 365.25 / 1000;
+        return getNeutronFlux_KR_hr() * 24 * 365.25 / 1000;
     }
 
     private double getNewCombatPower() {
-        return getNewCombatPower(mastLength);
-    }
-
-    private double getNewCombatPower(final double mastLength) {
         return 0.5 * characteristics.getShipMass() * 1000 * characteristics.getShipAcceleration() * 9.765625 * characteristics.getDriveGeneration() * 34722 / 1e12;
     }
 
-    private double getPivotAccel() {
-        return getPivotAccel(mastLength);
-    }
-
     private double getPivotAccel(final double mastLength) {
-        return (getPivotThrust(mastLength) * 1000) * ((1 - getDriveFraction(mastLength)) * (mastLength + getHullLength(mastLength) / 2) - (getDriveFraction(mastLength)) * (getDriveDiameter(mastLength) / 2d)) / (getMomentOfInertia(mastLength) * 1000) * ((3 / Math.PI) * 128 * 16);
+        return (getPivotThrust() * 1000) * ((1 - getDriveFraction(mastLength)) * (mastLength + getHullLength() / 2) - (getDriveFraction(mastLength)) * (getDriveDiameter() / 2d)) / (getMomentOfInertia(mastLength) * 1000) * ((3 / Math.PI) * 128 * 16);
     }
 
     private double getPivotThrust() {
-        return getPivotThrust(mastLength);
-    }
-
-    private double getPivotThrust(final double mastLength) {
         if (getThrustOverride() != 0) return getThrustOverride();
         final double scalingFactor = 14.1522458529503; // TODO: Is this actually a constant?
         // Can't find a place where it's updated in spreadsheet.
         return scalingFactor * Math.pow(characteristics.getShipMass(), 1d / 3d) * characteristics.getHullShape().getPivotModifier();
     }
 
-    private double getRadReductionDueToMast() {
-        return getRadReductionDueToMast(mastLength);
-    }
-
     private double getRadReductionDueToMast(final double mastLength) {
-        return Math.pow((mastLength + (getDriveDiameter(mastLength) / 2)) / (getDriveDiameter(mastLength) / 2), 2);
-    }
-
-    private double getShieldCrossSection() {
-        return getShieldCrossSection(mastLength);
+        return Math.pow((mastLength + (getDriveDiameter() / 2)) / (getDriveDiameter() / 2), 2);
     }
 
     private double getShieldCrossSection(final double mastLength) {
         return 0.25d * Math.PI * Math.pow(getShieldDiameter(mastLength), 2);
     }
 
-    private double getShieldDiameter() {
-        return getShieldDiameter(mastLength);
-    }
-
     private double getShieldDiameter(final double mastLength) {
-        return characteristics.getHullShape().getShieldDiameter(characteristics.getShipSpaces(), getArmorFraction(mastLength), getDriveFraction_Typical(mastLength), mastLength, getDriveDiameter(mastLength));
+        return characteristics.getHullShape().getShieldDiameter(characteristics.getShipSpaces(), getArmorFraction(), getDriveFraction_Typical(), mastLength, getDriveDiameter());
     }
 
     double calculateMastLength() {
