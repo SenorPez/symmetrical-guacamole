@@ -123,6 +123,7 @@ class DimensionsTest {
 
     @Test
     void getStructuralIntegrity() {
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
         double expectedValue = 6.21368d;
 
         assertEquals(expectedValue, instance.getStructuralIntegrity(), tolerance);

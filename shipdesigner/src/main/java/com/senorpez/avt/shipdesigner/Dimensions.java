@@ -72,8 +72,7 @@ public class Dimensions {
     }
 
     double getStructuralIntegrity() {
-        // TODO: Placeholder
-        return 0;
+        return 3.8558 * Math.pow(shipCharacteristics.getShipSpaces() / 25d, 0.6052d);
     }
 
     int getArmorPointsAvailable() {
