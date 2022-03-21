@@ -64,7 +64,7 @@ class DimensionsTest {
 
     @Test
     void getMastDiameter() {
-        doReturn(27.43900d).when(instance).getMastLength();
+        when(massCharacteristics.getMastLength()).thenReturn(27.43900d);
         double expectedValue = 1.82927d;
 
         assertEquals(expectedValue, instance.getMastDiameter(), tolerance);
@@ -72,6 +72,12 @@ class DimensionsTest {
 
     @Test
     void getShieldDiameter() {
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
+        when(massCharacteristics.getArmorFraction()).thenReturn(0.0181818d);
+        when(massCharacteristics.getDriveFraction_Typical()).thenReturn(0.1382455d);
+        when(massCharacteristics.getMastLength()).thenReturn(27.43900d);
+        when(massCharacteristics.getDriveDiameter()).thenReturn(22.00000d);
         double expectedValue = 3.45132d;
 
         assertEquals(expectedValue, instance.getShieldDiameter(), tolerance);

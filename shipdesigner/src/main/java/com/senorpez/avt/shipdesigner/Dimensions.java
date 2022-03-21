@@ -34,12 +34,17 @@ public class Dimensions {
     }
 
     double getMastDiameter() {
-        return getMastLength() / 15;
+        return massCharacteristics.getMastLength() / 15;
     }
 
     double getShieldDiameter() {
-        // TODO: Placeholder
-        return 0;
+        return shipCharacteristics.getHullShape().getShieldDiameter(
+                shipCharacteristics.getShipSpaces(),
+                massCharacteristics.getArmorFraction(),
+                massCharacteristics.getDriveFraction_Typical(),
+                massCharacteristics.getMastLength(),
+                massCharacteristics.getDriveDiameter()
+        );
     }
 
     double getShieldThickness() {

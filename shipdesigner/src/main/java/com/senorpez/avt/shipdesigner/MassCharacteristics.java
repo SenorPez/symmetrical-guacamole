@@ -304,7 +304,7 @@ class MassCharacteristics {
         return 4 * Math.PI * Math.pow(getDriveDiameter() / 2, 2) / 2;
     }
 
-    private double getDriveDiameter() {
+    double getDriveDiameter() {
         return ((Math.sqrt((characteristics.getShipMass() * characteristics.getShipAcceleration()) / 125)) * 20) / Math.sqrt(100 / (100d - getRadiantDeflection()));
     }
 
