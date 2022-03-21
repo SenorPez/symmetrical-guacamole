@@ -1,9 +1,14 @@
 package com.senorpez.avt.shipdesigner;
 
 public class Dimensions {
+    private final MassCharacteristics massCharacteristics;
+
+    public Dimensions(MassCharacteristics massCharacteristics) {
+        this.massCharacteristics = massCharacteristics;
+    }
+
     double getHullVolume() {
-        // TODO: Placeholder
-        return 0;
+        return 100 * massCharacteristics.getHullSpaces();
     }
 
     double getHullLength() {

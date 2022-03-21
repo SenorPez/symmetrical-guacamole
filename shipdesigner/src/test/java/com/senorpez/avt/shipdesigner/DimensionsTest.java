@@ -1,15 +1,30 @@
 package com.senorpez.avt.shipdesigner;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class DimensionsTest {
-    private Dimensions instance = new Dimensions();
-    private final double tolerance = 0.00001d;
+    @Mock
+    MassCharacteristics massCharacteristics;
+
+    private Dimensions instance;
+    private final double tolerance = 0.001d;
+
+    @BeforeEach
+    void setUp() {
+        instance = new Dimensions(massCharacteristics);
+    }
 
     @Test
     void getHullVolume() {
+        when(massCharacteristics.getHullSpaces()).thenReturn(39.96318d);
         double expectedValue = 3996.31795d;
 
         assertEquals(expectedValue, instance.getHullVolume(), tolerance);
