@@ -383,7 +383,7 @@ class MassCharacteristicsTest {
     }
 
     @Test
-    void integrationTest() {
+    void fullResultsTest() {
         when(characteristics.getShipSpaces()).thenReturn(55);
         when(characteristics.getShipMass()).thenReturn(1375);
 //        when(characteristics.getShipThrust()).thenReturn(11d);

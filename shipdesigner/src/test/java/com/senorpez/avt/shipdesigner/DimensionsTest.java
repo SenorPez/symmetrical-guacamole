@@ -140,8 +140,41 @@ class DimensionsTest {
 
     @Test
     void getHullDuelCost() {
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
         double expectedValue = 49.50000d;
 
         assertEquals(expectedValue, instance.getHullDuelCost(), tolerance);
+    }
+
+    @Test
+    void fullResultsTest() {
+        when(massCharacteristics.getHullSpaces()).thenReturn(39.96318d);
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
+        when(massCharacteristics.getArmorFraction()).thenReturn(0.0181818d);
+        when(massCharacteristics.getDriveFraction_Typical()).thenReturn(0.1382455d);
+        when(massCharacteristics.getMastLength()).thenReturn(27.43900d);
+        when(massCharacteristics.getDriveDiameter()).thenReturn(22.00000d);
+        when(massCharacteristics.getShieldThickness()).thenReturn(2.87666d);
+        when(massCharacteristics.getTotalShipArmorSpaces()).thenReturn(4.35644d);
+        when(shipCharacteristics.getArmorShrink()).thenReturn(0);
+        when(massCharacteristics.getHullArmorSpaces()).thenReturn(1);
+
+        instance = new Dimensions(shipCharacteristics, massCharacteristics);
+
+        assertEquals(3996.31795d, instance.getHullVolume(), tolerance);
+        assertEquals(32.84850d, instance.getHullLength(), tolerance);
+        assertEquals(16.42425d, instance.getHullDiameter(), tolerance);
+        assertEquals(27.43900d, instance.getMastLength(), tolerance);
+        assertEquals(1.82927d, instance.getMastDiameter(), tolerance);
+        assertEquals(3.45132d, instance.getShieldDiameter(), tolerance);
+        assertEquals(2.87666d, instance.getShieldThickness(), tolerance);
+        assertEquals(22.00000d, instance.getDriveDiameter(), tolerance);
+        assertEquals(71.28750d, instance.getTotalShipLength(), tolerance);
+        assertEquals(50.64356d, instance.getTotalBoxes(), tolerance);
+        assertEquals(6.21368d, instance.getStructuralIntegrity(), tolerance);
+        assertEquals(5L, instance.getArmorPointsAvailable(), tolerance);
+        assertEquals(49.50000d, instance.getHullDuelCost(), tolerance);
     }
 }

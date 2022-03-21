@@ -80,7 +80,6 @@ public class Dimensions {
     }
 
     double getHullDuelCost() {
-        // TODO: Placeholder
-        return 0;
+        return shipCharacteristics.getShipSpaces() * shipCharacteristics.getHullShape().getHullCostModifier();
     }
 }

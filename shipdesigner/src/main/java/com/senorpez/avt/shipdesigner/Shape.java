@@ -1,12 +1,12 @@
 package com.senorpez.avt.shipdesigner;
 
 enum Shape {
-    CYLINDER("Cylinder", 1d, 0.05d, 1d),
-    SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d),
-    LONG_CYLINDER("Long Cylinder", 0.75d, 0.025d, 0.75d),
-    HEMISPHEROID("Hemispheroid", 1.75d, 0.215d, 1.375d),
-    CONICAL("Conical", 1.375, 0.1125d, 1.1825d),
-    ELLIPSOID("Ellipsoid", 1.25d, 0.075d, 1.125d) {
+    CYLINDER("Cylinder", 1d, 0.05d, 1d, 0.8d),
+    SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 1.0d),
+    LONG_CYLINDER("Long Cylinder", 0.75d, 0.025d, 0.75d, 0.7d),
+    HEMISPHEROID("Hemispheroid", 1.75d, 0.215d, 1.375d, 1.1d),
+    CONICAL("Conical", 1.375, 0.1125d, 1.1825d, 1.05d),
+    ELLIPSOID("Ellipsoid", 1.25d, 0.075d, 1.125d, 0.9d) {
         @Override
         double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
             return 2 * getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical);
@@ -35,12 +35,14 @@ enum Shape {
     private final double mastMassModifier;
     private final double thrusterModifier;
     private final double pivotModifier;
+    private final double hullCostModifier;
 
-    Shape(String shapeName, double mastMassModifier, double thrusterModifier, double pivotModifier) {
+    Shape(String shapeName, double mastMassModifier, double thrusterModifier, double pivotModifier, double hullCostModifier) {
         this.shapeName = shapeName;
         this.mastMassModifier = mastMassModifier;
         this.thrusterModifier = thrusterModifier;
         this.pivotModifier = pivotModifier;
+        this.hullCostModifier = hullCostModifier;
     }
 
     String getShapeName() {
@@ -69,6 +71,10 @@ enum Shape {
 
     double getPivotModifier() {
         return pivotModifier;
+    }
+
+    public double getHullCostModifier() {
+        return hullCostModifier;
     }
 
     double getMomentOfInertia(double hullSpaces, double armorFraction, double driveFraction_Typical, double driveFraction, double shipMass, double mastLength, double lanternDiameter, double mastStructuralMass, double mastArmorMass, double lanternMass, double driveArmorMass, double mastMass) {
