@@ -21,7 +21,7 @@ class DimensionsTest {
 
     @BeforeEach
     void setUp() {
-        instance = spy(new Dimensions(shipCharacteristics, massCharacteristics));
+        instance = new Dimensions(shipCharacteristics, massCharacteristics);
     }
 
     @Test
