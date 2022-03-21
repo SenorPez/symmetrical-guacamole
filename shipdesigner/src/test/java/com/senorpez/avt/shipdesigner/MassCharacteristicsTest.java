@@ -106,10 +106,13 @@ class MassCharacteristicsTest {
         when(characteristics.getShipMass()).thenReturn(1375);
         when(characteristics.getShipAcceleration()).thenReturn(2.75d);
         when(characteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+
         instance.setMastLength(31.21665d);
         double expectedValue = 16.44100d;
-
         assertEquals(expectedValue, instance.getMastStructureMass(), tolerance);
+
+        expectedValue = 16.96768d;
+        assertEquals(expectedValue, instance.getMastStructureMass(32.21665d), tolerance);
     }
 
     @Test
@@ -133,10 +136,13 @@ class MassCharacteristicsTest {
     void getMastArmorMass() {
         when(characteristics.getMastArmor()).thenReturn(1);
         when(characteristics.getArmorShrink()).thenReturn(0);
+
         instance.setMastLength(31.21665d);
         double expectedValue = 10.20473d;
-
         assertEquals(expectedValue, instance.getMastArmorMass(), tolerance);
+
+        expectedValue = 10.86900d;
+        assertEquals(expectedValue, instance.getMastArmorMass(32.21665d), tolerance);
     }
 
     @Test
@@ -158,13 +164,19 @@ class MassCharacteristicsTest {
 
     @Test
     void getMastShieldMass() {
-        when(characteristics.getShipMass()).thenReturn(1375);
+        when(characteristics.getHullArmor()).thenReturn(1);
+        when(characteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
         when(characteristics.getShipAcceleration()).thenReturn(2.75d);
+        when(characteristics.getShipMass()).thenReturn(1375);
+        when(characteristics.getShipSpaces()).thenReturn(55);
         when(characteristics.getDriveGeneration()).thenReturn(3.1d);
+
         instance.setMastLength(31.21665d);
         double expectedValue = 45.88301d;
-
         assertEquals(expectedValue, instance.getMastShieldMass(), tolerance);
+
+        expectedValue = 44.07349d;
+        assertEquals(expectedValue, instance.getMastShieldMass(32.21665d), tolerance);
     }
 
     @Test
@@ -235,9 +247,11 @@ class MassCharacteristicsTest {
     void getDriveArmorMass() {
         when(characteristics.getDriveArmor()).thenReturn(2);
         when(characteristics.getArmorShrink()).thenReturn(0);
-        doReturn(760.26542d).when(instance).getDriveCoverageSurface();
+        when(characteristics.getShipMass()).thenReturn(1375);
+        when(characteristics.getShipAcceleration()).thenReturn(2.75d);
+        instance.setMastLength(31.21665d);
         double expectedValue = 76.02654d;
-        
+
         assertEquals(expectedValue, instance.getDriveArmorMass(), tolerance);
     }
 
@@ -373,16 +387,6 @@ class MassCharacteristicsTest {
     }
 
     @Test
-    void getDriveCoverageSurface() {
-        when(characteristics.getShipAcceleration()).thenReturn(2.75d);
-        when(characteristics.getShipMass()).thenReturn(1375);
-        instance.setMastLength(31.21665d);
-        double expectedValue = 760.26542d;
-
-        assertEquals(expectedValue, instance.getDriveCoverageSurface(), tolerance);
-    }
-
-    @Test
     void getDifferenceFunction() {
         when(characteristics.getArmorShrink()).thenReturn(0);
         when(characteristics.getDriveArmor()).thenReturn(2);
@@ -393,11 +397,12 @@ class MassCharacteristicsTest {
         when(characteristics.getShipAcceleration()).thenReturn(2.75d);
         when(characteristics.getShipMass()).thenReturn(1375);
         when(characteristics.getShipSpaces()).thenReturn(55);
-        doReturn(76.02654d).when(instance).getDriveArmorMass();
-        doReturn(347.28914d).when(instance).getOverallDriveMass_wArmor();
+
+
+//        doReturn(347.28914d).when(instance).getOverallDriveMass_wArmor();
         instance.setMastLength(31.21665d);
         double expectedValue = 10.85817d;
 
-        assertEquals(expectedValue, instance.getDifferenceFunction(), tolerance);
+        assertEquals(expectedValue, instance.getFigureOfMerit(32.21665d), tolerance);
     }
 }
