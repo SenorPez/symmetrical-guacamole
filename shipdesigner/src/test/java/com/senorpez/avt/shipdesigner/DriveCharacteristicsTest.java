@@ -133,4 +133,34 @@ class DriveCharacteristicsTest {
 
         assertEquals(expectedValue, instance.getImprovedAccesswayRequirement(), tolerance);
     }
+
+    @Test
+    void fullResultsTest() {
+        when(massCharacteristics.getNewCombatPower()).thenReturn(1.98734d);
+        when(shipCharacteristics.getShipAcceleration()).thenReturn(2.75d);
+        when(shipCharacteristics.getShipMass()).thenReturn(1375);
+        when(massCharacteristics.getPivotThrust()).thenReturn(177.04301d);
+        when(massCharacteristics.getPivotAccel()).thenReturn(11.35718d);
+        when(massCharacteristics.getRollAccel()).thenReturn(55.13342d);
+        when(shipCharacteristics.getDriveGeneration()).thenReturn(3.1d);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
+        when(massCharacteristics.getOverallDriveSpaces_noArmor()).thenReturn(10.68039d);
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+
+        instance = new DriveCharacteristics(shipCharacteristics, massCharacteristics);
+
+        assertEquals(1.98734d, instance.getDriveOutput_Combat(), tolerance);
+        assertEquals(2.60498d, instance.getDriveFlux(), tolerance);
+        assertEquals(55.00000d, instance.getDriveAcceleration_Transit(), tolerance);
+        assertEquals(0.36926d, instance.getDriveOutput_Transit(), tolerance);
+        assertEquals(177.04301d, instance.getPivotThrust(), tolerance);
+        assertEquals(11.35718d, instance.getPivotAcceleration(), tolerance);
+        assertEquals(ManeuverMode.H, instance.getPivotMode());
+        assertEquals(55.13342d, instance.getRollAcceleration(), tolerance);
+        assertEquals(ManeuverMode.C, instance.getRollMode());
+        assertEquals(11.27273d, instance.getFuelDensity(), tolerance);
+        assertEquals(12, instance.getEngineDamage());
+        assertEquals(1, instance.getMaxIntegratedReactor());
+        assertEquals(1, instance.getImprovedAccesswayRequirement());
+    }
 }
