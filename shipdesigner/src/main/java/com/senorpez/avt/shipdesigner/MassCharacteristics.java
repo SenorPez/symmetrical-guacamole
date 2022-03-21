@@ -89,7 +89,7 @@ class MassCharacteristics {
     }
 
     double getMastStructureSpaces() {
-        return getMastShieldSpaces(mastLength);
+        return getMastStructureSpaces(mastLength);
     }
 
     double getMastStructureSpaces(final double mastLength) {
