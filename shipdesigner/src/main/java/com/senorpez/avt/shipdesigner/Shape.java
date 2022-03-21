@@ -7,7 +7,40 @@ enum Shape {
             return Math.round(shipSpaces / 100f);
         }
     },
-    SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 0.239d, 1.0d),
+    SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 0.239d, 1.0d) {
+        @Override
+        double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
+            return getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical);
+        }
+
+        @Override
+        double getHullDiameter(double hullSpaces, double armorFraction, double driveFraction_Typical) {
+            return Math.pow(100 * hullSpaces * (1 - armorFraction - driveFraction_Typical) / (Math.PI / 6), 1 / 3d);
+        }
+
+        @Override
+        int getAxialHullDepth(double hullSpaces, double armorFraction, double driveFraction_Typical) {
+            return Long.valueOf(Math.round((approxAxialDepth1(hullSpaces) + ((hullSpaces - getHullSpaces(hullSpaces)) * ((approxAxialDepth2(hullSpaces) - approxAxialDepth1(hullSpaces)) / 25d))))).intValue();
+        }
+
+        @Override
+        int getLargestWeapon(final double hullSpaces) {
+            return SphereLargestWeaponMountable.getSphereLargestWeaponMountable(hullSpaces);
+        }
+
+        @Override
+        double getHullSpaces(final double hullSpaces) {
+            return SphereHullDepth.getSphereHullSpaces(hullSpaces);
+        }
+
+        private int approxAxialDepth1(final double hullSpaces) {
+            return SphereHullDepth.getSphereHullDepth(hullSpaces);
+        }
+
+        private int approxAxialDepth2(final double hullSpaces) {
+            return approxAxialDepth1(hullSpaces + 25);
+        }
+    },
     LONG_CYLINDER("Long Cylinder", 0.75d, 0.025d, 0.75d, Math.pow(10, -2.25), 0.7d) {
         @Override
         int getImprovedAccesswayRequirement(final int shipSpaces) {
@@ -67,6 +100,11 @@ enum Shape {
         @Override
         double getRearArmorArea(double hullSpaces, double armorFraction, double driveFraction_Typical) {
             return getHullSurfaceArea(hullSpaces, armorFraction, driveFraction_Typical) / 30;
+        }
+
+        @Override
+        int getAxialHullDepth(final double hullSpaces, final double armorFraction, final double driveFraction_Typical) {
+            return Long.valueOf(Math.round(SPHEROID.getAxialHullDepth(hullSpaces, armorFraction, driveFraction_Typical) * getHullLength(hullSpaces, armorFraction, driveFraction_Typical) / SPHEROID.getHullLength(hullSpaces, armorFraction, driveFraction_Typical))).intValue();
         }
     };
 
@@ -148,6 +186,18 @@ enum Shape {
     }
 
     double getRearArmorArea(final double hullSpaces, final double armorFraction, final double driveFraction_Typical) {
+        return 0;
+    }
+
+    int getAxialHullDepth(final double hullSpaces, final double armorFraction, final double driveFraction_Typical) {
+        return 0;
+    }
+
+    double getHullSpaces(final double hullSpaces) {
+        return 0;
+    }
+
+    int getLargestWeapon(final double hullSpaces) {
         return 0;
     }
 }

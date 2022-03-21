@@ -70,6 +70,10 @@ class SurfaceCharacteristicsTest {
 
     @Test
     void getAxialHullDepth() {
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
+        when(massCharacteristics.getArmorFraction()).thenReturn(0.0181818d);
+        when(massCharacteristics.getDriveFraction_Typical()).thenReturn(0.1382455d);
         int expectedValue = 17;
 
         assertEquals(expectedValue, instance.getAxialHullDepth());
