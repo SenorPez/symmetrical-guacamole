@@ -385,6 +385,14 @@ class MassCharacteristics {
         return characteristics.getHullShape().getShieldDiameter(characteristics.getShipSpaces(), getArmorFraction(), getDriveFraction_Typical(), mastLength, getDriveDiameter());
     }
 
+    double getShieldThickness() {
+        return getShieldThickness(mastLength);
+    }
+
+    private double getShieldThickness(final double mastLength) {
+        return getMastShieldMass(mastLength) / getShieldCrossSection(mastLength) * 0.5;
+    }
+
     private double calculateMastLength() {
         if (characteristics.getShipSpaces() < 100) mastLength = 25d;
         else if (characteristics.getShipSpaces() < 400) mastLength = 50d;

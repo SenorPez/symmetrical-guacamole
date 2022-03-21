@@ -85,6 +85,7 @@ class DimensionsTest {
 
     @Test
     void getShieldThickness() {
+        when(massCharacteristics.getShieldThickness()).thenReturn(2.87666d);
         double expectedValue = 2.87666d;
 
         assertEquals(expectedValue, instance.getShieldThickness(), tolerance);

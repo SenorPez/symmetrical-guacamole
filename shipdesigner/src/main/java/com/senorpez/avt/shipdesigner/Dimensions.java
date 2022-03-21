@@ -48,8 +48,7 @@ public class Dimensions {
     }
 
     double getShieldThickness() {
-        // TODO: Placeholder
-        return 0;
+        return massCharacteristics.getShieldThickness();
     }
 
     double getDriveDiameter() {
