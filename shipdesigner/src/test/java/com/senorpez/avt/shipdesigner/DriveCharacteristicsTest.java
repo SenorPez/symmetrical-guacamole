@@ -75,9 +75,10 @@ class DriveCharacteristicsTest {
 
     @Test
     void getPivotMode() {
-        char expectedValue = 'H';
+        when(massCharacteristics.getPivotAccel()).thenReturn(11.35718d);
+        ManeuverMode expectedValue = ManeuverMode.H;
 
-        assertEquals(expectedValue, instance.getPivotMode(), tolerance);
+        assertEquals(expectedValue, instance.getPivotMode());
     }
 
     @Test

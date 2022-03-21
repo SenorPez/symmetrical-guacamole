@@ -33,9 +33,8 @@ public class DriveCharacteristics {
         return massCharacteristics.getPivotAccel();
     }
 
-    char getPivotMode() {
-        // TODO: Placeholder
-        return 0;
+    ManeuverMode getPivotMode() {
+        return ManeuverMode.getMode(massCharacteristics.getPivotAccel());
     }
 
     double getRollAcceleration() {
