@@ -105,4 +105,25 @@ class SurfaceCharacteristicsTest {
 
         assertEquals(expectedValue, instance.getMastHullDepth());
     }
+
+    @Test
+    void fullResults() {
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
+        when(massCharacteristics.getArmorFraction()).thenReturn(0.0181818d);
+        when(massCharacteristics.getDriveFraction_Typical()).thenReturn(0.1382455d);
+        when(massCharacteristics.getDriveSpaces()).thenReturn(7.94935d);
+        when(massCharacteristics.getMastStructureMass()).thenReturn(14.45141d);
+
+        instance = new SurfaceCharacteristics(shipCharacteristics, massCharacteristics);
+
+        assertEquals(1447.62138d, instance.getHullSurfaceArea(), tolerance);
+        assertEquals(48.25405d, instance.getFrontArmorArea(), tolerance);
+        assertEquals(48.25405d, instance.getLateralArmorArea(), tolerance);
+        assertEquals(48.25405d, instance.getRearArmorArea(), tolerance);
+        assertEquals(17, instance.getAxialHullDepth());
+        assertEquals(9, instance.getLateralHullDepth());
+        assertEquals(2, instance.getDriveHullDepth());
+        assertEquals(2, instance.getMastHullDepth());
+    }
 }
