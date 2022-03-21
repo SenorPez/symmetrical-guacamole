@@ -46,8 +46,7 @@ public class DriveCharacteristics {
     }
 
     double getFuelDensity() {
-        // TODO: Placeholder
-        return 0;
+        return shipCharacteristics.getDriveGeneration() * 200 / shipCharacteristics.getShipSpaces();
     }
 
     int getEngineDamage() {

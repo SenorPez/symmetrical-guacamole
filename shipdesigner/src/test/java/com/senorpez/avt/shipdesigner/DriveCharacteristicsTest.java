@@ -99,6 +99,8 @@ class DriveCharacteristicsTest {
 
     @Test
     void getFuelDensity() {
+        when(shipCharacteristics.getDriveGeneration()).thenReturn(3.1d);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
         double expectedValue = 11.27273d;
 
         assertEquals(expectedValue, instance.getFuelDensity(), tolerance);
