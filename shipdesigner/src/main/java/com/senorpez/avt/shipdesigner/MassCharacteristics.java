@@ -381,6 +381,15 @@ class MassCharacteristics {
         return Math.pow((mastLength + (getDriveDiameter() / 2)) / (getDriveDiameter() / 2), 2);
     }
 
+    double getRollAccel() {
+        return getRollAccel(mastLength);
+    }
+
+    private double getRollAccel(final double mastLength) {
+        double rollFactor = Math.max(1 - getArmorFraction() - getDriveFraction(mastLength), 0.1);
+        return (getPivotThrust() * 1000) * (Math.pow((characteristics.getShipSpaces() * 100 * rollFactor) * characteristics.getHullShape().getRollModifier(), (1 / 3d)) + 2) / (characteristics.getHullShape().getRollMoment(getArmorFraction(), getDriveFraction(mastLength), characteristics.getShipMass(), characteristics.getShipSpaces(), getDriveMass(), getDriveArmorMass(), getDriveDiameter()) * 1000) * ((3 / Math.PI) * 16 * 128 / 2);
+    }
+
     private double getShieldCrossSection(final double mastLength) {
         return 0.25d * Math.PI * Math.pow(getShieldDiameter(mastLength), 2);
     }

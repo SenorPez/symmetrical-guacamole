@@ -83,6 +83,7 @@ class DriveCharacteristicsTest {
 
     @Test
     void getRollAcceleration() {
+        when(massCharacteristics.getRollAccel()).thenReturn(55.13342d);
         double expectedValue = 55.13342d;
 
         assertEquals(expectedValue, instance.getRollAcceleration(), tolerance);

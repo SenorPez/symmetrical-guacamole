@@ -38,8 +38,7 @@ public class DriveCharacteristics {
     }
 
     double getRollAcceleration() {
-        // TODO: Placeholder
-        return 0;
+        return massCharacteristics.getRollAccel();
     }
 
     char getRollMode() {

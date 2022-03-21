@@ -1,12 +1,12 @@
 package com.senorpez.avt.shipdesigner;
 
 enum Shape {
-    CYLINDER("Cylinder", 1d, 0.05d, 1d, 0.8d),
-    SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 1.0d),
-    LONG_CYLINDER("Long Cylinder", 0.75d, 0.025d, 0.75d, 0.7d),
-    HEMISPHEROID("Hemispheroid", 1.75d, 0.215d, 1.375d, 1.1d),
-    CONICAL("Conical", 1.375, 0.1125d, 1.1825d, 1.05d),
-    ELLIPSOID("Ellipsoid", 1.25d, 0.075d, 1.125d, 0.9d) {
+    CYLINDER("Cylinder", 1d, 0.05d, 1d, 0.0318d, 0.8d),
+    SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 0.239d, 1.0d),
+    LONG_CYLINDER("Long Cylinder", 0.75d, 0.025d, 0.75d, Math.pow(10, -2.25), 0.7d),
+    HEMISPHEROID("Hemispheroid", 1.75d, 0.215d, 1.375d, Math.pow(10, -0.3109), 1.1d),
+    CONICAL("Conical", 1.375, 0.1125d, 1.1825d, Math.pow(10, -0.87), 1.05d),
+    ELLIPSOID("Ellipsoid", 1.25d, 0.075d, 1.125d, Math.pow(10, -1.05), 0.9d) {
         @Override
         double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
             return 2 * getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical);
@@ -29,19 +29,28 @@ enum Shape {
             return (1 - driveFraction) / 4 * shipMass * (Math.pow(hullLength, 2) * (0.37))
                     + (driveFraction) * (1 - driveFraction) * shipMass * Math.pow(hullLength / 2 + mastLength + lanternDiameter / 2, 2) + (1 / 3d) * (mastStructuralMass + mastArmorMass) * Math.pow(mastLength, 2) + (0.2 * (lanternMass + driveArmorMass) + mastMass) * Math.pow(lanternDiameter / 2, 2);
         }
+
+        @Override
+        double getRollMoment(double armorFraction, double driveFraction, double shipMass, int shipSpaces, double driveMass, double driveArmorMass, double driveDiameter) {
+            double rollModifier = Math.max(1 - armorFraction - driveFraction, 0.1);
+            return Math.pow(rollModifier, 5 / 3d) * shipMass * Math.pow(shipSpaces * 100, 2 / 3d) * 0.087
+                    + 0.05 * (driveMass + driveArmorMass) * Math.pow(driveDiameter, 2);
+        }
     };
 
     private final String shapeName;
     private final double mastMassModifier;
     private final double thrusterModifier;
     private final double pivotModifier;
+    private final double rollModifier;
     private final double hullCostModifier;
 
-    Shape(String shapeName, double mastMassModifier, double thrusterModifier, double pivotModifier, double hullCostModifier) {
+    Shape(String shapeName, double mastMassModifier, double thrusterModifier, double pivotModifier, double rollModifier, double hullCostModifier) {
         this.shapeName = shapeName;
         this.mastMassModifier = mastMassModifier;
         this.thrusterModifier = thrusterModifier;
         this.pivotModifier = pivotModifier;
+        this.rollModifier = rollModifier;
         this.hullCostModifier = hullCostModifier;
     }
 
@@ -73,12 +82,20 @@ enum Shape {
         return pivotModifier;
     }
 
-    public double getHullCostModifier() {
+    double getRollModifier() {
+        return rollModifier;
+    }
+
+    double getHullCostModifier() {
         return hullCostModifier;
     }
 
     double getMomentOfInertia(double hullSpaces, double armorFraction, double driveFraction_Typical, double driveFraction, double shipMass, double mastLength, double lanternDiameter, double mastStructuralMass, double mastArmorMass, double lanternMass, double driveArmorMass, double mastMass) {
         // TODO: Simplify this signature.
+        return 0;
+    }
+
+    double getRollMoment(double armorFraction, double driveFraction, double shipMass, int shipSpaces, double driveMass, double driveArmorMass, double driveDiameter) {
         return 0;
     }
 }
