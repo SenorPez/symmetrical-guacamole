@@ -26,7 +26,7 @@ public class SurfaceCharacteristics {
     }
 
     double getLateralArmorArea() {
-        return this.shipCharacteristics.getHullShape().getFrontArmorArea(
+        return this.shipCharacteristics.getHullShape().getLateralArmorArea(
                 shipCharacteristics.getShipSpaces(),
                 massCharacteristics.getArmorFraction(),
                 massCharacteristics.getDriveFraction_Typical()
@@ -34,8 +34,11 @@ public class SurfaceCharacteristics {
     }
 
     double getRearArmorArea() {
-        // TODO: Placeholder
-        return 0;
+        return this.shipCharacteristics.getHullShape().getRearArmorArea(
+                shipCharacteristics.getShipSpaces(),
+                massCharacteristics.getArmorFraction(),
+                massCharacteristics.getDriveFraction_Typical()
+        );
     }
 
     int getAxialHullDepth() {
