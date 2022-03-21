@@ -1,9 +1,20 @@
 package com.senorpez.avt.shipdesigner;
 
 public class SurfaceCharacteristics {
+    final ShipCharacteristics shipCharacteristics;
+    final MassCharacteristics massCharacteristics;
+
+    public SurfaceCharacteristics(ShipCharacteristics shipCharacteristics, MassCharacteristics massCharacteristics) {
+        this.shipCharacteristics = shipCharacteristics;
+        this.massCharacteristics = massCharacteristics;
+    }
+
     double getHullSurfaceArea() {
-        // TODO: Placeholder
-        return 0;
+        return this.shipCharacteristics.getHullShape().getHullSurfaceArea(
+            shipCharacteristics.getShipSpaces(),
+            massCharacteristics.getArmorFraction(),
+            massCharacteristics.getDriveFraction_Typical()
+        );
     }
 
     double getFrontArmorArea() {

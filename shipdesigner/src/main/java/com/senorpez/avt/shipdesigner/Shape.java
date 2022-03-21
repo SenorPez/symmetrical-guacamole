@@ -46,6 +46,13 @@ enum Shape {
             return Math.pow(rollModifier, 5 / 3d) * shipMass * Math.pow(shipSpaces * 100, 2 / 3d) * 0.087
                     + 0.05 * (driveMass + driveArmorMass) * Math.pow(driveDiameter, 2);
         }
+
+        @Override
+        double getHullSurfaceArea(final double hullSpaces, final double armorFraction, final double driveFraction_Typical) {
+            final double hullLength = getHullLength(hullSpaces, armorFraction, driveFraction_Typical);
+            final double hullDiameter = getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical);
+            return 4 * Math.PI * Math.pow(2 * Math.pow(hullLength / 2, 1.6075) * Math.pow(hullDiameter / 2, 1.6075) / 3 + Math.pow(hullDiameter / 2, 2 * 1.6075) / 3, 1 / 1.6075);
+        }
     };
 
     private final String shapeName;
@@ -111,5 +118,9 @@ enum Shape {
 
     int getImprovedAccesswayRequirement(final int shipSpaces) {
         return Math.round(shipSpaces / 50f);
+    }
+
+    double getHullSurfaceArea(final double hullSpaces, final double armorFraction, final double driveFraction_Typical) {
+        return 0;
     }
 }

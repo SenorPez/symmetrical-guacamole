@@ -2,20 +2,34 @@ package com.senorpez.avt.shipdesigner;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class SurfaceCharacteristicsTest {
+    @Mock
+    ShipCharacteristics shipCharacteristics;
+    @Mock
+    MassCharacteristics massCharacteristics;
+
     private SurfaceCharacteristics instance;
     private final double tolerance = 0.001d;
 
     @BeforeEach
     void setUp() {
-        instance = new SurfaceCharacteristics();
+        instance = new SurfaceCharacteristics(shipCharacteristics, massCharacteristics);
     }
 
     @Test
     void getHullSurfaceArea() {
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
+        when(massCharacteristics.getArmorFraction()).thenReturn(0.0181818d);
+        when(massCharacteristics.getDriveFraction_Typical()).thenReturn(0.1382455d);
         double expectedValue = 1447.62138d;
 
         assertEquals(expectedValue, instance.getHullSurfaceArea(), tolerance);
