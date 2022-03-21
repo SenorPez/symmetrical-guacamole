@@ -1,9 +1,11 @@
 package com.senorpez.avt.shipdesigner;
 
 public class DriveCharacteristics {
+    private final ShipCharacteristics shipCharacteristics;
     private final MassCharacteristics massCharacteristics;
 
-    public DriveCharacteristics(MassCharacteristics massCharacteristics) {
+    public DriveCharacteristics(ShipCharacteristics shipCharacteristics, MassCharacteristics massCharacteristics) {
+        this.shipCharacteristics = shipCharacteristics;
         this.massCharacteristics = massCharacteristics;
     }
 
@@ -16,8 +18,7 @@ public class DriveCharacteristics {
     }
 
     double getDriveAcceleration_Transit() {
-        // TODO: Placeholder
-        return 0;
+        return shipCharacteristics.getShipAcceleration() * 20;
     }
 
     double getDriveOutput_Transit() {

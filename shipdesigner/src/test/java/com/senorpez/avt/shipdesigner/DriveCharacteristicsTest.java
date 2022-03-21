@@ -12,6 +12,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class DriveCharacteristicsTest {
     @Mock
+    ShipCharacteristics shipCharacteristics;
+    @Mock
     MassCharacteristics massCharacteristics;
 
     private DriveCharacteristics instance;
@@ -19,7 +21,7 @@ class DriveCharacteristicsTest {
 
     @BeforeEach
     void setUp() {
-        instance = new DriveCharacteristics(massCharacteristics);
+        instance = new DriveCharacteristics(shipCharacteristics, massCharacteristics);
     }
 
     @Test
@@ -40,6 +42,7 @@ class DriveCharacteristicsTest {
 
     @Test
     void getDriveAcceleration_Transit() {
+        when(shipCharacteristics.getShipAcceleration()).thenReturn(2.75d);
         double expectedValue = 55.00000d;
 
         assertEquals(expectedValue, instance.getDriveAcceleration_Transit(), tolerance);
