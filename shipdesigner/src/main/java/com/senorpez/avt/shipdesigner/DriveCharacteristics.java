@@ -54,8 +54,7 @@ public class DriveCharacteristics {
     }
 
     int getMaxIntegratedReactor() {
-        // TODO: Placeholder
-        return 0;
+        return Long.valueOf(Math.round(shipCharacteristics.getShipSpaces() / 50d)).intValue();
     }
 
     int getImprovedAccesswayRequirement() {

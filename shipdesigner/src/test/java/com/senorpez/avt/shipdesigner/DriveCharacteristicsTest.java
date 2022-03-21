@@ -119,6 +119,7 @@ class DriveCharacteristicsTest {
 
     @Test
     void getMaxIntegratedReactor() {
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
         int expectedValue = 1;
 
         assertEquals(expectedValue, instance.getMaxIntegratedReactor(), tolerance);
