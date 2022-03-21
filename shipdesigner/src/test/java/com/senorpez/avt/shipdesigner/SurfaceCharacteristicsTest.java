@@ -100,6 +100,7 @@ class SurfaceCharacteristicsTest {
 
     @Test
     void getMastHullDepth() {
+        when(massCharacteristics.getMastStructureMass()).thenReturn(14.45141d);
         int expectedValue = 2;
 
         assertEquals(expectedValue, instance.getMastHullDepth());
