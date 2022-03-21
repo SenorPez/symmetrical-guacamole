@@ -75,9 +75,8 @@ public class Dimensions {
         return 3.8558 * Math.pow(shipCharacteristics.getShipSpaces() / 25d, 0.6052d);
     }
 
-    int getArmorPointsAvailable() {
-        // TODO: Placeholder
-        return 0;
+    long getArmorPointsAvailable() {
+        return Math.round(massCharacteristics.getHullArmorSpaces() * 5 / (1 + 0.05 * shipCharacteristics.getArmorShrink()));
     }
 
     double getHullDuelCost() {

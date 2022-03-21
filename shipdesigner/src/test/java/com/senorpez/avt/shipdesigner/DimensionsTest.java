@@ -131,7 +131,9 @@ class DimensionsTest {
 
     @Test
     void getArmorPointsAvailable() {
-        int expectedValue = 5;
+        when(shipCharacteristics.getArmorShrink()).thenReturn(0);
+        when(massCharacteristics.getHullArmorSpaces()).thenReturn(1);
+        long expectedValue = 5L;
 
         assertEquals(expectedValue, instance.getArmorPointsAvailable());
     }
