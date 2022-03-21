@@ -30,8 +30,7 @@ public class DriveCharacteristics {
     }
 
     double getPivotAcceleration() {
-        // TODO: Placeholder
-        return 0;
+        return massCharacteristics.getPivotAccel();
     }
 
     char getPivotMode() {

@@ -362,7 +362,11 @@ class MassCharacteristics {
         return 0.5 * characteristics.getShipMass() * 1000 * characteristics.getShipAcceleration() * 9.765625 * characteristics.getDriveGeneration() * 34722 / 1e12;
     }
 
-    private double getPivotAccel(final double mastLength) {
+    double getPivotAccel() {
+        return getPivotAccel(mastLength);
+    }
+
+    final double getPivotAccel(final double mastLength) {
         return (getPivotThrust() * 1000) * ((1 - getDriveFraction(mastLength)) * (mastLength + getHullLength() / 2) - (getDriveFraction(mastLength)) * (getDriveDiameter() / 2d)) / (getMomentOfInertia(mastLength) * 1000) * ((3 / Math.PI) * 128 * 16);
     }
 

@@ -67,6 +67,7 @@ class DriveCharacteristicsTest {
 
     @Test
     void getPivotAcceleration() {
+        when(massCharacteristics.getPivotAccel()).thenReturn(11.35718d);
         double expectedValue = 11.35718d;
 
         assertEquals(expectedValue, instance.getPivotAcceleration(), tolerance);
