@@ -101,6 +101,12 @@ class DimensionsTest {
 
     @Test
     void getTotalShipLength() {
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
+        when(massCharacteristics.getArmorFraction()).thenReturn(0.0181818d);
+        when(massCharacteristics.getDriveFraction_Typical()).thenReturn(0.1382455d);
+        when(massCharacteristics.getMastLength()).thenReturn(27.43900d);
+        when(massCharacteristics.getDriveDiameter()).thenReturn(22.00000d);
         double expectedValue = 71.28750d;
 
         assertEquals(expectedValue, instance.getTotalShipLength(), tolerance);

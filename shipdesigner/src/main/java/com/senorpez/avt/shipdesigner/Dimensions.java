@@ -56,8 +56,15 @@ public class Dimensions {
     }
 
     double getTotalShipLength() {
-        // TODO: Placeholder
-        return 0;
+        final double hullLength = shipCharacteristics.getHullShape().getHullLength(
+                shipCharacteristics.getShipSpaces(),
+                massCharacteristics.getArmorFraction(),
+                massCharacteristics.getDriveFraction_Typical()
+        );
+
+        return hullLength
+                + massCharacteristics.getMastLength()
+                + massCharacteristics.getDriveDiameter() / 2;
     }
 
     double getTotalBoxes() {

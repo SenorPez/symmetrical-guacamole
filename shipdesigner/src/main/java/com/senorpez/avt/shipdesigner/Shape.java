@@ -18,16 +18,16 @@ enum Shape {
         }
 
         @Override
-        double getShieldDiameter(double hullSpaces, double armorFraction, double driveFraction, double mastLength, double lanternDiameter) {
-            final double hullDiameter = getHullDiameter(hullSpaces, armorFraction, driveFraction);
+        double getShieldDiameter(double hullSpaces, double armorFraction, double driveFraction_Typical, double mastLength, double lanternDiameter) {
+            final double hullDiameter = getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical);
             return Math.pow(Math.pow(hullDiameter, 2) - Math.pow(Math.pow(hullDiameter, 2) / (hullDiameter + mastLength + 0.5 * lanternDiameter), 2), 0.5) * ((lanternDiameter / 2) / ((lanternDiameter / 2) + mastLength + hullDiameter - ((Math.pow(hullDiameter, 2)) / (hullDiameter + mastLength + 0.5 * lanternDiameter))));
         }
 
         @Override
-        double getMomentOfInertia(double hullSpaces, double armorFraction, double typicalDriveFraction, double actualDriveFraction, double shipMass, double mastLength, double lanternDiameter, double mastStructuralMass, double mastArmorMass, double lanternMass, double driveArmorMass, double mastMass) {
-            double hullLength = getHullLength(hullSpaces, armorFraction, typicalDriveFraction);
-            return (1 - actualDriveFraction) / 4 * shipMass * (Math.pow(hullLength, 2) * (0.37))
-                    + (actualDriveFraction) * (1 - actualDriveFraction) * shipMass * Math.pow(hullLength / 2 + mastLength + lanternDiameter / 2, 2) + (1 / 3d) * (mastStructuralMass + mastArmorMass) * Math.pow(mastLength, 2) + (0.2 * (lanternMass + driveArmorMass) + mastMass) * Math.pow(lanternDiameter / 2, 2);
+        double getMomentOfInertia(double hullSpaces, double armorFraction, double driveFraction_Typical, double driveFraction, double shipMass, double mastLength, double lanternDiameter, double mastStructuralMass, double mastArmorMass, double lanternMass, double driveArmorMass, double mastMass) {
+            double hullLength = getHullLength(hullSpaces, armorFraction, driveFraction_Typical);
+            return (1 - driveFraction) / 4 * shipMass * (Math.pow(hullLength, 2) * (0.37))
+                    + (driveFraction) * (1 - driveFraction) * shipMass * Math.pow(hullLength / 2 + mastLength + lanternDiameter / 2, 2) + (1 / 3d) * (mastStructuralMass + mastArmorMass) * Math.pow(mastLength, 2) + (0.2 * (lanternMass + driveArmorMass) + mastMass) * Math.pow(lanternDiameter / 2, 2);
         }
     };
 
@@ -51,15 +51,15 @@ enum Shape {
         return mastMassModifier;
     }
 
-    double getHullLength(double hullSpaces, double armorFraction, double driveFraction) {
+    double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
         return 0;
     }
 
-    double getHullDiameter(double hullSpaces, double armorFraction, double driveFraction) {
+    double getHullDiameter(double hullSpaces, double armorFraction, double driveFraction_Typical) {
         return 0;
     }
 
-    double getShieldDiameter(final double hullSpaces, final double armorFraction, final double driveFraction, double mastLength, final double lanternDiameter) {
+    double getShieldDiameter(final double hullSpaces, final double armorFraction, final double driveFraction_Typical, double mastLength, final double lanternDiameter) {
         return 0;
     }
 
@@ -71,7 +71,7 @@ enum Shape {
         return pivotModifier;
     }
 
-    double getMomentOfInertia(double hullSpaces, double armorFraction, double typicalDriveFraction, double actualDriveFraction, double shipMass, double mastLength, double lanternDiameter, double mastStructuralMass, double mastArmorMass, double lanternMass, double driveArmorMass, double mastMass) {
+    double getMomentOfInertia(double hullSpaces, double armorFraction, double driveFraction_Typical, double driveFraction, double shipMass, double mastLength, double lanternDiameter, double mastStructuralMass, double mastArmorMass, double lanternMass, double driveArmorMass, double mastMass) {
         // TODO: Simplify this signature.
         return 0;
     }
