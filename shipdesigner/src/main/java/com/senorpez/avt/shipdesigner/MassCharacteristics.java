@@ -2,10 +2,16 @@ package com.senorpez.avt.shipdesigner;
 
 class MassCharacteristics {
     private final ShipCharacteristics characteristics;
-    private Double mastLength = null;
+    private double mastLength;
 
     MassCharacteristics(ShipCharacteristics characteristics) {
         this.characteristics = characteristics;
+        mastLength = calculateMastLength();
+    }
+
+    MassCharacteristics(ShipCharacteristics characteristics, final double mastLength) {
+        this.characteristics = characteristics;
+        this.mastLength = mastLength;
     }
 
     double getHullMass() {
@@ -247,7 +253,7 @@ class MassCharacteristics {
     }
 
     double getTotalShipMass(final double mastLength) {
-        return getHullMass(mastLength) + getOverallDriveMass_wArmor(mastLength);
+        return getTotalHullMass(mastLength) + getOverallDriveMass_wArmor(mastLength);
     }
 
     double getTotalShipSpaces() {
@@ -255,7 +261,7 @@ class MassCharacteristics {
     }
 
     double getTotalShipSpaces(final double mastLength) {
-        return getHullSpaces(mastLength) + getOverallDriveSpaces_wArmor(mastLength);
+        return getTotalHullSpaces(mastLength) + getOverallDriveSpaces_wArmor(mastLength);
     }
 
     double getTotalShipPercentage() {
@@ -263,7 +269,7 @@ class MassCharacteristics {
     }
 
     double getTotalShipPercentage(final double mastLength) {
-        return getHullPercentage(mastLength) + getOverallDrivePercentage_wArmor(mastLength);
+        return getTotalHullPercentage(mastLength) + getOverallDrivePercentage_wArmor(mastLength);
     }
 
     private int getDriveMassPower() {
@@ -375,22 +381,38 @@ class MassCharacteristics {
         return characteristics.getHullShape().getShieldDiameter(characteristics.getShipSpaces(), getArmorFraction(), getDriveFraction_Typical(), mastLength, getDriveDiameter());
     }
 
-    double calculateMastLength() {
-        // TODO: Incomplete.
+    private double calculateMastLength() {
         if (characteristics.getShipSpaces() < 100) mastLength = 25d;
         else if (characteristics.getShipSpaces() < 400) mastLength = 50d;
         else if (characteristics.getShipSpaces() < 1000) mastLength = 75d;
         else mastLength = 100d;
+        double diff = getDifferenceFunction();
+        System.out.println(mastLength + " " + diff);
 
-        return 0;
+        double step = 1;
+        final double target = 0.001d;
+        while (Math.abs(diff) > target) {
+            if (diff > 0) {
+                step *= -1;
+                while (diff > 0 && Math.abs(diff) > target) {
+                    mastLength += step;
+                    diff = getDifferenceFunction();
+                    System.out.println(mastLength + " " + diff + "" + step);
+                }
+                step *= -1;
+            } else {
+                while (diff < 0 && Math.abs(diff) > target) {
+                    mastLength += step;
+                    diff = getDifferenceFunction();
+                    System.out.println(mastLength + " " + diff + " " + step);
+                }
+            }
+            step /= 10;
+        }
+        return mastLength;
     }
 
-    double getDifferenceFunction() {
+    private double getDifferenceFunction() {
         return 1000000 * getFigureOfMerit() - 1000000 * getFigureOfMerit(mastLength + 0.1);
-    }
-
-    public MassCharacteristics setMastLength(Double mastLength) {
-        this.mastLength = mastLength;
-        return this;
     }
 }
