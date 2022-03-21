@@ -358,7 +358,7 @@ class MassCharacteristics {
         return getNeutronFlux_KR_hr() * 24 * 365.25 / 1000;
     }
 
-    private double getNewCombatPower() {
+    double getNewCombatPower() {
         return 0.5 * characteristics.getShipMass() * 1000 * characteristics.getShipAcceleration() * 9.765625 * characteristics.getDriveGeneration() * 34722 / 1e12;
     }
 
