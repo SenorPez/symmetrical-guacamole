@@ -34,8 +34,7 @@ public class Dimensions {
     }
 
     double getMastDiameter() {
-        // TODO: Placeholder
-        return 0;
+        return getMastLength() / 15;
     }
 
     double getShieldDiameter() {

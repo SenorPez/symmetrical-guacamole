@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class DimensionsTest {
@@ -21,7 +21,7 @@ class DimensionsTest {
 
     @BeforeEach
     void setUp() {
-        instance = new Dimensions(shipCharacteristics, massCharacteristics);
+        instance = spy(new Dimensions(shipCharacteristics, massCharacteristics));
     }
 
     @Test
@@ -64,6 +64,7 @@ class DimensionsTest {
 
     @Test
     void getMastDiameter() {
+        doReturn(27.43900d).when(instance).getMastLength();
         double expectedValue = 1.82927d;
 
         assertEquals(expectedValue, instance.getMastDiameter(), tolerance);
