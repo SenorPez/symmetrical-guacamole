@@ -1,14 +1,7 @@
 package com.senorpez.avt.shipdesigner;
 
-public class DriveCharacteristics {
-    private final ShipCharacteristics shipCharacteristics;
-    private final MassCharacteristics massCharacteristics;
-
-    public DriveCharacteristics(ShipCharacteristics shipCharacteristics, MassCharacteristics massCharacteristics) {
-        this.shipCharacteristics = shipCharacteristics;
-        this.massCharacteristics = massCharacteristics;
-    }
-
+public record DriveCharacteristics(ShipCharacteristics shipCharacteristics,
+                                   MassCharacteristics massCharacteristics) {
     double getDriveOutput_Combat() {
         return massCharacteristics.getNewCombatPower();
     }
