@@ -91,9 +91,10 @@ class DriveCharacteristicsTest {
 
     @Test
     void getRollMode() {
-        char expectedValue = 'C';
+        when(massCharacteristics.getRollAccel()).thenReturn(55.13342d);
+        ManeuverMode expectedValue = ManeuverMode.C;
 
-        assertEquals(expectedValue, instance.getRollMode(), tolerance);
+        assertEquals(expectedValue, instance.getRollMode());
     }
 
     @Test

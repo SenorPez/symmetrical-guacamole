@@ -41,9 +41,8 @@ public class DriveCharacteristics {
         return massCharacteristics.getRollAccel();
     }
 
-    char getRollMode() {
-        // TODO: Placeholder
-        return 0;
+    ManeuverMode getRollMode() {
+        return ManeuverMode.getMode(massCharacteristics.getRollAccel());
     }
 
     double getFuelDensity() {
