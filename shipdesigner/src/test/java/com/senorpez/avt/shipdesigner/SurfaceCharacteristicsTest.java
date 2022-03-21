@@ -37,6 +37,10 @@ class SurfaceCharacteristicsTest {
 
     @Test
     void getFrontArmorArea() {
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
+        when(massCharacteristics.getArmorFraction()).thenReturn(0.0181818d);
+        when(massCharacteristics.getDriveFraction_Typical()).thenReturn(0.1382455d);
         double expectedValue = 48.25405d;
 
         assertEquals(expectedValue, instance.getFrontArmorArea(), tolerance);

@@ -53,6 +53,11 @@ enum Shape {
             final double hullDiameter = getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical);
             return 4 * Math.PI * Math.pow(2 * Math.pow(hullLength / 2, 1.6075) * Math.pow(hullDiameter / 2, 1.6075) / 3 + Math.pow(hullDiameter / 2, 2 * 1.6075) / 3, 1 / 1.6075);
         }
+
+        @Override
+        double getFrontArmorArea(double hullSpaces, double armorFraction, double driveFraction_Typical) {
+            return getHullSurfaceArea(hullSpaces, armorFraction, driveFraction_Typical) / 30;
+        }
     };
 
     private final String shapeName;
@@ -121,6 +126,10 @@ enum Shape {
     }
 
     double getHullSurfaceArea(final double hullSpaces, final double armorFraction, final double driveFraction_Typical) {
+        return 0;
+    }
+
+    double getFrontArmorArea(final double hullSpaces, final double armorFraction, final double driveFraction_Typical) {
         return 0;
     }
 }
