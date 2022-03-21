@@ -22,8 +22,11 @@ public class Dimensions {
     }
 
     double getHullDiameter() {
-        // TODO: Placeholder
-        return 0;
+        return shipCharacteristics.getHullShape().getHullDiameter(
+                shipCharacteristics.getShipSpaces(),
+                massCharacteristics.getArmorFraction(),
+                massCharacteristics.getDriveFraction_Typical()
+        );
     }
 
     double getMastLength() {

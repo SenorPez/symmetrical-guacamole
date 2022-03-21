@@ -45,6 +45,10 @@ class DimensionsTest {
 
     @Test
     void getHullDiameter() {
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
+        when(massCharacteristics.getArmorFraction()).thenReturn(0.0181818d);
+        when(massCharacteristics.getDriveFraction_Typical()).thenReturn(0.1382455d);
         double expectedValue = 16.42425d;
 
         assertEquals(expectedValue, instance.getHullDiameter(), tolerance);
