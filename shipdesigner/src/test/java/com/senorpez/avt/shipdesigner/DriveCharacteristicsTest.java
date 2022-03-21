@@ -108,6 +108,10 @@ class DriveCharacteristicsTest {
 
     @Test
     void getEngineDamage() {
+        when(massCharacteristics.getOverallDriveSpaces_noArmor()).thenReturn(10.68039d);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
+        when(shipCharacteristics.getShipAcceleration()).thenReturn(2.75d);
+        when(shipCharacteristics.getDriveGeneration()).thenReturn(3.1d);
         int expectedValue = 12;
 
         assertEquals(expectedValue, instance.getEngineDamage(), tolerance);

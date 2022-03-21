@@ -50,8 +50,7 @@ public class DriveCharacteristics {
     }
 
     int getEngineDamage() {
-        // TODO: Placeholder
-        return 0;
+        return Double.valueOf(Math.ceil(massCharacteristics.getOverallDriveSpaces_noArmor() / ((shipCharacteristics.getShipSpaces() / 50d) * shipCharacteristics.getShipAcceleration() * (shipCharacteristics.getDriveGeneration() / 10)))).intValue();
     }
 
     int getMaxIntegratedReactor() {
