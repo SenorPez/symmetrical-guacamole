@@ -1,19 +1,12 @@
 package com.senorpez.avt.shipdesigner;
 
-public class SurfaceCharacteristics {
-    final ShipCharacteristics shipCharacteristics;
-    final MassCharacteristics massCharacteristics;
-
-    public SurfaceCharacteristics(ShipCharacteristics shipCharacteristics, MassCharacteristics massCharacteristics) {
-        this.shipCharacteristics = shipCharacteristics;
-        this.massCharacteristics = massCharacteristics;
-    }
-
+public record SurfaceCharacteristics(ShipCharacteristics shipCharacteristics,
+                                     MassCharacteristics massCharacteristics) {
     double getHullSurfaceArea() {
         return this.shipCharacteristics.getHullShape().getHullSurfaceArea(
-            shipCharacteristics.getShipSpaces(),
-            massCharacteristics.getArmorFraction(),
-            massCharacteristics.getDriveFraction_Typical()
+                shipCharacteristics.getShipSpaces(),
+                massCharacteristics.getArmorFraction(),
+                massCharacteristics.getDriveFraction_Typical()
         );
     }
 
