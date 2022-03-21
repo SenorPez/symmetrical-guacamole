@@ -50,6 +50,8 @@ class DriveCharacteristicsTest {
 
     @Test
     void getDriveOutput_Transit() {
+        when(shipCharacteristics.getShipAcceleration()).thenReturn(2.75d);
+        when(shipCharacteristics.getShipMass()).thenReturn(1375);
         double expectedValue = 0.36926d;
 
         assertEquals(expectedValue, instance.getDriveOutput_Transit(), tolerance);

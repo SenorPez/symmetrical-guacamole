@@ -22,8 +22,7 @@ public class DriveCharacteristics {
     }
 
     double getDriveOutput_Transit() {
-        // TODO: Placeholder
-        return 0;
+        return ((((shipCharacteristics.getShipMass() * 1000) * ((shipCharacteristics.getShipAcceleration() * 20 / 1000) * 9.765625)) * 1000000) / 2) / Math.pow(10, 12);
     }
 
     double getPivotThrust() {
