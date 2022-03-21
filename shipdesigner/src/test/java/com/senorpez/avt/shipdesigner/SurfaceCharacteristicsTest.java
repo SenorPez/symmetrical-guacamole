@@ -92,6 +92,7 @@ class SurfaceCharacteristicsTest {
 
     @Test
     void getDriveHullDepth() {
+        when(massCharacteristics.getDriveSpaces()).thenReturn(7.94935d);
         int expectedValue = 2;
 
         assertEquals(expectedValue, instance.getDriveHullDepth());

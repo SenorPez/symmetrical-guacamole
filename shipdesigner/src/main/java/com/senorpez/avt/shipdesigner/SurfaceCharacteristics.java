@@ -58,8 +58,7 @@ public class SurfaceCharacteristics {
     }
 
     int getDriveHullDepth() {
-        // TODO: Placeholder
-        return 0;
+        return Double.valueOf(Math.max(Math.floor(Math.pow(massCharacteristics.getDriveSpaces(), 0.5)), 1)).intValue();
     }
 
     int getMastHullDepth() {
