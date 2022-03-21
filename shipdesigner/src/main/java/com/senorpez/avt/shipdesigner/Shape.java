@@ -58,6 +58,11 @@ enum Shape {
         double getFrontArmorArea(double hullSpaces, double armorFraction, double driveFraction_Typical) {
             return getHullSurfaceArea(hullSpaces, armorFraction, driveFraction_Typical) / 30;
         }
+
+        @Override
+        double getLateralArmorArea(double hullSpaces, double armorFraction, double driveFraction_Typical) {
+            return getHullSurfaceArea(hullSpaces, armorFraction, driveFraction_Typical) / 30;
+        }
     };
 
     private final String shapeName;
@@ -130,6 +135,10 @@ enum Shape {
     }
 
     double getFrontArmorArea(final double hullSpaces, final double armorFraction, final double driveFraction_Typical) {
+        return 0;
+    }
+
+    double getLateralArmorArea(final double hullSpaces, final double armorFraction, final double driveFraction_Typical) {
         return 0;
     }
 }
