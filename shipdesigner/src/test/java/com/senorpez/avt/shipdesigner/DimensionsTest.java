@@ -93,6 +93,7 @@ class DimensionsTest {
 
     @Test
     void getDriveDiameter() {
+        when(massCharacteristics.getDriveDiameter()).thenReturn(22.00000d);
         double expectedValue = 22.00000d;
 
         assertEquals(expectedValue, instance.getDriveDiameter(), tolerance);

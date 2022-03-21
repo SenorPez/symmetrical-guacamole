@@ -52,8 +52,7 @@ public class Dimensions {
     }
 
     double getDriveDiameter() {
-        // TODO: Placeholder
-        return 0;
+        return massCharacteristics.getDriveDiameter();
     }
 
     double getTotalShipLength() {
