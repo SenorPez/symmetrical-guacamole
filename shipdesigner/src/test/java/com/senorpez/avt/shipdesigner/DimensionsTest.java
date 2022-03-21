@@ -114,6 +114,8 @@ class DimensionsTest {
 
     @Test
     void getTotalBoxes() {
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
+        when(massCharacteristics.getTotalShipArmorSpaces()).thenReturn(4.35644d);
         double expectedValue = 50.64356d;
 
         assertEquals(expectedValue, instance.getTotalBoxes(), tolerance);

@@ -68,8 +68,7 @@ public class Dimensions {
     }
 
     double getTotalBoxes() {
-        // TODO: Placeholder
-        return 0;
+        return shipCharacteristics.getShipSpaces() - massCharacteristics.getTotalShipArmorSpaces();
     }
 
     double getStructuralIntegrity() {
