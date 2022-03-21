@@ -30,8 +30,7 @@ public class Dimensions {
     }
 
     double getMastLength() {
-        // TODO: Placeholder
-        return 0;
+        return massCharacteristics.getMastLength();
     }
 
     double getMastDiameter() {

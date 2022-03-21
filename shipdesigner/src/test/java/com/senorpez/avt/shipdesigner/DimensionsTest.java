@@ -56,6 +56,7 @@ class DimensionsTest {
 
     @Test
     void getMastLength() {
+        when(massCharacteristics.getMastLength()).thenReturn(27.43900d);
         double expectedValue = 27.43900d;
 
         assertEquals(expectedValue, instance.getMastLength(), tolerance);

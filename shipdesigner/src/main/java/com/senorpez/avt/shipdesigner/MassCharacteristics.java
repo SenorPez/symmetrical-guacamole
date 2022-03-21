@@ -14,6 +14,10 @@ class MassCharacteristics {
         this.mastLength = mastLength;
     }
 
+    double getMastLength() {
+        return mastLength;
+    }
+
     double getHullMass() {
         return getHullMass(mastLength);
     }
