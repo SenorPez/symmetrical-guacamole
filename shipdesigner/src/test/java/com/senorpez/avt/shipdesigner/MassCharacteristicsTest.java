@@ -398,11 +398,9 @@ class MassCharacteristicsTest {
         when(characteristics.getShipMass()).thenReturn(1375);
         when(characteristics.getShipSpaces()).thenReturn(55);
 
-
-//        doReturn(347.28914d).when(instance).getOverallDriveMass_wArmor();
         instance.setMastLength(31.21665d);
-        double expectedValue = 10.85817d;
+        double expectedValue = 13.01364d;
 
-        assertEquals(expectedValue, instance.getFigureOfMerit(32.21665d), tolerance);
+        assertEquals(expectedValue, instance.getDifferenceFunction(), tolerance);
     }
 }

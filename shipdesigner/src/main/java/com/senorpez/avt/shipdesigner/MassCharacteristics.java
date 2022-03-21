@@ -365,7 +365,7 @@ class MassCharacteristics {
         return getFigureOfMerit(mastLength);
     }
 
-    double getFigureOfMerit(final double mastLength) {
+    private double getFigureOfMerit(final double mastLength) {
         // Different from spreadsheet; removed constant.
         return Math.pow(getPivotAccel(mastLength), getPivotAccelPower()) / Math.pow(getOverallDriveMass_wArmor(mastLength), getDriveMassPower());
     }
@@ -485,7 +485,7 @@ class MassCharacteristics {
     }
 
     double getDifferenceFunction() {
-        return 1000000 * getFigureOfMerit() - 1000000 * getFigureOfMerit(mastLength + 1);
+        return 1000000 * getFigureOfMerit() - 1000000 * getFigureOfMerit(mastLength + 0.1);
     }
 
     public MassCharacteristics setMastLength(Double mastLength) {
