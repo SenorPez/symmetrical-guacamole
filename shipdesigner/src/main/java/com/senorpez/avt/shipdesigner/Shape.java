@@ -8,13 +8,13 @@ enum Shape {
     CONICAL("Conical", 1.375, 0.1125d, 1.1825d),
     ELLIPSOID("Ellipsoid", 1.25d, 0.075d, 1.125d) {
         @Override
-        double getHullLength(double hullSpaces, double armorFraction, double driveFraction) {
-            return 2 * getHullDiameter(hullSpaces, armorFraction, driveFraction);
+        double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
+            return 2 * getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical);
         }
 
         @Override
-        double getHullDiameter(double hullSpaces, double armorFraction, double driveFraction) {
-            return Math.pow(3 * 100 * hullSpaces * (1 - armorFraction - driveFraction) / Math.PI, 1 / 3d);
+        double getHullDiameter(double hullSpaces, double armorFraction, double driveFraction_Typical) {
+            return Math.pow(3 * 100 * hullSpaces * (1 - armorFraction - driveFraction_Typical) / Math.PI, 1 / 3d);
         }
 
         @Override

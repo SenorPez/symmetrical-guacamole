@@ -12,6 +12,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class DimensionsTest {
     @Mock
+    ShipCharacteristics shipCharacteristics;
+    @Mock
     MassCharacteristics massCharacteristics;
 
     private Dimensions instance;
@@ -19,7 +21,7 @@ class DimensionsTest {
 
     @BeforeEach
     void setUp() {
-        instance = new Dimensions(massCharacteristics);
+        instance = new Dimensions(shipCharacteristics, massCharacteristics);
     }
 
     @Test
@@ -32,6 +34,10 @@ class DimensionsTest {
 
     @Test
     void getHullLength() {
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
+        when(massCharacteristics.getArmorFraction()).thenReturn(0.0181818d);
+        when(massCharacteristics.getDriveFraction_Typical()).thenReturn(0.1382455d);
         double expectedValue = 32.84850d;
 
         assertEquals(expectedValue, instance.getHullLength(), tolerance);

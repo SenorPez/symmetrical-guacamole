@@ -292,7 +292,7 @@ class MassCharacteristics {
         return 0d; // TODO: Allow as input?
     }
 
-    private double getArmorFraction() {
+    double getArmorFraction() {
         return characteristics.getHullArmor() / (double) characteristics.getShipSpaces();
     }
 
@@ -308,7 +308,7 @@ class MassCharacteristics {
         return getOverallDriveMass_wArmor(mastLength) / characteristics.getShipMass();
     }
 
-    private double getDriveFraction_Typical() {
+    double getDriveFraction_Typical() {
         return 0.1421d * Math.exp(-0.0005 * characteristics.getShipSpaces());
     }
 

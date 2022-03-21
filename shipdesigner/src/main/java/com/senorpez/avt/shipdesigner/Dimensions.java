@@ -1,9 +1,11 @@
 package com.senorpez.avt.shipdesigner;
 
 public class Dimensions {
+    private final ShipCharacteristics shipCharacteristics;
     private final MassCharacteristics massCharacteristics;
 
-    public Dimensions(MassCharacteristics massCharacteristics) {
+    public Dimensions(ShipCharacteristics shipCharacteristics, MassCharacteristics massCharacteristics) {
+        this.shipCharacteristics = shipCharacteristics;
         this.massCharacteristics = massCharacteristics;
     }
 
@@ -12,8 +14,11 @@ public class Dimensions {
     }
 
     double getHullLength() {
-        // TODO: Placeholder
-        return 0;
+        return shipCharacteristics.getHullShape().getHullLength(
+                shipCharacteristics.getShipSpaces(),
+                massCharacteristics.getArmorFraction(),
+                massCharacteristics.getDriveFraction_Typical()
+        );
     }
 
     double getHullDiameter() {
