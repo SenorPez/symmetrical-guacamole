@@ -26,8 +26,7 @@ public class DriveCharacteristics {
     }
 
     double getPivotThrust() {
-        // TODO: Placeholder
-        return 0;
+        return massCharacteristics.getPivotThrust();
     }
 
     double getPivotAcceleration() {
