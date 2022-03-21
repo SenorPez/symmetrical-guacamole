@@ -1,9 +1,19 @@
 package com.senorpez.avt.shipdesigner;
 
 enum Shape {
-    CYLINDER("Cylinder", 1d, 0.05d, 1d, 0.0318d, 0.8d),
+    CYLINDER("Cylinder", 1d, 0.05d, 1d, 0.0318d, 0.8d) {
+        @Override
+        int getImprovedAccesswayRequirement(final int shipSpaces) {
+            return Math.round(shipSpaces / 100f);
+        }
+    },
     SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 0.239d, 1.0d),
-    LONG_CYLINDER("Long Cylinder", 0.75d, 0.025d, 0.75d, Math.pow(10, -2.25), 0.7d),
+    LONG_CYLINDER("Long Cylinder", 0.75d, 0.025d, 0.75d, Math.pow(10, -2.25), 0.7d) {
+        @Override
+        int getImprovedAccesswayRequirement(final int shipSpaces) {
+            return Math.round(shipSpaces / 100f);
+        }
+    },
     HEMISPHEROID("Hemispheroid", 1.75d, 0.215d, 1.375d, Math.pow(10, -0.3109), 1.1d),
     CONICAL("Conical", 1.375, 0.1125d, 1.1825d, Math.pow(10, -0.87), 1.05d),
     ELLIPSOID("Ellipsoid", 1.25d, 0.075d, 1.125d, Math.pow(10, -1.05), 0.9d) {
@@ -97,5 +107,9 @@ enum Shape {
 
     double getRollMoment(double armorFraction, double driveFraction, double shipMass, int shipSpaces, double driveMass, double driveArmorMass, double driveDiameter) {
         return 0;
+    }
+
+    int getImprovedAccesswayRequirement(final int shipSpaces) {
+        return Math.round(shipSpaces / 50f);
     }
 }

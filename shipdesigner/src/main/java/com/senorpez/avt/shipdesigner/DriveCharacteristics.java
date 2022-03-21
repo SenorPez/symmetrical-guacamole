@@ -58,7 +58,6 @@ public class DriveCharacteristics {
     }
 
     int getImprovedAccesswayRequirement() {
-        // TODO: Placeholder
-        return 0;
+        return shipCharacteristics.getHullShape().getImprovedAccesswayRequirement(shipCharacteristics.getShipSpaces());
     }
 }

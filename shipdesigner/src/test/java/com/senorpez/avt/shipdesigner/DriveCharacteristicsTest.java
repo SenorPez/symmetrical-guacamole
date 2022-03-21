@@ -127,6 +127,8 @@ class DriveCharacteristicsTest {
 
     @Test
     void getImprovedAccesswayRequirement() {
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
         int expectedValue = 1;
 
         assertEquals(expectedValue, instance.getImprovedAccesswayRequirement(), tolerance);
