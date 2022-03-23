@@ -32,10 +32,12 @@ class WeaponsLoadCharacteristicsTest {
     }
 
     @Test
-    void getLargestWeaponsAllowed() {
+    void getLargestWeaponAllowed() {
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
         int expectedValue = 2;
 
-        assertEquals(expectedValue, instance.getLargestWeaponsAllowed());
+        assertEquals(expectedValue, instance.getLargestWeaponAllowed());
     }
 
     @Test

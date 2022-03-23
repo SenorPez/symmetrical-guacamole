@@ -13,9 +13,8 @@ public class WeaponsLoadCharacteristics {
         return Double.valueOf(Math.ceil(shipCharacteristics.getShipSpaces() * TotalWeaponsSpaces_10Worlds.getTotalWeaponsSpaces(shipCharacteristics.getShipSpaces()))).intValue();
     }
 
-    int getLargestWeaponsAllowed() {
-        // TODO: Placeholder
-        return 0;
+    int getLargestWeaponAllowed() {
+        return shipCharacteristics.getHullShape().getLargestWeaponMountable(shipCharacteristics.getShipSpaces());
     }
 
     int getLargestWeaponsAllowed_Keel() {

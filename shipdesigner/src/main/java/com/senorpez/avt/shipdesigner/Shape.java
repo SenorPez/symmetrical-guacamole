@@ -6,6 +6,11 @@ enum Shape {
         int getImprovedAccesswayRequirement(final int shipSpaces) {
             return Math.round(shipSpaces / 100f);
         }
+
+        @Override
+        int getLargestWeaponMountable(double hullSpaces) {
+            return CylinderLargestWeaponMountable.getCylinderLargestWeaponMountable(hullSpaces);
+        }
     },
     SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 0.239d, 1.0d) {
         @Override
@@ -29,7 +34,7 @@ enum Shape {
         }
 
         @Override
-        int getLargestWeapon(final double hullSpaces) {
+        int getLargestWeaponMountable(final double hullSpaces) {
             return SphereLargestWeaponMountable.getSphereLargestWeaponMountable(hullSpaces);
         }
 
@@ -115,6 +120,11 @@ enum Shape {
         @Override
         int getLateralHullDepth(double hullSpaces, double armorFraction, double driveFraction_Typical) {
             return Math.toIntExact(Math.round(SPHEROID.getLateralHullDepth(hullSpaces, armorFraction, driveFraction_Typical) * getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical) / SPHEROID.getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical)));
+        }
+
+        @Override
+        int getLargestWeaponMountable(double hullSpaces) {
+            return Long.valueOf(Math.round((SPHEROID.getLargestWeaponMountable(hullSpaces) + CYLINDER.getLargestWeaponMountable(hullSpaces)) / 2d)).intValue();
         }
     };
 
@@ -211,7 +221,7 @@ enum Shape {
         return 0;
     }
 
-    int getLargestWeapon(final double hullSpaces) {
+    int getLargestWeaponMountable(final double hullSpaces) {
         return 0;
     }
 }
