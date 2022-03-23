@@ -42,7 +42,7 @@ record DriveCharacteristics(ShipCharacteristics shipCharacteristics,
         return shipCharacteristics.getDriveGeneration() * 200 / shipCharacteristics.getShipSpaces();
     }
 
-    int getEngineDamage() {
+    int getDriveDamage() {
         return Double.valueOf(Math.ceil(massCharacteristics.getOverallDriveSpaces_noArmor() / ((shipCharacteristics.getShipSpaces() / 50d) * shipCharacteristics.getShipAcceleration() * (shipCharacteristics.getDriveGeneration() / 10)))).intValue();
     }
 

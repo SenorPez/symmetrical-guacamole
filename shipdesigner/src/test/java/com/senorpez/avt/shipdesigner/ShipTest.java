@@ -237,13 +237,6 @@ class ShipTest {
     }
 
     @Test
-    void getMinimumCrew() {
-        Ship instance = new Ship();
-        Integer expectedValue = 36;
-        assertEquals(expectedValue, instance.getMinimumCrew());
-    }
-
-    @Test
     void getOfficers() {
         Ship instance = new Ship().setPercentOfficers(20);
         Integer expectedValue = 7;

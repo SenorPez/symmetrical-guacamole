@@ -114,7 +114,7 @@ class DriveCharacteristicsTest {
         when(shipCharacteristics.getDriveGeneration()).thenReturn(3.1d);
         int expectedValue = 12;
 
-        assertEquals(expectedValue, instance.getEngineDamage(), tolerance);
+        assertEquals(expectedValue, instance.getDriveDamage(), tolerance);
     }
 
     @Test
@@ -159,7 +159,7 @@ class DriveCharacteristicsTest {
         assertEquals(55.13342d, instance.getRollAcceleration(), tolerance);
         assertEquals(ManeuverMode.C, instance.getRollMode());
         assertEquals(11.27273d, instance.getFuelDensity(), tolerance);
-        assertEquals(12, instance.getEngineDamage());
+        assertEquals(12, instance.getDriveDamage());
         assertEquals(1, instance.getMaxIntegratedReactor());
         assertEquals(1, instance.getImprovedAccesswayRequirement());
     }
