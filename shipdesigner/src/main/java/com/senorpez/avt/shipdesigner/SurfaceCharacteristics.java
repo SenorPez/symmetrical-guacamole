@@ -1,6 +1,6 @@
 package com.senorpez.avt.shipdesigner;
 
-public record SurfaceCharacteristics(ShipCharacteristics shipCharacteristics,
+record SurfaceCharacteristics(ShipCharacteristics shipCharacteristics,
                                      MassCharacteristics massCharacteristics) {
     double getHullSurfaceArea() {
         return this.shipCharacteristics.getHullShape().getHullSurfaceArea(

@@ -1,12 +1,6 @@
 package com.senorpez.avt.shipdesigner;
 
-class ShipCharacteristics {
-    private Ship ship;
-
-    ShipCharacteristics(Ship ship) {
-        this.ship = ship;
-    }
-
+record ShipCharacteristics(Ship ship) {
     int getShipSpaces() {
         return ship.getHullSize();
     }
