@@ -8,18 +8,18 @@ enum Shape {
         }
 
         @Override
-        int getLargestWeaponAllowed(double hullSpaces) {
-            return CylinderLargestWeaponMountable.getCylinderLargestWeaponMountable(hullSpaces);
+        int getLargestWeaponAllowed(int hullSpaces) {
+            return shipLookup.getCylinderLargestWeaponMountable_Single(hullSpaces);
         }
 
         @Override
         int getLargestWeaponAllowed_Keel(int hullSpaces) {
-            return CylinderKeelLargestWeaponMountable.getLargestWeaponMountable(hullSpaces);
+            return shipLookup.getCylinderLargestWeaponMountable_Keel(hullSpaces);
         }
 
         @Override
         double getLargestMountSpaces_Option1(int hullSpaces) {
-            return CylinderLargestMountSpaces.get(hullSpaces);
+            return shipLookup.getCylinderLargestMountSpaces_1(hullSpaces);
         }
 
         @Override
@@ -29,7 +29,7 @@ enum Shape {
 
         @Override
         int getMaximumMountLines(int hullSpaces) {
-            return CylinderMaximumNumberOfMountLines.getMaximumNumberOfMountLines(hullSpaces);
+            return shipLookup.getCylinderMaximumMountLines_Single(hullSpaces);
         }
     },
     SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 0.239d, 1.0d, 3, 5) {
@@ -44,18 +44,18 @@ enum Shape {
         }
 
         @Override
-        int getAxialHullDepth(double hullSpaces, double armorFraction, double driveFraction_Typical) {
+        int getAxialHullDepth(int hullSpaces, double armorFraction, double driveFraction_Typical) {
             return Long.valueOf(Math.round((approxAxialDepth1(hullSpaces) + ((hullSpaces - getHullSpaces(hullSpaces)) * ((approxAxialDepth2(hullSpaces) - approxAxialDepth1(hullSpaces)) / 25d))))).intValue();
         }
 
         @Override
-        int getLateralHullDepth(double hullSpaces, double armorFraction, double driveFraction_Typical) {
+        int getLateralHullDepth(int hullSpaces, double armorFraction, double driveFraction_Typical) {
             return getAxialHullDepth(hullSpaces, armorFraction, driveFraction_Typical);
         }
 
         @Override
-        int getLargestWeaponAllowed(final double hullSpaces) {
-            return SphereLargestWeaponMountable.getSphereLargestWeaponMountable(hullSpaces);
+        int getLargestWeaponAllowed(final int hullSpaces) {
+            return shipLookup.getSphereLargestWeaponMountable(hullSpaces);
         }
 
         @Override
@@ -65,7 +65,7 @@ enum Shape {
 
         @Override
         double getLargestMountSpaces_Option1(int hullSpaces) {
-            return SphereLargestMountSpaces.get(hullSpaces);
+            return shipLookup.getSphereLargestMountSpaces_3(hullSpaces);
         }
 
         @Override
@@ -75,19 +75,14 @@ enum Shape {
 
         @Override
         int getMaximumMountLines(int hullSpaces) {
-            return SphereMaximumNumberOfMountLines.getSphereMaximumNumberOfMountLines(hullSpaces);
+            return shipLookup.getSphereMaximumMountLines(hullSpaces);
         }
 
-        @Override
-        double getHullSpaces(final double hullSpaces) {
-            return SphereHullDepth.getSphereHullSpaces(hullSpaces);
+        private int approxAxialDepth1(final int hullSpaces) {
+            return shipLookup.getHullDepthSphere(hullSpaces);
         }
 
-        private int approxAxialDepth1(final double hullSpaces) {
-            return SphereHullDepth.getSphereHullDepth(hullSpaces);
-        }
-
-        private int approxAxialDepth2(final double hullSpaces) {
+        private int approxAxialDepth2(final int hullSpaces) {
             return approxAxialDepth1(hullSpaces + 25);
         }
     },
@@ -113,7 +108,8 @@ enum Shape {
         @Override
         double getShieldDiameter(double hullSpaces, double armorFraction, double driveFraction_Typical, double mastLength, double lanternDiameter) {
             final double hullDiameter = getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical);
-            return Math.pow(Math.pow(hullDiameter, 2) - Math.pow(Math.pow(hullDiameter, 2) / (hullDiameter + mastLength + 0.5 * lanternDiameter), 2), 0.5) * ((lanternDiameter / 2) / ((lanternDiameter / 2) + mastLength + hullDiameter - ((Math.pow(hullDiameter, 2)) / (hullDiameter + mastLength + 0.5 * lanternDiameter))));
+            final double value = Math.pow(hullDiameter, 2) / (hullDiameter + mastLength + 0.5 * lanternDiameter);
+            return Math.pow(Math.pow(hullDiameter, 2) - Math.pow(value, 2), 0.5) * ((lanternDiameter / 2) / ((lanternDiameter / 2) + mastLength + hullDiameter - value));
         }
 
         @Override
@@ -153,17 +149,17 @@ enum Shape {
         }
 
         @Override
-        int getAxialHullDepth(final double hullSpaces, final double armorFraction, final double driveFraction_Typical) {
+        int getAxialHullDepth(final int hullSpaces, final double armorFraction, final double driveFraction_Typical) {
             return Long.valueOf(Math.round(SPHEROID.getAxialHullDepth(hullSpaces, armorFraction, driveFraction_Typical) * getHullLength(hullSpaces, armorFraction, driveFraction_Typical) / SPHEROID.getHullLength(hullSpaces, armorFraction, driveFraction_Typical))).intValue();
         }
 
         @Override
-        int getLateralHullDepth(double hullSpaces, double armorFraction, double driveFraction_Typical) {
+        int getLateralHullDepth(int hullSpaces, double armorFraction, double driveFraction_Typical) {
             return Math.toIntExact(Math.round(SPHEROID.getLateralHullDepth(hullSpaces, armorFraction, driveFraction_Typical) * getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical) / SPHEROID.getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical)));
         }
 
         @Override
-        int getLargestWeaponAllowed(double hullSpaces) {
+        int getLargestWeaponAllowed(int hullSpaces) {
             return Long.valueOf(Math.round((SPHEROID.getLargestWeaponAllowed(hullSpaces) + CYLINDER.getLargestWeaponAllowed(hullSpaces)) / 2d)).intValue();
         }
 
@@ -283,19 +279,19 @@ enum Shape {
         return 0;
     }
 
-    int getAxialHullDepth(final double hullSpaces, final double armorFraction, final double driveFraction_Typical) {
+    int getAxialHullDepth(final int hullSpaces, final double armorFraction, final double driveFraction_Typical) {
         return 0;
     }
 
-    int getLateralHullDepth(final double hullSpaces, final double armorFraction, final double driveFraction_Typical) {
+    int getLateralHullDepth(final int hullSpaces, final double armorFraction, final double driveFraction_Typical) {
         return 0;
     }
 
-    double getHullSpaces(final double hullSpaces) {
-        return 0;
+    double getHullSpaces(final int hullSpaces) {
+        return shipLookup.getHullSpaces(hullSpaces);
     }
 
-    int getLargestWeaponAllowed(final double hullSpaces) {
+    int getLargestWeaponAllowed(final int hullSpaces) {
         return 0;
     }
 
@@ -313,5 +309,9 @@ enum Shape {
 
     int getMaximumMountLines(final int hullSpaces) {
         return 0;
+    }
+
+    double getTotalWeaponSpaces(final int hullSpaces) {
+        return shipLookup.getTotalWeaponSpaces(hullSpaces);
     }
 }

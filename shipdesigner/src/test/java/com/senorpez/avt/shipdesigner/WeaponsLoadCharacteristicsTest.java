@@ -16,7 +16,6 @@ class WeaponsLoadCharacteristicsTest {
     ShipCharacteristics shipCharacteristics;
 
     private WeaponsLoadCharacteristics instance;
-    private final double tolerance = 0.001d;
 
     @BeforeEach
     void setUp() {
@@ -25,6 +24,7 @@ class WeaponsLoadCharacteristicsTest {
 
     @Test
     void getTotalNumberOfWeapons() {
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
         when(shipCharacteristics.getShipSpaces()).thenReturn(55);
         int expectedValue = 10;
 

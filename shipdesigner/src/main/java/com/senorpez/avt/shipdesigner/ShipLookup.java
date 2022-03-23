@@ -15,6 +15,14 @@ record ShipLookup() {
         data.put(100d,   new ShipData(2, 3, 3, 3, 2, 2, 2, 2, 0.04d, 0.035d, 0.050d, 0.04d, 0.170d, 23, 5, 17));
     }
 
+    double getHullSpaces(final int hullSpaces) {
+        return data.entrySet()
+                .stream()
+                .min(Comparator.comparingDouble(d -> Math.abs(d.getKey() - hullSpaces)))
+                .map(Map.Entry::getKey)
+                .orElse(0d);
+    }
+
     int getSphereLargestWeaponMountable(final int hullSpaces) {
         return getShipData(hullSpaces)
                 .map(ShipData::SphereLargestWeaponMountable)
@@ -93,19 +101,19 @@ record ShipLookup() {
                 .orElse(0d);
     }
 
-    int getHullDepthAxial(final double hullSpaces) {
+    int getHullDepthAxial(final int hullSpaces) {
         return getShipData(hullSpaces)
                 .map(ShipData::HullDepthAxial)
                 .orElse(0);
     }
 
-    int getHullDepthLateral(final double hullSpaces) {
+    int getHullDepthLateral(final int hullSpaces) {
         return getShipData(hullSpaces)
                 .map(ShipData::HullDepthLateral)
                 .orElse(0);
     }
 
-    int getHullDepthSphere(final double hullSpaces) {
+    int getHullDepthSphere(final int hullSpaces) {
         return getShipData(hullSpaces)
                 .map(ShipData::HullDepthSphere)
                 .orElse(0);

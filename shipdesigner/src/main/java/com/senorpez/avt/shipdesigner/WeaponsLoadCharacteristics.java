@@ -3,15 +3,9 @@ package com.senorpez.avt.shipdesigner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeaponsLoadCharacteristics {
-    private final ShipCharacteristics shipCharacteristics;
-
-    public WeaponsLoadCharacteristics(ShipCharacteristics shipCharacteristics) {
-        this.shipCharacteristics = shipCharacteristics;
-    }
-
+record WeaponsLoadCharacteristics(ShipCharacteristics shipCharacteristics) {
     int getTotalNumberOfWeapons() {
-        return Double.valueOf(Math.ceil(shipCharacteristics.getShipSpaces() * TotalWeaponsSpaces_10Worlds.getTotalWeaponsSpaces(shipCharacteristics.getShipSpaces()))).intValue();
+        return Double.valueOf(Math.ceil(shipCharacteristics.getShipSpaces() * shipCharacteristics.getHullShape().getTotalWeaponSpaces(shipCharacteristics.getShipSpaces()))).intValue();
     }
 
     int getLargestWeaponAllowed() {
