@@ -6,7 +6,7 @@ record ShipCharacteristics(Ship ship) {
     }
 
     int getShipMass() {
-        return getShipSpaces() * 25;
+        return ship.getHullSize() * 25;
     }
 
     double getShipThrust() {
@@ -14,7 +14,7 @@ record ShipCharacteristics(Ship ship) {
     }
 
     double getShipAcceleration() {
-        return getShipThrust() / 4d;
+        return ship.getMaximumThrust() / 4d;
     }
 
     Shape getHullShape() {

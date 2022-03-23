@@ -19,7 +19,7 @@ class ShipCharacteristicsTest {
 
     @BeforeEach
     void setUp() {
-        instance = spy(new ShipCharacteristics(ship));
+        instance = new ShipCharacteristics(ship);
     }
 
     @Test
@@ -32,7 +32,7 @@ class ShipCharacteristicsTest {
 
     @Test
     void getShipMass() {
-        doReturn(55).when(instance).getShipSpaces();
+        when(ship.getHullSize()).thenReturn(55);
         int expectedValue = 1375;
 
         assertEquals(expectedValue, instance.getShipMass());
@@ -48,7 +48,7 @@ class ShipCharacteristicsTest {
 
     @Test
     void getShipAcceleration() {
-        doReturn(11.0d).when(instance).getShipThrust();
+        when(ship.getMaximumThrust()).thenReturn(11.0d);
         double expectedValue = 2.75d;
 
         assertEquals(expectedValue, instance.getShipAcceleration(), tolerance);
