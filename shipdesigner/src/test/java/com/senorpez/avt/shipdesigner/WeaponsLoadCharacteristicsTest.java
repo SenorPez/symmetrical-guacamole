@@ -51,6 +51,9 @@ class WeaponsLoadCharacteristicsTest {
 
     @Test
     void getLargestWeaponMountsAllowed() {
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
+
         WeaponMount expectedValueOption1 = new WeaponMount(2, 3);
         WeaponMount expectedValueOption2 = new WeaponMount(4, 2);
 

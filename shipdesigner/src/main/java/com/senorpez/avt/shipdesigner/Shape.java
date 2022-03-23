@@ -1,7 +1,7 @@
 package com.senorpez.avt.shipdesigner;
 
 enum Shape {
-    CYLINDER("Cylinder", 1d, 0.05d, 1d, 0.0318d, 0.8d) {
+    CYLINDER("Cylinder", 1d, 0.05d, 1d, 0.0318d, 0.8d, 1, 2) {
         @Override
         int getImprovedAccesswayRequirement(final int shipSpaces) {
             return Math.round(shipSpaces / 100f);
@@ -18,11 +18,21 @@ enum Shape {
         }
 
         @Override
+        double getLargestMountSpaces_Option1(int hullSpaces) {
+            return CylinderLargestMountSpaces.get(hullSpaces);
+        }
+
+        @Override
+        double getLargestMountSpaces_Option2(int hullSpaces) {
+            return shipLookup.getCylinderLargestMountSpaces_2(hullSpaces);
+        }
+
+        @Override
         int getMaximumMountLines(int hullSpaces) {
             return CylinderMaximumNumberOfMountLines.getMaximumNumberOfMountLines(hullSpaces);
         }
     },
-    SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 0.239d, 1.0d) {
+    SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 0.239d, 1.0d, 3, 5) {
         @Override
         double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
             return getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical);
@@ -54,6 +64,16 @@ enum Shape {
         }
 
         @Override
+        double getLargestMountSpaces_Option1(int hullSpaces) {
+            return SphereLargestMountSpaces.get(hullSpaces);
+        }
+
+        @Override
+        double getLargestMountSpaces_Option2(int hullSpaces) {
+            return shipLookup.getSphereLargestMountSpaces_5(hullSpaces);
+        }
+
+        @Override
         int getMaximumMountLines(int hullSpaces) {
             return SphereMaximumNumberOfMountLines.getSphereMaximumNumberOfMountLines(hullSpaces);
         }
@@ -71,15 +91,15 @@ enum Shape {
             return approxAxialDepth1(hullSpaces + 25);
         }
     },
-    LONG_CYLINDER("Long Cylinder", 0.75d, 0.025d, 0.75d, Math.pow(10, -2.25), 0.7d) {
+    LONG_CYLINDER("Long Cylinder", 0.75d, 0.025d, 0.75d, Math.pow(10, -2.25), 0.7d, 1, 2) {
         @Override
         int getImprovedAccesswayRequirement(final int shipSpaces) {
             return Math.round(shipSpaces / 100f);
         }
     },
-    HEMISPHEROID("Hemispheroid", 1.75d, 0.215d, 1.375d, Math.pow(10, -0.3109), 1.1d),
-    CONICAL("Conical", 1.375, 0.1125d, 1.1825d, Math.pow(10, -0.87), 1.05d),
-    ELLIPSOID("Ellipsoid", 1.25d, 0.075d, 1.125d, Math.pow(10, -1.05), 0.9d) {
+    HEMISPHEROID("Hemispheroid", 1.75d, 0.215d, 1.375d, Math.pow(10, -0.3109), 1.1d, 3, 5),
+    CONICAL("Conical", 1.375, 0.1125d, 1.1825d, Math.pow(10, -0.87), 1.05d, 1, 3),
+    ELLIPSOID("Ellipsoid", 1.25d, 0.075d, 1.125d, Math.pow(10, -1.05), 0.9d, 2, 4) {
         @Override
         double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
             return 2 * getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical);
@@ -153,6 +173,16 @@ enum Shape {
         }
 
         @Override
+        double getLargestMountSpaces_Option1(int hullSpaces) {
+            return (SPHEROID.getLargestMountSpaces_Option1(hullSpaces) + CYLINDER.getLargestMountSpaces_Option1(hullSpaces)) / 2;
+        }
+
+        @Override
+        double getLargestMountSpaces_Option2(int hullSpaces) {
+            return (SPHEROID.getLargestMountSpaces_Option2(hullSpaces) + CYLINDER.getLargestMountSpaces_Option2(hullSpaces)) / 2;
+        }
+
+        @Override
         int getMaximumMountLines(int hullSpaces) {
             return Long.valueOf(Math.round((SPHEROID.getMaximumMountLines(hullSpaces) + CYLINDER.getMaximumMountLines(hullSpaces)) / 2d)).intValue();
         }
@@ -164,14 +194,20 @@ enum Shape {
     private final double pivotModifier;
     private final double rollModifier;
     private final double hullCostModifier;
+    private final int largestMountLines_Option1;
+    private final int largestMountLines_Option2;
 
-    Shape(String shapeName, double mastMassModifier, double thrusterModifier, double pivotModifier, double rollModifier, double hullCostModifier) {
+    private static final ShipLookup shipLookup = new ShipLookup();
+
+    Shape(String shapeName, double mastMassModifier, double thrusterModifier, double pivotModifier, double rollModifier, double hullCostModifier, int largestMountLines_Option1, int largestMountLines_Option2) {
         this.shapeName = shapeName;
         this.mastMassModifier = mastMassModifier;
         this.thrusterModifier = thrusterModifier;
         this.pivotModifier = pivotModifier;
         this.rollModifier = rollModifier;
         this.hullCostModifier = hullCostModifier;
+        this.largestMountLines_Option1 = largestMountLines_Option1;
+        this.largestMountLines_Option2 = largestMountLines_Option2;
     }
 
     String getShapeName() {
@@ -180,18 +216,6 @@ enum Shape {
 
     double getMastMassModifier() {
         return mastMassModifier;
-    }
-
-    double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
-        return 0;
-    }
-
-    double getHullDiameter(double hullSpaces, double armorFraction, double driveFraction_Typical) {
-        return 0;
-    }
-
-    double getShieldDiameter(final double hullSpaces, final double armorFraction, final double driveFraction_Typical, double mastLength, final double lanternDiameter) {
-        return 0;
     }
 
     double getThrusterModifier() {
@@ -208,6 +232,26 @@ enum Shape {
 
     double getHullCostModifier() {
         return hullCostModifier;
+    }
+
+    public int getLargestMountLines_Option1() {
+        return largestMountLines_Option1;
+    }
+
+    public int getLargestMountLines_Option2() {
+        return largestMountLines_Option2;
+    }
+
+    double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
+        return 0;
+    }
+
+    double getHullDiameter(double hullSpaces, double armorFraction, double driveFraction_Typical) {
+        return 0;
+    }
+
+    double getShieldDiameter(final double hullSpaces, final double armorFraction, final double driveFraction_Typical, double mastLength, final double lanternDiameter) {
+        return 0;
     }
 
     double getMomentOfInertia(double hullSpaces, double armorFraction, double driveFraction_Typical, double driveFraction, double shipMass, double mastLength, double lanternDiameter, double mastStructuralMass, double mastArmorMass, double lanternMass, double driveArmorMass, double mastMass) {
@@ -256,6 +300,14 @@ enum Shape {
     }
 
     int getLargestWeaponAllowed_Keel(final int hullSpaces) {
+        return 0;
+    }
+
+    double getLargestMountSpaces_Option1(final int hullSpaces) {
+        return 0;
+    }
+
+    double getLargestMountSpaces_Option2(final int hullSpaces) {
         return 0;
     }
 
