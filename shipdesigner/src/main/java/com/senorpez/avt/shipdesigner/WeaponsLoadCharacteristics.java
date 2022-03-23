@@ -14,7 +14,7 @@ public class WeaponsLoadCharacteristics {
     }
 
     int getLargestWeaponAllowed() {
-        return shipCharacteristics.getHullShape().getLargestWeaponMountable(shipCharacteristics.getShipSpaces());
+        return shipCharacteristics.getHullShape().getLargestWeaponAllowed(shipCharacteristics.getShipSpaces());
     }
 
     int getLargestWeaponsAllowed_Keel() {
@@ -28,8 +28,7 @@ public class WeaponsLoadCharacteristics {
     }
 
     int getMaximumNumberOfLines() {
-        // TODO: Placeholder
-        return 0;
+        return shipCharacteristics.getHullShape().getMaximumMountLines(shipCharacteristics.getShipSpaces());
     }
 
     record WeaponMount(int lines, int spaces) {

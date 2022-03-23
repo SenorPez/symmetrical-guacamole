@@ -8,8 +8,13 @@ enum Shape {
         }
 
         @Override
-        int getLargestWeaponMountable(double hullSpaces) {
+        int getLargestWeaponAllowed(double hullSpaces) {
             return CylinderLargestWeaponMountable.getCylinderLargestWeaponMountable(hullSpaces);
+        }
+
+        @Override
+        int getMaximumMountLines(int hullSpaces) {
+            return CylinderMaximumNumberOfMountLines.getMaximumNumberOfMountLines(hullSpaces);
         }
     },
     SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 0.239d, 1.0d) {
@@ -34,8 +39,13 @@ enum Shape {
         }
 
         @Override
-        int getLargestWeaponMountable(final double hullSpaces) {
+        int getLargestWeaponAllowed(final double hullSpaces) {
             return SphereLargestWeaponMountable.getSphereLargestWeaponMountable(hullSpaces);
+        }
+
+        @Override
+        int getMaximumMountLines(int hullSpaces) {
+            return SphereMaximumNumberOfMountLines.getSphereMaximumNumberOfMountLines(hullSpaces);
         }
 
         @Override
@@ -123,8 +133,13 @@ enum Shape {
         }
 
         @Override
-        int getLargestWeaponMountable(double hullSpaces) {
-            return Long.valueOf(Math.round((SPHEROID.getLargestWeaponMountable(hullSpaces) + CYLINDER.getLargestWeaponMountable(hullSpaces)) / 2d)).intValue();
+        int getLargestWeaponAllowed(double hullSpaces) {
+            return Long.valueOf(Math.round((SPHEROID.getLargestWeaponAllowed(hullSpaces) + CYLINDER.getLargestWeaponAllowed(hullSpaces)) / 2d)).intValue();
+        }
+
+        @Override
+        int getMaximumMountLines(int hullSpaces) {
+            return Long.valueOf(Math.round((SPHEROID.getMaximumMountLines(hullSpaces) + CYLINDER.getMaximumMountLines(hullSpaces)) / 2d)).intValue();
         }
     };
 
@@ -221,7 +236,11 @@ enum Shape {
         return 0;
     }
 
-    int getLargestWeaponMountable(final double hullSpaces) {
+    int getLargestWeaponAllowed(final double hullSpaces) {
+        return 0;
+    }
+
+    int getMaximumMountLines(final int hullSpaces) {
         return 0;
     }
 }

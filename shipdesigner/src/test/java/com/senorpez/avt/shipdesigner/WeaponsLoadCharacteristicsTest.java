@@ -58,6 +58,8 @@ class WeaponsLoadCharacteristicsTest {
 
     @Test
     void getMaximumNumberOfLines() {
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
         int expectedValue = 2;
 
         assertEquals(expectedValue, instance.getMaximumNumberOfLines());
