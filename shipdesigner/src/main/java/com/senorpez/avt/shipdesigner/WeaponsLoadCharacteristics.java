@@ -18,8 +18,7 @@ public class WeaponsLoadCharacteristics {
     }
 
     int getLargestWeaponsAllowed_Keel() {
-        // TODO: Placeholder
-        return 0;
+        return shipCharacteristics.getHullShape().getLargestWeaponAllowed_Keel(shipCharacteristics.getShipSpaces());
     }
 
     List<WeaponMount> getLargestWeaponMountsAllowed() {

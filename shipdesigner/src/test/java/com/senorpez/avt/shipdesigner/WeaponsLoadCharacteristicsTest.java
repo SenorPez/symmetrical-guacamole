@@ -42,6 +42,8 @@ class WeaponsLoadCharacteristicsTest {
 
     @Test
     void getLargestWeaponsAllowed_Keel() {
+        when(shipCharacteristics.getHullShape()).thenReturn(Shape.ELLIPSOID);
+        when(shipCharacteristics.getShipSpaces()).thenReturn(55);
         int expectedValue = 2;
 
         assertEquals(expectedValue, instance.getLargestWeaponsAllowed_Keel());

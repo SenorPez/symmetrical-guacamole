@@ -13,6 +13,11 @@ enum Shape {
         }
 
         @Override
+        int getLargestWeaponAllowed_Keel(int hullSpaces) {
+            return CylinderKeelLargestWeaponMountable.getLargestWeaponMountable(hullSpaces);
+        }
+
+        @Override
         int getMaximumMountLines(int hullSpaces) {
             return CylinderMaximumNumberOfMountLines.getMaximumNumberOfMountLines(hullSpaces);
         }
@@ -41,6 +46,11 @@ enum Shape {
         @Override
         int getLargestWeaponAllowed(final double hullSpaces) {
             return SphereLargestWeaponMountable.getSphereLargestWeaponMountable(hullSpaces);
+        }
+
+        @Override
+        int getLargestWeaponAllowed_Keel(int hullSpaces) {
+            return getLargestWeaponAllowed(hullSpaces);
         }
 
         @Override
@@ -135,6 +145,11 @@ enum Shape {
         @Override
         int getLargestWeaponAllowed(double hullSpaces) {
             return Long.valueOf(Math.round((SPHEROID.getLargestWeaponAllowed(hullSpaces) + CYLINDER.getLargestWeaponAllowed(hullSpaces)) / 2d)).intValue();
+        }
+
+        @Override
+        int getLargestWeaponAllowed_Keel(int hullSpaces) {
+            return Long.valueOf(Math.round((SPHEROID.getLargestWeaponAllowed_Keel(hullSpaces) + CYLINDER.getLargestWeaponAllowed_Keel(hullSpaces)) / 2d)).intValue();
         }
 
         @Override
@@ -237,6 +252,10 @@ enum Shape {
     }
 
     int getLargestWeaponAllowed(final double hullSpaces) {
+        return 0;
+    }
+
+    int getLargestWeaponAllowed_Keel(final int hullSpaces) {
         return 0;
     }
 
