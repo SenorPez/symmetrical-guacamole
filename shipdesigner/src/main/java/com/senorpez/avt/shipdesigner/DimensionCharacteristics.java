@@ -1,7 +1,7 @@
 package com.senorpez.avt.shipdesigner;
 
-record Dimensions(ShipCharacteristics shipCharacteristics,
-                  MassCharacteristics massCharacteristics) {
+record DimensionCharacteristics(ShipCharacteristics shipCharacteristics,
+                                MassCharacteristics massCharacteristics) {
     double getHullVolume() {
         return 100 * massCharacteristics.getHullSpaces();
     }

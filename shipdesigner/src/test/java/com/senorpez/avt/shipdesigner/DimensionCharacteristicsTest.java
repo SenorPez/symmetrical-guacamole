@@ -10,18 +10,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class DimensionsTest {
+class DimensionCharacteristicsTest {
     @Mock
     ShipCharacteristics shipCharacteristics;
     @Mock
     MassCharacteristics massCharacteristics;
 
-    private Dimensions instance;
+    private DimensionCharacteristics instance;
     private final double tolerance = 0.001d;
 
     @BeforeEach
     void setUp() {
-        instance = new Dimensions(shipCharacteristics, massCharacteristics);
+        instance = new DimensionCharacteristics(shipCharacteristics, massCharacteristics);
     }
 
     @Test
@@ -161,7 +161,7 @@ class DimensionsTest {
         when(shipCharacteristics.getArmorShrink()).thenReturn(0);
         when(massCharacteristics.getHullArmorSpaces()).thenReturn(1);
 
-        instance = new Dimensions(shipCharacteristics, massCharacteristics);
+        instance = new DimensionCharacteristics(shipCharacteristics, massCharacteristics);
 
         assertEquals(3996.31795d, instance.getHullVolume(), tolerance);
         assertEquals(32.84850d, instance.getHullLength(), tolerance);
