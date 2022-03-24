@@ -1,10 +1,10 @@
-package com.senorpez.avt.shipdesigner;
+package com.senorpez.avt.shipdesigner.characteristics;
 
-class MassCharacteristics {
+public class MassCharacteristics {
     private final ShipCharacteristics shipCharacteristics;
     private double mastLength;
 
-    MassCharacteristics(ShipCharacteristics shipCharacteristics) {
+    public MassCharacteristics(ShipCharacteristics shipCharacteristics) {
         this.shipCharacteristics = shipCharacteristics;
         mastLength = calculateMastLength();
     }
@@ -14,7 +14,7 @@ class MassCharacteristics {
         this.mastLength = mastLength;
     }
 
-    double getMastLength() {
+    public double getMastLength() {
         return mastLength;
     }
 
@@ -134,7 +134,7 @@ class MassCharacteristics {
         return (getTenXRadReduction() * (Math.log10(getNeutronFlux_MR_yr()) + 6) - Math.log10(getRadReductionDueToMast(mastLength))) * getShieldCrossSection(mastLength);
     }
 
-    double getMastShieldSpaces() {
+    public double getMastShieldSpaces() {
         return getMastShieldSpaces(mastLength);
     }
 
@@ -160,7 +160,7 @@ class MassCharacteristics {
         }
     }
 
-    double getDriveSpaces() {
+    public double getDriveSpaces() {
         return getDriveMass() / 25d;
     }
 

@@ -1,6 +1,6 @@
-package com.senorpez.avt.shipdesigner;
+package com.senorpez.avt.shipdesigner.enums;
 
-enum SheetFormat {
+public enum SheetFormat {
     ONE_UP("1-Up"),
     TWO_UP("2-Up"),
     FOUR_UP("4-Up");
@@ -11,7 +11,7 @@ enum SheetFormat {
         this.format = format;
     }
 
-    String getFormat() {
+    public String getFormat() {
         return format;
     }
 }

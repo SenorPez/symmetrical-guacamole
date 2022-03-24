@@ -1,5 +1,9 @@
 package com.senorpez.avt.shipdesigner;
 
+import com.senorpez.avt.shipdesigner.enums.BuildMode;
+import com.senorpez.avt.shipdesigner.enums.Nation;
+import com.senorpez.avt.shipdesigner.enums.Shape;
+import com.senorpez.avt.shipdesigner.enums.SheetFormat;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;

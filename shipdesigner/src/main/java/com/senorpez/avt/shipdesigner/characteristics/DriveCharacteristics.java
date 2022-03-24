@@ -1,8 +1,10 @@
-package com.senorpez.avt.shipdesigner;
+package com.senorpez.avt.shipdesigner.characteristics;
 
-record DriveCharacteristics(ShipCharacteristics shipCharacteristics,
-                                   MassCharacteristics massCharacteristics) {
-    double getDriveOutput_Combat() {
+import com.senorpez.avt.shipdesigner.enums.ManeuverMode;
+
+public record DriveCharacteristics(ShipCharacteristics shipCharacteristics,
+                            MassCharacteristics massCharacteristics) {
+    public double getDriveOutput_Combat() {
         return massCharacteristics.getNewCombatPower();
     }
 
@@ -26,7 +28,7 @@ record DriveCharacteristics(ShipCharacteristics shipCharacteristics,
         return massCharacteristics.getPivotAccel();
     }
 
-    ManeuverMode getPivotMode() {
+    public ManeuverMode getPivotMode() {
         return ManeuverMode.getMode(massCharacteristics.getPivotAccel());
     }
 
@@ -34,7 +36,7 @@ record DriveCharacteristics(ShipCharacteristics shipCharacteristics,
         return massCharacteristics.getRollAccel();
     }
 
-    ManeuverMode getRollMode() {
+    public ManeuverMode getRollMode() {
         return ManeuverMode.getMode(massCharacteristics.getRollAccel());
     }
 
@@ -42,7 +44,7 @@ record DriveCharacteristics(ShipCharacteristics shipCharacteristics,
         return shipCharacteristics.getDriveGeneration() * 200 / shipCharacteristics.getShipSpaces();
     }
 
-    int getDriveDamage() {
+    public int getDriveDamage() {
         return Double.valueOf(Math.ceil(massCharacteristics.getOverallDriveSpaces_noArmor() / ((shipCharacteristics.getShipSpaces() / 50d) * shipCharacteristics.getShipAcceleration() * (shipCharacteristics.getDriveGeneration() / 10)))).intValue();
     }
 

@@ -1,6 +1,6 @@
-package com.senorpez.avt.shipdesigner;
+package com.senorpez.avt.shipdesigner.enums;
 
-enum Nation {
+public enum Nation {
     ALGERIA("Algeria"),
     ALTIPLANO("Republica de Altiplano"),
     ARGENTINA("Argentina"),
@@ -80,7 +80,7 @@ enum Nation {
         this.nationName = nationName;
     }
 
-    String getNationName() {
+    public String getNationName() {
         return nationName;
     }
 }

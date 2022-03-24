@@ -1,4 +1,4 @@
-package com.senorpez.avt.shipdesigner;
+package com.senorpez.avt.shipdesigner.enums;
 
 import java.util.Comparator;
 import java.util.stream.Stream;
@@ -44,7 +44,7 @@ public enum ManeuverMode {
         return maneuverAccel;
     }
 
-    static ManeuverMode getMode(double maneuverAccel) {
+    public static ManeuverMode getMode(double maneuverAccel) {
         return Stream
                 .of(ManeuverMode.values())
                 .min(Comparator.comparingDouble(m -> Math.abs(m.getManeuverAccel() - maneuverAccel)))

@@ -1,5 +1,7 @@
-package com.senorpez.avt.shipdesigner;
+package com.senorpez.avt.shipdesigner.characteristics;
 
+import com.senorpez.avt.shipdesigner.enums.ManeuverMode;
+import com.senorpez.avt.shipdesigner.enums.Shape;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

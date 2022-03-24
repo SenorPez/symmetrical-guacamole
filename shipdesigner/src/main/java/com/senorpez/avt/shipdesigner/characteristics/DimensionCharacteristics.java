@@ -1,12 +1,12 @@
-package com.senorpez.avt.shipdesigner;
+package com.senorpez.avt.shipdesigner.characteristics;
 
-record DimensionCharacteristics(ShipCharacteristics shipCharacteristics,
+public record DimensionCharacteristics(ShipCharacteristics shipCharacteristics,
                                 MassCharacteristics massCharacteristics) {
     double getHullVolume() {
         return 100 * massCharacteristics.getHullSpaces();
     }
 
-    double getHullLength() {
+    public double getHullLength() {
         return shipCharacteristics.getHullShape().getHullLength(
                 shipCharacteristics.getShipSpaces(),
                 massCharacteristics.getArmorFraction(),
@@ -14,7 +14,7 @@ record DimensionCharacteristics(ShipCharacteristics shipCharacteristics,
         );
     }
 
-    double getHullDiameter() {
+    public double getHullDiameter() {
         return shipCharacteristics.getHullShape().getHullDiameter(
                 shipCharacteristics.getShipSpaces(),
                 massCharacteristics.getArmorFraction(),
@@ -22,15 +22,15 @@ record DimensionCharacteristics(ShipCharacteristics shipCharacteristics,
         );
     }
 
-    double getMastLength() {
+    public double getMastLength() {
         return massCharacteristics.getMastLength();
     }
 
-    double getMastDiameter() {
+    public double getMastDiameter() {
         return massCharacteristics.getMastLength() / 15;
     }
 
-    double getShieldDiameter() {
+    public double getShieldDiameter() {
         return shipCharacteristics.getHullShape().getShieldDiameter(
                 shipCharacteristics.getShipSpaces(),
                 massCharacteristics.getArmorFraction(),
@@ -40,15 +40,15 @@ record DimensionCharacteristics(ShipCharacteristics shipCharacteristics,
         );
     }
 
-    double getShieldThickness() {
+    public double getShieldThickness() {
         return massCharacteristics.getShieldThickness();
     }
 
-    double getDriveDiameter() {
+    public double getDriveDiameter() {
         return massCharacteristics.getDriveDiameter();
     }
 
-    double getTotalShipLength() {
+    public double getTotalShipLength() {
         final double hullLength = shipCharacteristics.getHullShape().getHullLength(
                 shipCharacteristics.getShipSpaces(),
                 massCharacteristics.getArmorFraction(),

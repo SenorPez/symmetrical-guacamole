@@ -1,7 +1,7 @@
-package com.senorpez.avt.shipdesigner;
+package com.senorpez.avt.shipdesigner.characteristics;
 
-record SurfaceCharacteristics(ShipCharacteristics shipCharacteristics,
-                                     MassCharacteristics massCharacteristics) {
+public record SurfaceCharacteristics(ShipCharacteristics shipCharacteristics,
+                              MassCharacteristics massCharacteristics) {
     double getHullSurfaceArea() {
         return this.shipCharacteristics.getHullShape().getHullSurfaceArea(
                 shipCharacteristics.getShipSpaces(),
@@ -10,7 +10,7 @@ record SurfaceCharacteristics(ShipCharacteristics shipCharacteristics,
         );
     }
 
-    double getFrontArmorArea() {
+    public double getFrontArmorArea() {
         return this.shipCharacteristics.getHullShape().getFrontArmorArea(
                 shipCharacteristics.getShipSpaces(),
                 massCharacteristics.getArmorFraction(),
@@ -18,7 +18,7 @@ record SurfaceCharacteristics(ShipCharacteristics shipCharacteristics,
         );
     }
 
-    double getLateralArmorArea() {
+    public double getLateralArmorArea() {
         return this.shipCharacteristics.getHullShape().getLateralArmorArea(
                 shipCharacteristics.getShipSpaces(),
                 massCharacteristics.getArmorFraction(),
@@ -26,7 +26,7 @@ record SurfaceCharacteristics(ShipCharacteristics shipCharacteristics,
         );
     }
 
-    double getRearArmorArea() {
+    public double getRearArmorArea() {
         return this.shipCharacteristics.getHullShape().getRearArmorArea(
                 shipCharacteristics.getShipSpaces(),
                 massCharacteristics.getArmorFraction(),
@@ -34,7 +34,7 @@ record SurfaceCharacteristics(ShipCharacteristics shipCharacteristics,
         );
     }
 
-    int getAxialHullDepth() {
+    public int getAxialHullDepth() {
         return this.shipCharacteristics.getHullShape().getAxialHullDepth(
                 shipCharacteristics.getShipSpaces(),
                 massCharacteristics.getArmorFraction(),
@@ -42,7 +42,7 @@ record SurfaceCharacteristics(ShipCharacteristics shipCharacteristics,
         );
     }
 
-    int getLateralHullDepth() {
+    public int getLateralHullDepth() {
         return this.shipCharacteristics.getHullShape().getLateralHullDepth(
                 shipCharacteristics.getShipSpaces(),
                 massCharacteristics.getArmorFraction(),
@@ -50,11 +50,11 @@ record SurfaceCharacteristics(ShipCharacteristics shipCharacteristics,
         );
     }
 
-    int getDriveHullDepth() {
+    public int getDriveHullDepth() {
         return Double.valueOf(Math.round(Math.max(Math.floor(Math.pow(massCharacteristics.getDriveSpaces(), 0.5)), 1))).intValue();
     }
 
-    int getMastHullDepth() {
+    public int getMastHullDepth() {
         return Double.valueOf(Math.round(Math.max(Math.pow(massCharacteristics.getMastStructureMass(), 0.25), 1))).intValue();
     }
 }

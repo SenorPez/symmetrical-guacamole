@@ -1,4 +1,4 @@
-package com.senorpez.avt.shipdesigner;
+package com.senorpez.avt.shipdesigner.enums;
 
 import org.junit.jupiter.api.Test;
 

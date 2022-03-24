@@ -1,4 +1,4 @@
-package com.senorpez.avt.shipdesigner;
+package com.senorpez.avt.shipdesigner.characteristics;
 
 import java.util.ArrayList;
 import java.util.List;

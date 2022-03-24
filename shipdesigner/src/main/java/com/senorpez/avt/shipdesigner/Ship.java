@@ -1,12 +1,14 @@
 package com.senorpez.avt.shipdesigner;
 
+import com.senorpez.avt.shipdesigner.characteristics.*;
+import com.senorpez.avt.shipdesigner.enums.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
-class Ship {
+public class Ship {
     // Inputs
     private String name = "Class Name";
     private Nation origin = Nation.OLYMPIAN_REPUBLIC;
@@ -296,15 +298,15 @@ class Ship {
         return driveCharacteristics.getDriveDamage();
     }
 
-    int getHullArmor() {
+    public int getHullArmor() {
         // TODO: Probably move into a 'Systems' object. Exists now only to support
-        //       com.senorpez.avt.shipdesigner.ShipCharacteristics.getHullArmor
+        //       com.senorpez.avt.shipdesigner.characteristics.ShipCharacteristics.getHullArmor
         return 1;
     }
 
-    int getArmorShrink() {
+    public int getArmorShrink() {
         // TODO: Probably move into a 'Systems' object. Exists now only to support
-        //       com.senorpez.avt.shipdesigner.ShipCharacteristics.getArmorShrink
+        //       com.senorpez.avt.shipdesigner.characteristics.ShipCharacteristics.getArmorShrink
         return 0;
     }
 
@@ -503,7 +505,7 @@ class Ship {
         return this;
     }
 
-    Shape getShape() {
+    public Shape getShape() {
         return shape;
     }
 
@@ -513,7 +515,7 @@ class Ship {
         return this;
     }
 
-    int getHullSize() {
+    public int getHullSize() {
         return hullSize;
     }
 
@@ -570,7 +572,7 @@ class Ship {
         return this;
     }
 
-    double getDriveGeneration() {
+    public double getDriveGeneration() {
         return driveGeneration;
     }
 
@@ -579,7 +581,7 @@ class Ship {
         return this;
     }
 
-    double getMaximumThrust() {
+    public double getMaximumThrust() {
         return maximumThrust;
     }
 
@@ -588,7 +590,7 @@ class Ship {
         return this;
     }
 
-    int getDriveArmor() {
+    public int getDriveArmor() {
         return driveArmor;
     }
 
@@ -597,7 +599,7 @@ class Ship {
         return this;
     }
 
-    int getMastArmor() {
+    public int getMastArmor() {
         return mastArmor;
     }
 

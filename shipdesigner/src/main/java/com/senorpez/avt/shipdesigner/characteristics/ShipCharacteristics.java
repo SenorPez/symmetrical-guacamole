@@ -1,6 +1,9 @@
-package com.senorpez.avt.shipdesigner;
+package com.senorpez.avt.shipdesigner.characteristics;
 
-record ShipCharacteristics(Ship ship) {
+import com.senorpez.avt.shipdesigner.Ship;
+import com.senorpez.avt.shipdesigner.enums.Shape;
+
+public record ShipCharacteristics(Ship ship) {
     int getShipSpaces() {
         return ship.getHullSize();
     }

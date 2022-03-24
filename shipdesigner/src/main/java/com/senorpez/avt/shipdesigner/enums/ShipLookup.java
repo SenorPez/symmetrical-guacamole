@@ -1,4 +1,4 @@
-package com.senorpez.avt.shipdesigner;
+package com.senorpez.avt.shipdesigner.enums;
 
 import java.util.Comparator;
 import java.util.HashMap;
