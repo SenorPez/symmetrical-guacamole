@@ -1,7 +1,7 @@
 package com.senorpez.avt.shipdesigner.enums;
 
 public enum Shape {
-    CYLINDER("Cylinder", 1d, 0.05d, 1d, 0.0318d, 0.8d, 1, 2) {
+    CYLINDER("Cylinder", 1d, 0.05d, 1d, 0.0318d, 0.8d, 1, 2, 0.8d) {
         @Override
         public int getImprovedAccesswayRequirement(final int shipSpaces) {
             return Math.round(shipSpaces / 100f);
@@ -32,7 +32,7 @@ public enum Shape {
             return shipLookup.getCylinderMaximumMountLines_Single(hullSpaces);
         }
     },
-    SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 0.239d, 1.0d, 3, 5) {
+    SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 0.239d, 1.0d, 3, 5, 1.0d) {
         @Override
         public double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
             return getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical);
@@ -86,15 +86,15 @@ public enum Shape {
             return approxAxialDepth1(hullSpaces + 25);
         }
     },
-    LONG_CYLINDER("Long Cylinder", 0.75d, 0.025d, 0.75d, Math.pow(10, -2.25), 0.7d, 1, 2) {
+    LONG_CYLINDER("Long Cylinder", 0.75d, 0.025d, 0.75d, Math.pow(10, -2.25), 0.7d, 1, 2, 0.6d) {
         @Override
         public int getImprovedAccesswayRequirement(final int shipSpaces) {
             return Math.round(shipSpaces / 100f);
         }
     },
-    HEMISPHEROID("Hemispheroid", 1.75d, 0.215d, 1.375d, Math.pow(10, -0.3109), 1.1d, 3, 5),
-    CONICAL("Conical", 1.375, 0.1125d, 1.1825d, Math.pow(10, -0.87), 1.05d, 1, 3),
-    ELLIPSOID("Ellipsoid", 1.25d, 0.075d, 1.125d, Math.pow(10, -1.05), 0.9d, 2, 4) {
+    HEMISPHEROID("Hemispheroid", 1.75d, 0.215d, 1.375d, Math.pow(10, -0.3109), 1.1d, 3, 5, 1.0d),
+    CONICAL("Conical", 1.375, 0.1125d, 1.1825d, Math.pow(10, -0.87), 1.05d, 1, 3, 0.9d),
+    ELLIPSOID("Ellipsoid", 1.25d, 0.075d, 1.125d, Math.pow(10, -1.05), 0.9d, 2, 4, 1.0d) {
         @Override
         public double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
             return 2 * getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical);
@@ -193,9 +193,11 @@ public enum Shape {
     private final int largestMountLines_Option1;
     private final int largestMountLines_Option2;
 
+    private final double hullCostPerSpace;
+
     private static final ShipLookup shipLookup = new ShipLookup();
 
-    Shape(String shapeName, double mastMassModifier, double thrusterModifier, double pivotModifier, double rollModifier, double hullCostModifier, int largestMountLines_Option1, int largestMountLines_Option2) {
+    Shape(String shapeName, double mastMassModifier, double thrusterModifier, double pivotModifier, double rollModifier, double hullCostModifier, int largestMountLines_Option1, int largestMountLines_Option2, double hullCostPerSpace) {
         this.shapeName = shapeName;
         this.mastMassModifier = mastMassModifier;
         this.thrusterModifier = thrusterModifier;
@@ -204,6 +206,8 @@ public enum Shape {
         this.hullCostModifier = hullCostModifier;
         this.largestMountLines_Option1 = largestMountLines_Option1;
         this.largestMountLines_Option2 = largestMountLines_Option2;
+
+        this.hullCostPerSpace = hullCostPerSpace;
     }
 
     public String getShapeName() {
@@ -236,6 +240,10 @@ public enum Shape {
 
     public int getLargestMountLines_Option2() {
         return largestMountLines_Option2;
+    }
+
+    public double getHullCostPerSpace() {
+        return hullCostPerSpace;
     }
 
     public double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {

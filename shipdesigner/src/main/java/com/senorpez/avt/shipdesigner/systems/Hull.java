@@ -9,7 +9,6 @@ class Hull extends System {
     private final static int crewRequiredPerSpace = 0;
     private final static double maintenanceRate = 0.15d;
 
-    private final double costPerSpace = 1d;
     private final int basicSpacesUsed = 0;
 
     Hull(final Ship ship,
@@ -27,7 +26,7 @@ class Hull extends System {
     }
 
     double getCostPerSpace() {
-        return costPerSpace;
+        return getShip().getShape().getHullCostPerSpace();
     }
 
     @Override
