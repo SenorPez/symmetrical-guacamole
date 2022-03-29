@@ -20,7 +20,7 @@ class HullTest {
 
     @BeforeEach
     void setUp() {
-        instance = new Hull(ship, 0, Hull.ProductionLevel.STANDARD);
+        instance = new Hull(ship, 0, ProductionLevel.STANDARD);
     }
 
     @Test
@@ -61,7 +61,7 @@ class HullTest {
 
     @Test
     void getProductionLevel() {
-        Hull.ProductionLevel expectedValue = Hull.ProductionLevel.STANDARD;
+        ProductionLevel expectedValue = ProductionLevel.STANDARD;
         assertEquals(expectedValue, instance.getProductionLevel());
     }
 
@@ -108,11 +108,11 @@ class HullTest {
     void getEconomicCost() {
         when(ship.getHullSize()).thenReturn(55);
 
-        instance.setProductionLevel(Hull.ProductionLevel.STANDARD);
+        instance.setProductionLevel(ProductionLevel.STANDARD);
         int expectedValue = 55;
         assertEquals(expectedValue, instance.getEconomicCost());
 
-        instance.setProductionLevel(Hull.ProductionLevel.PROTOTYPE);
+        instance.setProductionLevel(ProductionLevel.PROTOTYPE);
         expectedValue = 220;
         assertEquals(expectedValue, instance.getEconomicCost());
     }
@@ -121,11 +121,11 @@ class HullTest {
     void getMaintenanceCostPerYear() {
         when(ship.getHullSize()).thenReturn(55);
 
-        instance.setProductionLevel(Hull.ProductionLevel.STANDARD);
+        instance.setProductionLevel(ProductionLevel.STANDARD);
         double expectedValue = 8.25000d;
         assertEquals(expectedValue, instance.getMaintenanceCostPerYear(), tolerance);
 
-        instance.setProductionLevel(Hull.ProductionLevel.PROTOTYPE);
+        instance.setProductionLevel(ProductionLevel.PROTOTYPE);
         expectedValue = 33.00000d;
         assertEquals(expectedValue, instance.getMaintenanceCostPerYear(), tolerance);
     }
