@@ -34,9 +34,9 @@ class HullTest {
     }
 
     @Test
-    void getSpacesPerSystem() {
+    void getQuantity() {
         int expectedValue = 0;
-        assertEquals(expectedValue, instance.getSpacesPerSystem());
+        assertEquals(expectedValue, instance.getQuantity());
     }
 
     @Test
@@ -46,9 +46,15 @@ class HullTest {
     }
 
     @Test
-    void getActualSpacesUsed() {
+    void getShrinkEnhancement() {
         int expectedValue = 0;
-        assertEquals(expectedValue, instance.getActualSpacesUsed());
+        assertEquals(expectedValue, instance.getShrinkEnhancement());
+    }
+
+    @Test
+    void getSpacesPerSystem() {
+        int expectedValue = 0;
+        assertEquals(expectedValue, instance.getSpacesPerSystem());
     }
 
     @Test
@@ -64,15 +70,9 @@ class HullTest {
     }
 
     @Test
-    void getProductionLevel() {
-        ProductionLevel expectedValue = ProductionLevel.STANDARD;
-        assertEquals(expectedValue, instance.getProductionLevel());
-    }
-
-    @Test
-    void getMaintenanceRate() {
-        double expectedValue = 0.15d;
-        assertEquals(expectedValue, instance.getMaintenanceRate());
+    void getActualSpacesUsed() {
+        int expectedValue = 0;
+        assertEquals(expectedValue, instance.getActualSpacesUsed());
     }
 
     @Test
@@ -94,7 +94,7 @@ class HullTest {
     }
 
     @Test
-    void getCrewRequired() {
+    void getCrewRequirement() {
         int expectedValue = 0;
         assertEquals(expectedValue, instance.getCrewRequirement());
     }
@@ -107,6 +107,12 @@ class HullTest {
     }
 
     @Test
+    void getProductionLevel() {
+        ProductionLevel expectedValue = ProductionLevel.STANDARD;
+        assertEquals(expectedValue, instance.getProductionLevel());
+    }
+
+    @Test
     void getEconomicCost() {
         when(ship.getHullSize()).thenReturn(55);
         int expectedValue = 55;
@@ -115,6 +121,12 @@ class HullTest {
         instance = instance.setProductionLevel(ProductionLevel.PROTOTYPE);
         expectedValue = 220;
         assertEquals(expectedValue, instance.getEconomicCost());
+    }
+
+    @Test
+    void getMaintenanceRate() {
+        double expectedValue = 0.15d;
+        assertEquals(expectedValue, instance.getMaintenanceRate());
     }
 
     @Test

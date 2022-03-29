@@ -127,7 +127,7 @@ class DriveTest {
     }
 
     @Test
-    void getCrewRequirements() {
+    void getCrewRequirement() {
         when(massCharacteristics.getDriveSpaces()).thenReturn(10.68039d);
         double expectedValue = 5.5d;
         assertEquals(expectedValue, instance.getCrewRequirement(), tolerance);
