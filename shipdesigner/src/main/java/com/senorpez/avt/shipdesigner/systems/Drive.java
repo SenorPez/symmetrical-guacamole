@@ -88,7 +88,7 @@ class Drive {
         return Double.valueOf(Math.ceil(getBasicSpacesUsed() * getCostPerSpace() * shrinkCost.get(getShrinkEnhancement()))).intValue();
     }
 
-    double getCrewRequirements() {
+    double getCrewRequirement() {
         return getTotalEngineSpaces() * getCrewRequiredPerSpace();
     }
 

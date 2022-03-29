@@ -20,7 +20,7 @@ class HullTest {
 
     @BeforeEach
     void setUp() {
-        instance = new Hull(ship, 0, ProductionLevel.STANDARD);
+        instance = new Hull(0, ProductionLevel.STANDARD, ship);
     }
 
     @Test
@@ -81,12 +81,10 @@ class HullTest {
     @Test
     void getEnhancedCost() {
         when(ship.getHullSize()).thenReturn(55);
-
-        instance.setShrinkEnhancement(0);
         int expectedValue = 55;
         assertEquals(expectedValue, instance.getEnhancedCost());
 
-        instance.setShrinkEnhancement(3);
+        instance = instance.setShrinkEnhancement(3);
         expectedValue = 82;
         assertEquals(expectedValue, instance.getEnhancedCost());
     }
@@ -94,7 +92,7 @@ class HullTest {
     @Test
     void getCrewRequired() {
         int expectedValue = 0;
-        assertEquals(expectedValue, instance.getCrewRequired());
+        assertEquals(expectedValue, instance.getCrewRequirement());
     }
 
     @Test
@@ -107,12 +105,10 @@ class HullTest {
     @Test
     void getEconomicCost() {
         when(ship.getHullSize()).thenReturn(55);
-
-        instance.setProductionLevel(ProductionLevel.STANDARD);
         int expectedValue = 55;
         assertEquals(expectedValue, instance.getEconomicCost());
 
-        instance.setProductionLevel(ProductionLevel.PROTOTYPE);
+        instance = instance.setProductionLevel(ProductionLevel.PROTOTYPE);
         expectedValue = 220;
         assertEquals(expectedValue, instance.getEconomicCost());
     }
@@ -120,12 +116,10 @@ class HullTest {
     @Test
     void getMaintenanceCostPerYear() {
         when(ship.getHullSize()).thenReturn(55);
-
-        instance.setProductionLevel(ProductionLevel.STANDARD);
         double expectedValue = 8.25000d;
         assertEquals(expectedValue, instance.getMaintenanceCostPerYear(), tolerance);
 
-        instance.setProductionLevel(ProductionLevel.PROTOTYPE);
+        instance = instance.setProductionLevel(ProductionLevel.PROTOTYPE);
         expectedValue = 33.00000d;
         assertEquals(expectedValue, instance.getMaintenanceCostPerYear(), tolerance);
     }

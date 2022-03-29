@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Hull {
-    private Ship ship;
+class Hull {
     private int shrinkEnhancement;
     private ProductionLevel productionLevel;
 
+    private Ship ship;
+
     private final String name = "Hull";
+    private final int quantity = 0;
     private final int spacesPerSystem = 0;
     private final int basicSpacesUsed = 0;
     private final int actualSpacesUsed = 0;
@@ -22,7 +24,7 @@ public class Hull {
 
     private final List<Double> shrinkCost = new ArrayList<>();
 
-    public Hull(Ship ship, int shrinkEnhancement, ProductionLevel productionLevel) {
+    Hull(int shrinkEnhancement, ProductionLevel productionLevel, Ship ship) {
         this.ship = ship;
         this.shrinkEnhancement = shrinkEnhancement;
         this.productionLevel = productionLevel;
@@ -33,82 +35,77 @@ public class Hull {
                 .collect(Collectors.toList()));
     }
 
-    public Ship getShip() {
-        return ship;
+    String getName() {
+        return name;
     }
 
-    public Hull setShip(Ship ship) {
-        this.ship = ship;
-        return this;
+    int getQuantity() {
+        return quantity;
     }
 
-    public int getShrinkEnhancement() {
+    int getBasicSpacesUsed() {
+        return basicSpacesUsed;
+    }
+
+    int getShrinkEnhancement() {
         return shrinkEnhancement;
     }
 
-    public Hull setShrinkEnhancement(int shrinkEnhancement) {
+    int getSpacesPerSystem() {
+        return spacesPerSystem;
+    }
+
+    int getCostPerSpace() {
+        return costPerSpace;
+    }
+
+    int getCrewRequiredPerSpace() {
+        return crewRequiredPerSpace;
+    }
+
+    int getActualSpacesUsed() {
+        return actualSpacesUsed;
+    }
+
+    int getBaseCost() {
+        return Double.valueOf(Math.ceil(costPerSpace * ship.getHullSize())).intValue();
+    }
+
+    int getEnhancedCost() {
+        return Double.valueOf(Math.ceil(getBaseCost() * shrinkCost.get(shrinkEnhancement))).intValue();
+    }
+
+    int getCrewRequirement() {
+        return basicSpacesUsed * crewRequiredPerSpace;
+    }
+
+    int getDuelCost() {
+        return getEnhancedCost();
+    }
+
+    ProductionLevel getProductionLevel() {
+        return productionLevel;
+    }
+
+    int getEconomicCost() {
+        return Double.valueOf(Math.ceil(getDuelCost() * getProductionLevel().getEconomicCostModifier())).intValue();
+    }
+
+    double getMaintenanceRate() {
+        return maintenanceRate;
+    }
+
+    double getMaintenanceCostPerYear() {
+        return getEconomicCost() * getMaintenanceRate();
+    }
+
+    Hull setShrinkEnhancement(int shrinkEnhancement) {
         this.shrinkEnhancement = shrinkEnhancement;
         return this;
     }
 
-    public ProductionLevel getProductionLevel() {
-        return productionLevel;
-    }
-
-    public Hull setProductionLevel(ProductionLevel productionLevel) {
+    Hull setProductionLevel(ProductionLevel productionLevel) {
         this.productionLevel = productionLevel;
         return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getSpacesPerSystem() {
-        return spacesPerSystem;
-    }
-
-    public int getBasicSpacesUsed() {
-        return basicSpacesUsed;
-    }
-
-    public int getActualSpacesUsed() {
-        return actualSpacesUsed;
-    }
-
-    public int getCostPerSpace() {
-        return costPerSpace;
-    }
-
-    public int getCrewRequiredPerSpace() {
-        return crewRequiredPerSpace;
-    }
-
-    public double getMaintenanceRate() {
-        return maintenanceRate;
-    }
-
-    final int getBaseCost() {
-        return Double.valueOf(Math.ceil(costPerSpace * ship.getHullSize())).intValue();
-    }
-
-    final int getEnhancedCost() {
-        return Double.valueOf(Math.ceil(getBaseCost() * shrinkCost.get(shrinkEnhancement))).intValue();
-    }
-
-    final int getCrewRequired() {
-        return basicSpacesUsed * crewRequiredPerSpace;
-    }
-
-    final int getDuelCost() {
-        return getEnhancedCost();
-    }
-
-    final int getEconomicCost() {
-        return Double.valueOf(Math.ceil(getDuelCost() * getProductionLevel().getEconomicCostModifier())).intValue();
-    }
-
-    final double getMaintenanceCostPerYear() {
-        return getEconomicCost() * getMaintenanceRate();
     }
 }
