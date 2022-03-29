@@ -46,12 +46,12 @@ class Drive extends System {
         return extraStructure;
     }
 
-    int getEngineDamage() {
-        return Double.valueOf(Math.ceil(getTotalEngineSpaces() / ((getShip().getHullSize() / 50d) * (getShip().getMaximumThrust() * 0.25) * (getShip().getDriveGeneration() / 10)) * ((driveModifier.get(getShrinkEnhancement()) - 1) * 2 + 1))).intValue();
+    int getDriveDamage() {
+        return Double.valueOf(Math.ceil(getTotalDriveSpaces() / ((getShip().getHullSize() / 50d) * (getShip().getMaximumThrust() * 0.25) * (getShip().getDriveGeneration() / 10)) * ((driveModifier.get(getShrinkEnhancement()) - 1) * 2 + 1))).intValue();
     }
 
     int getBasicSpacesUsed() {
-        return getTotalEngineSpaces() * getSpacesPerSystem();
+        return getTotalDriveSpaces() * getSpacesPerSystem();
     }
 
     double getCostPerSpace() {
@@ -68,7 +68,7 @@ class Drive extends System {
         return this;
     }
 
-    private int getTotalEngineSpaces() {
+    private int getTotalDriveSpaces() {
         return getQuantity() + getExtraStructure();
     }
 }

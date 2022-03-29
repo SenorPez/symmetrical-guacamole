@@ -53,14 +53,14 @@ class DriveTest {
     }
 
     @Test
-    void getEngineDamage() {
+    void getDriveDamage() {
         when(ship.getHullSize()).thenReturn(55);
         when(ship.getMaximumThrust()).thenReturn(11d);
         when(ship.getDriveGeneration()).thenReturn(3.1d);
         when(massCharacteristics.getDriveSpaces()).thenReturn(10.68039d);
 
         int expectedValue = 12;
-        assertEquals(expectedValue, instance.getEngineDamage());
+        assertEquals(expectedValue, instance.getDriveDamage());
     }
 
     @Test

@@ -109,7 +109,7 @@ class DriveCharacteristicsTest {
     }
 
     @Test
-    void getEngineDamage() {
+    void getDriveDamage() {
         when(massCharacteristics.getOverallDriveSpaces_noArmor()).thenReturn(10.68039d);
         when(shipCharacteristics.getShipSpaces()).thenReturn(55);
         when(shipCharacteristics.getShipAcceleration()).thenReturn(2.75d);
