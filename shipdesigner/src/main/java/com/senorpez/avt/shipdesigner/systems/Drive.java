@@ -8,28 +8,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class Drive {
+class Drive extends System {
     private int extraStructure;
-    private int shrinkEnhancement;
-    private ProductionLevel productionLevel;
 
-    private Ship ship;
-    private MassCharacteristics massCharacteristics;
+    private final MassCharacteristics massCharacteristics;
 
-    private final String name = "Drive";
-    private final int spacesPerSystem = 1;
-    private final double crewRequiredPerSpace = 0.5d;
-    private final double maintenanceRate = 0.2d;
+    private final static String name = "Drive";
+    private final static int spacesPerSystem = 1;
+    private final static double crewRequiredPerSpace = 0.5d;
+    private final static double maintenanceRate = 0.2d;
 
     private final List<Double> driveModifier = new ArrayList<>();
     private final List<Double> shrinkCost = new ArrayList<>();
 
-    Drive(int extraStructure, int shrinkEnhancement, ProductionLevel productionLevel, Ship ship, MassCharacteristics massCharacteristics) {
+    Drive(final Ship ship,
+          final MassCharacteristics massCharacteristics,
+          final int extraStructure,
+          final ProductionLevel productionLevel,
+          final int shrinkEnhancement) {
+        super(ship, name, spacesPerSystem, crewRequiredPerSpace, maintenanceRate, productionLevel, shrinkEnhancement);
         this.extraStructure = extraStructure;
-        this.shrinkEnhancement = shrinkEnhancement;
-        this.productionLevel = productionLevel;
-
-        this.ship = ship;
         this.massCharacteristics = massCharacteristics;
 
         driveModifier.addAll(
@@ -38,10 +36,6 @@ class Drive {
                 .limit(10)
                 .map(t -> t[1])
                 .collect(Collectors.toList()));
-    }
-
-    String getName() {
-        return name;
     }
 
     int getQuantity() {
@@ -53,43 +47,15 @@ class Drive {
     }
 
     int getEngineDamage() {
-        return Double.valueOf(Math.ceil(getTotalEngineSpaces() / ((ship.getHullSize() / 50d) * (ship.getMaximumThrust() * 0.25) * (ship.getDriveGeneration() / 10)) * ((driveModifier.get(getShrinkEnhancement()) - 1) * 2 + 1))).intValue();
+        return Double.valueOf(Math.ceil(getTotalEngineSpaces() / ((getShip().getHullSize() / 50d) * (getShip().getMaximumThrust() * 0.25) * (getShip().getDriveGeneration() / 10)) * ((driveModifier.get(getShrinkEnhancement()) - 1) * 2 + 1))).intValue();
     }
 
     int getBasicSpacesUsed() {
         return getTotalEngineSpaces() * getSpacesPerSystem();
     }
 
-    int getShrinkEnhancement() {
-        return shrinkEnhancement;
-    }
-
-    int getSpacesPerSystem() {
-        return spacesPerSystem;
-    }
-
     double getCostPerSpace() {
-        return 4.5d * Math.pow(ship.getDriveGeneration(), 1.2) * driveModifier.get(getShrinkEnhancement());
-    }
-
-    double getCrewRequiredPerSpace() {
-        return crewRequiredPerSpace;
-    }
-
-    double getActualSpacesUsed() {
-        return getTotalEngineSpaces();
-    }
-
-    int getBaseCost() {
-        return Double.valueOf(Math.ceil(getBasicSpacesUsed() * getCostPerSpace())).intValue();
-    }
-
-    int getEnhancedCost() {
-        return Double.valueOf(Math.ceil(getBasicSpacesUsed() * getCostPerSpace() * shrinkCost.get(getShrinkEnhancement()))).intValue();
-    }
-
-    double getCrewRequirement() {
-        return getTotalEngineSpaces() * getCrewRequiredPerSpace();
+        return 4.5d * Math.pow(getShip().getDriveGeneration(), 1.2) * driveModifier.get(getShrinkEnhancement());
     }
 
     double getArmorLevel() {
@@ -97,48 +63,8 @@ class Drive {
         return 0;
     }
 
-    int getDuelCost() {
-        return getEnhancedCost();
-    }
-
-    ProductionLevel getProductionLevel() {
-        return productionLevel;
-    }
-
-    int getEconomicCost() {
-        return Double.valueOf(Math.ceil(getDuelCost() * getProductionLevel().getEconomicCostModifier())).intValue();
-    }
-
-    double getMaintenanceRate() {
-        return maintenanceRate;
-    }
-
-    double getMaintenanceCostPerYear() {
-        return getEconomicCost() * getMaintenanceRate();
-    }
-
-    Drive setExtraStructure(int extraStructure) {
+    Drive setExtraStructure(final int extraStructure) {
         this.extraStructure = extraStructure;
-        return this;
-    }
-
-    Drive setShrinkEnhancement(int shrinkEnhancement) {
-        this.shrinkEnhancement = shrinkEnhancement;
-        return this;
-    }
-
-    Drive setProductionLevel(ProductionLevel productionLevel) {
-        this.productionLevel = productionLevel;
-        return this;
-    }
-
-    Drive setShip(Ship ship) {
-        this.ship = ship;
-        return this;
-    }
-
-    Drive setMassCharacteristics(MassCharacteristics massCharacteristics) {
-        this.massCharacteristics = massCharacteristics;
         return this;
     }
 

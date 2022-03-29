@@ -20,7 +20,11 @@ class HullTest {
 
     @BeforeEach
     void setUp() {
-        instance = new Hull(0, ProductionLevel.STANDARD, ship);
+        instance = new Hull(
+                ship,
+                ProductionLevel.STANDARD,
+                0
+        );
     }
 
     @Test

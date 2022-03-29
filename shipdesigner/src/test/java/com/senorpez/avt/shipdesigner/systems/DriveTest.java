@@ -23,7 +23,13 @@ class DriveTest {
 
     @BeforeEach
     void setUp() {
-        instance = new Drive(0, 0, ProductionLevel.STANDARD, ship, massCharacteristics);
+        instance = new Drive(
+                ship,
+                massCharacteristics,
+                0,
+                ProductionLevel.STANDARD,
+                0
+        );
     }
 
     @Test

@@ -2,41 +2,20 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+class Hull extends System {
+    private final static String name = "Hull";
+    private final static int quantity = 0;
+    private final static int spacesPerSystem = 0;
+    private final static int crewRequiredPerSpace = 0;
+    private final static double maintenanceRate = 0.15d;
 
-class Hull {
-    private int shrinkEnhancement;
-    private ProductionLevel productionLevel;
-
-    private Ship ship;
-
-    private final String name = "Hull";
-    private final int quantity = 0;
-    private final int spacesPerSystem = 0;
+    private final double costPerSpace = 1d;
     private final int basicSpacesUsed = 0;
-    private final int actualSpacesUsed = 0;
-    private final int costPerSpace = 1;
-    private final int crewRequiredPerSpace = 0;
-    private final double maintenanceRate = 0.15d;
 
-    private final List<Double> shrinkCost = new ArrayList<>();
-
-    Hull(int shrinkEnhancement, ProductionLevel productionLevel, Ship ship) {
-        this.ship = ship;
-        this.shrinkEnhancement = shrinkEnhancement;
-        this.productionLevel = productionLevel;
-
-        shrinkCost.addAll(Stream.iterate(new double[]{1, 1d, 1d + 1 / 10d}, t -> new double[]{t[0] + 1, t[2], t[2] + (t[0] + 1) / 10d * 0.75})
-                .limit(10)
-                .map(t -> t[1])
-                .collect(Collectors.toList()));
-    }
-
-    String getName() {
-        return name;
+    Hull(final Ship ship,
+         final ProductionLevel productionLevel,
+         final int shrinkEnhancement) {
+        super(ship, name, spacesPerSystem, crewRequiredPerSpace, maintenanceRate, productionLevel, shrinkEnhancement);
     }
 
     int getQuantity() {
@@ -47,65 +26,17 @@ class Hull {
         return basicSpacesUsed;
     }
 
-    int getShrinkEnhancement() {
-        return shrinkEnhancement;
-    }
-
-    int getSpacesPerSystem() {
-        return spacesPerSystem;
-    }
-
-    int getCostPerSpace() {
+    double getCostPerSpace() {
         return costPerSpace;
     }
 
-    int getCrewRequiredPerSpace() {
-        return crewRequiredPerSpace;
-    }
-
-    int getActualSpacesUsed() {
-        return actualSpacesUsed;
-    }
-
+    @Override
     int getBaseCost() {
-        return Double.valueOf(Math.ceil(costPerSpace * ship.getHullSize())).intValue();
+        return Double.valueOf(Math.ceil(getShip().getHullSize() * getCostPerSpace())).intValue();
     }
 
+    @Override
     int getEnhancedCost() {
-        return Double.valueOf(Math.ceil(getBaseCost() * shrinkCost.get(shrinkEnhancement))).intValue();
-    }
-
-    int getCrewRequirement() {
-        return basicSpacesUsed * crewRequiredPerSpace;
-    }
-
-    int getDuelCost() {
-        return getEnhancedCost();
-    }
-
-    ProductionLevel getProductionLevel() {
-        return productionLevel;
-    }
-
-    int getEconomicCost() {
-        return Double.valueOf(Math.ceil(getDuelCost() * getProductionLevel().getEconomicCostModifier())).intValue();
-    }
-
-    double getMaintenanceRate() {
-        return maintenanceRate;
-    }
-
-    double getMaintenanceCostPerYear() {
-        return getEconomicCost() * getMaintenanceRate();
-    }
-
-    Hull setShrinkEnhancement(int shrinkEnhancement) {
-        this.shrinkEnhancement = shrinkEnhancement;
-        return this;
-    }
-
-    Hull setProductionLevel(ProductionLevel productionLevel) {
-        this.productionLevel = productionLevel;
-        return this;
+        return Double.valueOf(Math.ceil(getShip().getHullSize() * getCostPerSpace() * shrinkCost.get(getShrinkEnhancement()))).intValue();
     }
 }
