@@ -43,7 +43,7 @@ public abstract class ArmoredSystem extends System {
     }
 
     @SuppressWarnings("unchecked")
-    <T extends ArmoredSystem> T setArmorLevel(int armorLevel) {
+    public <T extends ArmoredSystem> T setArmorLevel(int armorLevel) {
         this.armorLevel = armorLevel;
         return (T) this;
     }
