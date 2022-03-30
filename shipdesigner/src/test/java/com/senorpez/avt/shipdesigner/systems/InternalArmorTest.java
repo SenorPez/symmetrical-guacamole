@@ -19,14 +19,14 @@ public class InternalArmorTest {
     @Mock
     ArmorProductionLevel armorProductionLevel;
 
-    private ExternalArmor instance;
+    private InternalArmor instance;
     private final double tolerance = 0.001d;
 
     @BeforeEach
     void setUp() {
         when(armorShrink.getShrinkEnhancement()).thenReturn(1);
         when(armorProductionLevel.getProductionLevel()).thenReturn(ProductionLevel.STANDARD);
-        instance = new ExternalArmor(
+        instance = new InternalArmor(
                 ship,
                 1,
                 armorShrink,
@@ -36,7 +36,7 @@ public class InternalArmorTest {
 
     @Test
     void getName() {
-        String expectedValue = "External Armor";
+        String expectedValue = "Internal Armor";
         assertEquals(expectedValue, instance.getName());
     }
 
@@ -49,7 +49,7 @@ public class InternalArmorTest {
     @Test
     void getExternalArmorPoints() {
         int expectedValue = 6;
-        assertEquals(expectedValue, instance.getExternalArmorPoints());
+        assertEquals(expectedValue, instance.getInternalArmorPoints());
     }
 
     @Test
