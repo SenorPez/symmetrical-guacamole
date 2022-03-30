@@ -2,9 +2,6 @@ package com.senorpez.avt.shipdesigner.systems.structural;
 
 import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
-import com.senorpez.avt.shipdesigner.systems.structural.ArmorProductionLevel;
-import com.senorpez.avt.shipdesigner.systems.structural.ArmorShrink;
-import com.senorpez.avt.shipdesigner.systems.structural.DriveMastArmor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

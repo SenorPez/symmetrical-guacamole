@@ -3,7 +3,6 @@ package com.senorpez.avt.shipdesigner.systems.structural;
 import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.enums.Shape;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
-import com.senorpez.avt.shipdesigner.systems.structural.FrameReinforcement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
