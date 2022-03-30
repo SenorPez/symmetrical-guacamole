@@ -52,7 +52,7 @@ public record DriveCharacteristics(ShipCharacteristics shipCharacteristics,
         return Long.valueOf(Math.round(shipCharacteristics.getShipSpaces() / 50d)).intValue();
     }
 
-    int getImprovedAccesswayRequirement() {
+    public int getImprovedAccesswayRequirement() {
         return shipCharacteristics.getHullShape().getImprovedAccesswayRequirement(shipCharacteristics.getShipSpaces());
     }
 }

@@ -31,4 +31,11 @@ class FrameReinforcement extends System {
     double getCostPerSpace() {
         return getShip().getShape().getHullCostPerSpace() * 2;
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    FrameReinforcement setShrinkEnhancement(int quantity) {
+        // Shrink is immutable.
+        return this;
+    }
 }
