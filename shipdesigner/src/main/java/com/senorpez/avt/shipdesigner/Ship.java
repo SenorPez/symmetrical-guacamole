@@ -128,7 +128,7 @@ public class Ship {
         return 0;
     }
 
-    private int getMinimumCrew() {
+    public int getMinimumCrew() {
         // TODO: Compute minimum crew
         return 0;
     }
