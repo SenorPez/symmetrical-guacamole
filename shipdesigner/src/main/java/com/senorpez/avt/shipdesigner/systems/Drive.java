@@ -65,6 +65,11 @@ class Drive extends System {
         return 4.5d * Math.pow(getShip().getDriveGeneration(), 1.2) * driveModifier.get(getShrinkEnhancement());
     }
 
+    @Override
+    int getActualSpacesUsed() {
+        return getBasicSpacesUsed();
+    }
+
     double getArmorLevel() {
         // TODO: Seems to always be 0 in spreadsheet.
         return 0;

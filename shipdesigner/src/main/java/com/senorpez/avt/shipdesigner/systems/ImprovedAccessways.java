@@ -39,6 +39,11 @@ class ImprovedAccessways extends System {
         return hasImprovedAccessways ? driveCharacteristics.getImprovedAccesswayRequirement() : 0;
     }
 
+    @Override
+    int getActualSpacesUsed() {
+        return getBasicSpacesUsed();
+    }
+
     ImprovedAccessways setHasImprovedAccessways(boolean hasImprovedAccessways) {
         this.hasImprovedAccessways = hasImprovedAccessways;
         return this;

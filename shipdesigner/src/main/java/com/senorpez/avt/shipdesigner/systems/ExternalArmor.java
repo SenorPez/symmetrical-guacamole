@@ -39,6 +39,11 @@ class ExternalArmor extends System {
     }
 
     @Override
+    int getActualSpacesUsed() {
+        return getBasicSpacesUsed();
+    }
+
+    @Override
     ProductionLevel getProductionLevel() {
         return armorProductionLevel.getProductionLevel();
     }

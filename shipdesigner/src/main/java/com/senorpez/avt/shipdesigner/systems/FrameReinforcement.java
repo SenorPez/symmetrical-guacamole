@@ -32,6 +32,11 @@ class FrameReinforcement extends System {
         return getShip().getShape().getHullCostPerSpace() * 2;
     }
 
+    @Override
+    int getActualSpacesUsed() {
+        return getBasicSpacesUsed();
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     FrameReinforcement setShrinkEnhancement(int quantity) {

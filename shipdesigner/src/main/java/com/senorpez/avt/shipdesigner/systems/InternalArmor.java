@@ -12,7 +12,7 @@ class InternalArmor extends System {
     private final static double crewRequiredPerSpace = 0d;
     private final static double maintenanceRate = 0.05;
 
-    public InternalArmor(Ship ship,
+    InternalArmor(Ship ship,
                          int quantity,
                          ArmorShrink armorShrink,
                          ArmorProductionLevel armorProductionLevel) {
@@ -36,6 +36,11 @@ class InternalArmor extends System {
     @Override
     int getShrinkEnhancement() {
         return armorShrink.getShrinkEnhancement();
+    }
+
+    @Override
+    int getActualSpacesUsed() {
+        return getBasicSpacesUsed();
     }
 
     @Override

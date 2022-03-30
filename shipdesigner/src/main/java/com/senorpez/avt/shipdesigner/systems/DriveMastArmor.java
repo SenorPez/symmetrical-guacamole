@@ -42,6 +42,11 @@ class DriveMastArmor extends System {
     }
 
     @Override
+    int getActualSpacesUsed() {
+        return getBasicSpacesUsed();
+    }
+
+    @Override
     ProductionLevel getProductionLevel() {
         return armorProductionLevel.getProductionLevel();
     }

@@ -29,6 +29,11 @@ class Hull extends System {
     }
 
     @Override
+    int getActualSpacesUsed() {
+        return getBasicSpacesUsed();
+    }
+
+    @Override
     int getBaseCost() {
         return Double.valueOf(Math.ceil(getShip().getHullSize() * getCostPerSpace())).intValue();
     }

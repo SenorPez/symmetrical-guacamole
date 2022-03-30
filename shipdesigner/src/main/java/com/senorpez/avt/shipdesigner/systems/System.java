@@ -78,7 +78,11 @@ abstract class System {
     }
 
     int getActualSpacesUsed() {
-        return getBasicSpacesUsed();
+        if (getBasicSpacesUsed() > 0) {
+            return Math.max(1, Double.valueOf(Math.floor(getBasicSpacesUsed() * (1 - getShrinkEnhancement() * 0.05))).intValue());
+        } else {
+            return 0;
+        }
     }
 
     int getBaseCost() {
