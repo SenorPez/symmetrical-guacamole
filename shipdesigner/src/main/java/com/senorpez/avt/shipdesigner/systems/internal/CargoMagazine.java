@@ -10,12 +10,12 @@ class CargoMagazine extends Cargo {
     CargoMagazine(Ship ship,
                   int quantity,
                   ProductionLevel productionLevel,
-                  ArmorGroup armorGroup) {
+                  CargoArmor cargoArmor) {
         super(ship,
                 spacesPerSystem,
                 quantity,
                 productionLevel,
-                armorGroup);
+                cargoArmor);
     }
 
     @Override

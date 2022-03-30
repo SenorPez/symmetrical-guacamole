@@ -13,12 +13,12 @@ class CargoSupport extends Cargo {
     CargoSupport(Ship ship,
                  int endurance,
                  ProductionLevel productionLevel,
-                 ArmorGroup armorGroup) {
+                 CargoArmor cargoArmor) {
         super(ship,
                 spacesPerSystem,
                 2, // TODO: Calculate quantity based on endurance; placeholder for now.
                 productionLevel,
-                armorGroup);
+                cargoArmor);
         this.endurance = endurance;
     }
 

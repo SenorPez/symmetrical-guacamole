@@ -16,7 +16,7 @@ class CargoSupportTest {
     @Mock
     Ship ship;
     @Mock
-    ArmorGroup armorGroup;
+    CargoArmor cargoArmor;
 
     private CargoSupport instance;
     private final double tolerance = 0.001d;
@@ -27,7 +27,7 @@ class CargoSupportTest {
                 ship,
                 7,
                 ProductionLevel.STANDARD,
-                armorGroup
+                cargoArmor
         );
     }
 
@@ -105,14 +105,14 @@ class CargoSupportTest {
 
     @Test
     void getArmorLevel() {
-        when(armorGroup.getArmorLevel()).thenReturn(1);
+        when(cargoArmor.getArmorLevel()).thenReturn(1);
         int expectedValue = 1;
         assertEquals(expectedValue, instance.getArmorLevel());
     }
 
     @Test
     void getArmorPointsUsed() {
-        when(armorGroup.getArmorPointsUsed()).thenReturn(5.5d);
+        when(cargoArmor.getArmorPointsUsed()).thenReturn(5.5d);
         double expectedValue = 5.50000d;
         assertEquals(expectedValue, instance.getArmorPointsUsed(), tolerance);
     }

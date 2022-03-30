@@ -28,7 +28,6 @@ class StructuralSummaryTest {
     ImprovedAccessways improvedAccessways;
 
     StructuralSummary instance;
-    final double tolerance = 0.001d;
 
     @BeforeEach
     void setUp() {

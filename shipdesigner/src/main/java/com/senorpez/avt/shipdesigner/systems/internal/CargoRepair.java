@@ -10,12 +10,12 @@ class CargoRepair extends Cargo {
     CargoRepair(Ship ship,
                 int quantity,
                 ProductionLevel productionLevel,
-                ArmorGroup armorGroup) {
+                CargoArmor cargoArmor) {
         super(ship,
                 spacesPerSystem,
                 quantity,
                 productionLevel,
-                armorGroup);
+                cargoArmor);
     }
 
     @Override

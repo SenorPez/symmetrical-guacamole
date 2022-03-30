@@ -94,7 +94,7 @@ public class Drive extends System {
         return this;
     }
 
-    private int getTotalDriveSpaces() {
+    public int getTotalDriveSpaces() {
         return getQuantity() + getExtraStructure();
     }
 }

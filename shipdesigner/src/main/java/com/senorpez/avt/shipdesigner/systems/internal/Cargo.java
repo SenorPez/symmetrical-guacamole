@@ -10,13 +10,13 @@ abstract class Cargo extends ArmoredSystem {
     private final static double crewRequiredPerSpace = 0.125d;
     private final static double maintenanceRate = 0.05d;
 
-    protected ArmorGroup armorGroup;
+    protected CargoArmor cargoArmor;
 
     Cargo(Ship ship,
           int spacesPerSystem,
           int quantity,
           ProductionLevel productionLevel,
-          ArmorGroup armorGroup) {
+          CargoArmor cargoArmor) {
         super(ship,
                 name,
                 spacesPerSystem,
@@ -26,21 +26,21 @@ abstract class Cargo extends ArmoredSystem {
                 quantity,
                 0,
                 productionLevel,
-                armorGroup.getArmorLevel()
+                cargoArmor.getArmorLevel()
         );
-        this.armorGroup = armorGroup;
+        this.cargoArmor = cargoArmor;
     }
 
     public abstract String getName();
 
     @Override
     public int getArmorLevel() {
-        return armorGroup.getArmorLevel();
+        return cargoArmor.getArmorLevel();
     }
 
     @Override
     public double getArmorPointsUsed() {
-        return armorGroup.getArmorPointsUsed();
+        return cargoArmor.getArmorPointsUsed();
     }
 
     @SuppressWarnings("unchecked")
@@ -53,7 +53,7 @@ abstract class Cargo extends ArmoredSystem {
     @SuppressWarnings("unchecked")
     @Override
     public Cargo setArmorLevel(int armorLevel) {
-        this.armorGroup.setArmorLevel(armorLevel);
+        this.cargoArmor.setArmorLevel(armorLevel);
         return this;
     }
 }

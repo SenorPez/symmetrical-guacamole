@@ -12,108 +12,110 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CargoShuttleTest {
+class CivilianReactorTest {
     @Mock
     Ship ship;
     @Mock
-    CargoArmor cargoArmor;
+    ReactorArmor reactorArmor;
 
-    private CargoShuttle instance;
+    private CivilianReactor instance;
+
     private final double tolerance = 0.001d;
 
     @BeforeEach
     void setUp() {
-        instance = new CargoShuttle(
+        instance = new CivilianReactor(
                 ship,
-                1,
+                2,
+                7,
                 ProductionLevel.STANDARD,
-                cargoArmor
+                reactorArmor
         );
     }
 
     @Test
     void getName() {
-        String expectedValue = "Cargo (Shuttle)";
+        String expectedValue = "Civilian Reactor";
         assertEquals(expectedValue, instance.getName());
     }
 
     @Test
     void getQuantity() {
-        int expectedValue = 1;
+        int expectedValue = 2;
         assertEquals(expectedValue, instance.getQuantity());
     }
 
     @Test
     void getBasicSpacesUsed() {
-        int expectedValue = 2;
+        int expectedValue = 6;
         assertEquals(expectedValue, instance.getBasicSpacesUsed());
     }
 
     @Test
     void getShrinkEnhancement() {
-        int expectedValue = 0;
+        int expectedValue = 7;
         assertEquals(expectedValue, instance.getShrinkEnhancement());
     }
 
     @Test
     void getSpacesPerSystem() {
-        int expectedValue = 2;
+        int expectedValue = 3;
         assertEquals(expectedValue, instance.getSpacesPerSystem());
     }
 
     @Test
     void getCostPerSpace() {
-        double expectedValue = 1d;
+        double expectedValue = 4d;
         assertEquals(expectedValue, instance.getCostPerSpace(), tolerance);
     }
 
     @Test
     void getCrewRequiredPerSpace() {
-        double expectedValue = 0.125d;
+        double expectedValue = 0.25d;
         assertEquals(expectedValue, instance.getCrewRequiredPerSpace(), tolerance);
     }
 
     @Test
     void getActualSpacesUsed() {
-        int expectedValue = 2;
+        int expectedValue = 3;
         assertEquals(expectedValue, instance.getActualSpacesUsed());
     }
 
     @Test
     void getBaseCost() {
-        int expectedValue = 2;
+        int expectedValue = 24;
         assertEquals(expectedValue, instance.getBaseCost());
     }
 
     @Test
     void getEnhancedCost() {
-        int expectedValue = 2;
+        int expectedValue = 76;
         assertEquals(expectedValue, instance.getEnhancedCost());
     }
 
     @Test
     void getCrewRequirement() {
-        double expectedValue = 0.25d;
+        double expectedValue = 1.5d;
         assertEquals(expectedValue, instance.getCrewRequirement(), tolerance);
     }
 
     @Test
     void getArmorLevel() {
-        when(cargoArmor.getArmorLevel()).thenReturn(1);
-        int expectedValue = 1;
+        when(reactorArmor.getArmorLevel()).thenReturn(5);
+        int expectedValue = 5;
         assertEquals(expectedValue, instance.getArmorLevel());
     }
 
     @Test
     void getArmorPointsUsed() {
-        when(cargoArmor.getArmorPointsUsed()).thenReturn(5.5d);
-        double expectedValue = 5.50000d;
+        when(reactorArmor.getArmorPointsUsed()).thenReturn(325d);
+        double expectedValue = 325.00000d;
         assertEquals(expectedValue, instance.getArmorPointsUsed(), tolerance);
     }
 
     @Test
     void getDuelCost() {
-        int expectedValue = 2;
+        int expectedValue = 76;
         assertEquals(expectedValue, instance.getDuelCost());
     }
 
@@ -125,19 +127,19 @@ class CargoShuttleTest {
 
     @Test
     void getEconomicCost() {
-        int expectedValue = 2;
+        int expectedValue = 76;
         assertEquals(expectedValue, instance.getEconomicCost());
     }
 
     @Test
     void getMaintenanceRate() {
-        double expectedValue = 0.05d;
+        double expectedValue = 0.15d;
         assertEquals(expectedValue, instance.getMaintenanceRate(), tolerance);
     }
 
     @Test
     void getMaintenanceCostPerYear() {
-        double expectedValue = 0.1d;
+        double expectedValue = 11.4d;
         assertEquals(expectedValue, instance.getMaintenanceCostPerYear(), tolerance);
     }
 }
