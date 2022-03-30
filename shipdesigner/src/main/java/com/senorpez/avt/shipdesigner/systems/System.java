@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-abstract class System {
+public abstract class System {
     private final Ship ship;
 
     private final String name;
@@ -20,7 +20,7 @@ abstract class System {
     private int shrinkEnhancement;
     private ProductionLevel productionLevel;
 
-    final List<Double> shrinkCost = new ArrayList<>();
+    protected final List<Double> shrinkCost = new ArrayList<>();
 
     protected System(Ship ship,
                      String name,
@@ -49,35 +49,35 @@ abstract class System {
                 .collect(Collectors.toList()));
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    int getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    int getBasicSpacesUsed() {
+    public int getBasicSpacesUsed() {
         return getQuantity() * getSpacesPerSystem();
     }
 
-    int getShrinkEnhancement() {
+    public int getShrinkEnhancement() {
         return shrinkEnhancement;
     }
 
-    int getSpacesPerSystem() {
+    public int getSpacesPerSystem() {
         return spacesPerSystem;
     }
 
-    double getCostPerSpace() {
+    public double getCostPerSpace() {
         return costPerSpace;
     }
 
-    double getCrewRequiredPerSpace() {
+    public double getCrewRequiredPerSpace() {
         return crewRequiredPerSpace;
     }
 
-    int getActualSpacesUsed() {
+    public int getActualSpacesUsed() {
         if (getBasicSpacesUsed() > 0) {
             return Math.max(1, Double.valueOf(Math.floor(getBasicSpacesUsed() * (1 - getShrinkEnhancement() * 0.05))).intValue());
         } else {
@@ -85,57 +85,57 @@ abstract class System {
         }
     }
 
-    int getBaseCost() {
+    public int getBaseCost() {
         return Double.valueOf(Math.ceil(getBasicSpacesUsed() * getCostPerSpace())).intValue();
     }
 
-    int getEnhancedCost() {
+    public int getEnhancedCost() {
         return Double.valueOf(Math.ceil(getBasicSpacesUsed() * getCostPerSpace() * shrinkCost.get(getShrinkEnhancement()))).intValue();
     }
 
-    double getCrewRequirement() {
+    public double getCrewRequirement() {
         return getBasicSpacesUsed() * getCrewRequiredPerSpace();
     }
 
-    int getDuelCost() {
+    public int getDuelCost() {
         return getEnhancedCost();
     }
 
-    ProductionLevel getProductionLevel() {
+    public ProductionLevel getProductionLevel() {
         return productionLevel;
     }
 
-    int getEconomicCost() {
+    public int getEconomicCost() {
         return Double.valueOf(Math.ceil(getDuelCost() * getProductionLevel().getEconomicCostModifier())).intValue();
     }
 
-    double getMaintenanceRate() {
+    public double getMaintenanceRate() {
         return maintenanceRate;
     }
 
-    double getMaintenanceCostPerYear() {
+    public double getMaintenanceCostPerYear() {
         return getEconomicCost() * getMaintenanceRate();
     }
 
     @SuppressWarnings("unchecked")
-    <T extends System> T setQuantity(int quantity) {
+    public <T extends System> T setQuantity(int quantity) {
         this.quantity = quantity;
         return (T) this;
     }
 
     @SuppressWarnings("unchecked")
-    <T extends System> T setShrinkEnhancement(int shrinkEnhancement) {
+    public <T extends System> T setShrinkEnhancement(int shrinkEnhancement) {
         this.shrinkEnhancement = shrinkEnhancement;
         return (T) this;
     }
 
     @SuppressWarnings("unchecked")
-    <T extends System> T setProductionLevel(ProductionLevel productionLevel) {
+    public <T extends System> T setProductionLevel(ProductionLevel productionLevel) {
         this.productionLevel = productionLevel;
         return (T) this;
     }
 
-    Ship getShip() {
+    protected Ship getShip() {
         return ship;
     }
 }

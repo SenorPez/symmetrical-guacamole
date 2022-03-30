@@ -5,7 +5,7 @@ import com.senorpez.avt.shipdesigner.Ship;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class ArmoredSystem extends System {
+public abstract class ArmoredSystem extends System {
     private int armorLevel;
 
     final List<Double> armorUsage = new ArrayList<>();
@@ -34,11 +34,11 @@ abstract class ArmoredSystem extends System {
         armorUsage.addAll(List.of(0d, 0.5d, 1.0d, 2.0d, 3.5d, 5.0d, 7.0d, 9.0d));
     }
 
-    int getArmorLevel() {
+    public int getArmorLevel() {
         return armorLevel;
     }
 
-    double getArmorPointsUsed() {
+    public double getArmorPointsUsed() {
         return getActualSpacesUsed() * armorUsage.get(getArmorLevel());
     }
 

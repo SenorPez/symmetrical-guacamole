@@ -1,5 +1,7 @@
 package com.senorpez.avt.shipdesigner.systems;
 
+import com.senorpez.avt.shipdesigner.systems.structural.*;
+
 class StructuralSummary {
     private Hull hull;
     private Drive drive;

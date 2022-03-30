@@ -1,5 +1,6 @@
 package com.senorpez.avt.shipdesigner.systems;
 
+import com.senorpez.avt.shipdesigner.systems.structural.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
