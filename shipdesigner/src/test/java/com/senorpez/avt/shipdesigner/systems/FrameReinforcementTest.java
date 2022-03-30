@@ -25,7 +25,6 @@ public class FrameReinforcementTest {
         instance = new FrameReinforcement(
                 ship,
                 1,
-                0.1d,
                 ProductionLevel.STANDARD
         );
     }

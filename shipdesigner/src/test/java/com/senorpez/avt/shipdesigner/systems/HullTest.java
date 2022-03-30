@@ -23,8 +23,8 @@ class HullTest {
     void setUp() {
         instance = new Hull(
                 ship,
-                ProductionLevel.STANDARD,
-                0
+                0,
+                ProductionLevel.STANDARD
         );
     }
 

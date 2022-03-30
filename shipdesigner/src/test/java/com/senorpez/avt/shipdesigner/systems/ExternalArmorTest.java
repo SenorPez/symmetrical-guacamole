@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class DriveMastArmorTest {
+class ExternalArmorTest {
     @Mock
     Ship ship;
     @Mock
@@ -19,15 +19,16 @@ class DriveMastArmorTest {
     @Mock
     ArmorProductionLevel armorProductionLevel;
 
-    private DriveMastArmor instance;
+    private ExternalArmor instance;
     private final double tolerance = 0.001d;
 
     @BeforeEach
     void setUp() {
         when(armorShrink.getShrinkEnhancement()).thenReturn(1);
         when(armorProductionLevel.getProductionLevel()).thenReturn(ProductionLevel.STANDARD);
-        instance = new DriveMastArmor(
+        instance = new ExternalArmor(
                 ship,
+                1,
                 armorShrink,
                 armorProductionLevel
         );
@@ -35,33 +36,25 @@ class DriveMastArmorTest {
 
     @Test
     void getName() {
-        String expectedValue = "Engine and Mast Armor";
+        String expectedValue = "External Armor";
         assertEquals(expectedValue, instance.getName());
     }
 
     @Test
     void getQuantity() {
-        int expectedValue = 0;
+        int expectedValue = 1;
         assertEquals(expectedValue, instance.getQuantity());
     }
 
     @Test
-    void getMastArmor() {
-        when(ship.getMastArmor()).thenReturn(1);
-        int expectedValue = 1;
-        assertEquals(expectedValue, instance.getMastArmor());
-    }
-
-    @Test
-    void getDriveArmor() {
-        when(ship.getDriveArmor()).thenReturn(2);
-        int expectedValue = 2;
-        assertEquals(expectedValue, instance.getDriveArmor());
+    void getExternalArmorPoints() {
+        int expectedValue = 6;
+        assertEquals(expectedValue, instance.getExternalArmorPoints());
     }
 
     @Test
     void getBasicSpacesUsed() {
-        int expectedValue = 0;
+        int expectedValue = 1;
         assertEquals(expectedValue, instance.getBasicSpacesUsed());
     }
 
@@ -91,19 +84,19 @@ class DriveMastArmorTest {
 
     @Test
     void getActualSpacesUsed() {
-        double expectedValue = 0;
+        int expectedValue = 1;
         assertEquals(expectedValue, instance.getActualSpacesUsed());
     }
 
     @Test
     void getBaseCost() {
-        int expectedValue = 0;
+        int expectedValue = 2;
         assertEquals(expectedValue, instance.getBaseCost());
     }
 
     @Test
     void getEnhancedCost() {
-        int expectedValue = 0;
+        int expectedValue = 3;
         assertEquals(expectedValue, instance.getEnhancedCost());
     }
 
@@ -115,7 +108,7 @@ class DriveMastArmorTest {
 
     @Test
     void getDuelCost() {
-        int expectedValue = 0;
+        int expectedValue = 3;
         assertEquals(expectedValue, instance.getDuelCost());
     }
 
@@ -127,7 +120,7 @@ class DriveMastArmorTest {
 
     @Test
     void getEconomicCost() {
-        int expectedValue = 0;
+        int expectedValue = 3;
         assertEquals(expectedValue, instance.getEconomicCost());
     }
 
@@ -139,7 +132,7 @@ class DriveMastArmorTest {
 
     @Test
     void getMaintenanceCostPerYear() {
-        double expectedValue = 0d;
+        double expectedValue = 0.15d;
         assertEquals(expectedValue, instance.getMaintenanceCostPerYear(), tolerance);
     }
 }

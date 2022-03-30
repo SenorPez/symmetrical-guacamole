@@ -2,38 +2,35 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-class DriveMastArmor extends System {
+class ExternalArmor extends System {
     private final ArmorShrink armorShrink;
     private final ArmorProductionLevel armorProductionLevel;
 
-    private final static String name = "Engine and Mast Armor";
+    private final static String name = "External Armor";
     private final static int spacesPerSystem = 1;
     private final static double costPerSpace = 2d;
     private final static double crewRequiredPerSpace = 0d;
     private final static double maintenanceRate = 0.05d;
 
-    DriveMastArmor(Ship ship,
-                   ArmorShrink armorShrink,
-                   ArmorProductionLevel armorProductionLevel) {
+    ExternalArmor(Ship ship,
+                  int quantity,
+                  ArmorShrink armorShrink,
+                  ArmorProductionLevel armorProductionLevel) {
         super(ship,
                 name,
                 spacesPerSystem,
                 costPerSpace,
                 crewRequiredPerSpace,
                 maintenanceRate,
-                0,
+                quantity,
                 armorShrink.getShrinkEnhancement(),
                 armorProductionLevel.getProductionLevel());
         this.armorShrink = armorShrink;
         this.armorProductionLevel = armorProductionLevel;
     }
 
-    int getMastArmor() {
-        return getShip().getMastArmor();
-    }
-
-    int getDriveArmor() {
-        return getShip().getDriveArmor();
+    int getExternalArmorPoints() {
+        return Double.valueOf(Math.ceil((getQuantity() * 5) / (1 - 0.05 * getShrinkEnhancement()))).intValue();
     }
 
     @Override
@@ -48,21 +45,14 @@ class DriveMastArmor extends System {
 
     @SuppressWarnings("unchecked")
     @Override
-    DriveMastArmor setQuantity(int quantity) {
-        // Hull quantity is immutable.
-        return this;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    DriveMastArmor setShrinkEnhancement(int shrinkEnhancement) {
+    ExternalArmor setShrinkEnhancement(int shrinkEnhancement) {
         this.armorShrink.setShrinkEnhancement(shrinkEnhancement);
         return this;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    DriveMastArmor setProductionLevel(ProductionLevel productionLevel) {
+    ExternalArmor setProductionLevel(ProductionLevel productionLevel) {
         this.armorProductionLevel.setProductionLevel(productionLevel);
         return this;
     }

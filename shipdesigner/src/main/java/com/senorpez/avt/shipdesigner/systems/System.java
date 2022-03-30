@@ -12,28 +12,36 @@ abstract class System {
 
     private final String name;
     private final int spacesPerSystem;
+    private final double costPerSpace;
     private final double crewRequiredPerSpace;
     private final double maintenanceRate;
 
-    private ProductionLevel productionLevel;
+    private int quantity;
     private int shrinkEnhancement;
+    private ProductionLevel productionLevel;
 
     final List<Double> shrinkCost = new ArrayList<>();
 
     protected System(Ship ship,
-                  String name,
-                  int spacesPerSystem,
-                  double crewRequiredPerSpace,
-                  double maintenanceRate,
-                  ProductionLevel productionLevel,
-                  int shrinkEnhancement) {
+                     String name,
+                     int spacesPerSystem,
+                     double costPerSpace,
+                     double crewRequiredPerSpace,
+                     double maintenanceRate,
+                     int quantity,
+                     int shrinkEnhancement,
+                     ProductionLevel productionLevel) {
         this.ship = ship;
+
         this.name = name;
-        this.shrinkEnhancement = shrinkEnhancement;
         this.spacesPerSystem = spacesPerSystem;
+        this.costPerSpace = costPerSpace;
         this.crewRequiredPerSpace = crewRequiredPerSpace;
-        this.productionLevel = productionLevel;
         this.maintenanceRate = maintenanceRate;
+
+        this.quantity = quantity;
+        this.shrinkEnhancement = shrinkEnhancement;
+        this.productionLevel = productionLevel;
 
         shrinkCost.addAll(Stream.iterate(new double[]{1, 1d, 1d + 1 / 10d}, t -> new double[]{t[0] + 1, t[2], t[2] + (t[0] + 1) / 10d * 0.75})
                 .limit(10)
@@ -45,9 +53,13 @@ abstract class System {
         return name;
     }
 
-    abstract int getQuantity();
+    int getQuantity() {
+        return quantity;
+    }
 
-    abstract int getBasicSpacesUsed();
+    int getBasicSpacesUsed() {
+        return getQuantity() * getSpacesPerSystem();
+    }
 
     int getShrinkEnhancement() {
         return shrinkEnhancement;
@@ -57,7 +69,9 @@ abstract class System {
         return spacesPerSystem;
     }
 
-    abstract double getCostPerSpace();
+    double getCostPerSpace() {
+        return costPerSpace;
+    }
 
     double getCrewRequiredPerSpace() {
         return crewRequiredPerSpace;
@@ -97,6 +111,12 @@ abstract class System {
 
     double getMaintenanceCostPerYear() {
         return getEconomicCost() * getMaintenanceRate();
+    }
+
+    @SuppressWarnings("unchecked")
+    <T extends System> T setQuantity(int quantity) {
+        this.quantity = quantity;
+        return (T) this;
     }
 
     @SuppressWarnings("unchecked")

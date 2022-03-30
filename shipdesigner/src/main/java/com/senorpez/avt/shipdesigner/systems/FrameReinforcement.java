@@ -3,23 +3,24 @@ package com.senorpez.avt.shipdesigner.systems;
 import com.senorpez.avt.shipdesigner.Ship;
 
 class FrameReinforcement extends System {
-    private int quantity;
-
     private final static String name = "Frame Reinforcement";
     private final static int spacesPerSystem = 1;
+    private final static double costPerSpace = 0;
     private final static double crewRequiredPerSpace = 0d;
+    private final static double maintenanceRate = 0.1d;
 
     FrameReinforcement(Ship ship,
                        int quantity,
-                       double maintenanceRate,
                        ProductionLevel productionLevel) {
-        super(ship, name, spacesPerSystem, crewRequiredPerSpace, maintenanceRate, productionLevel, 0);
-        this.quantity = quantity;
-    }
-
-    @Override
-    int getQuantity() {
-        return quantity;
+        super(ship,
+                name,
+                spacesPerSystem,
+                costPerSpace,
+                crewRequiredPerSpace,
+                maintenanceRate,
+                quantity,
+                0,
+                productionLevel);
     }
 
     int getMaximumExternalArmorSpaces() {
@@ -27,17 +28,7 @@ class FrameReinforcement extends System {
     }
 
     @Override
-    int getBasicSpacesUsed() {
-        return getQuantity() * getSpacesPerSystem();
-    }
-
-    @Override
     double getCostPerSpace() {
         return getShip().getShape().getHullCostPerSpace() * 2;
-    }
-
-    FrameReinforcement setQuantity(final int quantity) {
-        this.quantity = quantity;
-        return this;
     }
 }

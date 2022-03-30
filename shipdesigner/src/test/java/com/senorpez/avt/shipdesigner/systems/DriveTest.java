@@ -27,8 +27,8 @@ class DriveTest {
                 ship,
                 massCharacteristics,
                 0,
-                ProductionLevel.STANDARD,
-                0
+                0,
+                ProductionLevel.STANDARD
         );
     }
 

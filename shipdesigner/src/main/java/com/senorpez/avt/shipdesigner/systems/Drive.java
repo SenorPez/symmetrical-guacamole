@@ -10,23 +10,30 @@ import java.util.stream.Stream;
 
 class Drive extends System {
     private int extraStructure;
-
-    private final MassCharacteristics massCharacteristics;
+    private MassCharacteristics massCharacteristics;
 
     private final static String name = "Drive";
     private final static int spacesPerSystem = 1;
+    private final static double costPerSpace = 0;
     private final static double crewRequiredPerSpace = 0.5d;
     private final static double maintenanceRate = 0.2d;
 
     private final List<Double> driveModifier = new ArrayList<>();
-    private final List<Double> shrinkCost = new ArrayList<>();
 
     Drive(final Ship ship,
           final MassCharacteristics massCharacteristics,
           final int extraStructure,
-          final ProductionLevel productionLevel,
-          final int shrinkEnhancement) {
-        super(ship, name, spacesPerSystem, crewRequiredPerSpace, maintenanceRate, productionLevel, shrinkEnhancement);
+          final int shrinkEnhancement,
+          final ProductionLevel productionLevel) {
+        super(ship,
+                name,
+                spacesPerSystem,
+                costPerSpace,
+                crewRequiredPerSpace,
+                maintenanceRate,
+                Long.valueOf(Math.round(massCharacteristics.getDriveSpaces())).intValue(),
+                shrinkEnhancement,
+                productionLevel);
         this.extraStructure = extraStructure;
         this.massCharacteristics = massCharacteristics;
 
@@ -63,8 +70,20 @@ class Drive extends System {
         return 0;
     }
 
-    Drive setExtraStructure(final int extraStructure) {
+    Drive setExtraStructure(int extraStructure) {
         this.extraStructure = extraStructure;
+        return this;
+    }
+
+    Drive setMassCharacteristics(MassCharacteristics massCharacteristics) {
+        this.massCharacteristics = massCharacteristics;
+        return this;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    Drive setQuantity(int quantity) {
+        // Hull quantity is not directly changeable.
         return this;
     }
 
