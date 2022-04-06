@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-class ReactorArmor extends ArmorGroup {
+public class ReactorArmor extends ArmorGroup {
     private List<Reactor> reactors = new ArrayList<>();
     private CivilianReactor civilianReactor = null;
     private SolarArray solarArray = null;
@@ -18,7 +18,7 @@ class ReactorArmor extends ArmorGroup {
         super(armorLevel);
     }
 
-    double getArmorPointsUsed() {
+    public double getArmorPointsUsed() {
         final int totalReactorActualSpacesUsed = reactors.stream().map(Reactor::getActualSpacesUsed).mapToInt(Integer::intValue).sum();
         final int totalOtherActualSpacesUsed = getCivilianReactor().map(System::getActualSpacesUsed).orElse(0)
                 + getSolarArray().map(System::getActualSpacesUsed).orElse(0)

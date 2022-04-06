@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.systems.ArmoredSystem;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
-class Fuel extends ArmoredSystem {
+public class Fuel extends ArmoredSystem {
     private final static String name = "Fuel";
     private final static int spacesPerSystem = 1;
     private final static double costPerSpace = 0.25d;

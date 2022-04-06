@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.systems.ArmoredSystem;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
-class Quarters extends ArmoredSystem {
+public class Quarters extends ArmoredSystem {
     private final static String name = "Quarters";
     private final static int spacesPerSystem = 1;
     private final static double costPerSpace = 1d;

@@ -7,7 +7,7 @@ import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 import java.util.ArrayList;
 import java.util.List;
 
-class Battery extends ArmoredSystem {
+public class Battery extends ArmoredSystem {
     private final static String name = "Battery";
     private final static int spacesPerSystem = 1;
     private final static double crewRequiredPerSpace = 0.5d;

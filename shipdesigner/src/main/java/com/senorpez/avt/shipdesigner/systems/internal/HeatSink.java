@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.systems.ArmoredSystem;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
-abstract class HeatSink extends ArmoredSystem {
+public abstract class HeatSink extends ArmoredSystem {
     protected final static String name = "Heat Sink";
 
     protected HeatSinkArmor heatSinkArmor;

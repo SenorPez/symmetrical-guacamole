@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.systems.System;
 
 import java.util.Optional;
 
-class CargoArmor extends ArmorGroup {
+public class CargoArmor extends ArmorGroup {
     private CargoSupport cargoSupport = null;
     private CargoRepair cargoRepair = null;
     private CargoMagazine cargoMagazine = null;
@@ -15,7 +15,7 @@ class CargoArmor extends ArmorGroup {
     }
 
     @Override
-    double getArmorPointsUsed() {
+    public double getArmorPointsUsed() {
         final int totalActualSpacesUsed = getCargoSupport().map(System::getActualSpacesUsed).orElse(0)
                 + getCargoRepair().map(System::getActualSpacesUsed).orElse(0)
                 + getCargoMagazine().map(System::getActualSpacesUsed).orElse(0)

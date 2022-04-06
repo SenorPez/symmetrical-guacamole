@@ -3,7 +3,7 @@ package com.senorpez.avt.shipdesigner.systems.internal;
 import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
-class HeatSinkWater extends HeatSink {
+public class HeatSinkWater extends HeatSink {
     private final String heatSinkType = "Water";
     private final static int spacesPerSystem = 5;
     private final static double costPerSpace = 0.25d;

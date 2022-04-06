@@ -101,18 +101,6 @@ class RadiatorTest {
     }
 
     @Test
-    void getArmorLevel() {
-        int expectedValue = 0;
-        assertEquals(expectedValue, instance.getArmorLevel());
-    }
-
-    @Test
-    void getArmorPointsUsed() {
-        double expectedValue = 0d;
-        assertEquals(expectedValue, instance.getArmorPointsUsed(), tolerance);
-    }
-
-    @Test
     void getDuelCost() {
         int expectedValue = 3;
         assertEquals(expectedValue, instance.getDuelCost());

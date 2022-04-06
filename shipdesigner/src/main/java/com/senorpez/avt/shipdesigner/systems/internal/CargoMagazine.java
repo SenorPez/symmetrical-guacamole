@@ -3,7 +3,7 @@ package com.senorpez.avt.shipdesigner.systems.internal;
 import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
-class CargoMagazine extends Cargo {
+public class CargoMagazine extends Cargo {
     private final String cargoType = "Magazine";
     private final static int spacesPerSystem = 1;
 

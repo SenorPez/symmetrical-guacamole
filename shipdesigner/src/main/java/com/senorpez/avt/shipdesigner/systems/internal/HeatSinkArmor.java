@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.systems.System;
 
 import java.util.Optional;
 
-class HeatSinkArmor extends ArmorGroup {
+public class HeatSinkArmor extends ArmorGroup {
     private HeatSinkWater heatSinkWater = null;
     private HeatSinkSodium heatSinkSodium = null;
     private HeatSinkLithium heatSinkLithium = null;
@@ -14,7 +14,7 @@ class HeatSinkArmor extends ArmorGroup {
     }
 
     @Override
-    double getArmorPointsUsed() {
+    public double getArmorPointsUsed() {
         final int totalActualSpacesUsed = getHeatSinkWater().map(System::getActualSpacesUsed).orElse(0)
                 + getHeatSinkSodium().map(System::getActualSpacesUsed).orElse(0)
                 + getHeatSinkLithium().map(System::getActualSpacesUsed).orElse(0);

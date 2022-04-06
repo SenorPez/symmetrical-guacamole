@@ -3,8 +3,9 @@ package com.senorpez.avt.shipdesigner.systems.internal;
 import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.systems.ArmoredSystem;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
+import com.senorpez.avt.shipdesigner.systems.System;
 
-class Radiator extends ArmoredSystem {
+public class Radiator extends System {
     private final static String name = "Radiator";
     private final static int spacesPerSystem = 1;
     private final static double costPerSpace = 1d;
@@ -23,18 +24,10 @@ class Radiator extends ArmoredSystem {
                 maintenanceRate,
                 quantity,
                 shrinkEnhancement,
-                productionLevel,
-                0);
+                productionLevel);
     }
 
     double getRadiatorDissipation() {
         return getQuantity() * 0.4d;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Radiator setArmorLevel(int armorLevel) {
-        // Shrink is immutable.
-        return this;
     }
 }

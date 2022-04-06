@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.systems.ArmoredSystem;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
-abstract class Cargo extends ArmoredSystem {
+public abstract class Cargo extends ArmoredSystem {
     protected final static String name = "Cargo";
     private final static double costPerSpace = 1;
     private final static double crewRequiredPerSpace = 0.125d;
