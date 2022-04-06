@@ -3,7 +3,7 @@ package com.senorpez.avt.shipdesigner.systems.core;
 import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
-class DeltaHyperdrive extends Hyperdrive {
+public class DeltaHyperdrive extends Hyperdrive {
     private final String hyperdriveType = "Delta";
 
     private final static int spacesPerSystem = 8;

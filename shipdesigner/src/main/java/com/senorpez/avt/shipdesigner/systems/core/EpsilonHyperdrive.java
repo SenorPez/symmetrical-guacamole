@@ -3,7 +3,7 @@ package com.senorpez.avt.shipdesigner.systems.core;
 import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
-class EpsilonHyperdrive extends Hyperdrive {
+public class EpsilonHyperdrive extends Hyperdrive {
     private final String hyperdriveType = "Epsilon";
 
     private final static int spacesPerSystem = 12;

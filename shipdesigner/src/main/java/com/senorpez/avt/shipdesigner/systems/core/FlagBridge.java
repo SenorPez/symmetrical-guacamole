@@ -7,7 +7,7 @@ import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 import java.util.ArrayList;
 import java.util.List;
 
-class FlagBridge extends ArmoredSystem {
+public class FlagBridge extends ArmoredSystem {
     private final static String name = "Flag Bridge";
     private final static int spacesPerSystem = 1;
     private final static double costPerSpace = 3d;

@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.systems.ArmoredSystem;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
-class LifeSupport extends ArmoredSystem {
+public class LifeSupport extends ArmoredSystem {
     private LifeSupportClass lifeSupportClass;
 
     private final static String name = "Life Support";

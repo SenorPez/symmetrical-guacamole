@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 import com.senorpez.avt.shipdesigner.systems.System;
 
-class HIRTS extends System {
+public class HIRTS extends System {
     private final static String name = "HIRTS";
     private final static int spacesPerSystem = 1;
     private final static double costPerSpace = 1d;

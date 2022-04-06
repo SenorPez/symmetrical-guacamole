@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 import com.senorpez.avt.shipdesigner.systems.System;
 
-class ECM extends System {
+public class ECM extends System {
     private final static String name = "ECM";
     private final static double crewRequiredPerSpace = 1d;
     private final static double maintenanceRate = 0.25d;
