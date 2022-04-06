@@ -14,6 +14,7 @@ class CargoArmor extends ArmorGroup {
         super(armorLevel);
     }
 
+    @Override
     double getArmorPointsUsed() {
         final int totalActualSpacesUsed = getCargoSupport().map(System::getActualSpacesUsed).orElse(0)
                 + getCargoRepair().map(System::getActualSpacesUsed).orElse(0)
