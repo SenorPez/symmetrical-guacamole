@@ -487,7 +487,7 @@ public class Ship {
     }
 
     int getPrimaryMountsAvailable() {
-        return mountConfiguration.getPrimaryMountTotalCount();
+        return mountConfiguration.getPrimaryMountTotalCount(shape);
     }
 
     int getPrimaryMountFieldOfFire() {
