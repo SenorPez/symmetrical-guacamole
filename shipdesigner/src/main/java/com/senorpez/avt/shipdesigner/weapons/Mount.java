@@ -42,6 +42,25 @@ class Mount {
         return 0;
     }
 
+    int getMaximumRows() {
+        if (mountType.equals(PRIMARY)) {
+            return ship
+                    .getMountConfiguration()
+                    .getPrimaryMountRows(ship.getShape(), ship.getHullSize(), ship.getLaidDown());
+        }
+        if (mountType.equals(SECONDARY)) {
+            return ship
+                    .getMountConfiguration()
+                    .getSecondaryMountRows(ship.getShape(), ship.getHullSize(), ship.getLaidDown());
+        }
+        if (mountType.equals(TERTIARY)) {
+            return ship
+                    .getMountConfiguration()
+                    .getTertiaryMountRows(ship.getShape(), ship.getHullSize(), ship.getLaidDown());
+        }
+        return 0;
+    }
+
     // GETTERS & SETTERS
     Ship getShip() {
         return ship;

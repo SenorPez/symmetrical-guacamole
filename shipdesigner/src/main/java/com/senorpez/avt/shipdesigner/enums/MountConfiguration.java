@@ -216,7 +216,7 @@ public enum MountConfiguration {
 
     public abstract int getPrimaryMountFieldOfFire(final Shape shape);
 
-    int getPrimaryMountRows(final Shape shape, final int hullSpaces, final int year) {
+    public int getPrimaryMountRows(final Shape shape, final int hullSpaces, final int year) {
         return Math.min(
                 Double.valueOf(Math.ceil(Math.pow(getPrimaryMountTotalSpaces(shape, hullSpaces, year), 1 / 1.75d))).intValue(),
                 10);
@@ -281,7 +281,7 @@ public enum MountConfiguration {
         return shape.getSecondaryMountFieldOfFire();
     }
 
-    int getSecondaryMountRows(final Shape shape, final int hullSpaces, final int year) {
+    public int getSecondaryMountRows(final Shape shape, final int hullSpaces, final int year) {
         return Math.min(
                 Double.valueOf(Math.ceil(Math.pow(getSecondaryMountTotalSpaces(shape, hullSpaces, year), 1 / 1.65d))).intValue(),
                 10
@@ -310,7 +310,7 @@ public enum MountConfiguration {
         return shape.getTertiaryMountFieldOfFire();
     }
 
-    int getTertiaryMountRows(final Shape shape, final int hullSpaces, final int year) {
+    public int getTertiaryMountRows(final Shape shape, final int hullSpaces, final int year) {
         return Math.min(
                 Double.valueOf(Math.ceil(Math.pow(getTertiaryMountTotalSpaces(shape, hullSpaces, year), 1 / 1.414d))).intValue(),
                 10

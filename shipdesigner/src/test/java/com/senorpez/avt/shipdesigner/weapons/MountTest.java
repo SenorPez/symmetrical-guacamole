@@ -7,8 +7,6 @@ import com.senorpez.avt.shipdesigner.enums.Shape;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -45,5 +43,25 @@ class MountTest {
         instance.setMountType(MountType.TERTIARY);
         expectedValue = 1;
         assertEquals(expectedValue, instance.getMaximumMountSpaces());
+    }
+
+    @Test
+    void getMaximumTotalCount() {
+        when(ship.getHullSize()).thenReturn(106);
+        when(ship.getLaidDown()).thenReturn(2186);
+        when(ship.getShape()).thenReturn(Shape.CONICAL);
+        when(ship.getMountConfiguration()).thenReturn(MountConfiguration.TRIPLE);
+
+        instance = instance.setMountType(MountType.PRIMARY);
+        int expectedValue = 3;
+        assertEquals(expectedValue, instance.getMaximumRows());
+
+        instance.setMountType(MountType.SECONDARY);
+        expectedValue = 2;
+        assertEquals(expectedValue, instance.getMaximumRows());
+
+        instance.setMountType(MountType.TERTIARY);
+        expectedValue = 1;
+        assertEquals(expectedValue, instance.getMaximumRows());
     }
 }
