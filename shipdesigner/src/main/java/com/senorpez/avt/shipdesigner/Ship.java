@@ -672,7 +672,7 @@ public class Ship {
         return this;
     }
 
-    MountConfiguration getMountConfiguration() {
+    public MountConfiguration getMountConfiguration() {
         return mountConfiguration;
     }
 
