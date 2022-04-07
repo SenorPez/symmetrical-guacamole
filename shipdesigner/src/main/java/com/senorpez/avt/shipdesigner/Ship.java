@@ -486,12 +486,12 @@ public class Ship {
         return getHullSize() - (getDriveOutput() * 943.7244398d / getDriveGeneration() / (getMaximumThrust() + (index * 0.5)));
     }
 
-    int getPrimaryMountsAvailable() {
+    int getPrimaryMountTotalCount() {
         return mountConfiguration.getPrimaryMountTotalCount(shape);
     }
 
-    int getPrimaryMountFieldOfFire() {
-        return mountConfiguration.getPrimaryMountFieldOfFire(shape);
+    int getSecondaryMountTotalCount() {
+        return mountConfiguration.getSecondaryMountTotalCount(shape, hullSize, laidDown);
     }
 
     // GETTERS & SETTERS

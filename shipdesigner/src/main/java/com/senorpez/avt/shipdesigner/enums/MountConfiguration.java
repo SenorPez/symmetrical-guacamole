@@ -265,7 +265,7 @@ public enum MountConfiguration {
         ));
     }
 
-    int getSecondaryMountTotalCount(final Shape shape, final int hullSpaces, final int year) {
+    public int getSecondaryMountTotalCount(final Shape shape, final int hullSpaces, final int year) {
         if (shape.equals(CYLINDER))
             return Double.valueOf(Math.round(getWeaponizableSpaces(shape, hullSpaces, year) * 0.48d / getSecondaryMountTotalSpaces(shape, hullSpaces, year))).intValue();
         if (shape.equals(LONG_CYLINDER))

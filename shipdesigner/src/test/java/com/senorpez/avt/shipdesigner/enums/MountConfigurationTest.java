@@ -48,7 +48,6 @@ class MountConfigurationTest {
         testDataList.add(new TestData(HEMISPHEROID, SEXTUPLE, 81, 14, 3, 4, 20, 5, 7, 2, 5, 24, 4, 4, 2, 15, 26, 3, 151));
     }
 
-
     @ParameterizedTest
     @MethodSource("provider")
     void getWeaponizableSpaces(TestData testData) {
