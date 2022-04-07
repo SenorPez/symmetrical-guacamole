@@ -320,18 +320,4 @@ class ShipTest {
         MountConfiguration expectedValue = MountConfiguration.TRIPLE;
         assertEquals(expectedValue, instance.getMountConfiguration());
     }
-
-    @Test
-    void getPrimaryMountsAvailable() {
-        Ship instance = new Ship().setMountConfiguration(MountConfiguration.TRIPLE);
-        int expectedValue = 3;
-        assertEquals(expectedValue, instance.getPrimaryMountsAvailable());
-    }
-
-    @Test
-    void getPrimaryMountFieldOfFire() {
-        Ship instance = new Ship().setShape(Shape.CONICAL).setMountConfiguration(MountConfiguration.TRIPLE);
-        int expectedValue = 17;
-        assertEquals(expectedValue, instance.getPrimaryMountFieldOfFire());
-    }
 }

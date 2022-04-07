@@ -3,8 +3,11 @@ package com.senorpez.avt.shipdesigner.weapons;
 import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.enums.AVIDWindow;
 import com.senorpez.avt.shipdesigner.enums.ArmorSegment;
+import com.senorpez.avt.shipdesigner.enums.MountType;
 
 import java.util.List;
+
+import static com.senorpez.avt.shipdesigner.enums.MountType.*;
 
 class Mount {
     Ship ship;
@@ -19,6 +22,25 @@ class Mount {
     Coordinate diamondLocation;
     
     Mount() {}
+
+    int getMaximumMountSpaces() {
+        if (mountType.equals(PRIMARY)) {
+            return ship
+                    .getMountConfiguration()
+                    .getPrimaryMountTotalSpaces(ship.getShape(), ship.getHullSize(), ship.getLaidDown());
+        }
+        if (mountType.equals(SECONDARY)) {
+            return ship
+                    .getMountConfiguration()
+                    .getSecondaryMountTotalSpaces(ship.getShape(), ship.getHullSize(), ship.getLaidDown());
+        }
+        if (mountType.equals(TERTIARY)) {
+            return ship
+                    .getMountConfiguration()
+                    .getTertiaryMountTotalSpaces(ship.getShape(), ship.getHullSize(), ship.getLaidDown());
+        }
+        return 0;
+    }
 
     // GETTERS & SETTERS
     Ship getShip() {
@@ -82,12 +104,6 @@ class Mount {
     Mount setDiamondLocation(Coordinate diamondLocation) {
         this.diamondLocation = diamondLocation;
         return this;
-    }
-
-    private enum MountType {
-        PRIMARY,
-        SECONDARY,
-        TERTIARY
     }
 
     private static class Coordinate {

@@ -546,7 +546,7 @@ public class Ship {
         return this;
     }
 
-    int getLaidDown() {
+    public int getLaidDown() {
         return laidDown;
     }
 

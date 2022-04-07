@@ -6,7 +6,7 @@ import static com.senorpez.avt.shipdesigner.enums.UsablePercentageByYear.getUsab
 public enum MountConfiguration {
     KEEL("Keel", 1) {
         @Override
-        int getPrimaryMountTotalSpaces(final Shape shape, final int hullSpaces, final int year) {
+        public int getPrimaryMountTotalSpaces(final Shape shape, final int hullSpaces, final int year) {
             if (shape.equals(CYLINDER)) return getPrimaryMountTotalSpaces(0.38d, shape, hullSpaces, year);
             if (shape.equals(LONG_CYLINDER)) return getPrimaryMountTotalSpaces(0.38d, shape, hullSpaces, year);
             if (shape.equals(CONICAL)) return getPrimaryMountTotalSpaces(0.36d, shape, hullSpaces, year);
@@ -28,7 +28,7 @@ public enum MountConfiguration {
     },
     SINGLE("Single", 1) {
         @Override
-        int getPrimaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
+        public int getPrimaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
             if (shape.equals(CYLINDER)) return getPrimaryMountTotalSpaces(0.34d, shape, hullSpaces, year);
             if (shape.equals(LONG_CYLINDER)) return getPrimaryMountTotalSpaces(0.35d, shape, hullSpaces, year);
             if (shape.equals(SPHEROID)) return getPrimaryMountTotalSpaces(0.31d, shape, hullSpaces, year);
@@ -51,7 +51,7 @@ public enum MountConfiguration {
     },
     DOUBLE("Double", 2) {
         @Override
-        int getPrimaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
+        public int getPrimaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
             if (shape.equals(CYLINDER)) return getPrimaryMountTotalSpaces(0.3d, shape, hullSpaces, year);
             if (shape.equals(SPHEROID)) return getPrimaryMountTotalSpaces(0.28d, shape, hullSpaces, year);
             if (shape.equals(ELLIPSOID)) return getPrimaryMountTotalSpaces(0.28d, shape, hullSpaces, year);
@@ -77,7 +77,7 @@ public enum MountConfiguration {
     },
     TRIPLE("Triple", 3) {
         @Override
-        int getPrimaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
+        public int getPrimaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
             if (shape.equals(SPHEROID)) return getPrimaryMountTotalSpaces(0.25d, shape, hullSpaces, year);
             if (shape.equals(ELLIPSOID)) return getPrimaryMountTotalSpaces(0.25d, shape, hullSpaces, year);
             if (shape.equals(CONICAL)) return getPrimaryMountTotalSpaces(0.24d, shape, hullSpaces, year);
@@ -101,7 +101,7 @@ public enum MountConfiguration {
     },
     QUADRUPLE("Quadruple", 4) {
         @Override
-        int getPrimaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
+        public int getPrimaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
             if (shape.equals(SPHEROID)) return getPrimaryMountTotalSpaces(0.22d, shape, hullSpaces, year);
             if (shape.equals(ELLIPSOID)) return getPrimaryMountTotalSpaces(0.22d, shape, hullSpaces, year);
             if (shape.equals(CONICAL)) return getPrimaryMountTotalSpaces(0.2d, shape, hullSpaces, year);
@@ -125,7 +125,7 @@ public enum MountConfiguration {
     },
     QUINTUPLE("Quintuple", 5) {
         @Override
-        int getPrimaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
+        public int getPrimaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
             if (shape.equals(SPHEROID)) return getPrimaryMountTotalSpaces(0.19d, shape, hullSpaces, year);
             if (shape.equals(ELLIPSOID)) return getPrimaryMountTotalSpaces(0.19d, shape, hullSpaces, year);
             if (shape.equals(HEMISPHEROID)) return getPrimaryMountTotalSpaces(0.2d, shape, hullSpaces, year);
@@ -147,7 +147,7 @@ public enum MountConfiguration {
     },
     SEXTUPLE("Sextuple", 4) {
         @Override
-        int getPrimaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
+        public int getPrimaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
             if (shape.equals(HEMISPHEROID)) return getPrimaryMountTotalSpaces(0.1667d, shape, hullSpaces, year);
             return 0;
         }
@@ -189,7 +189,7 @@ public enum MountConfiguration {
         return val;
     }
 
-    abstract int getPrimaryMountTotalSpaces(final Shape shape, final int hullSpaces, final int year);
+    public abstract int getPrimaryMountTotalSpaces(final Shape shape, final int hullSpaces, final int year);
 
     final int getPrimaryMountTotalSpaces(final double multiplier, final Shape shape, final int hullSpaces, final int year) {
         return Double.valueOf(Math.round(multiplier * getWeaponizableSpaces(shape, hullSpaces, year))).intValue();
@@ -222,7 +222,7 @@ public enum MountConfiguration {
                 10);
     }
 
-    int getSecondaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
+    public int getSecondaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
         if (shape.equals(CYLINDER))
             return Math.max(
                     Double.valueOf(Math.round(0.09 * getWeaponizableSpaces(shape, hullSpaces, year))).intValue(),
@@ -288,7 +288,7 @@ public enum MountConfiguration {
         );
     }
 
-    int getTertiaryMountTotalSpaces(final Shape shape, final int hullSpaces, final int year) {
+    public int getTertiaryMountTotalSpaces(final Shape shape, final int hullSpaces, final int year) {
         return Math.max(
                 Double.valueOf(Math.round(0.05 * getWeaponizableSpaces(shape, hullSpaces, year))).intValue(),
                 1
