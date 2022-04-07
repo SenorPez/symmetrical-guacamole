@@ -39,6 +39,8 @@ public class Ship {
     private DriveCharacteristics driveCharacteristics;
     private SurfaceCharacteristics surfaceCharacteristics;
 
+    private MountConfiguration mountConfiguration;
+
     private static final Logger logger = LogManager.getLogger(Ship.class);
     private static final Map<Integer, String> shipClasses = new HashMap<>();
 
@@ -484,6 +486,14 @@ public class Ship {
         return getHullSize() - (getDriveOutput() * 943.7244398d / getDriveGeneration() / (getMaximumThrust() + (index * 0.5)));
     }
 
+    int getPrimaryMountsAvailable() {
+        return mountConfiguration.getPrimaryMountsTotalCount();
+    }
+
+    int getPrimaryMountFieldOfFire() {
+        return mountConfiguration.getPrimaryMountFieldOfFire(shape);
+    }
+
     // GETTERS & SETTERS
     String getName() {
         return name;
@@ -659,6 +669,15 @@ public class Ship {
 
     Ship setStarboardArmor(List<Integer> starboardArmor) {
         this.starboardArmor = starboardArmor;
+        return this;
+    }
+
+    MountConfiguration getMountConfiguration() {
+        return mountConfiguration;
+    }
+
+    Ship setMountConfiguration(MountConfiguration mountConfiguration) {
+        this.mountConfiguration = mountConfiguration;
         return this;
     }
 }

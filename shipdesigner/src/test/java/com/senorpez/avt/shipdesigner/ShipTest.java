@@ -1,9 +1,6 @@
 package com.senorpez.avt.shipdesigner;
 
-import com.senorpez.avt.shipdesigner.enums.BuildMode;
-import com.senorpez.avt.shipdesigner.enums.Nation;
-import com.senorpez.avt.shipdesigner.enums.Shape;
-import com.senorpez.avt.shipdesigner.enums.SheetFormat;
+import com.senorpez.avt.shipdesigner.enums.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
@@ -315,5 +312,26 @@ class ShipTest {
         Ship instance = new Ship().setMastArmor(4);
         Integer expectedValue = 4;
         assertEquals(expectedValue, instance.getMastArmor());
+    }
+
+    @Test
+    void getMountConfiguration() {
+        Ship instance = new Ship().setMountConfiguration(MountConfiguration.TRIPLE);
+        MountConfiguration expectedValue = MountConfiguration.TRIPLE;
+        assertEquals(expectedValue, instance.getMountConfiguration());
+    }
+
+    @Test
+    void getPrimaryMountsAvailable() {
+        Ship instance = new Ship().setMountConfiguration(MountConfiguration.TRIPLE);
+        int expectedValue = 3;
+        assertEquals(expectedValue, instance.getPrimaryMountsAvailable());
+    }
+
+    @Test
+    void getPrimaryMountFieldOfFire() {
+        Ship instance = new Ship().setShape(Shape.CONICAL).setMountConfiguration(MountConfiguration.TRIPLE);
+        int expectedValue = 17;
+        assertEquals(expectedValue, instance.getPrimaryMountFieldOfFire());
     }
 }

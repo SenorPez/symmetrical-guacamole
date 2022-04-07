@@ -1,7 +1,12 @@
 package com.senorpez.avt.shipdesigner.enums;
 
+import java.util.List;
+
+import static com.senorpez.avt.shipdesigner.enums.MountConfiguration.*;
+import static com.senorpez.avt.shipdesigner.enums.UsablePercentageByYear.getUsablePercentage;
+
 public enum Shape {
-    CYLINDER("Cylinder", 1d, 0.05d, 1d, 0.0318d, 0.8d, 1, 2, 0.8d) {
+    CYLINDER("Cylinder", 1d, 0.05d, 1d, 0.0318d, 0.8d, 1, 2, 0.8d, List.of(KEEL, SINGLE, DOUBLE)) {
         @Override
         public int getImprovedAccesswayRequirement(final int shipSpaces) {
             return Math.round(shipSpaces / 100f);
@@ -31,8 +36,13 @@ public enum Shape {
         public int getMaximumMountLines(int hullSpaces) {
             return shipLookup.getCylinderMaximumMountLines_Single(hullSpaces);
         }
+
+        @Override
+        int getWeaponizableSpaces(int hullSpaces, int year) {
+            return getWeaponizableSpaces(1.104d, hullSpaces, year);
+        }
     },
-    SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 0.239d, 1.0d, 3, 5, 1.0d) {
+    SPHEROID("Spheroid", 1.5d, 0.154d, 1.25d, 0.239d, 1.0d, 3, 5, 1.0d, List.of(SINGLE, DOUBLE, TRIPLE, QUADRUPLE, QUINTUPLE)) {
         @Override
         public double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
             return getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical);
@@ -85,16 +95,36 @@ public enum Shape {
         private int approxAxialDepth2(final int hullSpaces) {
             return approxAxialDepth1(hullSpaces + 25);
         }
+
+        @Override
+        int getWeaponizableSpaces(int hullSpaces, int year) {
+            return getWeaponizableSpaces(1, hullSpaces, year);
+        }
     },
-    LONG_CYLINDER("Long Cylinder", 0.75d, 0.025d, 0.75d, Math.pow(10, -2.25), 0.7d, 1, 2, 0.6d) {
+    LONG_CYLINDER("Long Cylinder", 0.75d, 0.025d, 0.75d, Math.pow(10, -2.25), 0.7d, 1, 2, 0.6d, List.of(KEEL, SINGLE)) {
         @Override
         public int getImprovedAccesswayRequirement(final int shipSpaces) {
             return Math.round(shipSpaces / 100f);
         }
+
+        @Override
+        int getWeaponizableSpaces(int hullSpaces, int year) {
+            return getWeaponizableSpaces(1.203d, hullSpaces, year);
+        }
     },
-    HEMISPHEROID("Hemispheroid", 1.75d, 0.215d, 1.375d, Math.pow(10, -0.3109), 1.1d, 3, 5, 1.0d),
-    CONICAL("Conical", 1.375, 0.1125d, 1.1825d, Math.pow(10, -0.87), 1.05d, 1, 3, 0.9d),
-    ELLIPSOID("Ellipsoid", 1.25d, 0.075d, 1.125d, Math.pow(10, -1.05), 0.9d, 2, 4, 1.0d) {
+    HEMISPHEROID("Hemispheroid", 1.75d, 0.215d, 1.375d, Math.pow(10, -0.3109), 1.1d, 3, 5, 1.0d, List.of(SINGLE, DOUBLE, TRIPLE, QUADRUPLE, QUINTUPLE, SEXTUPLE)) {
+        @Override
+        int getWeaponizableSpaces(int hullSpaces, int year) {
+            return getWeaponizableSpaces(0.976d, hullSpaces, year);
+        }
+    },
+    CONICAL("Conical", 1.375, 0.1125d, 1.1825d, Math.pow(10, -0.87), 1.05d, 1, 3, 0.9d, List.of(KEEL, SINGLE, DOUBLE, TRIPLE, QUADRUPLE)) {
+        @Override
+        int getWeaponizableSpaces(int hullSpaces, int year) {
+            return getWeaponizableSpaces(1.038d, hullSpaces, year);
+        }
+    },
+    ELLIPSOID("Ellipsoid", 1.25d, 0.075d, 1.125d, Math.pow(10, -1.05), 0.9d, 2, 4, 1.0d, List.of(SINGLE, DOUBLE, TRIPLE, QUADRUPLE, QUINTUPLE)) {
         @Override
         public double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
             return 2 * getHullDiameter(hullSpaces, armorFraction, driveFraction_Typical);
@@ -179,8 +209,8 @@ public enum Shape {
         }
 
         @Override
-        public int getMaximumMountLines(int hullSpaces) {
-            return Long.valueOf(Math.round((SPHEROID.getMaximumMountLines(hullSpaces) + CYLINDER.getMaximumMountLines(hullSpaces)) / 2d)).intValue();
+        int getWeaponizableSpaces(int hullSpaces, int year) {
+            return getWeaponizableSpaces(1.024d, hullSpaces, year);
         }
     };
 
@@ -192,12 +222,21 @@ public enum Shape {
     private final double hullCostModifier;
     private final int largestMountLines_Option1;
     private final int largestMountLines_Option2;
-
     private final double hullCostPerSpace;
+    private final List<MountConfiguration> availableMountConfigurations;
 
     private static final ShipLookup shipLookup = new ShipLookup();
 
-    Shape(String shapeName, double mastMassModifier, double thrusterModifier, double pivotModifier, double rollModifier, double hullCostModifier, int largestMountLines_Option1, int largestMountLines_Option2, double hullCostPerSpace) {
+    Shape(String shapeName,
+          double mastMassModifier,
+          double thrusterModifier,
+          double pivotModifier,
+          double rollModifier,
+          double hullCostModifier,
+          int largestMountLines_Option1,
+          int largestMountLines_Option2,
+          double hullCostPerSpace,
+          List<MountConfiguration> availableMountConfigurations) {
         this.shapeName = shapeName;
         this.mastMassModifier = mastMassModifier;
         this.thrusterModifier = thrusterModifier;
@@ -206,8 +245,8 @@ public enum Shape {
         this.hullCostModifier = hullCostModifier;
         this.largestMountLines_Option1 = largestMountLines_Option1;
         this.largestMountLines_Option2 = largestMountLines_Option2;
-
         this.hullCostPerSpace = hullCostPerSpace;
+        this.availableMountConfigurations = availableMountConfigurations;
     }
 
     public String getShapeName() {
@@ -244,6 +283,10 @@ public enum Shape {
 
     public double getHullCostPerSpace() {
         return hullCostPerSpace;
+    }
+
+    public List<MountConfiguration> getAvailableMountConfigurations() {
+        return availableMountConfigurations;
     }
 
     public double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
@@ -321,5 +364,25 @@ public enum Shape {
 
     public double getTotalWeaponSpaces(final int hullSpaces) {
         return shipLookup.getTotalWeaponSpaces(hullSpaces);
+    }
+
+    abstract int getWeaponizableSpaces(int hullSpaces, int year);
+
+    int getWeaponizableSpaces(double multiplier, int hullSpaces, int year) {
+        return Double.valueOf(Math.ceil(getWeaponSpaces(hullSpaces) * getUsablePercentage(year) * multiplier)).intValue();
+    }
+
+    private static double getWeaponSpaces(final int hullSpaces) {
+        double val = 0.2917d * Math.pow(hullSpaces, 0.8869d);
+        if (hullSpaces < 100) {
+            val *= 0.0000006d * Math.pow(hullSpaces, 3d) - 0.0001d * Math.pow(hullSpaces, 2d) + 0.009d * hullSpaces + 0.7877d;
+        } else if (hullSpaces < 600) {
+            val *= -0.000000001d * Math.pow(hullSpaces, 3d) + 0.000002d * Math.pow(hullSpaces, 2d) - 0.0008d * hullSpaces + 1.0934d;
+        } else if (hullSpaces < 1400) {
+            val *= -0.00000000005d * Math.pow(hullSpaces, 3d) + 0.0000002d * Math.pow(hullSpaces, 2d) - 0.0002d * hullSpaces + 1.056;
+        } else {
+            val *= 0.00003d * hullSpaces + 0.9532d;
+        }
+        return val;
     }
 }
