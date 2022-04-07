@@ -182,4 +182,31 @@ public enum MountConfiguration {
                 Double.valueOf(Math.ceil(Math.pow(getPrimaryMountTotalSpaces(shape, hullSpaces, year), 1 / 1.75d))).intValue(),
                 10);
     }
+
+    int getSecondaryMountBiggestWeaponSpaces(final Shape shape, final int hullSpaces, final int year) {
+        final int primary = getPrimaryMountBiggestWeaponSpaces(shape, hullSpaces, year);
+        final int spaces = shape.getSecondaryMountTotalSpaces(hullSpaces, year);
+        return Math.max(1, Math.max(
+                Math.min(
+                        Double.valueOf(Math.floor(primary * 0.83)).intValue(),
+                        Double.valueOf(Math.round(0.6 * spaces)).intValue()
+                ),
+                Math.min(2, Math.min(
+                        primary - 1,
+                        spaces
+                ))
+        ));
+    }
+
+    int getSecondaryMountsTotalCount(final Shape shape, final int hullSpaces, final int year) {
+        if (shape.equals(CYLINDER))
+            return Double.valueOf(Math.round(shape.getWeaponizableSpaces(hullSpaces, year) * 0.48d / shape.getSecondaryMountTotalSpaces(hullSpaces, year))).intValue();
+        if (shape.equals(LONG_CYLINDER))
+            return Double.valueOf(Math.round(shape.getWeaponizableSpaces(hullSpaces, year) * 0.33d / shape.getSecondaryMountTotalSpaces(hullSpaces, year))).intValue();
+        if (shape.equals(SPHEROID)) return 8 - getPrimaryMountsTotalCount();
+        if (shape.equals(ELLIPSOID)) return 8 - getPrimaryMountsTotalCount();
+        if (shape.equals(CONICAL)) return 10 - getPrimaryMountsTotalCount();
+        if (shape.equals(HEMISPHEROID)) return 9 - getPrimaryMountsTotalCount();
+        return 0;
+    }
 }
