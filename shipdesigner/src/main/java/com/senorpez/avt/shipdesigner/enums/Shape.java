@@ -244,6 +244,8 @@ public enum Shape {
     private final List<MountConfiguration> availableMountConfigurations;
     private final int secondaryMountFieldOfFire;
 
+    private final int tertiaryMountFieldOfFire = 26;
+
     private static final ShipLookup shipLookup = new ShipLookup();
 
     Shape(String shapeName,
@@ -312,6 +314,10 @@ public enum Shape {
 
     public int getSecondaryMountFieldOfFire() {
         return secondaryMountFieldOfFire;
+    }
+
+    public int getTertiaryMountFieldOfFire() {
+        return tertiaryMountFieldOfFire;
     }
 
     public double getHullLength(double hullSpaces, double armorFraction, double driveFraction_Typical) {
@@ -421,6 +427,20 @@ public enum Shape {
     int getSecondaryMountRows(final int hullSpaces, final int year) {
         return Math.min(
                 Double.valueOf(Math.ceil(Math.pow(getSecondaryMountTotalSpaces(hullSpaces, year), 1 / 1.65d))).intValue(),
+                10
+        );
+    }
+
+    int getTertiaryMountTotalSpaces(final int hullSpaces, final int year) {
+        return Math.max(
+                Double.valueOf(Math.round(0.05 * getWeaponizableSpaces(hullSpaces, year))).intValue(),
+                1
+        );
+    }
+
+    int getTertiaryMountRows(final int hullSpaces, final int year) {
+        return Math.min(
+                Double.valueOf(Math.ceil(Math.pow(getTertiaryMountTotalSpaces(hullSpaces, year), 1 / 1.414d))).intValue(),
                 10
         );
     }

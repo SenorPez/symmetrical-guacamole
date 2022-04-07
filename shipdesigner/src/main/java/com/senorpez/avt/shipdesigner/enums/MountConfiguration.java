@@ -171,7 +171,7 @@ public enum MountConfiguration {
         return 0.72 / Math.pow(hullSpaces / 25d, 1 / 2.95d);
     }
 
-    public int getPrimaryMountsTotalCount() {
+    public int getPrimaryMountTotalCount() {
         return primaryMountsTotalCount;
     }
 
@@ -198,15 +198,32 @@ public enum MountConfiguration {
         ));
     }
 
-    int getSecondaryMountsTotalCount(final Shape shape, final int hullSpaces, final int year) {
+    int getSecondaryMountTotalCount(final Shape shape, final int hullSpaces, final int year) {
         if (shape.equals(CYLINDER))
             return Double.valueOf(Math.round(shape.getWeaponizableSpaces(hullSpaces, year) * 0.48d / shape.getSecondaryMountTotalSpaces(hullSpaces, year))).intValue();
         if (shape.equals(LONG_CYLINDER))
             return Double.valueOf(Math.round(shape.getWeaponizableSpaces(hullSpaces, year) * 0.33d / shape.getSecondaryMountTotalSpaces(hullSpaces, year))).intValue();
-        if (shape.equals(SPHEROID)) return 8 - getPrimaryMountsTotalCount();
-        if (shape.equals(ELLIPSOID)) return 8 - getPrimaryMountsTotalCount();
-        if (shape.equals(CONICAL)) return 10 - getPrimaryMountsTotalCount();
-        if (shape.equals(HEMISPHEROID)) return 9 - getPrimaryMountsTotalCount();
+        if (shape.equals(SPHEROID)) return 8 - getPrimaryMountTotalCount();
+        if (shape.equals(ELLIPSOID)) return 8 - getPrimaryMountTotalCount();
+        if (shape.equals(CONICAL)) return 10 - getPrimaryMountTotalCount();
+        if (shape.equals(HEMISPHEROID)) return 9 - getPrimaryMountTotalCount();
         return 0;
+    }
+
+    int getTertiaryMountBiggestWeaponSpaces(final Shape shape, final int hullSpaces, final int year) {
+        return Math.max(
+                Double.valueOf(Math.round(Math.sqrt(getPrimaryMountBiggestWeaponSpaces(shape, hullSpaces, year)))).intValue(),
+                1
+        );
+    }
+
+    int getTertiaryMountTotalCount(final Shape shape, final int hullSpaces, final int year) {
+        return 24 - getPrimaryMountTotalCount() - getSecondaryMountTotalCount(shape, hullSpaces, year);
+    }
+
+    int getMountTotalSpaces(final Shape shape, final int hullSpaces, final int year) {
+        return getPrimaryMountTotalSpaces(shape, hullSpaces, year) * getPrimaryMountTotalCount()
+                + shape.getSecondaryMountTotalSpaces(hullSpaces, year) * getSecondaryMountTotalCount(shape, hullSpaces, year)
+                + shape.getTertiaryMountTotalSpaces(hullSpaces, year) * getTertiaryMountTotalCount(shape, hullSpaces, year);
     }
 }
