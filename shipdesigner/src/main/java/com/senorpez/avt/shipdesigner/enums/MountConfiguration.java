@@ -1,6 +1,7 @@
 package com.senorpez.avt.shipdesigner.enums;
 
 import static com.senorpez.avt.shipdesigner.enums.Shape.*;
+import static com.senorpez.avt.shipdesigner.enums.UsablePercentageByYear.getUsablePercentage;
 
 public enum MountConfiguration {
     KEEL("Keel", 1) {
@@ -170,10 +171,28 @@ public enum MountConfiguration {
         return name;
     }
 
+    int getWeaponizableSpaces(final Shape shape, final int hullSpaces, final int year) {
+        return Double.valueOf(Math.ceil(getWeaponSpaces(hullSpaces) * getUsablePercentage(year) * shape.getWeaponizableSpaceMultiplier())).intValue();
+    }
+
+    private static double getWeaponSpaces(final int hullSpaces) {
+        double val = 0.2917d * Math.pow(hullSpaces, 0.8869d);
+        if (hullSpaces < 100) {
+            val *= 0.0000006d * Math.pow(hullSpaces, 3d) - 0.0001d * Math.pow(hullSpaces, 2d) + 0.009d * hullSpaces + 0.7877d;
+        } else if (hullSpaces < 600) {
+            val *= -0.000000001d * Math.pow(hullSpaces, 3d) + 0.000002d * Math.pow(hullSpaces, 2d) - 0.0008d * hullSpaces + 1.0934d;
+        } else if (hullSpaces < 1400) {
+            val *= -0.00000000005d * Math.pow(hullSpaces, 3d) + 0.0000002d * Math.pow(hullSpaces, 2d) - 0.0002d * hullSpaces + 1.056;
+        } else {
+            val *= 0.00003d * hullSpaces + 0.9532d;
+        }
+        return val;
+    }
+
     abstract int getPrimaryMountTotalSpaces(final Shape shape, final int hullSpaces, final int year);
 
     final int getPrimaryMountTotalSpaces(final double multiplier, final Shape shape, final int hullSpaces, final int year) {
-        return Double.valueOf(Math.round(multiplier * shape.getWeaponizableSpaces(hullSpaces, year))).intValue();
+        return Double.valueOf(Math.round(multiplier * getWeaponizableSpaces(shape, hullSpaces, year))).intValue();
     }
 
     int getPrimaryMountBiggestWeaponSpaces(final Shape shape, final int hullSpaces, final int year) {
@@ -206,12 +225,12 @@ public enum MountConfiguration {
     int getSecondaryMountTotalSpaces(Shape shape, int hullSpaces, int year) {
         if (shape.equals(CYLINDER))
             return Math.max(
-                    Double.valueOf(Math.round(0.09 * shape.getWeaponizableSpaces(hullSpaces, year))).intValue(),
+                    Double.valueOf(Math.round(0.09 * getWeaponizableSpaces(shape, hullSpaces, year))).intValue(),
                     1
             );
         if (shape.equals(LONG_CYLINDER))
             return Math.max(
-                    Double.valueOf(Math.round(0.09 * shape.getWeaponizableSpaces(hullSpaces, year))).intValue(),
+                    Double.valueOf(Math.round(0.09 * getWeaponizableSpaces(shape, hullSpaces, year))).intValue(),
                     1
             );
         if (shape.equals(SPHEROID))
@@ -220,12 +239,12 @@ public enum MountConfiguration {
             return Double.valueOf(Math.round(0.6 * getPrimaryMountTotalSpaces(shape, hullSpaces, year))).intValue();
         if (shape.equals(CONICAL))
             return Math.max(
-                    Double.valueOf(Math.round(0.08 * shape.getWeaponizableSpaces(hullSpaces, year))).intValue(),
+                    Double.valueOf(Math.round(0.08 * getWeaponizableSpaces(shape, hullSpaces, year))).intValue(),
                     1
             );
         if (shape.equals(HEMISPHEROID))
             return Math.max(
-                    Double.valueOf(Math.round(0.09 * shape.getWeaponizableSpaces(hullSpaces, year))).intValue(),
+                    Double.valueOf(Math.round(0.09 * getWeaponizableSpaces(shape, hullSpaces, year))).intValue(),
                     1
             );
         return 0;
@@ -248,9 +267,9 @@ public enum MountConfiguration {
 
     int getSecondaryMountTotalCount(final Shape shape, final int hullSpaces, final int year) {
         if (shape.equals(CYLINDER))
-            return Double.valueOf(Math.round(shape.getWeaponizableSpaces(hullSpaces, year) * 0.48d / getSecondaryMountTotalSpaces(shape, hullSpaces, year))).intValue();
+            return Double.valueOf(Math.round(getWeaponizableSpaces(shape, hullSpaces, year) * 0.48d / getSecondaryMountTotalSpaces(shape, hullSpaces, year))).intValue();
         if (shape.equals(LONG_CYLINDER))
-            return Double.valueOf(Math.round(shape.getWeaponizableSpaces(hullSpaces, year) * 0.33d / getSecondaryMountTotalSpaces(shape, hullSpaces, year))).intValue();
+            return Double.valueOf(Math.round(getWeaponizableSpaces(shape, hullSpaces, year) * 0.33d / getSecondaryMountTotalSpaces(shape, hullSpaces, year))).intValue();
         if (shape.equals(SPHEROID)) return 8 - getPrimaryMountTotalCount(shape);
         if (shape.equals(ELLIPSOID)) return 8 - getPrimaryMountTotalCount(shape);
         if (shape.equals(CONICAL)) return 10 - getPrimaryMountTotalCount(shape);
@@ -258,10 +277,21 @@ public enum MountConfiguration {
         return 0;
     }
 
+    int getSecondaryMountFieldOfFire(final Shape shape) {
+        return shape.getSecondaryMountFieldOfFire();
+    }
+
     int getSecondaryMountRows(final Shape shape, final int hullSpaces, final int year) {
         return Math.min(
                 Double.valueOf(Math.ceil(Math.pow(getSecondaryMountTotalSpaces(shape, hullSpaces, year), 1 / 1.65d))).intValue(),
                 10
+        );
+    }
+
+    int getTertiaryMountTotalSpaces(final Shape shape, final int hullSpaces, final int year) {
+        return Math.max(
+                Double.valueOf(Math.round(0.05 * getWeaponizableSpaces(shape, hullSpaces, year))).intValue(),
+                1
         );
     }
 
@@ -276,9 +306,20 @@ public enum MountConfiguration {
         return 24 - getPrimaryMountTotalCount(shape) - getSecondaryMountTotalCount(shape, hullSpaces, year);
     }
 
+    int getTertiaryMountFieldOfFire(final Shape shape) {
+        return shape.getTertiaryMountFieldOfFire();
+    }
+
+    int getTertiaryMountRows(final Shape shape, final int hullSpaces, final int year) {
+        return Math.min(
+                Double.valueOf(Math.ceil(Math.pow(getTertiaryMountTotalSpaces(shape, hullSpaces, year), 1 / 1.414d))).intValue(),
+                10
+        );
+    }
+
     int getMountTotalSpaces(final Shape shape, final int hullSpaces, final int year) {
         return getPrimaryMountTotalSpaces(shape, hullSpaces, year) * getPrimaryMountTotalCount(shape)
                 + getSecondaryMountTotalSpaces(shape, hullSpaces, year) * getSecondaryMountTotalCount(shape, hullSpaces, year)
-                + shape.getTertiaryMountTotalSpaces(hullSpaces, year) * getTertiaryMountTotalCount(shape, hullSpaces, year);
+                + getTertiaryMountTotalSpaces(shape, hullSpaces, year) * getTertiaryMountTotalCount(shape, hullSpaces, year);
     }
 }

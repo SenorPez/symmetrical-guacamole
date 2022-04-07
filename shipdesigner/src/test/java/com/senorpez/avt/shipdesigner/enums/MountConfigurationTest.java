@@ -55,9 +55,10 @@ class MountConfigurationTest {
         final int hullSpaces = 600;
         final int year = 2186;
         Shape shape = testData.shape;
+        MountConfiguration mountConfiguration = testData.mountConfiguration;
 
         int expectedValue = testData.weaponizableSpaces;
-        assertEquals(expectedValue, shape.getWeaponizableSpaces(hullSpaces, year));
+        assertEquals(expectedValue, mountConfiguration.getWeaponizableSpaces(shape, hullSpaces, year));
     }
 
     @ParameterizedTest
@@ -156,9 +157,10 @@ class MountConfigurationTest {
     @MethodSource("provider")
     void getSecondaryMountFieldOfFire(TestData testData) {
         Shape shape = testData.shape;
+        MountConfiguration mountConfiguration = testData.mountConfiguration;
 
         int expectedValue = testData.secondaryMountFieldOfFire;
-        assertEquals(expectedValue, shape.getSecondaryMountFieldOfFire());
+        assertEquals(expectedValue, mountConfiguration.getSecondaryMountFieldOfFire(shape));
     }
 
     @ParameterizedTest
@@ -179,9 +181,10 @@ class MountConfigurationTest {
         final int hullSpaces = 600;
         final int year = 2186;
         Shape shape = testData.shape;
+        MountConfiguration mountConfiguration = testData.mountConfiguration;
 
         int expectedValue = testData.tertiaryMountTotalSpaces;
-        assertEquals(expectedValue, shape.getTertiaryMountTotalSpaces(hullSpaces, year));
+        assertEquals(expectedValue, mountConfiguration.getTertiaryMountTotalSpaces(shape, hullSpaces, year));
     }
 
     @ParameterizedTest
@@ -212,9 +215,10 @@ class MountConfigurationTest {
     @MethodSource("provider")
     void getTertiaryMountFieldOfFire(TestData testData) {
         Shape shape = testData.shape;
+        MountConfiguration mountConfiguration = testData.mountConfiguration;
 
         int expectedValue = testData.tertiaryMountFieldOfFire;
-        assertEquals(expectedValue, shape.getTertiaryMountFieldOfFire());
+        assertEquals(expectedValue, mountConfiguration.getTertiaryMountFieldOfFire(shape));
     }
 
     @ParameterizedTest
@@ -223,9 +227,10 @@ class MountConfigurationTest {
         final int hullSpaces = 600;
         final int year = 2186;
         Shape shape = testData.shape;
+        MountConfiguration mountConfiguration = testData.mountConfiguration;
 
         int expectedValue = testData.tertiaryMountRows;
-        assertEquals(expectedValue, shape.getTertiaryMountRows(hullSpaces, year));
+        assertEquals(expectedValue, mountConfiguration.getTertiaryMountRows(shape, hullSpaces, year));
     }
 
     @ParameterizedTest
