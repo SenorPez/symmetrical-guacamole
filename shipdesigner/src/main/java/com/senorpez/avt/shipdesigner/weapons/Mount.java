@@ -4,8 +4,11 @@ import com.senorpez.avt.shipdesigner.Ship;
 import com.senorpez.avt.shipdesigner.enums.AVIDWindow;
 import com.senorpez.avt.shipdesigner.enums.ArmorSegment;
 import com.senorpez.avt.shipdesigner.enums.MountType;
+import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.senorpez.avt.shipdesigner.enums.MountType.*;
 
@@ -13,6 +16,13 @@ class Mount {
     Ship ship;
 
     MountType mountType;
+    ProductionLevel productionLevel;
+
+    int mountArmor; // Component Armor
+    int shutterArmor;
+    
+    int cgDrums;
+    int cmDrums;
 
     List<Weapon> weapons;
     ArmorSegment location;
@@ -80,6 +90,58 @@ class Mount {
         return 0;
     }
 
+    int getDuelCost(Ship ship) {
+        return Double.valueOf(Math.ceil(getMountCost(ship))).intValue() + getWeaponCost();
+    }
+
+    int getEconomicCost(Ship ship) {
+        return Double.valueOf(Math.ceil(getMountCost(ship) * getProductionLevel().getEconomicCostModifier())).intValue()
+                + getWeaponCost();
+    }
+
+    int getHeatExchangers() {
+        return weapons.stream().map(Weapon::getHeatExchangers).reduce(Integer::sum).orElse(0);
+    }
+
+    int getFlashCoolers() {
+        return weapons.stream().map(Weapon::getFlashCoolers).reduce(Integer::sum).orElse(0);
+    }
+
+    private double getMountCost(Ship ship) {
+        if (getWeaponSpacesUsed() <= 0) return 0;
+        int large = getLargestWeaponSpacesUsed();
+        int count = countLargestWeaponsInMount();
+        int sum = getWeaponSpacesUsed();
+        double mod = ship.getShape().getWeaponCostModifier();
+        int fieldOfFire = firingArc.size();
+
+        return (Math.pow(2, large) * (count + ((sum - (large * count)) / 5d)) * mod + 3 * (cgDrums + cmDrums)) * (0.9 + fieldOfFire / 10d)
+                + shutterArmorCost();
+    }
+
+    private int shutterArmorCost() {
+        List<Double> armorShrinkMultiplier = List.of(1d, 1.1d, 1.3d, 1.6d, 2d, 2.5d, 3.1d, 3.8d, 4.6d, 5.5d, 6.5d);
+
+        return Double.valueOf(Math.ceil(shutterArmor * 2 * armorShrinkMultiplier.get(ship.getArmorShrink()))).intValue();
+
+    }
+
+    private int getLargestWeaponSpacesUsed() {
+        return Collections.max(weapons.stream().map(Weapon::getSpacesUsed).toList());
+    }
+
+    private int getWeaponSpacesUsed() {
+        return weapons.stream().map(Weapon::getSpacesUsed).reduce(Integer::sum).orElse(0);
+    }
+
+    private int countLargestWeaponsInMount() {
+        return (int) weapons.stream().filter(w -> w.getSpacesUsed() == getLargestWeaponSpacesUsed()).count();
+    }
+
+    private int getWeaponCost() {
+        return weapons.stream().map(Weapon::getDuelCost).reduce(Integer::sum).orElse(0);
+    }
+
     // GETTERS & SETTERS
     Ship getShip() {
         return ship;
@@ -99,6 +161,47 @@ class Mount {
         return this;
     }
 
+    int getMountArmor() {
+        return mountArmor;
+    }
+
+    public Mount setMountArmor(int mountArmor) {
+        this.mountArmor = mountArmor;
+        return this;
+    }
+
+    int getShutterArmor() {
+        return shutterArmor;
+    }
+
+    Mount setShutterArmor(int shutterArmor) {
+        this.shutterArmor = shutterArmor;
+        return this;
+    }
+
+    int getCgDrums() {
+        return cgDrums;
+    }
+
+    Mount setCgDrums(int cgDrums) {
+        this.cgDrums = cgDrums;
+        return this;
+    }
+
+    int getCmDrums() {
+        return cmDrums;
+    }
+
+    Mount setCmDrums(int cmDrums) {
+        this.cmDrums = cmDrums;
+        return this;
+    }
+
+    public Mount setProductionLevel(ProductionLevel productionLevel) {
+        this.productionLevel = productionLevel;
+        return this;
+    }
+
     List<Weapon> getWeapons() {
         return weapons;
     }
@@ -106,6 +209,10 @@ class Mount {
     Mount setWeapons(List<Weapon> weapons) {
         this.weapons = weapons;
         return this;
+    }
+
+    public ProductionLevel getProductionLevel() {
+        return productionLevel;
     }
 
     ArmorSegment getLocation() {

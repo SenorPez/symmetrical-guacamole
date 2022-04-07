@@ -12,7 +12,7 @@ public enum ProductionLevel {
         this.economicCostModifier = economicCostModifier;
     }
 
-    double getEconomicCostModifier() {
+    public double getEconomicCostModifier() {
         return economicCostModifier;
     }
 }
