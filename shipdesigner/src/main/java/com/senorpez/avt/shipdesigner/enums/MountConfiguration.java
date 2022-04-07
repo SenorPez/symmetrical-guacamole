@@ -14,7 +14,7 @@ public enum MountConfiguration {
         }
 
         @Override
-        int getPrimaryMountBiggestWeaponSpaces(Shape shape, int hullSpaces, int year) {
+        public int getPrimaryMountBiggestWeaponSpaces(Shape shape, int hullSpaces, int year) {
             final int primaryMountTotalSpaces = getPrimaryMountTotalSpaces(shape, hullSpaces, year);
             return Math.max(
                     Math.min(15, Double.valueOf(Math.round(getKeelWeaponPercentage(hullSpaces) * primaryMountTotalSpaces)).intValue()),
@@ -195,7 +195,7 @@ public enum MountConfiguration {
         return Double.valueOf(Math.round(multiplier * getWeaponizableSpaces(shape, hullSpaces, year))).intValue();
     }
 
-    int getPrimaryMountBiggestWeaponSpaces(final Shape shape, final int hullSpaces, final int year) {
+    public int getPrimaryMountBiggestWeaponSpaces(final Shape shape, final int hullSpaces, final int year) {
         final int primaryMountTotalSpaces = getPrimaryMountTotalSpaces(shape, hullSpaces, year);
         return Math.max(
                 Math.min(15, Double.valueOf(Math.round(getStandardWeaponPercentage(hullSpaces) * primaryMountTotalSpaces)).intValue()),
@@ -250,7 +250,7 @@ public enum MountConfiguration {
         return 0;
     }
 
-    int getSecondaryMountBiggestWeaponSpaces(final Shape shape, final int hullSpaces, final int year) {
+    public int getSecondaryMountBiggestWeaponSpaces(final Shape shape, final int hullSpaces, final int year) {
         final int primary = getPrimaryMountBiggestWeaponSpaces(shape, hullSpaces, year);
         final int spaces = getSecondaryMountTotalSpaces(shape, hullSpaces, year);
         return Math.max(1, Math.max(
@@ -295,7 +295,7 @@ public enum MountConfiguration {
         );
     }
 
-    int getTertiaryMountBiggestWeaponSpaces(final Shape shape, final int hullSpaces, final int year) {
+    public int getTertiaryMountBiggestWeaponSpaces(final Shape shape, final int hullSpaces, final int year) {
         return Math.max(
                 Double.valueOf(Math.round(Math.sqrt(getPrimaryMountBiggestWeaponSpaces(shape, hullSpaces, year)))).intValue(),
                 1

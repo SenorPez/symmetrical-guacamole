@@ -23,7 +23,7 @@ class Mount {
     
     Mount() {}
 
-    int getMaximumMountSpaces() {
+    int getMountTotalSpaces() {
         if (mountType.equals(PRIMARY)) {
             return ship
                     .getMountConfiguration()
@@ -42,7 +42,7 @@ class Mount {
         return 0;
     }
 
-    int getMaximumRows() {
+    int getMountRows() {
         if (mountType.equals(PRIMARY)) {
             return ship
                     .getMountConfiguration()
@@ -57,6 +57,25 @@ class Mount {
             return ship
                     .getMountConfiguration()
                     .getTertiaryMountRows(ship.getShape(), ship.getHullSize(), ship.getLaidDown());
+        }
+        return 0;
+    }
+
+    int getMountBiggestWeaponSpaces() {
+        if (mountType.equals(PRIMARY)) {
+            return ship
+                    .getMountConfiguration()
+                    .getPrimaryMountBiggestWeaponSpaces(ship.getShape(), ship.getHullSize(), ship.getLaidDown());
+        }
+        if (mountType.equals(SECONDARY)) {
+            return ship
+                    .getMountConfiguration()
+                    .getSecondaryMountBiggestWeaponSpaces(ship.getShape(), ship.getHullSize(), ship.getLaidDown());
+        }
+        if (mountType.equals(TERTIARY)) {
+            return ship
+                    .getMountConfiguration()
+                    .getTertiaryMountBiggestWeaponSpaces(ship.getShape(), ship.getHullSize(), ship.getLaidDown());
         }
         return 0;
     }

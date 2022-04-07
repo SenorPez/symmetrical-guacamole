@@ -26,7 +26,7 @@ class MountTest {
     }
 
     @Test
-    void getMaximumMountSpaces() {
+    void getMountTotalSpaces() {
         when(ship.getHullSize()).thenReturn(106);
         when(ship.getLaidDown()).thenReturn(2186);
         when(ship.getShape()).thenReturn(Shape.CONICAL);
@@ -34,19 +34,19 @@ class MountTest {
 
         instance = instance.setMountType(MountType.PRIMARY);
         int expectedValue = 5;
-        assertEquals(expectedValue, instance.getMaximumMountSpaces());
+        assertEquals(expectedValue, instance.getMountTotalSpaces());
 
         instance.setMountType(MountType.SECONDARY);
         expectedValue = 2;
-        assertEquals(expectedValue, instance.getMaximumMountSpaces());
+        assertEquals(expectedValue, instance.getMountTotalSpaces());
 
         instance.setMountType(MountType.TERTIARY);
         expectedValue = 1;
-        assertEquals(expectedValue, instance.getMaximumMountSpaces());
+        assertEquals(expectedValue, instance.getMountTotalSpaces());
     }
 
     @Test
-    void getMaximumTotalCount() {
+    void getMountRows() {
         when(ship.getHullSize()).thenReturn(106);
         when(ship.getLaidDown()).thenReturn(2186);
         when(ship.getShape()).thenReturn(Shape.CONICAL);
@@ -54,14 +54,34 @@ class MountTest {
 
         instance = instance.setMountType(MountType.PRIMARY);
         int expectedValue = 3;
-        assertEquals(expectedValue, instance.getMaximumRows());
+        assertEquals(expectedValue, instance.getMountRows());
 
         instance.setMountType(MountType.SECONDARY);
         expectedValue = 2;
-        assertEquals(expectedValue, instance.getMaximumRows());
+        assertEquals(expectedValue, instance.getMountRows());
 
         instance.setMountType(MountType.TERTIARY);
         expectedValue = 1;
-        assertEquals(expectedValue, instance.getMaximumRows());
+        assertEquals(expectedValue, instance.getMountRows());
+    }
+
+    @Test
+    void getMountBiggestWeaponSpaces() {
+        when(ship.getHullSize()).thenReturn(106);
+        when(ship.getLaidDown()).thenReturn(2186);
+        when(ship.getShape()).thenReturn(Shape.CONICAL);
+        when(ship.getMountConfiguration()).thenReturn(MountConfiguration.TRIPLE);
+
+        instance = instance.setMountType(MountType.PRIMARY);
+        int expectedValue = 3;
+        assertEquals(expectedValue, instance.getMountBiggestWeaponSpaces());
+
+        instance.setMountType(MountType.SECONDARY);
+        expectedValue = 2;
+        assertEquals(expectedValue, instance.getMountBiggestWeaponSpaces());
+
+        instance.setMountType(MountType.TERTIARY);
+        expectedValue = 2;
+        assertEquals(expectedValue, instance.getMountBiggestWeaponSpaces());
     }
 }
