@@ -3,7 +3,6 @@ package com.senorpez.avt.shipdesigner.enums;
 import java.util.List;
 
 import static com.senorpez.avt.shipdesigner.enums.MountConfiguration.*;
-import static com.senorpez.avt.shipdesigner.enums.UsablePercentageByYear.getUsablePercentage;
 
 public enum Shape {
     CYLINDER("Cylinder", 1d, 0.05d, 1d, 0.0318d, 0.8d, 1, 2, 0.8d, List.of(KEEL, SINGLE, DOUBLE), 1.104d, 12, 0.8d) {

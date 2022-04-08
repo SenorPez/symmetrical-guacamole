@@ -1,7 +1,6 @@
 package com.senorpez.avt.shipdesigner.weapons;
 
 import com.senorpez.avt.shipdesigner.Ship;
-import com.senorpez.avt.shipdesigner.enums.AVIDWindow;
 import com.senorpez.avt.shipdesigner.enums.MountConfiguration;
 import com.senorpez.avt.shipdesigner.enums.MountType;
 import com.senorpez.avt.shipdesigner.enums.Shape;
@@ -12,15 +11,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.senorpez.avt.shipdesigner.enums.AVIDWindow.*;
 import static com.senorpez.avt.shipdesigner.systems.ProductionLevel.LIMITED;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -115,7 +109,7 @@ class MountTest {
                         BLUE_UP_NOSE_PORT, BLUE_UP_NOSE, BLUE_UP_NOSE_STARBOARD,
                         YELLOW_NOSE_PORT, YELLOW_NOSE, YELLOW_NOSE_STARBOARD));
         int expectedValue = 21;
-        assertEquals(expectedValue, instance.getDuelCost(ship));
+        assertEquals(expectedValue, instance.getDuelCost());
     }
 
     @Test

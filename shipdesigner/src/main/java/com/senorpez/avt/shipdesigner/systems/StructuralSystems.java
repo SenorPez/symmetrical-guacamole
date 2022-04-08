@@ -3,13 +3,13 @@ package com.senorpez.avt.shipdesigner.systems;
 import com.senorpez.avt.shipdesigner.systems.structural.*;
 
 public class StructuralSystems {
-    private Hull hull;
-    private Drive drive;
-    private FrameReinforcement frameReinforcement;
-    private DriveMastArmor driveMastArmor;
-    private ExternalArmor externalArmor;
-    private InternalArmor internalArmor;
-    private ImprovedAccessways improvedAccessways;
+    private final Hull hull;
+    private final Drive drive;
+    private final FrameReinforcement frameReinforcement;
+    private final DriveMastArmor driveMastArmor;
+    private final ExternalArmor externalArmor;
+    private final InternalArmor internalArmor;
+    private final ImprovedAccessways improvedAccessways;
 
     StructuralSystems(Hull hull,
                       Drive drive,

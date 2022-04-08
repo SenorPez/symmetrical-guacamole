@@ -5,13 +5,13 @@ import com.senorpez.avt.shipdesigner.systems.core.*;
 import java.util.List;
 
 public class CoreSystems {
-    private LifeSupport lifeSupport;
-    private Bridge bridge;
-    private FlagBridge flagBridge;
-    private List<Hyperdrive> hyperdrives;
-    private ECM ecm;
-    private ECCM eccm;
-    private HIRTS hirts;
+    private final LifeSupport lifeSupport;
+    private final Bridge bridge;
+    private final FlagBridge flagBridge;
+    private final List<Hyperdrive> hyperdrives;
+    private final ECM ecm;
+    private final ECCM eccm;
+    private final HIRTS hirts;
 
     public CoreSystems(LifeSupport lifeSupport,
                        Bridge bridge,

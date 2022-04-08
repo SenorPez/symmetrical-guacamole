@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class MountConfigurationTest {
-    static List<TestData> testDataList = new ArrayList<>();
+    static final List<TestData> testDataList = new ArrayList<>();
 
     @BeforeAll
     static void beforeAll() {

@@ -5,16 +5,16 @@ import com.senorpez.avt.shipdesigner.systems.internal.*;
 import java.util.List;
 
 public class InternalSystems {
-    private Quarters quarters;
-    private List<Cargo> cargos;
-    private CargoArmor cargoArmor;
-    private List<Reactor> reactors;
-    private ReactorArmor reactorArmor;
-    private List<Battery> batteries;
-    private List<HeatSink> heatSinks;
-    private HeatSinkArmor heatSinkArmor;
-    private Radiator radiator;
-    private Fuel fuel;
+    private final Quarters quarters;
+    private final List<Cargo> cargos;
+    private final CargoArmor cargoArmor;
+    private final List<Reactor> reactors;
+    private final ReactorArmor reactorArmor;
+    private final List<Battery> batteries;
+    private final List<HeatSink> heatSinks;
+    private final HeatSinkArmor heatSinkArmor;
+    private final Radiator radiator;
+    private final Fuel fuel;
 
     public InternalSystems(Quarters quarters,
                            List<Cargo> cargos,

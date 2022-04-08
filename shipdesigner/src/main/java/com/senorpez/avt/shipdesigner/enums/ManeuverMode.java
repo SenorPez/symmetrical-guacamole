@@ -45,6 +45,7 @@ public enum ManeuverMode {
     }
 
     public static ManeuverMode getMode(double maneuverAccel) {
+        // TODO: This is probably incorrect due to how VLOOKUP in Excel works.
         return Stream
                 .of(ManeuverMode.values())
                 .min(Comparator.comparingDouble(m -> Math.abs(m.getManeuverAccel() - maneuverAccel)))

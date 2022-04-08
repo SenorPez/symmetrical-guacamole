@@ -5,7 +5,7 @@ import com.senorpez.avt.shipdesigner.systems.ArmoredSystem;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
 public class SolarArray extends ArmoredSystem {
-    private ReactorArmor reactorarmor;
+    private final ReactorArmor reactorarmor;
 
     private final static String name = "Solar Array";
     private final static int spacesPerSystem = 5;

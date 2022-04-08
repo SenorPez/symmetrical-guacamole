@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.senorpez.avt.shipdesigner.systems.ProductionLevel.STANDARD;
-import static com.senorpez.avt.shipdesigner.weapons.LaserSRLS.SRLS.SRLS3;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 

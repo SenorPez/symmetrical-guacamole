@@ -2,8 +2,6 @@ package com.senorpez.avt.shipdesigner.weapons;
 
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
-import java.util.Optional;
-
 class ZoneDefenseZDCM extends ZoneDefense {
     private ZDCM model;
 

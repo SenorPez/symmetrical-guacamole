@@ -5,10 +5,9 @@ import com.senorpez.avt.shipdesigner.systems.System;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class ReactorArmor extends ArmorGroup {
-    private List<Reactor> reactors = new ArrayList<>();
+    private final List<Reactor> reactors = new ArrayList<>();
     private CivilianReactor civilianReactor = null;
     private SolarArray solarArray = null;
     private ChemicalBattery chemicalBattery = null;

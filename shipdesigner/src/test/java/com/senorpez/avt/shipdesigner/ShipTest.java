@@ -12,14 +12,11 @@ import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -54,7 +51,7 @@ class ShipTest {
                 .setInternalSystems(internalSystems)
                 .setMounts(mounts)
                 .build();
-        when(structuralSystems.getDuelCost()).thenReturn(333);
+        when(structuralSystems.getDuelCost()).thenReturn(324);
         when(coreSystems.getDuelCost()).thenReturn(66);
         when(internalSystems.getDuelCost()).thenReturn(147);
         when(mounts.stream().map(any()).reduce(any())).thenReturn(Optional.of(107));
@@ -62,7 +59,7 @@ class ShipTest {
         doReturn(ManeuverMode.I).when(instance).getPivotMode();
         doReturn(43).when(instance).getMinimumCrew();
 
-        int expectedValue = 733;
+        int expectedValue = 724;
         assertEquals(expectedValue, instance.getDuelCost());
     }
 

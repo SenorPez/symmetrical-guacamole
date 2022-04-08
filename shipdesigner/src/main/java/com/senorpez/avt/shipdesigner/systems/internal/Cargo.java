@@ -10,7 +10,7 @@ public abstract class Cargo extends ArmoredSystem {
     private final static double crewRequiredPerSpace = 0.125d;
     private final static double maintenanceRate = 0.05d;
 
-    protected CargoArmor cargoArmor;
+    protected final CargoArmor cargoArmor;
 
     Cargo(Ship ship,
           int spacesPerSystem,

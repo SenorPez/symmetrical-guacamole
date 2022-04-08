@@ -6,7 +6,7 @@ import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 import com.senorpez.avt.shipdesigner.systems.structural.Drive;
 
 public class MHDCaptureSystem extends ArmoredSystem {
-    private ReactorArmor reactorArmor;
+    private final ReactorArmor reactorArmor;
 
     private final static String name = "MHD Capture System";
     private final static double costPerSpace = 10d;

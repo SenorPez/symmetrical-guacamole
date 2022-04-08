@@ -16,6 +16,7 @@ record ShipLookup() {
     }
 
     double getHullSpaces(final int hullSpaces) {
+        // TODO: This is probably incorrect due to how VLOOKUP in Excel works.
         return data.entrySet()
                 .stream()
                 .min(Comparator.comparingDouble(d -> Math.abs(d.getKey() - hullSpaces)))
@@ -120,6 +121,7 @@ record ShipLookup() {
     }
 
     private Optional<ShipData> getShipData(final double hullSpaces) {
+        // TODO: This is probably incorrect due to how VLOOKUP in Excel works.
         return data.entrySet()
                 .stream()
                 .min(Comparator.comparingDouble(d -> Math.abs(d.getKey() - hullSpaces)))

@@ -1,7 +1,6 @@
 package com.senorpez.avt.shipdesigner.systems.internal;
 
 import com.senorpez.avt.shipdesigner.Ship;
-import com.senorpez.avt.shipdesigner.systems.ArmoredSystem;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 import com.senorpez.avt.shipdesigner.systems.System;
 

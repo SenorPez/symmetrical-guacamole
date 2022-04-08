@@ -5,7 +5,7 @@ import com.senorpez.avt.shipdesigner.systems.ArmoredSystem;
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
 public class ChemicalBattery extends ArmoredSystem {
-    private ReactorArmor reactorArmor;
+    private final ReactorArmor reactorArmor;
 
     private final static String name = "Chemical Battery";
     private final static int spacesPerSystem = 4;

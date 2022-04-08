@@ -2,8 +2,6 @@ package com.senorpez.avt.shipdesigner.weapons;
 
 import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
-import java.util.Optional;
-
 class PodDock extends Weapon {
     public PodDock(Mount mount, int shrinkEnhancement, ProductionLevel productionLevel) {
         super(mount, shrinkEnhancement, productionLevel);

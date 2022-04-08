@@ -8,7 +8,6 @@ import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.senorpez.avt.shipdesigner.enums.MountType.*;
 

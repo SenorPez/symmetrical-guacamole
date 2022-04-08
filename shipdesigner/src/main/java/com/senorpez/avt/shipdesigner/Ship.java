@@ -319,7 +319,7 @@ public class Ship {
     }
 
     double getDriveFlux() {
-        // Different than DriveCharacteristics.getDriveFlux, which seems to be used nowhere.
+        // Different from DriveCharacteristics.getDriveFlux, which seems to be used nowhere.
         return getHullSize() / 50d;
     }
 

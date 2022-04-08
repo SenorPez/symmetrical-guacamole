@@ -57,6 +57,7 @@ public record UsablePercentageByYear() {
     }
 
     public static double getUsablePercentage(final int year) {
+        // TODO: This is probably incorrect due to how VLOOKUP in Excel works.
         return data.entrySet()
                 .stream()
                 .min(Comparator.comparingInt(d -> Math.abs(d.getKey() - year)))

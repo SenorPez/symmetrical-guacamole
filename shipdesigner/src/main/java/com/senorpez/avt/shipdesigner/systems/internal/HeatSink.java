@@ -7,7 +7,7 @@ import com.senorpez.avt.shipdesigner.systems.ProductionLevel;
 public abstract class HeatSink extends ArmoredSystem {
     protected final static String name = "Heat Sink";
 
-    protected HeatSinkArmor heatSinkArmor;
+    protected final HeatSinkArmor heatSinkArmor;
 
     HeatSink(Ship ship,
              int spacesPerSystem,
