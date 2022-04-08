@@ -7,5 +7,7 @@ abstract class ZoneDefense extends Weapon {
         super(mount, shrinkEnhancement, productionLevel);
     }
 
+    abstract int getRecycleTime();
+
     abstract double getPower();
 }

@@ -26,8 +26,6 @@ abstract class Weapon {
     int getEconomicCost() {
         return Double.valueOf(Math.ceil(productionLevel.getEconomicCostModifier() * getDuelCost())).intValue();
     }
-    
-    abstract int getRecycleTime();
 
     abstract int getBaseCost();
     
