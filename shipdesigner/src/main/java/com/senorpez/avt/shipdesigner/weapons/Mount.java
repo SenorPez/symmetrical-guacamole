@@ -100,11 +100,21 @@ class Mount {
     }
 
     int getHeatExchangers() {
-        return weapons.stream().map(Weapon::getHeatExchangers).reduce(Integer::sum).orElse(0);
+        return weapons
+                .stream()
+                .filter(w -> w instanceof Laser)
+                .map(l -> ((Laser) l).getHeatExchangers())
+                .reduce(Integer::sum)
+                .orElse(0);
     }
 
     int getFlashCoolers() {
-        return weapons.stream().map(Weapon::getFlashCoolers).reduce(Integer::sum).orElse(0);
+        return weapons
+                .stream()
+                .filter(w -> w instanceof Laser)
+                .map(l -> ((Laser) l).getHeatExchangers())
+                .reduce(Integer::sum)
+                .orElse(0);
     }
 
     private double getMountCost(Ship ship) {
