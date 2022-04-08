@@ -11,9 +11,6 @@ abstract class Laser extends Weapon {
     private int heatExchangers;
     private int flashCoolers;
 
-    // TODO: This is used in multiple places
-    private final static List<Double> enhancementTable = List.of(1d, 1.1d, 1.25d, 1.475d, 1.775d, 2.15d, 2.6d, 3.125d, 3.725d, 4.4d, 5.15d, 5.975d, 6.875d, 7.85d, 8.9d, 10.025d, 11.225d, 12.5d, 13.85d, 15.275, 16.775d, 18.35);
-
     Laser(final Mount mount,
           final int armorPiercing,
           final int shrinkEnhancement,
