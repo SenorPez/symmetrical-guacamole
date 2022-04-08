@@ -5,6 +5,7 @@ import com.senorpez.avt.shipdesigner.systems.CoreSystems;
 import com.senorpez.avt.shipdesigner.systems.InternalSystems;
 import com.senorpez.avt.shipdesigner.systems.StructuralSystems;
 import com.senorpez.avt.shipdesigner.weapons.Mount;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Answers;
@@ -18,7 +19,8 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ShipTest {
@@ -31,14 +33,42 @@ class ShipTest {
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     List<Mount> mounts;
 
+    Ship instance;
+
     private int getRandomNumber(int min, int max) {
         Random random = new Random();
         return random.nextInt(max - min) + min;
     }
 
+    @BeforeEach
+    void setUp() {
+        instance = spy(new Ship());
+    }
+
+    @Test
+    void getDuelCost() {
+        instance = instance
+                .setMaximumThrust(10)
+                .setStructuralSystems(structuralSystems)
+                .setCoreSystems(coreSystems)
+                .setInternalSystems(internalSystems)
+                .setMounts(mounts)
+                .build();
+        when(structuralSystems.getDuelCost()).thenReturn(333);
+        when(coreSystems.getDuelCost()).thenReturn(66);
+        when(internalSystems.getDuelCost()).thenReturn(147);
+        when(mounts.stream().map(any()).reduce(any())).thenReturn(Optional.of(107));
+
+        doReturn(ManeuverMode.I).when(instance).getPivotMode();
+        doReturn(43).when(instance).getMinimumCrew();
+
+        int expectedValue = 733;
+        assertEquals(expectedValue, instance.getDuelCost());
+    }
+
     @Test
     void getMinimumCrew() {
-        Ship instance = new Ship()
+        instance = instance
                 .setStructuralSystems(structuralSystems)
                 .setCoreSystems(coreSystems)
                 .setInternalSystems(internalSystems)
@@ -248,13 +278,6 @@ class ShipTest {
         Ship instance = new Ship().setPercentOfficers(percentOfficers);
         Integer expectedValue = 22;
         assertEquals(expectedValue, instance.getPercentOfficers());
-    }
-
-    @Test
-    void getDuelCost() {
-        Ship instance = new Ship();
-        Integer expectedValue = 644;
-        assertEquals(expectedValue, instance.getDuelCost());
     }
 
     @Test

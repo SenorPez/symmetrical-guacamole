@@ -77,7 +77,7 @@ public class StructuralSystems {
                 + improvedAccessways.getCrewRequirement();
     }
     
-    int getDuelCost() {
+    public int getDuelCost() {
         return hull.getDuelCost()
                 + drive.getDuelCost()
                 + frameReinforcement.getDuelCost()

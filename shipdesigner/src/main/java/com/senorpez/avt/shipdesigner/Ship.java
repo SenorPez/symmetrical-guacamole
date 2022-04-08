@@ -119,9 +119,21 @@ public class Ship {
         return baseCost + surcharge;
     }
 
+    private double getMountCost() {
+        double thrustFactor = getMaximumThrust() / 8d;
+        double pivotAccel = getPivotMode().getManeuverAccel() / 4;
+        double pivotTime = 2 * Math.sqrt(3 / pivotAccel);
+        int pivotTimeCeil = Double.valueOf(Math.ceil(pivotTime)).intValue();
+        double pivotFactor = 3 / (pivotTimeCeil + 1d);
+        return mounts.stream().map(Mount::getDuelCost).reduce(Integer::sum).orElse(0) * thrustFactor * pivotFactor;
+    }
+
     int getDuelCost() {
-        // TODO: Compute duel cost
-        return 0;
+        return Double.valueOf(Math.ceil(structuralSystems.getDuelCost()
+                + coreSystems.getDuelCost()
+                + internalSystems.getDuelCost()
+                + getMountCost()
+                + 2 * getMinimumCrew())).intValue();
     }
 
     int getEconomicCost() {

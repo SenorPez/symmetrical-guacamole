@@ -86,7 +86,7 @@ public class CoreSystems {
                 + hyperdrives.stream().map(ArmoredSystem::getArmorPointsUsed).reduce(Double::sum).orElse(0d);
     }
     
-    int getDuelCost() {
+    public int getDuelCost() {
         return lifeSupport.getDuelCost()
                 + bridge.getDuelCost()
                 + flagBridge.getDuelCost()

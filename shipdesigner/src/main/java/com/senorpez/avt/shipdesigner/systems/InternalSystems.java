@@ -98,7 +98,7 @@ public class InternalSystems {
                 + batteries.stream().map(ArmoredSystem::getArmorPointsUsed).reduce(Double::sum).orElse(0d);
     }
     
-    int getDuelCost() {
+    public int getDuelCost() {
         return quarters.getDuelCost()
                 + radiator.getDuelCost()
                 + fuel.getDuelCost()

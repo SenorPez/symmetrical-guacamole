@@ -98,7 +98,7 @@ public class Mount {
         return getSpacesUsed() * 0.5d;
     }
 
-    int getDuelCost(Ship ship) {
+    public int getDuelCost() {
         return Double.valueOf(Math.ceil(getMountCost(ship))).intValue() + getWeaponCost();
     }
 
