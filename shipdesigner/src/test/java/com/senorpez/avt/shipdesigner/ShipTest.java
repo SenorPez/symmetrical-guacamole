@@ -1,16 +1,57 @@
 package com.senorpez.avt.shipdesigner;
 
 import com.senorpez.avt.shipdesigner.enums.*;
+import com.senorpez.avt.shipdesigner.systems.CoreSystems;
+import com.senorpez.avt.shipdesigner.systems.InternalSystems;
+import com.senorpez.avt.shipdesigner.systems.StructuralSystems;
+import com.senorpez.avt.shipdesigner.weapons.Mount;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class ShipTest {
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    StructuralSystems structuralSystems;
+    @Mock
+    CoreSystems coreSystems;
+    @Mock
+    InternalSystems internalSystems;
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    List<Mount> mounts;
+
     private int getRandomNumber(int min, int max) {
         Random random = new Random();
         return random.nextInt(max - min) + min;
+    }
+
+    @Test
+    void getMinimumCrew() {
+        Ship instance = new Ship()
+                .setStructuralSystems(structuralSystems)
+                .setCoreSystems(coreSystems)
+                .setInternalSystems(internalSystems)
+                .setMounts(mounts)
+                .build();
+        when(structuralSystems.getCrewRequirement()).thenReturn(8.5d);
+        when(coreSystems.getCrewRequirement()).thenReturn(7.5d);
+        when(internalSystems.getCrewRequirement()).thenReturn(20.25d);
+        when(mounts.stream().map(any()).reduce(any())).thenReturn(Optional.of(6.5));
+        when(structuralSystems.getHull().getShrinkEnhancement()).thenReturn(0);
+
+        int expectedValue = 43;
+        assertEquals(expectedValue, instance.getMinimumCrew());
     }
 
     @Test

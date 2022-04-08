@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CoreSummaryTest {
+class CoreSystemsTest {
     @Mock
     private LifeSupport lifeSupport;
     @Mock
@@ -38,11 +38,11 @@ class CoreSummaryTest {
     @Mock
     private HIRTS hirts;
 
-    CoreSummary instance;
+    CoreSystems instance;
 
     @BeforeEach
     void setUp() {
-        instance = new CoreSummary(
+        instance = new CoreSystems(
                 lifeSupport,
                 bridge,
                 flagBridge,

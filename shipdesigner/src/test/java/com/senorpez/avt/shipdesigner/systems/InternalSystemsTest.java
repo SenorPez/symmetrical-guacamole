@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class InternalSummaryTest {
+class InternalSystemsTest {
     @Mock
     private Quarters quarters;
     @Mock
@@ -46,11 +46,11 @@ class InternalSummaryTest {
     @Mock
     private Fuel fuel;
 
-    InternalSummary instance;
+    InternalSystems instance;
 
     @BeforeEach
     void setUp() {
-        instance = new InternalSummary(
+        instance = new InternalSystems(
                 quarters,
                 new ArrayList<>(List.of(cargoSupport, cargoRepair, cargoMagazine, cargoShuttle)),
                 cargoArmor,

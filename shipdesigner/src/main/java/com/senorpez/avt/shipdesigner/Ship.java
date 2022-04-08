@@ -2,6 +2,10 @@ package com.senorpez.avt.shipdesigner;
 
 import com.senorpez.avt.shipdesigner.characteristics.*;
 import com.senorpez.avt.shipdesigner.enums.*;
+import com.senorpez.avt.shipdesigner.systems.CoreSystems;
+import com.senorpez.avt.shipdesigner.systems.InternalSystems;
+import com.senorpez.avt.shipdesigner.systems.StructuralSystems;
+import com.senorpez.avt.shipdesigner.weapons.Mount;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,6 +42,11 @@ public class Ship {
     private DimensionCharacteristics dimensionCharacteristics;
     private DriveCharacteristics driveCharacteristics;
     private SurfaceCharacteristics surfaceCharacteristics;
+
+    private StructuralSystems structuralSystems;
+    private CoreSystems coreSystems;
+    private InternalSystems internalSystems;
+    private List<Mount> mounts = new ArrayList<>();
 
     private MountConfiguration mountConfiguration;
 
@@ -132,7 +141,13 @@ public class Ship {
 
     public int getMinimumCrew() {
         // TODO: Compute minimum crew
-        return 0;
+        double systemsCrew = structuralSystems.getCrewRequirement()
+                + coreSystems.getCrewRequirement()
+                + internalSystems.getCrewRequirement()
+                + mounts.stream().map(Mount::getCrewRequirement).reduce(Double::sum).orElse(0d);
+        double automationReduction = (1 - 0.05 * structuralSystems.getHull().getShrinkEnhancement());
+        int crew = Double.valueOf(Math.ceil(systemsCrew * automationReduction)).intValue();
+        return Math.max(crew, 10);
     }
 
     int getOfficers() {
@@ -678,6 +693,42 @@ public class Ship {
 
     Ship setMountConfiguration(MountConfiguration mountConfiguration) {
         this.mountConfiguration = mountConfiguration;
+        return this;
+    }
+
+    StructuralSystems getStructuralSystems() {
+        return structuralSystems;
+    }
+
+    Ship setStructuralSystems(StructuralSystems structuralSystems) {
+        this.structuralSystems = structuralSystems;
+        return this;
+    }
+
+    CoreSystems getCoreSystems() {
+        return coreSystems;
+    }
+
+    Ship setCoreSystems(CoreSystems coreSystems) {
+        this.coreSystems = coreSystems;
+        return this;
+    }
+
+    InternalSystems getInternalSystems() {
+        return internalSystems;
+    }
+
+    Ship setInternalSystems(InternalSystems internalSystems) {
+        this.internalSystems = internalSystems;
+        return this;
+    }
+
+    List<Mount> getMounts() {
+        return mounts;
+    }
+
+    Ship setMounts(List<Mount> mounts) {
+        this.mounts = mounts;
         return this;
     }
 }

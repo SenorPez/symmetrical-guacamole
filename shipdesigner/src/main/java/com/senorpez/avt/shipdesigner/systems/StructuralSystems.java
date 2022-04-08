@@ -2,7 +2,7 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.systems.structural.*;
 
-class StructuralSummary {
+public class StructuralSystems {
     private Hull hull;
     private Drive drive;
     private FrameReinforcement frameReinforcement;
@@ -11,7 +11,7 @@ class StructuralSummary {
     private InternalArmor internalArmor;
     private ImprovedAccessways improvedAccessways;
 
-    StructuralSummary(Hull hull,
+    StructuralSystems(Hull hull,
                       Drive drive,
                       FrameReinforcement frameReinforcement,
                       DriveMastArmor driveMastArmor,
@@ -67,6 +67,16 @@ class StructuralSummary {
                 + improvedAccessways.getEnhancedCost();
     }
     
+    public double getCrewRequirement() {
+        return hull.getCrewRequirement()
+                + drive.getCrewRequirement()
+                + frameReinforcement.getCrewRequirement()
+                + driveMastArmor.getCrewRequirement()
+                + externalArmor.getCrewRequirement()
+                + internalArmor.getCrewRequirement()
+                + improvedAccessways.getCrewRequirement();
+    }
+    
     int getDuelCost() {
         return hull.getDuelCost()
                 + drive.getDuelCost()
@@ -95,5 +105,9 @@ class StructuralSummary {
                 + externalArmor.getMaintenanceCostPerYear()
                 + internalArmor.getMaintenanceCostPerYear()
                 + improvedAccessways.getMaintenanceCostPerYear();
+    }
+
+    public Hull getHull() {
+        return hull;
     }
 }

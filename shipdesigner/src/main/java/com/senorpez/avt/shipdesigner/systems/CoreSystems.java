@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.systems.core.*;
 
 import java.util.List;
 
-class CoreSummary {
+public class CoreSystems {
     private LifeSupport lifeSupport;
     private Bridge bridge;
     private FlagBridge flagBridge;
@@ -13,7 +13,7 @@ class CoreSummary {
     private ECCM eccm;
     private HIRTS hirts;
 
-    public CoreSummary(LifeSupport lifeSupport,
+    public CoreSystems(LifeSupport lifeSupport,
                        Bridge bridge,
                        FlagBridge flagBridge,
                        List<Hyperdrive> hyperdrives,
@@ -67,6 +67,16 @@ class CoreSummary {
                 + eccm.getEnhancedCost()
                 + hirts.getEnhancedCost()
                 + hyperdrives.stream().map(System::getEnhancedCost).reduce(Integer::sum).orElse(0);
+    }
+    
+    public double getCrewRequirement() {
+        return lifeSupport.getCrewRequirement()
+                + bridge.getCrewRequirement()
+                + flagBridge.getCrewRequirement()
+                + ecm.getCrewRequirement()
+                + eccm.getCrewRequirement()
+                + hirts.getCrewRequirement()
+                + hyperdrives.stream().map(System::getCrewRequirement).reduce(Double::sum).orElse(0d);
     }
     
     double getArmorPointsUsed() {

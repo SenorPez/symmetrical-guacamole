@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 import static com.senorpez.avt.shipdesigner.enums.MountType.*;
 
-class Mount {
+public class Mount {
     Ship ship;
 
     MountType mountType;
@@ -88,6 +88,14 @@ class Mount {
                     .getTertiaryMountBiggestWeaponSpaces(ship.getShape(), ship.getHullSize(), ship.getLaidDown());
         }
         return 0;
+    }
+
+    private int getSpacesUsed() {
+        return weapons.stream().map(Weapon::getSpacesUsed).reduce(Integer::sum).orElse(0);
+    }
+
+    public double getCrewRequirement() {
+        return getSpacesUsed() * 0.5d;
     }
 
     int getDuelCost(Ship ship) {

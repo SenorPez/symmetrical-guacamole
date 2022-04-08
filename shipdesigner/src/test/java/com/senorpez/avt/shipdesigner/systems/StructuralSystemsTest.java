@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class StructuralSummaryTest {
+class StructuralSystemsTest {
     @Mock
     Hull hull;
     @Mock
@@ -27,11 +27,11 @@ class StructuralSummaryTest {
     @Mock
     ImprovedAccessways improvedAccessways;
 
-    StructuralSummary instance;
+    StructuralSystems instance;
 
     @BeforeEach
     void setUp() {
-        instance = new StructuralSummary(hull,
+        instance = new StructuralSystems(hull,
                 drive,
                 frameReinforcement,
                 driveMastArmor,

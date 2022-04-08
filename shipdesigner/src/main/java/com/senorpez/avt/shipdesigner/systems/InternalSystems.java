@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.systems.internal.*;
 
 import java.util.List;
 
-class InternalSummary {
+public class InternalSystems {
     private Quarters quarters;
     private List<Cargo> cargos;
     private CargoArmor cargoArmor;
@@ -16,7 +16,7 @@ class InternalSummary {
     private Radiator radiator;
     private Fuel fuel;
 
-    public InternalSummary(Quarters quarters,
+    public InternalSystems(Quarters quarters,
                            List<Cargo> cargos,
                            CargoArmor cargoArmor,
                            List<Reactor> reactors,
@@ -79,8 +79,17 @@ class InternalSummary {
                 + heatSinks.stream().map(System::getEnhancedCost).reduce(Integer::sum).orElse(0);
     }
     
+    public double getCrewRequirement() {
+        return quarters.getCrewRequirement()
+                + radiator.getCrewRequirement()
+                + fuel.getCrewRequirement()
+                + cargos.stream().map(System::getCrewRequirement).reduce(Double::sum).orElse(0d)
+                + reactors.stream().map(System::getCrewRequirement).reduce(Double::sum).orElse(0d)
+                + batteries.stream().map(System::getCrewRequirement).reduce(Double::sum).orElse(0d)
+                + heatSinks.stream().map(System::getCrewRequirement).reduce(Double::sum).orElse(0d);
+    }
+    
     double getArmorPointsUsed() {
-
         return quarters.getArmorPointsUsed()
                 + fuel.getArmorPointsUsed()
                 + cargoArmor.getArmorPointsUsed()
