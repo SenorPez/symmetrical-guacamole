@@ -108,7 +108,7 @@ public class InternalSystems {
                 + heatSinks.stream().map(System::getDuelCost).reduce(Integer::sum).orElse(0);
     }
     
-    int getEconomicCost() {
+    public int getEconomicCost() {
         return quarters.getEconomicCost()
                 + radiator.getEconomicCost()
                 + fuel.getEconomicCost()

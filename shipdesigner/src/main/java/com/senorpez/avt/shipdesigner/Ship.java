@@ -119,7 +119,7 @@ public class Ship {
         return baseCost + surcharge;
     }
 
-    private double getMountCost() {
+    private double getMountDuelCost() {
         double thrustFactor = getMaximumThrust() / 8d;
         double pivotAccel = getPivotMode().getManeuverAccel() / 4;
         double pivotTime = 2 * Math.sqrt(3 / pivotAccel);
@@ -128,17 +128,24 @@ public class Ship {
         return mounts.stream().map(Mount::getDuelCost).reduce(Integer::sum).orElse(0) * thrustFactor * pivotFactor;
     }
 
+    private double getMountEconomicCost() {
+        return mounts.stream().map(Mount::getEconomicCost).reduce(Integer::sum).orElse(0);
+    }
+
     int getDuelCost() {
         return Double.valueOf(Math.ceil(structuralSystems.getDuelCost()
                 + coreSystems.getDuelCost()
                 + internalSystems.getDuelCost()
-                + getMountCost()
+                + getMountDuelCost()
                 + 2 * getMinimumCrew())).intValue();
     }
 
     int getEconomicCost() {
-        // TODO: Compute economic cost
-        return 0;
+        return Double.valueOf(Math.ceil(structuralSystems.getEconomicCost()
+                + coreSystems.getEconomicCost()
+                + internalSystems.getEconomicCost()
+                + getMountEconomicCost()
+                + 2 * getMinimumCrew())).intValue();
     }
 
     int getMaintenanceCost() {

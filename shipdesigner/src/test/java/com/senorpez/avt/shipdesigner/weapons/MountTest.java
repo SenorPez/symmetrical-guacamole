@@ -128,7 +128,7 @@ class MountTest {
                         BLUE_UP_NOSE_PORT, BLUE_UP_NOSE, BLUE_UP_NOSE_STARBOARD,
                         YELLOW_NOSE_PORT, YELLOW_NOSE, YELLOW_NOSE_STARBOARD));
         int expectedValue = 33;
-        assertEquals(expectedValue, instance.getEconomicCost(ship));
+        assertEquals(expectedValue, instance.getEconomicCost());
     }
 
     @Test

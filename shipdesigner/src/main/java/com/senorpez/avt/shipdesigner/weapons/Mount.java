@@ -101,7 +101,7 @@ public class Mount {
         return Double.valueOf(Math.ceil(getMountCost(ship))).intValue() + getWeaponCost();
     }
 
-    int getEconomicCost(Ship ship) {
+    public int getEconomicCost() {
         return Double.valueOf(Math.ceil(getMountCost(ship) * getProductionLevel().getEconomicCostModifier())).intValue()
                 + getWeaponCost();
     }

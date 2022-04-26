@@ -64,6 +64,27 @@ class ShipTest {
     }
 
     @Test
+    void getEconomicCost() {
+        instance = instance
+                .setMaximumThrust(10)
+                .setStructuralSystems(structuralSystems)
+                .setCoreSystems(coreSystems)
+                .setInternalSystems(internalSystems)
+                .setMounts(mounts)
+                .build();
+        when(structuralSystems.getEconomicCost()).thenReturn(324);
+        when(coreSystems.getEconomicCost()).thenReturn(66);
+        when(internalSystems.getEconomicCost()).thenReturn(147);
+        when(mounts.stream().map(any()).reduce(any())).thenReturn(Optional.of(107));
+
+        doReturn(43).when(instance).getMinimumCrew();
+
+        int expectedValue = 730;
+        assertEquals(expectedValue, instance.getEconomicCost());
+
+    }
+
+    @Test
     void getMinimumCrew() {
         instance = instance
                 .setStructuralSystems(structuralSystems)
@@ -275,13 +296,6 @@ class ShipTest {
         Ship instance = new Ship().setPercentOfficers(percentOfficers);
         Integer expectedValue = 22;
         assertEquals(expectedValue, instance.getPercentOfficers());
-    }
-
-    @Test
-    void getEconomicCost() {
-        Ship instance = new Ship();
-        Integer expectedValue = 610;
-        assertEquals(expectedValue, instance.getEconomicCost());
     }
 
     @Test

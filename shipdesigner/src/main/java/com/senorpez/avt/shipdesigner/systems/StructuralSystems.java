@@ -87,7 +87,7 @@ public class StructuralSystems {
                 + improvedAccessways.getDuelCost();
     }
     
-    int getEconomicCost() {
+    public int getEconomicCost() {
         return hull.getEconomicCost()
                 + drive.getEconomicCost()
                 + frameReinforcement.getEconomicCost()

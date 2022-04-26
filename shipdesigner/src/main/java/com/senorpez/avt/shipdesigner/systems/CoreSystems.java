@@ -96,7 +96,7 @@ public class CoreSystems {
                 + hyperdrives.stream().map(System::getDuelCost).reduce(Integer::sum).orElse(0);
     }
     
-    int getEconomicCost() {
+    public int getEconomicCost() {
         return lifeSupport.getEconomicCost()
                 + bridge.getEconomicCost()
                 + flagBridge.getEconomicCost()
