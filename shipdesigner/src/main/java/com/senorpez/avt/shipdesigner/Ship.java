@@ -132,6 +132,10 @@ public class Ship {
         return mounts.stream().map(Mount::getEconomicCost).reduce(Integer::sum).orElse(0);
     }
 
+    private double getMountMaintenanceCostPerYear() {
+        return getMountEconomicCost() * 0.2d;
+    }
+
     int getDuelCost() {
         return Double.valueOf(Math.ceil(structuralSystems.getDuelCost()
                 + coreSystems.getDuelCost()
@@ -148,9 +152,15 @@ public class Ship {
                 + 2 * getMinimumCrew())).intValue();
     }
 
-    int getMaintenanceCost() {
-        // TODO: Compute maintenance cost
-        return 0;
+    int getMaintenanceCostPerYear() {
+        double systemsMaintenance = structuralSystems.getMaintenanceCostPerYear()
+                + coreSystems.getMaintenanceCostPerYear()
+                + internalSystems.getMaintenanceCostPerYear()
+                + getMountMaintenanceCostPerYear();
+        double accesswayModifier = structuralSystems.hasImprovedAccessways() ? 0.9d : 1.0d;
+        double buildMethodModifier = getBuildMode().getMaintenanceIncrease();
+
+        return Double.valueOf(Math.ceil(systemsMaintenance * (accesswayModifier + buildMethodModifier))).intValue();
     }
 
     int getBoxes() {

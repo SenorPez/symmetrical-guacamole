@@ -65,7 +65,7 @@ public class IntegrationTest {
     @Test
     void getMaintenanceCost() {
         int expectedValue = 444;
-        assertEquals(expectedValue, ship.getMaintenanceCost());
+        assertEquals(expectedValue, ship.getMaintenanceCostPerYear());
     }
 
     @Test

@@ -97,7 +97,7 @@ public class StructuralSystems {
                 + improvedAccessways.getEconomicCost();
     }
     
-    double getMaintenanceCostPerYear() {
+    public double getMaintenanceCostPerYear() {
         return hull.getMaintenanceCostPerYear()
                 + drive.getMaintenanceCostPerYear()
                 + frameReinforcement.getMaintenanceCostPerYear()
@@ -109,5 +109,9 @@ public class StructuralSystems {
 
     public Hull getHull() {
         return hull;
+    }
+
+    public boolean hasImprovedAccessways() {
+        return improvedAccessways.hasImprovedAccessways();
     }
 }

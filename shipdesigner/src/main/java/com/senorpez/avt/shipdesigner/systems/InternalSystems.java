@@ -118,7 +118,7 @@ public class InternalSystems {
                 + heatSinks.stream().map(System::getEconomicCost).reduce(Integer::sum).orElse(0);
     }
     
-    double getMaintenanceCostPerYear() {
+    public double getMaintenanceCostPerYear() {
         return quarters.getMaintenanceCostPerYear()
                 + radiator.getMaintenanceCostPerYear()
                 + fuel.getMaintenanceCostPerYear()

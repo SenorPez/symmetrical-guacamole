@@ -106,7 +106,7 @@ public class CoreSystems {
                 + hyperdrives.stream().map(System::getEconomicCost).reduce(Integer::sum).orElse(0);
     }
     
-    double getMaintenanceCostPerYear() {
+    public double getMaintenanceCostPerYear() {
         return lifeSupport.getMaintenanceCostPerYear()
                 + bridge.getMaintenanceCostPerYear()
                 + flagBridge.getMaintenanceCostPerYear()

@@ -46,6 +46,10 @@ public class ImprovedAccessways extends System {
         return getBasicSpacesUsed();
     }
 
+    public boolean hasImprovedAccessways() {
+        return hasImprovedAccessways;
+    }
+
     ImprovedAccessways setHasImprovedAccessways(boolean hasImprovedAccessways) {
         this.hasImprovedAccessways = hasImprovedAccessways;
         return this;

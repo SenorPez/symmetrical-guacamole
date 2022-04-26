@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import static com.senorpez.avt.shipdesigner.enums.BuildMode.QUICK;
+import static com.senorpez.avt.shipdesigner.enums.BuildMode.STANDARD;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -81,7 +83,38 @@ class ShipTest {
 
         int expectedValue = 730;
         assertEquals(expectedValue, instance.getEconomicCost());
+    }
 
+    @Test
+    void getMaintenanceCostPerYear() {
+        instance = instance
+                .setMaximumThrust(10)
+                .setStructuralSystems(structuralSystems)
+                .setCoreSystems(coreSystems)
+                .setInternalSystems(internalSystems)
+                .setMounts(mounts)
+                .setBuildMode(STANDARD)
+                .build();
+        when(structuralSystems.hasImprovedAccessways()).thenReturn(false);
+        when(structuralSystems.getMaintenanceCostPerYear()).thenReturn(57.45d);
+        when(coreSystems.getMaintenanceCostPerYear()).thenReturn(13.35d);
+        when(internalSystems.getMaintenanceCostPerYear()).thenReturn(27.05d);
+        when(mounts.stream().map(any()).reduce(any())).thenReturn(Optional.of(107));
+
+        int expectedValue = 120;
+        assertEquals(expectedValue, instance.getMaintenanceCostPerYear());
+
+        instance = instance.setBuildMode(QUICK);
+        expectedValue = 191;
+        assertEquals(expectedValue, instance.getMaintenanceCostPerYear());
+
+        when(structuralSystems.hasImprovedAccessways()).thenReturn(true);
+        expectedValue = 179;
+        assertEquals(expectedValue, instance.getMaintenanceCostPerYear());
+
+        instance = instance.setBuildMode(STANDARD);
+        expectedValue = 108;
+        assertEquals(expectedValue, instance.getMaintenanceCostPerYear());
     }
 
     @Test
@@ -162,9 +195,9 @@ class ShipTest {
 
     @Test
     void fieldBuildMode() {
-        Ship instance = new Ship().setBuildMode(BuildMode.QUICK);
+        Ship instance = new Ship().setBuildMode(QUICK);
 
-        BuildMode expectedValue = BuildMode.QUICK;
+        BuildMode expectedValue = QUICK;
         String expectedBuildModeName = "Quick and Dirty";
         assertEquals(expectedValue, instance.getBuildMode());
         assertEquals(expectedBuildModeName, instance.getBuildMode().getBuildModeName());
@@ -246,7 +279,7 @@ class ShipTest {
     void getBuildTime_Standard() {
         Ship instance = new Ship()
                 .setHullSize(275)
-                .setBuildMode(BuildMode.STANDARD);
+                .setBuildMode(STANDARD);
         Integer expectedValue = 29;
         assertEquals(expectedValue, instance.getBuildTime());
     }
@@ -255,21 +288,21 @@ class ShipTest {
     void getBuildTime_Quick() {
         Ship instance = new Ship()
                 .setHullSize(125)
-                .setBuildMode(BuildMode.QUICK);
+                .setBuildMode(QUICK);
         Integer expectedValue = 7;
         assertEquals(expectedValue, instance.getBuildTime());
     }
 
     @Test
     void getMonetaryCost_Standard() {
-        Ship instance = new Ship().setBuildMode(BuildMode.STANDARD);
+        Ship instance = new Ship().setBuildMode(STANDARD);
         Double expectedValue = 61d;
         assertEquals(expectedValue, instance.getMonetaryCost());
     }
 
     @Test
     void getMonetaryCost_Quick() {
-        Ship instance = new Ship().setBuildMode(BuildMode.QUICK);
+        Ship instance = new Ship().setBuildMode(QUICK);
         Double expectedValue = 76.25d;
         assertEquals(expectedValue, instance.getMonetaryCost());
     }
@@ -302,7 +335,7 @@ class ShipTest {
     void getMaintenanceCost() {
         Ship instance = new Ship();
         Integer expectedValue = 185;
-        assertEquals(expectedValue, instance.getMaintenanceCost());
+        assertEquals(expectedValue, instance.getMaintenanceCostPerYear());
     }
 
     @Test
