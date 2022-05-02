@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 import static com.senorpez.avt.shipdesigner.validators.HullSpacesValidator.hullSpacesOutOfBounds;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
@@ -46,7 +48,7 @@ class ShipTest {
 
     @Test
     void getDriveHullSpaces() {
-        doReturn(94.92721d).when(instance).getDriveMass();
+        doReturn(94.92721d).when(instance).getDriveMass(anyDouble());
 
         double expectedValue = 3.79709d;
         assertEquals(expectedValue, instance.getDriveHullSpaces(), tolerance);
@@ -55,10 +57,10 @@ class ShipTest {
     @Test
     void getDriveMass() {
         doReturn(73.51272d).when(instance).getLanternMass();
-        doReturn(21.41449d).when(instance).getMastMass();
+        doReturn(21.41449d).when(instance).getMastMass(anyDouble());
 
         double expectedValue = 94.92721d;
-        assertEquals(expectedValue, instance.getDriveMass(), tolerance);
+        assertEquals(expectedValue, instance.getDriveMass(22.39590d), tolerance);
     }
 
     @Test
@@ -89,8 +91,8 @@ class ShipTest {
     @ParameterizedTest(name = "{0} tons, {1} g, Gen {2}")
     @MethodSource("driveOutputProvider")
     void getDriveOutput(int shipMass, double shipMaxAcceleration, double driveGeneration, double expectedValue) {
-        instance.shipMass = shipMass;
-        instance.shipMaxAcceleration = shipMaxAcceleration;
+        instance.mass = shipMass;
+        instance.maxAcceleration = shipMaxAcceleration;
         instance.driveGeneration = driveGeneration;
 
         assertEquals(expectedValue, instance.getDriveOutput(), tolerance);
@@ -145,8 +147,8 @@ class ShipTest {
     @ParameterizedTest(name = "{0} tons, {1} g")
     @MethodSource("lanternDiameterProvider")
     void getLanternDiameter(int shipMass, double shipMaxAcceleration, double expectedValue) {
-        instance.shipMass = shipMass;
-        instance.shipMaxAcceleration = shipMaxAcceleration;
+        instance.mass = shipMass;
+        instance.maxAcceleration = shipMaxAcceleration;
 
         assertEquals(expectedValue, instance.getLanternDiameter(), tolerance);
     }
@@ -162,22 +164,29 @@ class ShipTest {
 
     @Test
     void getMastMass() {
-        doReturn(3.50936d).when(instance).getMastStructuralMass();
+        doReturn(3.50936d).when(instance).getMastStructuralMass(anyDouble());
         doReturn(5.25249d).when(instance).getMastArmorMass();
         doReturn(24.05152d).when(instance).getShieldMass();
 
         double expectedValue = 32.81337d;
         assertEquals(expectedValue, instance.getMastMass(), tolerance);
+        assertEquals(expectedValue, instance.getMastMass(22.39590d), tolerance);
     }
 
     @Test
     void getMastStructuralMass() {
-        instance.shipMass = 625;
-        instance.shipMaxAcceleration = 1.5d;
-        doReturn(22.39590d).when(instance).getMastLength();
+        instance.mass = 625;
+        instance.maxAcceleration = 1.5d;
+        instance.mastLength = 22.39590d;
         doReturn(1.5d).when(instance).getMastMassModifier();
 
         double expectedValue = 3.50936d;
         assertEquals(expectedValue, instance.getMastStructuralMass(), tolerance);
+        assertEquals(expectedValue, instance.getMastStructuralMass(22.39590d), tolerance);
+    }
+
+    @Test
+    void calculateMastLength() {
+        // TODO: Need to test.
     }
 }

@@ -8,13 +8,17 @@ import java.util.List;
 
 class Ship {
     private int hullSpaces;
-    int shipMass; // TODO: Setter and validation, make private
-    double shipMaxAcceleration; // TODO: Setter and validation, make private
+    int mass; // TODO: Setter and validation, make private
+    double maxAcceleration; // TODO: Setter and validation, make private
     double driveGeneration; // TODO: Setter and validation, make private
+
+    double mastLength;
 
     int lanternArmor; // TODO: Systems object
     int armorShrink; // TODO: Systems object
 
+    private static final int DRIVE_MASS_POWER = 1;
+    private static final int PIVOT_ACCEL_POWER = 1;
     private static final int RADIANT_DEFLECTION = 96; // Handwaved "lensing" to reduce heat load.
 
     private boolean valid = false;
@@ -24,6 +28,8 @@ class Ship {
         ValidationResult hullSpacesValidation = HullSpacesValidator.validate(hullSpaces);
         valid = hullSpacesValidation.valid();
         validationErrors.addAll(hullSpacesValidation.validationErrors());
+
+        mastLength = calculateMastLength();
         return this;
     }
 
@@ -45,7 +51,11 @@ class Ship {
     }
 
     double getDriveMass() {
-        return getMastMass() + getLanternMass();
+        return getDriveMass(mastLength);
+    }
+
+    double getDriveMass(final double mastLength) {
+        return getMastMass(mastLength) + getLanternMass();
     }
 
     double getLanternMass() {
@@ -64,7 +74,7 @@ class Ship {
     }
 
     double getDriveOutput() { // TODO: Add validation
-        return 0.5d * shipMass * 1000 * shipMaxAcceleration * 9.765625d * driveGeneration * 34722 / Math.pow(10, 12);
+        return 0.5d * mass * 1000 * maxAcceleration * 9.765625d * driveGeneration * 34722 / Math.pow(10, 12);
     }
 
     double getLanternArmorMass() {
@@ -76,19 +86,64 @@ class Ship {
     }
 
     double getLanternDiameter() {
-        return Math.sqrt(shipMass * shipMaxAcceleration / 125) * 20 / Math.sqrt(100 / (100d - RADIANT_DEFLECTION));
+        return Math.sqrt(mass * maxAcceleration / 125) * 20 / Math.sqrt(100 / (100d - RADIANT_DEFLECTION));
     }
 
     double getMastMass() {
-        return getMastStructuralMass() + getMastArmorMass() + getShieldMass();
+        return getMastMass(mastLength);
+    }
+
+    double getMastMass(final double mastLength) {
+        return getMastStructuralMass(mastLength) + getMastArmorMass() + getShieldMass();
     }
 
     double getMastStructuralMass() {
-        return shipMass * shipMaxAcceleration / 70000 * 7.8 * getMastLength() * getMastMassModifier();
+        return getMastStructuralMass(mastLength);
     }
 
-    double getMastLength() {
-        // TODO: Placeholder
+    double getMastStructuralMass(final double mastLength) {
+        return mass * maxAcceleration / 70000 * 7.8 * mastLength * getMastMassModifier();
+    }
+
+    double calculateMastLength() {
+        double mastLength;
+        if (hullSpaces < 100) mastLength = 25d;
+        else if (hullSpaces < 400) mastLength = 50d;
+        else if (hullSpaces < 1000) mastLength = 75d;
+        else mastLength = 100d;
+        double diff = getDifference(mastLength);
+
+        double step = 1;
+        final double target = 0.001d;
+        while (Math.abs(diff) > target) {
+            if (diff > 0) {
+                step *= -1;
+                while (diff > 0 && Math.abs(diff) > target) {
+                    mastLength += step;
+                    diff = getDifference(mastLength);
+                }
+                step *= -1;
+            } else {
+                while (diff < 0 && Math.abs(diff) > target) {
+                    mastLength += step;
+                    diff = getDifference(mastLength);
+                }
+            }
+            step /= 10;
+        }
+        return mastLength;
+    }
+
+    private double getDifference(final double mastLength) {
+        return 100000 * getFigureOfMerit(mastLength) - 1000000 * getFigureOfMerit(mastLength + 0.1);
+    }
+
+    private double getFigureOfMerit(final double mastLength) {
+        return Math.pow(getPivotAccel(mastLength), PIVOT_ACCEL_POWER) / Math.pow(getDriveMass(mastLength), DRIVE_MASS_POWER);
+    }
+
+    double getPivotAccel(final double mastLength) {
+        // TODO: Placeholder.
         return 0;
     }
 
