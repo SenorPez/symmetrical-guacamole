@@ -45,6 +45,17 @@ class Ship {
     }
 
     double getLanternStructuralMass() {
+        double driveOutput = getDriveOutput();
+        if (driveOutput > 4) {
+            return 400 * Math.pow(driveOutput / 4d, 1.5);
+        } else if (driveOutput < 1) {
+            return 100 * Math.pow(driveOutput, 0.5);
+        } else {
+            return driveOutput * 100;
+        }
+    }
+
+    double getDriveOutput() {
         // TODO: Placeholder
         return 0;
     }

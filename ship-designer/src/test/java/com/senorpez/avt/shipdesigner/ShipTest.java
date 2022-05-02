@@ -69,4 +69,20 @@ class ShipTest {
         double expectedValue = 82.93750d;
         assertEquals(expectedValue, instance.getLanternMass(), tolerance);
     }
+
+    @ParameterizedTest(name = "{0} drive output => {1} lantern mass")
+    @MethodSource("driveOutputProvider")
+    void getLanternStructuralMass(double driveOutput, double expectedValue) {
+        double tolerance = 1e-3;
+        doReturn(driveOutput).when(instance).getDriveOutput();
+        assertEquals(expectedValue, instance.getLanternStructuralMass(), tolerance);
+    }
+
+    private static Stream<Arguments> driveOutputProvider() {
+        return Stream.of(
+                arguments(0.54041d, 73.51272d),
+                arguments(1.17089d, 117.08926d),
+                arguments(4.32330d, 449.46145d)
+        );
+    }
 }
