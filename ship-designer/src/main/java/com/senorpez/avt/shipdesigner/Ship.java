@@ -143,6 +143,25 @@ class Ship {
     }
 
     double getPivotAccel(final double mastLength) {
+        return (getPivotThrust() * 1000) * ((1 - getDriveFraction()) * (mastLength + getHullLength() / 2) - (getDriveFraction()) * (getLanternDiameter() / 2)) / (getMomentOfInertia() * 1000) * ((3 / Math.PI) * 128 * 16);
+    }
+
+    double getPivotThrust() {
+        // TODO: Placeholder.
+        return 0;
+    }
+
+    double getDriveFraction() {
+        // TODO: Placeholder.
+        return 0;
+    }
+
+    double getHullLength() {
+        // TODO: Placeholder.
+        return 0;
+    }
+
+    double getMomentOfInertia() {
         // TODO: Placeholder.
         return 0;
     }

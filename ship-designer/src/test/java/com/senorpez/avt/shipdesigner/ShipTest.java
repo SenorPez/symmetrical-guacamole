@@ -189,4 +189,18 @@ class ShipTest {
     void calculateMastLength() {
         // TODO: Need to test.
     }
+
+    @Test
+    void getPivotAcceleration() {
+        double mastLength = 22.39590d;
+        double tolerance = 1e-4;
+        doReturn(151.25000d).when(instance).getPivotThrust();
+        doReturn(0.1701217d).when(instance).getDriveFraction();
+        doReturn(14.94895d).when(instance).getHullLength();
+        doReturn(10.95445d).when(instance).getLanternDiameter();
+        doReturn(124730.07776d).when(instance).getMomentOfInertia();
+
+        double expectedValue = 56.57713d;
+        assertEquals(expectedValue, instance.getPivotAccel(mastLength), tolerance);
+    }
 }
