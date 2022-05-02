@@ -1,0 +1,7 @@
+micronaut:
+  application:
+    name: api
+  session:
+    http:
+      cookie: true
+      header: true
