@@ -1,0 +1,28 @@
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ shipdesignernew ]
+  pull_request:
+    branches: [ shipdesignernew ]
+    
+permissions:
+  contents: read
+  
+jobs:
+  builds:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout branch
+      uses: actions/checkout@v3
+    - name: Set up JDK 16
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'corretto'
+        java-version: '17'
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@v1.0.4
+    - name: Test with Gradle
+      uses: gradle/gradle-build-action@v2.1.5
+      with:
+        arguments: test
