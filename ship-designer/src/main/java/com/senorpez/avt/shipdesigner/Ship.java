@@ -12,6 +12,9 @@ class Ship {
     double shipMaxAcceleration; // TODO: Setter and validation, make private
     double driveGeneration; // TODO: Setter and validation, make private
 
+    int lanternArmor; // TODO: Systems object
+    int armorShrink; // TODO: Systems object
+
     private boolean valid = false;
     private final List<String> validationErrors = new ArrayList<>();
 
@@ -63,6 +66,10 @@ class Ship {
     }
 
     double getLanternArmorMass() {
+        return lanternArmor * 50 * getLanternCoverageSurface() / (1000 + 50 * armorShrink);
+    }
+
+    double getLanternCoverageSurface() {
         // TODO: Placeholder
         return 0;
     }

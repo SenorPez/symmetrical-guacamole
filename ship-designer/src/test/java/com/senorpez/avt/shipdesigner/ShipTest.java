@@ -109,4 +109,27 @@ class ShipTest {
         );
     }
 
+    @ParameterizedTest(name = "{0} lantern armor, {1} armor shrink => {2} lantern armor mass")
+    @MethodSource("lanternArmorMassProvider")
+    void getLanternArmorMass(final int lanternArmor, final int armorShrink, final double expectedValue) {
+        instance.lanternArmor = lanternArmor;
+        instance.armorShrink = armorShrink;
+        doReturn(188.49556d).when(instance).getLanternCoverageSurface();
+
+        assertEquals(expectedValue, instance.getLanternArmorMass(), tolerance);
+    }
+
+    private static Stream<Arguments> lanternArmorMassProvider() {
+        return Stream.of(
+                arguments(0, 0, 0d),
+                arguments(0, 1, 0d),
+                arguments(0, 2, 0d),
+                arguments(1, 0, 9.42478d),
+                arguments(1, 1, 8.97598d),
+                arguments(1, 2, 8.56798d),
+                arguments(2, 0, 18.84956d),
+                arguments(2, 1, 17.95196d),
+                arguments(2, 2, 17.13596d)
+        );
+    }
 }
