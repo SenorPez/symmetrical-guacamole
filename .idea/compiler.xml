@@ -73,7 +73,7 @@
         <module name="avt.api.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="16">
+    <bytecodeTargetLevel target="17">
       <module name="api.main" target="17" />
       <module name="api.test" target="17" />
       <module name="com.senorpez.avt.api.main" target="17" />
