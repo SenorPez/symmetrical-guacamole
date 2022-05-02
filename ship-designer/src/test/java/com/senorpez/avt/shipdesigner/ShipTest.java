@@ -203,4 +203,16 @@ class ShipTest {
         double expectedValue = 56.57713d;
         assertEquals(expectedValue, instance.getPivotAccel(mastLength), tolerance);
     }
+
+    @Test
+    void getPivotThrust() {
+        instance.mass = 625;
+        doReturn(1.25d).when(instance).getPivotModifier();
+
+        double expectedValue = 151.25000d;
+        assertEquals(expectedValue, instance.getPivotThrust(), tolerance);
+        instance.pivotThrustOverride = 42;
+        expectedValue = 42d;
+        assertEquals(expectedValue, instance.getPivotThrust(), tolerance);
+    }
 }

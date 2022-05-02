@@ -12,13 +12,17 @@ class Ship {
     double maxAcceleration; // TODO: Setter and validation, make private
     double driveGeneration; // TODO: Setter and validation, make private
 
-    double mastLength;
+    double mastLength; // TODO: Setter, make private
 
     int lanternArmor; // TODO: Systems object
     int armorShrink; // TODO: Systems object
 
     private static final int DRIVE_MASS_POWER = 1;
     private static final int PIVOT_ACCEL_POWER = 1;
+    private static final double PIVOT_SCALING_FACTOR = 14.1522458529503d;
+
+    double pivotThrustOverride = 0; // Setter, make private
+
     private static final int RADIANT_DEFLECTION = 96; // Handwaved "lensing" to reduce heat load.
 
     private boolean valid = false;
@@ -147,6 +151,11 @@ class Ship {
     }
 
     double getPivotThrust() {
+        return pivotThrustOverride != 0 ? pivotThrustOverride
+                : PIVOT_SCALING_FACTOR * Math.pow(mass, 1 / 3d) * getPivotModifier();
+    }
+
+    double getPivotModifier() {
         // TODO: Placeholder.
         return 0;
     }
