@@ -2,9 +2,9 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, ship-designer ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, ship-designer ]
     
 permissions:
   contents: read
@@ -20,6 +20,12 @@ jobs:
       with:
         distribution: temurin
         java-version: 17
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
     - name: Validate Gradle wrapper
       uses: gradle/wrapper-validation-action@v1
-      
+    - name: Test Ship Designer with Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: :ship-designer:test
+        
