@@ -169,7 +169,6 @@ public class Ship {
     }
 
     public int getMinimumCrew() {
-        // TODO: Compute minimum crew
         double systemsCrew = structuralSystems.getCrewRequirement()
                 + coreSystems.getCrewRequirement()
                 + internalSystems.getCrewRequirement()
@@ -290,13 +289,14 @@ public class Ship {
     }
 
     boolean hasImprovedAccessways() {
-        // TODO: Probably move into a 'Systems' object.
-        return false;
+        return structuralSystems.hasImprovedAccessways();
     }
 
     int getStructuralIntegrity() {
-        // TODO: Calculate. Different than DimensionCharacteristics.getStructuralIntegrity.
-        return 0;
+        double reinforcementModifier = structuralSystems.getFrameReinforcement().getQuantity() > 10 ?
+                Math.pow(structuralSystems.getFrameReinforcement().getQuantity() - 10, 1 / 3d)
+                : 1;
+        return Double.valueOf(Math.round(reinforcementModifier * Math.sqrt(getHullSize() / 25d) * 4.4)).intValue();
     }
 
     double getHullLength() {

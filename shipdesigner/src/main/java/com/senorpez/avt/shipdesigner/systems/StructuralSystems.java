@@ -111,6 +111,10 @@ public class StructuralSystems {
         return hull;
     }
 
+    public FrameReinforcement getFrameReinforcement() {
+        return frameReinforcement;
+    }
+
     public boolean hasImprovedAccessways() {
         return improvedAccessways.hasImprovedAccessways();
     }

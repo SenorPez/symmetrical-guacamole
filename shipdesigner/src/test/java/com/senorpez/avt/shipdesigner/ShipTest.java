@@ -118,6 +118,21 @@ class ShipTest {
     }
 
     @Test
+    void getStructuralIntegrity() {
+        instance = instance
+                .setStructuralSystems(structuralSystems);
+        when(structuralSystems.getFrameReinforcement().getQuantity()).thenReturn(5);
+        doReturn(106).when(instance).getHullSize();
+
+        int expectedValue = 9;
+        assertEquals(expectedValue, instance.getStructuralIntegrity());
+
+        when(structuralSystems.getFrameReinforcement().getQuantity()).thenReturn(50);
+        expectedValue = 31;
+        assertEquals(expectedValue, instance.getStructuralIntegrity());
+    }
+
+    @Test
     void getMinimumCrew() {
         instance = instance
                 .setStructuralSystems(structuralSystems)
