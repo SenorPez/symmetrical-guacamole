@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static com.senorpez.avt.shipdesigner.HullShape.SPHERE;
 import static com.senorpez.avt.shipdesigner.validators.HullSpacesValidator.hullSpacesOutOfBounds;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -34,6 +35,7 @@ class ShipTest {
     void validateHullSpaces(final int hullSpaces, final boolean expectedValue) {
         instance = instance
                 .setHullSpaces(hullSpaces)
+                .setHullShape(SPHERE)
                 .build();
 
         assertEquals(expectedValue, instance.isValid());
@@ -214,5 +216,15 @@ class ShipTest {
         instance.pivotThrustOverride = 42;
         expectedValue = 42d;
         assertEquals(expectedValue, instance.getPivotThrust(), tolerance);
+    }
+
+    @Test
+    void getPivotModifier() {
+        instance = instance
+                .setHullShape(SPHERE)
+                .build();
+
+        double expectedValue = 1.25d;
+        assertEquals(expectedValue, instance.getPivotModifier());
     }
 }

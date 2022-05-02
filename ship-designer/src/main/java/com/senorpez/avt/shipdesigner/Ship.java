@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Ship {
+    private HullShape hullShape;
     private int hullSpaces;
     int mass; // TODO: Setter and validation, make private
     double maxAcceleration; // TODO: Setter and validation, make private
@@ -43,6 +44,11 @@ class Ship {
 
     List<String> getValidationErrors() {
         return validationErrors;
+    }
+
+    Ship setHullShape(final HullShape hullShape) {
+        this.hullShape = hullShape;
+        return this;
     }
 
     Ship setHullSpaces(final int hullSpaces) {
@@ -156,8 +162,7 @@ class Ship {
     }
 
     double getPivotModifier() {
-        // TODO: Placeholder.
-        return 0;
+        return hullShape.getPivotModifier();
     }
 
     double getDriveFraction() {
