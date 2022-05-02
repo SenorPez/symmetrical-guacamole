@@ -15,6 +15,8 @@ class Ship {
     int lanternArmor; // TODO: Systems object
     int armorShrink; // TODO: Systems object
 
+    private static final int RADIANT_DEFLECTION = 96; // Handwaved "lensing" to reduce heat load.
+
     private boolean valid = false;
     private final List<String> validationErrors = new ArrayList<>();
 
@@ -74,8 +76,7 @@ class Ship {
     }
 
     double getLanternDiameter() {
-        // TODO: Placeholder
-        return 0;
+        return Math.sqrt(shipMass * shipMaxAcceleration / 125) * 20 / Math.sqrt(100 / (100d - RADIANT_DEFLECTION));
     }
 
     double getMastMass() {

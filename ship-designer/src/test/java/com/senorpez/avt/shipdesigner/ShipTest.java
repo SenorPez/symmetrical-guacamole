@@ -101,7 +101,7 @@ class ShipTest {
                 arguments(625, 1.5d, 3.4d, 0.54041d),
                 arguments(625, 3d, 3.4d, 1.08082d),
                 arguments(625, 1.5d, 2.0d, 0.31789d),
-                arguments(625, 3d, 3.4d, 1.08082d),
+                arguments(625, 3d, 2.0d, 0.63578d),
                 arguments(2500, 1.5d, 3.4d, 2.16165d),
                 arguments(2500, 3d, 3.4d, 4.32330d),
                 arguments(2500, 1.5d, 2.0d, 1.27156d),
@@ -141,4 +141,23 @@ class ShipTest {
         double expectedValue = 188.49556d;
         assertEquals(expectedValue, instance.getLanternCoverageSurface(), tolerance);
     }
+
+    @ParameterizedTest(name = "{0} tons, {1} g")
+    @MethodSource("lanternDiameterProvider")
+    void getLanternDiameter(int shipMass, double shipMaxAcceleration, double expectedValue) {
+        instance.shipMass = shipMass;
+        instance.shipMaxAcceleration = shipMaxAcceleration;
+
+        assertEquals(expectedValue, instance.getLanternDiameter(), tolerance);
+    }
+
+    private static Stream<Arguments> lanternDiameterProvider() {
+        return Stream.of(
+                arguments(625, 1.5d, 10.95445d),
+                arguments(625, 3d, 15.49193d),
+                arguments(2500, 1.5d, 21.90890d),
+                arguments(2500, 3d, 30.98387d)
+        );
+    }
+
 }
