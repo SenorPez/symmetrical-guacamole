@@ -99,16 +99,8 @@ class Ship {
         return Math.sqrt(mass * maxAcceleration / 125) * 20 / Math.sqrt(100 / (100d - RADIANT_DEFLECTION));
     }
 
-    double getMastMass() {
-        return getMastMass(mastLength);
-    }
-
     double getMastMass(final double mastLength) {
         return getMastStructuralMass(mastLength) + getMastArmorMass() + getShieldMass();
-    }
-
-    double getMastStructuralMass() {
-        return getMastStructuralMass(mastLength);
     }
 
     double getMastStructuralMass(final double mastLength) {
@@ -153,7 +145,7 @@ class Ship {
     }
 
     double getPivotAccel(final double mastLength) {
-        return (getPivotThrust() * 1000) * ((1 - getDriveFraction()) * (mastLength + getHullLength() / 2) - (getDriveFraction()) * (getLanternDiameter() / 2)) / (getMomentOfInertia() * 1000) * ((3 / Math.PI) * 128 * 16);
+        return (getPivotThrust() * 1000) * ((1 - getDriveFraction(mastLength)) * (mastLength + getHullLength() / 2) - (getDriveFraction(mastLength)) * (getLanternDiameter() / 2)) / (getMomentOfInertia() * 1000) * ((3 / Math.PI) * 128 * 16);
     }
 
     double getPivotThrust() {
@@ -165,9 +157,8 @@ class Ship {
         return hullShape.getPivotModifier();
     }
 
-    double getDriveFraction() {
-        // TODO: Placeholder.
-        return 0;
+    double getDriveFraction(final double mastLength) {
+        return getDriveMass(mastLength) / mass;
     }
 
     double getHullLength() {

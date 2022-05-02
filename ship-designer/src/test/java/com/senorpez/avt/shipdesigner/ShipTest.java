@@ -166,25 +166,25 @@ class ShipTest {
 
     @Test
     void getMastMass() {
+        double mastLength = 22.39590d;
         doReturn(3.50936d).when(instance).getMastStructuralMass(anyDouble());
         doReturn(5.25249d).when(instance).getMastArmorMass();
         doReturn(24.05152d).when(instance).getShieldMass();
 
         double expectedValue = 32.81337d;
-        assertEquals(expectedValue, instance.getMastMass(), tolerance);
-        assertEquals(expectedValue, instance.getMastMass(22.39590d), tolerance);
+        assertEquals(expectedValue, instance.getMastMass(mastLength), tolerance);
     }
 
     @Test
     void getMastStructuralMass() {
+        double mastLength = 22.39590d;
         instance.mass = 625;
         instance.maxAcceleration = 1.5d;
         instance.mastLength = 22.39590d;
         doReturn(1.5d).when(instance).getMastMassModifier();
 
         double expectedValue = 3.50936d;
-        assertEquals(expectedValue, instance.getMastStructuralMass(), tolerance);
-        assertEquals(expectedValue, instance.getMastStructuralMass(22.39590d), tolerance);
+        assertEquals(expectedValue, instance.getMastStructuralMass(mastLength), tolerance);
     }
 
     @Test
@@ -197,7 +197,7 @@ class ShipTest {
         double mastLength = 22.39590d;
         double tolerance = 1e-4;
         doReturn(151.25000d).when(instance).getPivotThrust();
-        doReturn(0.1701217d).when(instance).getDriveFraction();
+        doReturn(0.1701217d).when(instance).getDriveFraction(anyDouble());
         doReturn(14.94895d).when(instance).getHullLength();
         doReturn(10.95445d).when(instance).getLanternDiameter();
         doReturn(124730.07776d).when(instance).getMomentOfInertia();
@@ -225,6 +225,16 @@ class ShipTest {
                 .build();
 
         double expectedValue = 1.25d;
-        assertEquals(expectedValue, instance.getPivotModifier());
+        assertEquals(expectedValue, instance.getPivotModifier(), tolerance);
+    }
+
+    @Test
+    void getDriveFraction() {
+        double mastLength = 22.39590d;
+        instance.mass = 625;
+        doReturn(106.32609d).when(instance).getDriveMass(anyDouble());
+
+        double expectedValue = 0.1701217d;
+        assertEquals(expectedValue, instance.getDriveFraction(mastLength), tolerance);
     }
 }
