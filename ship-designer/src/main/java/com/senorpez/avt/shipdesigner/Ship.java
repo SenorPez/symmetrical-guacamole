@@ -31,4 +31,12 @@ class Ship {
         this.hullSpaces = hullSpaces;
         return this;
     }
+
+    double getDriveHullSpaces() {
+        return getDriveMass() / 25d;
+    }
+
+    double getDriveMass() {
+        return 0;
+    }
 }
