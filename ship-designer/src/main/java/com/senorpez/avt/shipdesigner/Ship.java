@@ -70,6 +70,10 @@ class Ship {
     }
 
     double getLanternCoverageSurface() {
+        return 4 * Math.PI * Math.pow(getLanternDiameter() / 2, 2) / 2;
+    }
+
+    double getLanternDiameter() {
         // TODO: Placeholder
         return 0;
     }

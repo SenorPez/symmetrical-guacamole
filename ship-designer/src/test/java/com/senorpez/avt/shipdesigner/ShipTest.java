@@ -132,4 +132,13 @@ class ShipTest {
                 arguments(2, 2, 17.13596d)
         );
     }
+
+    @Test
+    void getLanternCoverageSurface() {
+        double tolerance = 1e-4;
+        doReturn(10.95445d).when(instance).getLanternDiameter();
+
+        double expectedValue = 188.49556d;
+        assertEquals(expectedValue, instance.getLanternCoverageSurface(), tolerance);
+    }
 }
