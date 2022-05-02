@@ -80,6 +80,20 @@ class Ship {
     }
 
     double getMastMass() {
+        return getMastStructuralMass() + getMastArmorMass() + getShieldMass();
+    }
+
+    double getMastStructuralMass() {
+        // TODO: Placeholder
+        return 0;
+    }
+
+    double getMastArmorMass() {
+        // TODO: Placeholder
+        return 0;
+    }
+
+    double getShieldMass() {
         // TODO: Placeholder
         return 0;
     }

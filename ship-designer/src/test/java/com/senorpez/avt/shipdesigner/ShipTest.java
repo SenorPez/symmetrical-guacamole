@@ -160,4 +160,13 @@ class ShipTest {
         );
     }
 
+    @Test
+    void getMastMass() {
+        doReturn(3.50936d).when(instance).getMastStructuralMass();
+        doReturn(5.25249d).when(instance).getMastArmorMass();
+        doReturn(24.05152d).when(instance).getShieldMass();
+
+        double expectedValue = 32.81337d;
+        assertEquals(expectedValue, instance.getMastMass());
+    }
 }
