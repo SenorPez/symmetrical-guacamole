@@ -37,6 +37,16 @@ class Ship {
     }
 
     double getDriveMass() {
+        return getMastMass() + getLanternMass();
+    }
+
+    double getLanternMass() {
+        // TODO: Placeholder
+        return 0;
+    }
+
+    double getMastMass() {
+        // TODO: Placeholder
         return 0;
     }
 }

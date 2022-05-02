@@ -51,4 +51,13 @@ class ShipTest {
         double expectedValue = 3.79709d;
         assertEquals(expectedValue, instance.getDriveHullSpaces(), tolerance);
     }
+
+    @Test
+    void getDriveMass() {
+        doReturn(73.51272d).when(instance).getLanternMass();
+        doReturn(21.41449d).when(instance).getMastMass();
+
+        double expectedValue = 94.92721d;
+        assertEquals(expectedValue, instance.getDriveMass(), tolerance);
+    }
 }
