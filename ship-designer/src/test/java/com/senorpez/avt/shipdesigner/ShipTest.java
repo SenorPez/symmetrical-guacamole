@@ -167,6 +167,17 @@ class ShipTest {
         doReturn(24.05152d).when(instance).getShieldMass();
 
         double expectedValue = 32.81337d;
-        assertEquals(expectedValue, instance.getMastMass());
+        assertEquals(expectedValue, instance.getMastMass(), tolerance);
+    }
+
+    @Test
+    void getMastStructuralMass() {
+        instance.shipMass = 625;
+        instance.shipMaxAcceleration = 1.5d;
+        doReturn(22.39590d).when(instance).getMastLength();
+        doReturn(1.5d).when(instance).getMastMassModifier();
+
+        double expectedValue = 3.50936d;
+        assertEquals(expectedValue, instance.getMastStructuralMass(), tolerance);
     }
 }

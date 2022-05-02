@@ -84,7 +84,16 @@ class Ship {
     }
 
     double getMastStructuralMass() {
+        return shipMass * shipMaxAcceleration / 70000 * 7.8 * getMastLength() * getMastMassModifier();
+    }
+
+    double getMastLength() {
         // TODO: Placeholder
+        return 0;
+    }
+
+    double getMastMassModifier() {
+        // TODO: Placeholder.
         return 0;
     }
 
