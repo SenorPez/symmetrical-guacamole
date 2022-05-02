@@ -60,4 +60,13 @@ class ShipTest {
         double expectedValue = 94.92721d;
         assertEquals(expectedValue, instance.getDriveMass(), tolerance);
     }
+
+    @Test
+    void getLanternMass() {
+        doReturn(73.51272d).when(instance).getLanternStructuralMass();
+        doReturn(9.42478d).when(instance).getLanternArmorMass();
+
+        double expectedValue = 82.93750d;
+        assertEquals(expectedValue, instance.getLanternMass(), tolerance);
+    }
 }

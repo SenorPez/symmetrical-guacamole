@@ -41,6 +41,15 @@ class Ship {
     }
 
     double getLanternMass() {
+        return getLanternStructuralMass() + getLanternArmorMass();
+    }
+
+    double getLanternStructuralMass() {
+        // TODO: Placeholder
+        return 0;
+    }
+
+    double getLanternArmorMass() {
         // TODO: Placeholder
         return 0;
     }
