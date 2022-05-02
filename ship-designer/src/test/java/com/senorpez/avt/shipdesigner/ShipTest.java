@@ -14,7 +14,6 @@ import static com.senorpez.avt.shipdesigner.HullShape.SPHERE;
 import static com.senorpez.avt.shipdesigner.validators.HullSpacesValidator.hullSpacesOutOfBounds;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
@@ -198,7 +197,7 @@ class ShipTest {
         double tolerance = 1e-4;
         doReturn(151.25000d).when(instance).getPivotThrust();
         doReturn(0.1701217d).when(instance).getDriveFraction(anyDouble());
-        doReturn(14.94895d).when(instance).getHullLength();
+        doReturn(14.94895d).when(instance).getHullLength(anyDouble());
         doReturn(10.95445d).when(instance).getLanternDiameter();
         doReturn(124730.07776d).when(instance).getMomentOfInertia();
 
@@ -236,5 +235,19 @@ class ShipTest {
 
         double expectedValue = 0.1701217d;
         assertEquals(expectedValue, instance.getDriveFraction(mastLength), tolerance);
+    }
+
+    @Test
+    void getHullLength() {
+        double mastLength = 22.39590d;
+        instance = instance
+                .setHullShape(SPHERE)
+                .setHullSpaces(25)
+                .build();
+        doReturn(0.1600000d).when(instance).getArmorFraction();
+        doReturn(0.1701217d).when(instance).getDriveFraction(anyDouble());
+
+        double expectedValue = 14.73372d;
+        assertEquals(expectedValue, instance.getHullLength(mastLength), tolerance);
     }
 }
