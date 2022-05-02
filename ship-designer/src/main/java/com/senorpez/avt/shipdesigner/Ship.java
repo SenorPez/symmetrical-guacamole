@@ -8,6 +8,9 @@ import java.util.List;
 
 class Ship {
     private int hullSpaces;
+    int shipMass; // TODO: Setter and validation, make private
+    double shipMaxAcceleration; // TODO: Setter and validation, make private
+    double driveGeneration; // TODO: Setter and validation, make private
 
     private boolean valid = false;
     private final List<String> validationErrors = new ArrayList<>();
@@ -55,9 +58,8 @@ class Ship {
         }
     }
 
-    double getDriveOutput() {
-        // TODO: Placeholder
-        return 0;
+    double getDriveOutput() { // TODO: Add validation
+        return 0.5d * shipMass * 1000 * shipMaxAcceleration * 9.765625d * driveGeneration * 34722 / Math.pow(10, 12);
     }
 
     double getLanternArmorMass() {

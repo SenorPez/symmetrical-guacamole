@@ -71,18 +71,42 @@ class ShipTest {
     }
 
     @ParameterizedTest(name = "{0} drive output => {1} lantern mass")
-    @MethodSource("driveOutputProvider")
+    @MethodSource("lanternStructuralMassProvider")
     void getLanternStructuralMass(double driveOutput, double expectedValue) {
         double tolerance = 1e-3;
         doReturn(driveOutput).when(instance).getDriveOutput();
         assertEquals(expectedValue, instance.getLanternStructuralMass(), tolerance);
     }
 
-    private static Stream<Arguments> driveOutputProvider() {
+    private static Stream<Arguments> lanternStructuralMassProvider() {
         return Stream.of(
                 arguments(0.54041d, 73.51272d),
                 arguments(1.17089d, 117.08926d),
                 arguments(4.32330d, 449.46145d)
         );
     }
+
+    @ParameterizedTest(name = "{0} tons, {1} g, Gen {2}")
+    @MethodSource("driveOutputProvider")
+    void getDriveOutput(int shipMass, double shipMaxAcceleration, double driveGeneration, double expectedValue) {
+        instance.shipMass = shipMass;
+        instance.shipMaxAcceleration = shipMaxAcceleration;
+        instance.driveGeneration = driveGeneration;
+
+        assertEquals(expectedValue, instance.getDriveOutput(), tolerance);
+    }
+
+    private static Stream<Arguments> driveOutputProvider() {
+        return Stream.of(
+                arguments(625, 1.5d, 3.4d, 0.54041d),
+                arguments(625, 3d, 3.4d, 1.08082d),
+                arguments(625, 1.5d, 2.0d, 0.31789d),
+                arguments(625, 3d, 3.4d, 1.08082d),
+                arguments(2500, 1.5d, 3.4d, 2.16165d),
+                arguments(2500, 3d, 3.4d, 4.32330d),
+                arguments(2500, 1.5d, 2.0d, 1.27156d),
+                arguments(2500, 3d, 2.0d, 2.54312d)
+        );
+    }
+
 }
