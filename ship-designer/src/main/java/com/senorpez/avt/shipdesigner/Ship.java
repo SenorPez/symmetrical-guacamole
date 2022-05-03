@@ -9,7 +9,6 @@ import java.util.List;
 class Ship {
     private HullShape hullShape;
     private int hullSpaces;
-    int mass; // TODO: Setter and validation, make private
     double maxAcceleration; // TODO: Setter and validation, make private
     double driveGeneration; // TODO: Setter and validation, make private
 
@@ -19,6 +18,8 @@ class Ship {
     int internalArmor; // TODO: Systems object
     int lanternArmor; // TODO: Systems object
     int armorShrink; // TODO: Systems object
+
+    private int mass;
 
     private static final int DRIVE_MASS_POWER = 1;
     private static final int PIVOT_ACCEL_POWER = 1;
@@ -35,6 +36,7 @@ class Ship {
         ValidationResult hullSpacesValidation = HullSpacesValidator.validate(hullSpaces);
         valid = hullSpacesValidation.valid();
         validationErrors.addAll(hullSpacesValidation.validationErrors());
+        mass = hullSpaces * 25;
 
         mastLength = calculateMastLength();
         return this;
@@ -71,10 +73,10 @@ class Ship {
     }
 
     double getLanternMass() {
-        return getLanternStructuralMass() + getLanternArmorMass();
+        return getLanternStructureMass() + getLanternArmorMass();
     }
 
-    double getLanternStructuralMass() {
+    double getLanternStructureMass() {
         double driveOutput = getDriveOutput();
         if (driveOutput > 4) {
             return 400 * Math.pow(driveOutput / 4d, 1.5);
@@ -102,10 +104,10 @@ class Ship {
     }
 
     double getMastMass(final double mastLength) {
-        return getMastStructuralMass(mastLength) + getMastArmorMass() + getShieldMass();
+        return getMastStructureMass(mastLength) + getMastArmorMass() + getShieldMass();
     }
 
-    double getMastStructuralMass(final double mastLength) {
+    double getMastStructureMass(final double mastLength) {
         return mass * maxAcceleration / 70000 * 7.8 * mastLength * getMastMassModifier();
     }
 
@@ -147,7 +149,7 @@ class Ship {
     }
 
     double getPivotAccel(final double mastLength) {
-        return (getPivotThrust() * 1000) * ((1 - getDriveFraction(mastLength)) * (mastLength + getHullLength(mastLength) / 2) - (getDriveFraction(mastLength)) * (getLanternDiameter() / 2)) / (getMomentOfInertia() * 1000) * ((3 / Math.PI) * 128 * 16);
+        return (getPivotThrust() * 1000) * ((1 - getDriveFraction(mastLength)) * (mastLength + getHullLength(mastLength) / 2) - (getDriveFraction(mastLength)) * (getLanternDiameter() / 2)) / (getMomentOfInertia(mastLength) * 1000) * ((3 / Math.PI) * 128 * 16);
     }
 
     double getPivotThrust() {
@@ -176,7 +178,19 @@ class Ship {
         return externalArmor + internalArmor;
     }
 
-    double getMomentOfInertia() {
+    double getMomentOfInertia(final double mastLength) {
+        return hullShape.getMomentOfInertia(hullSpaces,
+                getUsableFraction(),
+                getDriveFraction(mastLength),
+                getLanternMass(),
+                getLanternDiameter(),
+                mastLength,
+                getMastStructureMass(mastLength),
+                getMastArmorMass(),
+                getMastMass(mastLength));
+    }
+
+    double getUsableFraction() {
         // TODO: Placeholder.
         return 0;
     }

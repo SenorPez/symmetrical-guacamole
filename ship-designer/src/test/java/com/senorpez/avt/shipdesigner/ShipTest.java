@@ -15,6 +15,7 @@ import static com.senorpez.avt.shipdesigner.validators.HullSpacesValidator.hullS
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
@@ -66,7 +67,7 @@ class ShipTest {
 
     @Test
     void getLanternMass() {
-        doReturn(73.51272d).when(instance).getLanternStructuralMass();
+        doReturn(73.51272d).when(instance).getLanternStructureMass();
         doReturn(9.42478d).when(instance).getLanternArmorMass();
 
         double expectedValue = 82.93750d;
@@ -78,7 +79,7 @@ class ShipTest {
     void getLanternStructuralMass(double driveOutput, double expectedValue) {
         double tolerance = 1e-3;
         doReturn(driveOutput).when(instance).getDriveOutput();
-        assertEquals(expectedValue, instance.getLanternStructuralMass(), tolerance);
+        assertEquals(expectedValue, instance.getLanternStructureMass(), tolerance);
     }
 
     private static Stream<Arguments> lanternStructuralMassProvider() {
@@ -91,8 +92,9 @@ class ShipTest {
 
     @ParameterizedTest(name = "{0} tons, {1} g, Gen {2}")
     @MethodSource("driveOutputProvider")
-    void getDriveOutput(int shipMass, double shipMaxAcceleration, double driveGeneration, double expectedValue) {
-        instance.mass = shipMass;
+    void getDriveOutput(int hullSpaces, double shipMaxAcceleration, double driveGeneration, double expectedValue) {
+        doReturn(22.39590d).when(instance).calculateMastLength();
+        instance.setHullSpaces(hullSpaces).build();
         instance.maxAcceleration = shipMaxAcceleration;
         instance.driveGeneration = driveGeneration;
 
@@ -101,14 +103,14 @@ class ShipTest {
 
     private static Stream<Arguments> driveOutputProvider() {
         return Stream.of(
-                arguments(625, 1.5d, 3.4d, 0.54041d),
-                arguments(625, 3d, 3.4d, 1.08082d),
-                arguments(625, 1.5d, 2.0d, 0.31789d),
-                arguments(625, 3d, 2.0d, 0.63578d),
-                arguments(2500, 1.5d, 3.4d, 2.16165d),
-                arguments(2500, 3d, 3.4d, 4.32330d),
-                arguments(2500, 1.5d, 2.0d, 1.27156d),
-                arguments(2500, 3d, 2.0d, 2.54312d)
+                arguments(25, 1.5d, 3.4d, 0.54041d),
+                arguments(25, 3d, 3.4d, 1.08082d),
+                arguments(25, 1.5d, 2.0d, 0.31789d),
+                arguments(25, 3d, 2.0d, 0.63578d),
+                arguments(100, 1.5d, 3.4d, 2.16165d),
+                arguments(100, 3d, 3.4d, 4.32330d),
+                arguments(100, 1.5d, 2.0d, 1.27156d),
+                arguments(100, 3d, 2.0d, 2.54312d)
         );
     }
 
@@ -147,8 +149,9 @@ class ShipTest {
 
     @ParameterizedTest(name = "{0} tons, {1} g")
     @MethodSource("lanternDiameterProvider")
-    void getLanternDiameter(int shipMass, double shipMaxAcceleration, double expectedValue) {
-        instance.mass = shipMass;
+    void getLanternDiameter(int hullSpaces, double shipMaxAcceleration, double expectedValue) {
+        doReturn(22.39590d).when(instance).calculateMastLength();
+        instance.setHullSpaces(hullSpaces).build();
         instance.maxAcceleration = shipMaxAcceleration;
 
         assertEquals(expectedValue, instance.getLanternDiameter(), tolerance);
@@ -156,17 +159,17 @@ class ShipTest {
 
     private static Stream<Arguments> lanternDiameterProvider() {
         return Stream.of(
-                arguments(625, 1.5d, 10.95445d),
-                arguments(625, 3d, 15.49193d),
-                arguments(2500, 1.5d, 21.90890d),
-                arguments(2500, 3d, 30.98387d)
+                arguments(25, 1.5d, 10.95445d),
+                arguments(25, 3d, 15.49193d),
+                arguments(100, 1.5d, 21.90890d),
+                arguments(100, 3d, 30.98387d)
         );
     }
 
     @Test
     void getMastMass() {
         double mastLength = 22.39590d;
-        doReturn(3.50936d).when(instance).getMastStructuralMass(anyDouble());
+        doReturn(3.50936d).when(instance).getMastStructureMass(anyDouble());
         doReturn(5.25249d).when(instance).getMastArmorMass();
         doReturn(24.05152d).when(instance).getShieldMass();
 
@@ -177,13 +180,14 @@ class ShipTest {
     @Test
     void getMastStructuralMass() {
         double mastLength = 22.39590d;
-        instance.mass = 625;
+        doReturn(mastLength).when(instance).calculateMastLength();
+        instance.setHullSpaces(25).build();
         instance.maxAcceleration = 1.5d;
         instance.mastLength = 22.39590d;
         doReturn(1.5d).when(instance).getMastMassModifier();
 
         double expectedValue = 3.50936d;
-        assertEquals(expectedValue, instance.getMastStructuralMass(mastLength), tolerance);
+        assertEquals(expectedValue, instance.getMastStructureMass(mastLength), tolerance);
     }
 
     @Test
@@ -199,7 +203,7 @@ class ShipTest {
         doReturn(0.1701217d).when(instance).getDriveFraction(anyDouble());
         doReturn(14.94895d).when(instance).getHullLength(anyDouble());
         doReturn(10.95445d).when(instance).getLanternDiameter();
-        doReturn(124730.07776d).when(instance).getMomentOfInertia();
+        doReturn(124730.07776d).when(instance).getMomentOfInertia(anyDouble());
 
         double expectedValue = 56.57713d;
         assertEquals(expectedValue, instance.getPivotAccel(mastLength), tolerance);
@@ -207,7 +211,8 @@ class ShipTest {
 
     @Test
     void getPivotThrust() {
-        instance.mass = 625;
+        doReturn(22.39590d).when(instance).calculateMastLength();
+        instance.setHullSpaces(25).build();
         doReturn(1.25d).when(instance).getPivotModifier();
 
         double expectedValue = 151.25000d;
@@ -230,7 +235,8 @@ class ShipTest {
     @Test
     void getDriveFraction() {
         double mastLength = 22.39590d;
-        instance.mass = 625;
+        doReturn(22.39590d).when(instance).calculateMastLength();
+        instance.setHullSpaces(25).build();
         doReturn(106.32609d).when(instance).getDriveMass(anyDouble());
 
         double expectedValue = 0.1701217d;
@@ -267,5 +273,24 @@ class ShipTest {
 
         int expectedValue = 5;
         assertEquals(expectedValue, instance.getHullArmor());
+    }
+
+    @Test
+    void getMomentOfInertia() {
+        final double tolerance = 1e-1;
+        final double mastLength = 22.39590d;
+        doReturn(mastLength).when(instance).calculateMastLength();
+        doReturn(0.6698783d).when(instance).getUsableFraction();
+        doReturn(73.51272d).when(instance).getLanternMass();
+        doReturn(10.95445d).when(instance).getLanternDiameter();
+        doReturn(3.50936d).when(instance).getMastStructureMass(anyDouble());
+        doReturn(5.25249d).when(instance).getMastArmorMass();
+        doReturn(32.81337d).when(instance).getMastMass(anyDouble());
+        instance.setHullSpaces(25)
+                .setHullShape(SPHERE)
+                .build();
+
+        double expectedValue = 123728.46426d;
+        assertEquals(expectedValue, instance.getMomentOfInertia(mastLength), tolerance);
     }
 }
