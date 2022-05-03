@@ -303,4 +303,12 @@ class ShipTest {
         double expectedValue = 0.6698783d;
         assertEquals(expectedValue, instance.getUsableFraction(mastLength), tolerance);
     }
+
+    @Test
+    void getMastMassModifier() {
+        instance.setHullShape(SPHERE);
+
+        double expectedValue = 1.5d;
+        assertEquals(expectedValue, instance.getMastMassModifier(), tolerance);
+    }
 }

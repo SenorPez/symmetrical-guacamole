@@ -195,8 +195,7 @@ class Ship {
     }
 
     double getMastMassModifier() {
-        // TODO: Placeholder.
-        return 0;
+        return hullShape.getMastMassModifier();
     }
 
     double getMastArmorMass() {

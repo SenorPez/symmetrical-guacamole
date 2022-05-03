@@ -1,7 +1,7 @@
 package com.senorpez.avt.shipdesigner;
 
 enum HullShape {
-    SPHERE(1.25d) {
+    SPHERE(1.25d, 1.5d) {
         @Override
         double getHullLength(final int hullSpaces, final double usableFraction) {
             return Math.pow(6 / Math.PI, 1 / 3d) * Math.pow(hullSpaces * 100 * usableFraction, 1 / 3d);
@@ -27,13 +27,19 @@ enum HullShape {
     };
 
     private final double pivotModifier;
+    private final double mastMassModifier;
 
-    HullShape(final double pivotModifier) {
+    HullShape(final double pivotModifier, final double mastMassModifier) {
         this.pivotModifier = pivotModifier;
+        this.mastMassModifier = mastMassModifier;
     }
 
     double getPivotModifier() {
         return pivotModifier;
+    }
+
+    double getMastMassModifier() {
+        return mastMassModifier;
     }
 
     abstract double getHullLength(final int hullSpaces, final double usableFraction);
