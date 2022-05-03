@@ -1,6 +1,7 @@
 package com.senorpez.avt.shipdesigner;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,6 +33,8 @@ class ShipTest {
     @ParameterizedTest(name = "{0} hull spaces => {1}")
     @MethodSource("hullSpacesProvider")
     void validateHullSpaces(final int hullSpaces, final boolean expectedValue) {
+        final double mastLength = 28.20816d;
+        doReturn(mastLength).when(instance).calculateMastLength();
         instance = instance
                 .setHullSpaces(hullSpaces)
                 .setHullShape(SPHERE)
@@ -223,9 +226,7 @@ class ShipTest {
 
     @Test
     void getPivotModifier() {
-        instance = instance
-                .setHullShape(SPHERE)
-                .build();
+        instance.setHullShape(SPHERE);
 
         double expectedValue = 1.25d;
         assertEquals(expectedValue, instance.getPivotModifier(), tolerance);
