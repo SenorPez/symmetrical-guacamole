@@ -15,6 +15,8 @@ class Ship {
 
     double mastLength; // TODO: Setter, make private
 
+    int externalArmor; // TODO: Systems object
+    int internalArmor; // TODO: Systems object
     int lanternArmor; // TODO: Systems object
     int armorShrink; // TODO: Systems object
 
@@ -171,8 +173,7 @@ class Ship {
     }
 
     int getHullArmor() {
-        // TODO: Placeholder.
-        return 0;
+        return externalArmor + internalArmor;
     }
 
     double getMomentOfInertia() {

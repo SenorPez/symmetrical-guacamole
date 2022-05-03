@@ -259,4 +259,13 @@ class ShipTest {
         double expectedValue = 0.1600000d;
         assertEquals(expectedValue, instance.getArmorFraction(), tolerance);
     }
+
+    @Test
+    void getHullArmor() {
+        instance.externalArmor = 1;
+        instance.internalArmor = 4;
+
+        int expectedValue = 5;
+        assertEquals(expectedValue, instance.getHullArmor());
+    }
 }
