@@ -206,12 +206,12 @@ class Ship {
     }
 
     double getShieldMass() {
-        return (RAD_REDUCTION * (Math.log10(getNeutronFlux()) + 6) - Math.log10(getRadReductionDueToMast())) * getShieldCrossSection();
+        return (RAD_REDUCTION * (Math.log10(getNeutronFluxAtShield()) + 6) - Math.log10(getRadReductionDueToMast())) * getShieldCrossSection();
     }
 
-    double getNeutronFlux() {
-        // TODO: Placeholder.
-        return 0;
+    double getNeutronFluxAtShield() {
+        final double flux_kr_per_hour = (getDriveOutput() * 500000) / Math.pow(getLanternDiameter() / 2, 2);
+        return flux_kr_per_hour * 24 * 365.25 / 1000;
     }
 
     double getRadReductionDueToMast() {

@@ -325,11 +325,21 @@ class ShipTest {
     @Test
     void getShieldMass() {
         final double tolerance = 1e-4;
-        doReturn(78954.19135d).when(instance).getNeutronFlux();
+        doReturn(78954.19135d).when(instance).getNeutronFluxAtShield();
         doReturn(37.82351d).when(instance).getRadReductionDueToMast();
         doReturn(3.21401d).when(instance).getShieldCrossSection();
 
         double expectedValue = 16.99437d;
         assertEquals(expectedValue, instance.getShieldMass(), tolerance);
+    }
+
+    @Test
+    void getNeutronFluxAtShield() {
+        final double tolerance = 1e0;
+        doReturn(0.54041d).when(instance).getDriveOutput();
+        doReturn(10.95445d).when(instance).getLanternDiameter();
+
+        double expectedValue = 78954.19135d;
+        assertEquals(expectedValue, instance.getNeutronFluxAtShield(), tolerance);
     }
 }
