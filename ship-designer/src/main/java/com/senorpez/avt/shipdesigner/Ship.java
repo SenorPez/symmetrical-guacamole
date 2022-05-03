@@ -219,6 +219,10 @@ class Ship {
     }
 
     double getShieldCrossSection() {
+        return 0.25 * Math.PI * Math.pow(getShieldDiameter(), 2);
+    }
+
+    double getShieldDiameter() {
         // TODO: Placeholder.
         return 0;
     }

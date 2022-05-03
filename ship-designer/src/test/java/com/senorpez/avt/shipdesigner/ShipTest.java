@@ -352,4 +352,12 @@ class ShipTest {
         double expectedValue = 37.82351d;
         assertEquals(expectedValue, instance.getRadReductionDueToMast(mastLength), tolerance);
     }
+
+    @Test
+    void getShieldCrossSection() {
+        doReturn(2.02292d).when(instance).getShieldDiameter();
+
+        double expectedValue = 3.21401d;
+        assertEquals(expectedValue, instance.getShieldCrossSection(), tolerance);
+    }
 }
