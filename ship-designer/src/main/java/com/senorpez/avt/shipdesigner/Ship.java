@@ -16,6 +16,7 @@ class Ship {
 
     int externalArmor; // TODO: Systems object
     int internalArmor; // TODO: Systems object
+    int mastArmor; // TODO: Systems object
     int lanternArmor; // TODO: Systems object
     int armorShrink; // TODO: Systems object
 
@@ -104,7 +105,7 @@ class Ship {
     }
 
     double getMastMass(final double mastLength) {
-        return getMastStructureMass(mastLength) + getMastArmorMass() + getShieldMass();
+        return getMastStructureMass(mastLength) + getMastArmorMass(mastLength) + getShieldMass();
     }
 
     double getMastStructureMass(final double mastLength) {
@@ -186,7 +187,7 @@ class Ship {
                 getLanternDiameter(),
                 mastLength,
                 getMastStructureMass(mastLength),
-                getMastArmorMass(),
+                getMastArmorMass(mastLength),
                 getMastMass(mastLength));
     }
 
@@ -198,9 +199,8 @@ class Ship {
         return hullShape.getMastMassModifier();
     }
 
-    double getMastArmorMass() {
-        // TODO: Placeholder
-        return 0;
+    double getMastArmorMass(final double mastLength) {
+        return ((1 / 15d) * Math.PI * Math.pow(mastLength, 2)) * mastArmor * 50 / (1000 + 50 * armorShrink);
     }
 
     double getShieldMass() {

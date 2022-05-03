@@ -15,7 +15,6 @@ import static com.senorpez.avt.shipdesigner.validators.HullSpacesValidator.hullS
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.anyDouble;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
@@ -170,7 +169,7 @@ class ShipTest {
     void getMastMass() {
         double mastLength = 22.39590d;
         doReturn(3.50936d).when(instance).getMastStructureMass(anyDouble());
-        doReturn(5.25249d).when(instance).getMastArmorMass();
+        doReturn(5.25249d).when(instance).getMastArmorMass(anyDouble());
         doReturn(24.05152d).when(instance).getShieldMass();
 
         double expectedValue = 32.81337d;
@@ -246,6 +245,7 @@ class ShipTest {
     @Test
     void getHullLength() {
         double mastLength = 22.39590d;
+        doReturn(22.39590d).when(instance).calculateMastLength();
         instance = instance
                 .setHullShape(SPHERE)
                 .setHullSpaces(25)
@@ -284,7 +284,7 @@ class ShipTest {
         doReturn(73.51272d).when(instance).getLanternMass();
         doReturn(10.95445d).when(instance).getLanternDiameter();
         doReturn(3.50936d).when(instance).getMastStructureMass(anyDouble());
-        doReturn(5.25249d).when(instance).getMastArmorMass();
+        doReturn(5.25249d).when(instance).getMastArmorMass(anyDouble());
         doReturn(32.81337d).when(instance).getMastMass(anyDouble());
         instance.setHullSpaces(25)
                 .setHullShape(SPHERE)
@@ -295,7 +295,7 @@ class ShipTest {
     }
 
     @Test
-    void getUseableFraction() {
+    void getUsableFraction() {
         final double mastLength = 22.39590d;
         doReturn(0.1600000d).when(instance).getArmorFraction();
         doReturn(0.1701217d).when(instance).getDriveFraction(anyDouble());
@@ -310,5 +310,15 @@ class ShipTest {
 
         double expectedValue = 1.5d;
         assertEquals(expectedValue, instance.getMastMassModifier(), tolerance);
+    }
+
+    @Test
+    void getMastArmorMass() {
+        final double mastLength = 16.61676d;
+        instance.mastArmor = 1;
+        instance.armorShrink = 1;
+
+        double expectedValue = 2.75380d;
+        assertEquals(expectedValue, instance.getMastArmorMass(mastLength), tolerance);
     }
 }
