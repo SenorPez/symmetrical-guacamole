@@ -321,4 +321,15 @@ class ShipTest {
         double expectedValue = 2.75380d;
         assertEquals(expectedValue, instance.getMastArmorMass(mastLength), tolerance);
     }
+
+    @Test
+    void getShieldMass() {
+        final double tolerance = 1e-4;
+        doReturn(78954.19135d).when(instance).getNeutronFlux();
+        doReturn(37.82351d).when(instance).getRadReductionDueToMast();
+        doReturn(3.21401d).when(instance).getShieldCrossSection();
+
+        double expectedValue = 16.99437d;
+        assertEquals(expectedValue, instance.getShieldMass(), tolerance);
+    }
 }

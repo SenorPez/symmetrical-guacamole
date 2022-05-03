@@ -26,6 +26,8 @@ class Ship {
     private static final int PIVOT_ACCEL_POWER = 1;
     private static final double PIVOT_SCALING_FACTOR = 14.1522458529503d;
 
+    private static final double RAD_REDUCTION = 0.630000d;
+
     double pivotThrustOverride = 0; // Setter, make private
 
     private static final int RADIANT_DEFLECTION = 96; // Handwaved "lensing" to reduce heat load.
@@ -204,7 +206,21 @@ class Ship {
     }
 
     double getShieldMass() {
-        // TODO: Placeholder
+        return (RAD_REDUCTION * (Math.log10(getNeutronFlux()) + 6) - Math.log10(getRadReductionDueToMast())) * getShieldCrossSection();
+    }
+
+    double getNeutronFlux() {
+        // TODO: Placeholder.
+        return 0;
+    }
+
+    double getRadReductionDueToMast() {
+        // TODO: Placeholder.
+        return 0;
+    }
+
+    double getShieldCrossSection() {
+        // TODO: Placeholder.
         return 0;
     }
 }
