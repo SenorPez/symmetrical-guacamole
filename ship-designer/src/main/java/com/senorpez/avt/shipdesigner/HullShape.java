@@ -24,6 +24,15 @@ enum HullShape {
                     + (1 / 3d) * (mastStructureMass + mastArmorMass) * Math.pow(mastLength, 2)
                     + (0.2 * lanternMass + mastMass) * Math.pow(lanternDiameter / 2, 2);
         }
+
+        @Override
+        double getShieldDiameter(final int hullSpaces,
+                                 final double usableFraction,
+                                 final double lanternDiameter,
+                                 final double mastLength) {
+            final double hullLength = getHullLength(hullSpaces, usableFraction);
+            return lanternDiameter * Math.tan(Math.asin((hullLength / 2) / (mastLength + ((lanternDiameter + hullLength) / 2))));
+        }
     };
 
     private final double pivotModifier;
@@ -53,4 +62,9 @@ enum HullShape {
                                        final double mastStructureMass,
                                        final double mastArmorMass,
                                        final double mastMass);
+
+    abstract double getShieldDiameter(final int hullSpaces,
+                                      final double usableFraction,
+                                      final double lanternDiameter,
+                                      final double mastLength);
 }
