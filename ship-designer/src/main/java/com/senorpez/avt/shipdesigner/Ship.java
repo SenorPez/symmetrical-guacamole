@@ -107,7 +107,7 @@ class Ship {
     }
 
     double getMastMass(final double mastLength) {
-        return getMastStructureMass(mastLength) + getMastArmorMass(mastLength) + getShieldMass();
+        return getMastStructureMass(mastLength) + getMastArmorMass(mastLength) + getShieldMass(mastLength);
     }
 
     double getMastStructureMass(final double mastLength) {
@@ -205,8 +205,8 @@ class Ship {
         return ((1 / 15d) * Math.PI * Math.pow(mastLength, 2)) * mastArmor * 50 / (1000 + 50 * armorShrink);
     }
 
-    double getShieldMass() {
-        return (RAD_REDUCTION * (Math.log10(getNeutronFluxAtShield()) + 6) - Math.log10(getRadReductionDueToMast())) * getShieldCrossSection();
+    double getShieldMass(final double mastLength) {
+        return (RAD_REDUCTION * (Math.log10(getNeutronFluxAtShield()) + 6) - Math.log10(getRadReductionDueToMast(mastLength))) * getShieldCrossSection();
     }
 
     double getNeutronFluxAtShield() {
@@ -214,9 +214,8 @@ class Ship {
         return flux_kr_per_hour * 24 * 365.25 / 1000;
     }
 
-    double getRadReductionDueToMast() {
-        // TODO: Placeholder.
-        return 0;
+    double getRadReductionDueToMast(final double mastLength) {
+        return Math.pow((mastLength + getLanternDiameter() / 2) / (getLanternDiameter() / 2), 2);
     }
 
     double getShieldCrossSection() {

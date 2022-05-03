@@ -170,7 +170,7 @@ class ShipTest {
         double mastLength = 22.39590d;
         doReturn(3.50936d).when(instance).getMastStructureMass(anyDouble());
         doReturn(5.25249d).when(instance).getMastArmorMass(anyDouble());
-        doReturn(24.05152d).when(instance).getShieldMass();
+        doReturn(24.05152d).when(instance).getShieldMass(anyDouble());
 
         double expectedValue = 32.81337d;
         assertEquals(expectedValue, instance.getMastMass(mastLength), tolerance);
@@ -325,12 +325,13 @@ class ShipTest {
     @Test
     void getShieldMass() {
         final double tolerance = 1e-4;
+        final double mastLength = 28.20816d;
         doReturn(78954.19135d).when(instance).getNeutronFluxAtShield();
-        doReturn(37.82351d).when(instance).getRadReductionDueToMast();
+        doReturn(37.82351d).when(instance).getRadReductionDueToMast(anyDouble());
         doReturn(3.21401d).when(instance).getShieldCrossSection();
 
         double expectedValue = 16.99437d;
-        assertEquals(expectedValue, instance.getShieldMass(), tolerance);
+        assertEquals(expectedValue, instance.getShieldMass(mastLength), tolerance);
     }
 
     @Test
@@ -341,5 +342,14 @@ class ShipTest {
 
         double expectedValue = 78954.19135d;
         assertEquals(expectedValue, instance.getNeutronFluxAtShield(), tolerance);
+    }
+
+    @Test
+    void getRadReductionDueToMast() {
+        final double mastLength = 28.20816d;
+        doReturn(10.95445d).when(instance).getLanternDiameter();
+
+        double expectedValue = 37.82351d;
+        assertEquals(expectedValue, instance.getRadReductionDueToMast(mastLength), tolerance);
     }
 }
