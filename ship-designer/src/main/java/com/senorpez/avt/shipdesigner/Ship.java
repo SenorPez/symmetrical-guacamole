@@ -167,6 +167,10 @@ class Ship {
     }
 
     double getArmorFraction() {
+        return getHullArmor() / (double) hullSpaces;
+    }
+
+    int getHullArmor() {
         // TODO: Placeholder.
         return 0;
     }

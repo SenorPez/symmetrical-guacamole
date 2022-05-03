@@ -250,4 +250,13 @@ class ShipTest {
         double expectedValue = 14.73372d;
         assertEquals(expectedValue, instance.getHullLength(mastLength), tolerance);
     }
+
+    @Test
+    void getArmorFraction() {
+        instance = instance.setHullSpaces(25);
+        doReturn(4).when(instance).getHullArmor();
+
+        double expectedValue = 0.1600000d;
+        assertEquals(expectedValue, instance.getArmorFraction(), tolerance);
+    }
 }
