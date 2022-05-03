@@ -30,7 +30,7 @@ class Ship {
 
     double pivotThrustOverride = 0; // Setter, make private
 
-    private static final int RADIANT_DEFLECTION = 96; // Handwaved "lensing" to reduce heat load.
+    private static final int RADIANT_DEFLECTION = 96; // Hand-waved "lensing" to reduce heat load.
 
     private boolean valid = false;
     private final List<String> validationErrors = new ArrayList<>();
