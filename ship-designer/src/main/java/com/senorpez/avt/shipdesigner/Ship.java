@@ -180,7 +180,7 @@ class Ship {
 
     double getMomentOfInertia(final double mastLength) {
         return hullShape.getMomentOfInertia(hullSpaces,
-                getUsableFraction(),
+                getUsableFraction(mastLength),
                 getDriveFraction(mastLength),
                 getLanternMass(),
                 getLanternDiameter(),
@@ -190,9 +190,8 @@ class Ship {
                 getMastMass(mastLength));
     }
 
-    double getUsableFraction() {
-        // TODO: Placeholder.
-        return 0;
+    double getUsableFraction(final double mastLength) {
+        return 1 - getArmorFraction() - getDriveFraction(mastLength);
     }
 
     double getMastMassModifier() {

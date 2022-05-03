@@ -280,7 +280,7 @@ class ShipTest {
         final double tolerance = 1e-1;
         final double mastLength = 22.39590d;
         doReturn(mastLength).when(instance).calculateMastLength();
-        doReturn(0.6698783d).when(instance).getUsableFraction();
+        doReturn(0.6698783d).when(instance).getUsableFraction(anyDouble());
         doReturn(73.51272d).when(instance).getLanternMass();
         doReturn(10.95445d).when(instance).getLanternDiameter();
         doReturn(3.50936d).when(instance).getMastStructureMass(anyDouble());
@@ -292,5 +292,15 @@ class ShipTest {
 
         double expectedValue = 123728.46426d;
         assertEquals(expectedValue, instance.getMomentOfInertia(mastLength), tolerance);
+    }
+
+    @Test
+    void getUseableFraction() {
+        final double mastLength = 22.39590d;
+        doReturn(0.1600000d).when(instance).getArmorFraction();
+        doReturn(0.1701217d).when(instance).getDriveFraction(anyDouble());
+
+        double expectedValue = 0.6698783d;
+        assertEquals(expectedValue, instance.getUsableFraction(mastLength), tolerance);
     }
 }
