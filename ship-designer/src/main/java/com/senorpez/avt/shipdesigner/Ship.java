@@ -8,7 +8,7 @@ import com.senorpez.avt.shipdesigner.validators.ValidationResult;
 import java.util.ArrayList;
 import java.util.List;
 
-class Ship {
+public class Ship {
     private double driveGeneration = 1.0;
     private HullShape hullShape = HullShape.SPHERE;
     private int hullSpaces = 25;
@@ -38,7 +38,7 @@ class Ship {
     private boolean valid = false;
     private final List<String> validationErrors = new ArrayList<>();
 
-    Ship build() {
+    public Ship build() {
         ValidationResult driveGenerationValidation = DriveGenerationValidator.validate(driveGeneration);
         valid = driveGenerationValidation.valid();
         validationErrors.addAll(driveGenerationValidation.validationErrors());
@@ -174,7 +174,7 @@ class Ship {
     }
 
     double getPivotAccel(final double mastLength) {
-        return (getPivotThrust() * 1000) * ((1 - getDriveFraction(mastLength)) * (mastLength + getHullLength(mastLength) / 2) - (getDriveFraction(mastLength)) * (getLanternDiameter() / 2)) / (getMomentOfInertia(mastLength) * 1000) * ((3 / Math.PI) * 128 * 16);
+        return (getPivotThrust() * 1000) * ((1 - getDriveFraction(mastLength)) * (mastLength + getHullLength() / 2) - (getDriveFraction(mastLength)) * (getLanternDiameter() / 2)) / (getMomentOfInertia(mastLength) * 1000) * ((3 / Math.PI) * 128 * 16);
     }
 
     double getPivotThrust() {
@@ -190,13 +190,15 @@ class Ship {
         return getDriveMass(mastLength) / mass;
     }
 
-    double getHullLength(final double mastLength) {
+//    public double getHullLength(final double mastLength) {
+    public double getHullLength() {
         return hullShape.getHullLength(hullSpaces, getArmorFraction());
 //        double usableFraction = 1 - getArmorFraction() - getDriveFraction(mastLength);
 //        return hullShape.getHullLength(hullSpaces, usableFraction);
     }
 
-    double getHullDiameter(final double mastLength) {
+//    double getHullDiameter(final double mastLength) {
+    double getHullDiameter() {
         return hullShape.getHullDiameter(hullSpaces, getArmorFraction());
 //        double usableFraction = 1 - getArmorFraction() - getDriveFraction(mastLength);
 //        return hullShape.getHullLength(hullSpaces, usableFraction);

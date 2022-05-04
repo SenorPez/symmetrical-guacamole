@@ -271,7 +271,7 @@ class ShipTest {
         double tolerance = 1e-4;
         doReturn(151.25000d).when(instance).getPivotThrust();
         doReturn(0.1701217d).when(instance).getDriveFraction(anyDouble());
-        doReturn(14.94895d).when(instance).getHullLength(anyDouble());
+        doReturn(14.94895d).when(instance).getHullLength();
         doReturn(10.95445d).when(instance).getLanternDiameter();
         doReturn(124730.07776d).when(instance).getMomentOfInertia(anyDouble());
 
@@ -325,7 +325,7 @@ class ShipTest {
         // double expectedValue = 14.73372d;
         double expectedValue = 14.94895d;
 
-        assertEquals(expectedValue, instance.getHullLength(mastLength), tolerance);
+        assertEquals(expectedValue, instance.getHullLength(), tolerance);
     }
 
     @Test
@@ -342,7 +342,7 @@ class ShipTest {
         // double expectedValue = 14.73372d;
         double expectedValue = 14.94895d;
 
-        assertEquals(expectedValue, instance.getHullDiameter(mastLength), tolerance);
+        assertEquals(expectedValue, instance.getHullDiameter(), tolerance);
     }
 
     @Test
