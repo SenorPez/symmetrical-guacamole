@@ -3,9 +3,11 @@ package com.senorpez.avt.shipdesigner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -18,6 +20,7 @@ import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
+@ExtendWith(MockitoExtension.class)
 class ShipTest {
     Ship instance;
 
@@ -51,7 +54,7 @@ class ShipTest {
 
     @Test
     void getDriveHullSpaces() {
-        doReturn(94.92721d).when(instance).getDriveMass(anyDouble());
+        doReturn(94.92721d).when(instance).getDriveMass();
 
         double expectedValue = 3.79709d;
         assertEquals(expectedValue, instance.getDriveHullSpaces(), tolerance);
@@ -251,10 +254,29 @@ class ShipTest {
                 .setHullSpaces(25)
                 .build();
         doReturn(0.1600000d).when(instance).getArmorFraction();
-        doReturn(0.1701217d).when(instance).getDriveFraction(anyDouble());
 
-        double expectedValue = 14.73372d;
+        // TODO: Should be this value; using typical drive fraction to avoid circular reference.
+        // double expectedValue = 14.73372d;
+        double expectedValue = 14.94895d;
+
         assertEquals(expectedValue, instance.getHullLength(mastLength), tolerance);
+    }
+
+    @Test
+    void getHullDiameter() {
+        double mastLength = 22.39590d;
+        doReturn(22.39590d).when(instance).calculateMastLength();
+        instance = instance
+                .setHullShape(SPHERE)
+                .setHullSpaces(25)
+                .build();
+        doReturn(0.1600000d).when(instance).getArmorFraction();
+
+        // TODO: Should be this value; using typical drive fraction to avoid circular reference.
+        // double expectedValue = 14.73372d;
+        double expectedValue = 14.94895d;
+
+        assertEquals(expectedValue, instance.getHullDiameter(mastLength), tolerance);
     }
 
     @Test
@@ -278,19 +300,22 @@ class ShipTest {
     @Test
     void getMomentOfInertia() {
         final double tolerance = 1e-1;
-        final double mastLength = 22.39590d;
+        final double mastLength = 28.20816d;
         doReturn(mastLength).when(instance).calculateMastLength();
-        doReturn(0.6698783d).when(instance).getUsableFraction(anyDouble());
+        doReturn(0.1600000d).when(instance).getArmorFraction();
         doReturn(73.51272d).when(instance).getLanternMass();
         doReturn(10.95445d).when(instance).getLanternDiameter();
-        doReturn(3.50936d).when(instance).getMastStructureMass(anyDouble());
-        doReturn(5.25249d).when(instance).getMastArmorMass(anyDouble());
-        doReturn(32.81337d).when(instance).getMastMass(anyDouble());
+        doReturn(4.42012d).when(instance).getMastStructureMass(anyDouble());
+        doReturn(0d).when(instance).getMastArmorMass(anyDouble());
+        doReturn(21.41449d).when(instance).getMastMass(anyDouble());
         instance.setHullSpaces(25)
                 .setHullShape(SPHERE)
                 .build();
 
-        double expectedValue = 123728.46426d;
+        // TODO: Should be this value; using typical drive fraction to avoid circular reference.
+        // double expectedValue = 123728.46426d;
+        double expectedValue = 150495.05241d;
+
         assertEquals(expectedValue, instance.getMomentOfInertia(mastLength), tolerance);
     }
 
@@ -366,13 +391,16 @@ class ShipTest {
     void getShieldDiameter() {
         final double mastLength = 28.20816d;
         doReturn(mastLength).when(instance).calculateMastLength();
-        doReturn(0.6881165d).when(instance).getUsableFraction(anyDouble());
+        doReturn(0.1600000d).when(instance).getArmorFraction();
         doReturn(10.95445d).when(instance).getLanternDiameter();
         instance.setHullSpaces(25)
                 .setHullShape(SPHERE)
                 .build();
 
-        double expectedValue = 2.01344d;
+        // TODO: Should be this value; using typical drive fraction to avoid circular reference.
+        // double expectedValue = 2.01344d;
+        double expectedValue = 2.02292d;
+
         assertEquals(expectedValue, instance.getShieldDiameter(mastLength), tolerance);
     }
 }

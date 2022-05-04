@@ -169,8 +169,15 @@ class Ship {
     }
 
     double getHullLength(final double mastLength) {
-        double usableFraction = 1 - getArmorFraction() - getDriveFraction(mastLength);
-        return hullShape.getHullLength(hullSpaces, usableFraction);
+        return hullShape.getHullLength(hullSpaces, getArmorFraction());
+//        double usableFraction = 1 - getArmorFraction() - getDriveFraction(mastLength);
+//        return hullShape.getHullLength(hullSpaces, usableFraction);
+    }
+
+    double getHullDiameter(final double mastLength) {
+        return hullShape.getHullDiameter(hullSpaces, getArmorFraction());
+//        double usableFraction = 1 - getArmorFraction() - getDriveFraction(mastLength);
+//        return hullShape.getHullLength(hullSpaces, usableFraction);
     }
 
     double getArmorFraction() {
@@ -183,7 +190,7 @@ class Ship {
 
     double getMomentOfInertia(final double mastLength) {
         return hullShape.getMomentOfInertia(hullSpaces,
-                getUsableFraction(mastLength),
+                getArmorFraction(),
                 getDriveFraction(mastLength),
                 getLanternMass(),
                 getLanternDiameter(),
@@ -224,7 +231,7 @@ class Ship {
 
     double getShieldDiameter(final double mastLength) {
         return hullShape.getShieldDiameter(hullSpaces,
-                getUsableFraction(mastLength),
+                getArmorFraction(),
                 getLanternDiameter(),
                 mastLength);
     }
