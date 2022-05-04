@@ -1,15 +1,17 @@
 package com.senorpez.avt.shipdesigner;
 
 import com.senorpez.avt.shipdesigner.validators.HullSpacesValidator;
+import com.senorpez.avt.shipdesigner.validators.ThrustValidator;
 import com.senorpez.avt.shipdesigner.validators.ValidationResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
 class Ship {
-    private HullShape hullShape;
-    private int hullSpaces;
-    double maxAcceleration; // TODO: Setter and validation, make private
+    private HullShape hullShape = HullShape.SPHERE;
+    private int hullSpaces = 25;
+    private double thrust = 0.5;
+
     double driveGeneration; // TODO: Setter and validation, make private
 
     double mastLength; // TODO: Setter, make private
@@ -20,6 +22,7 @@ class Ship {
     int lanternArmor; // TODO: Systems object
     int armorShrink; // TODO: Systems object
 
+    private double acceleration;
     private int mass;
 
     private static final int DRIVE_MASS_POWER = 1;
@@ -39,7 +42,10 @@ class Ship {
         ValidationResult hullSpacesValidation = HullSpacesValidator.validate(hullSpaces);
         valid = hullSpacesValidation.valid();
         validationErrors.addAll(hullSpacesValidation.validationErrors());
-        mass = hullSpaces * 25;
+
+        ValidationResult thrustValidation = ThrustValidator.validate(thrust);
+        valid = valid && thrustValidation.valid();
+        validationErrors.addAll(thrustValidation.validationErrors());
 
         mastLength = calculateMastLength();
         return this;
@@ -60,6 +66,13 @@ class Ship {
 
     Ship setHullSpaces(final int hullSpaces) {
         this.hullSpaces = hullSpaces;
+        this.mass = hullSpaces * 25;
+        return this;
+    }
+
+    public Ship setThrust(final double thrust) {
+        this.thrust = thrust;
+        this.acceleration = thrust / 4d;
         return this;
     }
 
@@ -91,7 +104,7 @@ class Ship {
     }
 
     double getDriveOutput() { // TODO: Add validation
-        return 0.5d * mass * 1000 * maxAcceleration * 9.765625d * driveGeneration * 34722 / Math.pow(10, 12);
+        return 0.5d * mass * 1000 * acceleration * 9.765625d * driveGeneration * 34722 / Math.pow(10, 12);
     }
 
     double getLanternArmorMass() {
@@ -103,7 +116,7 @@ class Ship {
     }
 
     double getLanternDiameter() {
-        return Math.sqrt(mass * maxAcceleration / 125) * 20 / Math.sqrt(100 / (100d - RADIANT_DEFLECTION));
+        return Math.sqrt(mass * acceleration / 125) * 20 / Math.sqrt(100 / (100d - RADIANT_DEFLECTION));
     }
 
     double getMastMass(final double mastLength) {
@@ -111,7 +124,7 @@ class Ship {
     }
 
     double getMastStructureMass(final double mastLength) {
-        return mass * maxAcceleration / 70000 * 7.8 * mastLength * getMastMassModifier();
+        return mass * acceleration / 70000 * 7.8 * mastLength * getMastMassModifier();
     }
 
     double calculateMastLength() {

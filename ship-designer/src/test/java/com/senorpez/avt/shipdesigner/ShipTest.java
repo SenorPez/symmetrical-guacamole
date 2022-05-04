@@ -14,6 +14,8 @@ import java.util.stream.Stream;
 
 import static com.senorpez.avt.shipdesigner.HullShape.SPHERE;
 import static com.senorpez.avt.shipdesigner.validators.HullSpacesValidator.hullSpacesOutOfBounds;
+import static com.senorpez.avt.shipdesigner.validators.ThrustValidator.thrustInvalid;
+import static com.senorpez.avt.shipdesigner.validators.ThrustValidator.thrustOutOfBounds;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.anyDouble;
@@ -50,6 +52,35 @@ class ShipTest {
 
     private static Stream<Arguments> hullSpacesProvider() {
         return IntStream.iterate(0, v -> v <= 3000, v -> v + 25).mapToObj(v -> arguments(v, v >= 25 && v <= 2500));
+    }
+
+    @DisplayName("Validate Thrust")
+    @ParameterizedTest(name = "{0} thrust => {1} with {2} errors")
+    @MethodSource("thrustProvider")
+    void validateThrust(final double thrust, final boolean expectedValue, final int errorCount) {
+        final double mastLength = 28.20816d;
+        doReturn(mastLength).when(instance).calculateMastLength();
+        instance = instance
+                .setHullSpaces(25)
+                .setHullShape(SPHERE)
+                .setThrust(thrust)
+                .build();
+
+        assertEquals(expectedValue, instance.isValid());
+        assertEquals(instance.getValidationErrors().size(), errorCount);
+
+        if (instance.isValid()) assertFalse(instance.getValidationErrors().contains(thrustOutOfBounds));
+        if (instance.isValid()) assertFalse(instance.getValidationErrors().contains(thrustInvalid));
+    }
+
+    private static Stream<Arguments> thrustProvider() {
+        return Stream.of(
+                arguments(0.3, false, 2),
+                arguments(0.5, true, 0),
+                arguments(1.1, false, 1),
+                arguments(15.5, true, 0),
+                arguments(16, true, 0),
+                arguments(17, false, 1));
     }
 
     @Test
@@ -96,10 +127,11 @@ class ShipTest {
 
     @ParameterizedTest(name = "{0} tons, {1} g, Gen {2}")
     @MethodSource("driveOutputProvider")
-    void getDriveOutput(int hullSpaces, double shipMaxAcceleration, double driveGeneration, double expectedValue) {
+    void getDriveOutput(int hullSpaces, double acceleration, double driveGeneration, double expectedValue) {
         doReturn(22.39590d).when(instance).calculateMastLength();
-        instance.setHullSpaces(hullSpaces).build();
-        instance.maxAcceleration = shipMaxAcceleration;
+        instance.setHullSpaces(hullSpaces)
+                .setThrust(acceleration * 4)
+                .build();
         instance.driveGeneration = driveGeneration;
 
         assertEquals(expectedValue, instance.getDriveOutput(), tolerance);
@@ -153,10 +185,11 @@ class ShipTest {
 
     @ParameterizedTest(name = "{0} tons, {1} g")
     @MethodSource("lanternDiameterProvider")
-    void getLanternDiameter(int hullSpaces, double shipMaxAcceleration, double expectedValue) {
+    void getLanternDiameter(int hullSpaces, double acceleration, double expectedValue) {
         doReturn(22.39590d).when(instance).calculateMastLength();
-        instance.setHullSpaces(hullSpaces).build();
-        instance.maxAcceleration = shipMaxAcceleration;
+        instance.setHullSpaces(hullSpaces)
+                .setThrust(acceleration * 4)
+                .build();
 
         assertEquals(expectedValue, instance.getLanternDiameter(), tolerance);
     }
@@ -185,8 +218,9 @@ class ShipTest {
     void getMastStructuralMass() {
         double mastLength = 22.39590d;
         doReturn(mastLength).when(instance).calculateMastLength();
-        instance.setHullSpaces(25).build();
-        instance.maxAcceleration = 1.5d;
+        instance.setHullSpaces(25)
+                .setThrust(6d)
+                .build();
         instance.mastLength = 22.39590d;
         doReturn(1.5d).when(instance).getMastMassModifier();
 
