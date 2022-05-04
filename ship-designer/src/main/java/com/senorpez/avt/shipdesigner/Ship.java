@@ -1,5 +1,6 @@
 package com.senorpez.avt.shipdesigner;
 
+import com.senorpez.avt.shipdesigner.validators.DriveGenerationValidator;
 import com.senorpez.avt.shipdesigner.validators.HullSpacesValidator;
 import com.senorpez.avt.shipdesigner.validators.ThrustValidator;
 import com.senorpez.avt.shipdesigner.validators.ValidationResult;
@@ -8,11 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Ship {
+    private double driveGeneration = 1.0;
     private HullShape hullShape = HullShape.SPHERE;
     private int hullSpaces = 25;
     private double thrust = 0.5;
-
-    double driveGeneration; // TODO: Setter and validation, make private
 
     double mastLength; // TODO: Setter, make private
 
@@ -39,8 +39,12 @@ class Ship {
     private final List<String> validationErrors = new ArrayList<>();
 
     Ship build() {
+        ValidationResult driveGenerationValidation = DriveGenerationValidator.validate(driveGeneration);
+        valid = driveGenerationValidation.valid();
+        validationErrors.addAll(driveGenerationValidation.validationErrors());
+
         ValidationResult hullSpacesValidation = HullSpacesValidator.validate(hullSpaces);
-        valid = hullSpacesValidation.valid();
+        valid = valid && hullSpacesValidation.valid();
         validationErrors.addAll(hullSpacesValidation.validationErrors());
 
         ValidationResult thrustValidation = ThrustValidator.validate(thrust);
@@ -57,6 +61,11 @@ class Ship {
 
     List<String> getValidationErrors() {
         return validationErrors;
+    }
+
+    public Ship setDriveGeneration(double driveGeneration) {
+        this.driveGeneration = driveGeneration;
+        return this;
     }
 
     Ship setHullShape(final HullShape hullShape) {

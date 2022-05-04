@@ -13,6 +13,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.senorpez.avt.shipdesigner.HullShape.SPHERE;
+import static com.senorpez.avt.shipdesigner.validators.DriveGenerationValidator.driveGenerationInvalid;
+import static com.senorpez.avt.shipdesigner.validators.DriveGenerationValidator.driveGenerationOutOfBounds;
 import static com.senorpez.avt.shipdesigner.validators.HullSpacesValidator.hullSpacesOutOfBounds;
 import static com.senorpez.avt.shipdesigner.validators.ThrustValidator.thrustInvalid;
 import static com.senorpez.avt.shipdesigner.validators.ThrustValidator.thrustOutOfBounds;
@@ -80,7 +82,37 @@ class ShipTest {
                 arguments(1.1, false, 1),
                 arguments(15.5, true, 0),
                 arguments(16, true, 0),
-                arguments(17, false, 1));
+                arguments(17, false, 1)
+        );
+    }
+
+    @DisplayName("Validate Drive Generation")
+    @ParameterizedTest(name = "{0} generation -> {1} with {2} errors")
+    @MethodSource("driveGenerationProvider")
+    void validateDriveGeneration(final double driveGeneration, final boolean expectedValue, final int errorCount) {
+        final double mastLength = 28.20816d;
+        doReturn(mastLength).when(instance).calculateMastLength();
+        instance = instance
+                .setDriveGeneration(driveGeneration)
+                .build();
+
+        instance.getValidationErrors().forEach(e -> System.out.printf("%2.1f and %s\n", driveGeneration, e));
+
+        assertEquals(expectedValue, instance.isValid());
+        assertEquals(instance.getValidationErrors().size(), errorCount);
+
+        if (instance.isValid()) assertFalse(instance.getValidationErrors().contains(driveGenerationOutOfBounds));
+        if (instance.isValid()) assertFalse(instance.getValidationErrors().contains(driveGenerationInvalid));
+    }
+
+    private static Stream<Arguments> driveGenerationProvider() {
+        return Stream.of(
+                arguments(0.5, false, 1),
+                arguments(1.0, true, 0),
+                arguments(1.1, true, 0),
+                arguments(9.0, true, 0),
+                arguments(9.1, false, 1)
+        );
     }
 
     @Test
@@ -131,8 +163,8 @@ class ShipTest {
         doReturn(22.39590d).when(instance).calculateMastLength();
         instance.setHullSpaces(hullSpaces)
                 .setThrust(acceleration * 4)
+                .setDriveGeneration(driveGeneration)
                 .build();
-        instance.driveGeneration = driveGeneration;
 
         assertEquals(expectedValue, instance.getDriveOutput(), tolerance);
     }
