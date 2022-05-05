@@ -14,7 +14,7 @@ public class Ship {
     private int hullSpaces = 25;
     private double thrust = 0.5;
 
-    double mastLength; // TODO: Setter, make private
+    public double mastLength; // TODO: Setter, make private
 
     int externalArmor; // TODO: Systems object
     int internalArmor; // TODO: Systems object
@@ -124,7 +124,7 @@ public class Ship {
         return 4 * Math.PI * Math.pow(getLanternDiameter() / 2, 2) / 2;
     }
 
-    double getLanternDiameter() {
+    public double getLanternDiameter() {
         return Math.sqrt(mass * acceleration / 125) * 20 / Math.sqrt(100 / (100d - RADIANT_DEFLECTION));
     }
 
@@ -253,10 +253,14 @@ public class Ship {
         return 0.25 * Math.PI * Math.pow(getShieldDiameter(mastLength), 2);
     }
 
-    double getShieldDiameter(final double mastLength) {
+    public double getShieldDiameter(final double mastLength) {
         return hullShape.getShieldDiameter(hullSpaces,
                 getArmorFraction(),
                 getLanternDiameter(),
                 mastLength);
+    }
+
+    public double getShieldWidth(final double mastLength) {
+        return getShieldMass(mastLength) / getShieldCrossSection(mastLength) * 0.5;
     }
 }
