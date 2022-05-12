@@ -14,6 +14,7 @@ import {
   WebGLRenderer,
   WireframeGeometry
 } from "three";
+import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 @Component({
   selector: 'app-render',
@@ -26,6 +27,7 @@ export class RenderComponent implements OnInit, AfterViewInit {
 
   private scene!: Scene;
   private camera!: Camera;
+  private controls!: OrbitControls;
   private renderer!: WebGLRenderer;
 
   private get canvas(): HTMLCanvasElement {
@@ -104,7 +106,6 @@ export class RenderComponent implements OnInit, AfterViewInit {
 
     this.camera = new PerspectiveCamera(50, this.getAspectRatio());
     this.camera.position.set(totalLength, totalLength, totalLength + totalLength / 2);
-    this.camera.lookAt(0, 0, totalLength / 2);
   }
 
   private getAspectRatio() {
@@ -116,9 +117,13 @@ export class RenderComponent implements OnInit, AfterViewInit {
     this.renderer.setPixelRatio(devicePixelRatio);
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
 
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.update();
+
     let component: RenderComponent = this;
     (function render() {
       requestAnimationFrame(render);
+      component.controls.update();
       component.renderer.render(component.scene, component.camera);
     }());
   }
