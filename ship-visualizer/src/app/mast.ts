@@ -14,9 +14,9 @@ export class Mast {
     return this._mastMesh;
   }
 
-  attachShield(shield: Shield): this {
+  attachShield(shield: Shield): Shield {
     shield.shieldMesh.position.set(0, -0.5 * (shield.shieldMesh.geometry.parameters.height + this._mastMesh.geometry.parameters.height), 0);
     this._mastMesh.add(shield.shieldMesh);
-    return this;
+    return shield;
   }
 }

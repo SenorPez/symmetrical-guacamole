@@ -1,19 +1,10 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {
-  AxesHelper,
-  Camera,
-  Color,
-  CylinderGeometry,
-  Mesh,
-  MeshBasicMaterial,
-  PerspectiveCamera,
-  Scene,
-  SphereGeometry,
-  WebGLRenderer
-} from "three";
+import {AxesHelper, Camera, Color, PerspectiveCamera, Scene, WebGLRenderer} from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {Lantern} from "../lantern";
 import {Shield} from "../shield";
+import {Hull} from "../hull";
+import {Mast} from "../mast";
 
 @Component({
   selector: 'app-render',
@@ -41,59 +32,13 @@ export class RenderComponent implements OnInit, AfterViewInit {
     shieldDiameter: number = 2.02292,
     lanternDiameter: number = 10.95445
   ) {
-    let hull: Mesh<SphereGeometry, MeshBasicMaterial> = RenderComponent.createHull(hullDiameter);
-    let mast: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createMast(mastDiameter, mastLength);
+    let hull: Hull = new Hull(hullDiameter);
+    let mast: Mast = new Mast(mastDiameter, mastLength);
     let shield: Shield = new Shield(shieldDiameter * 1.25, shieldDiameter, shieldLength);
-    // let shield: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createShield(shieldDiameter, shieldLength);
     let lantern: Lantern = new Lantern(lanternDiameter);
-    // let lantern: Line<WireframeGeometry<SphereGeometry>, LineBasicMaterial> = RenderComponent.createLantern(lanternDiameter);
 
-    shield.attachLantern(lantern);
-    mast = RenderComponent.attachShield(mast, shield.shieldMesh);
-    hull = RenderComponent.attachMast(hull, mast);
-    this.scene.add(hull);
-  }
-
-  static attachMast(
-    hull: Mesh<SphereGeometry, MeshBasicMaterial>,
-    mast: Mesh<CylinderGeometry, MeshBasicMaterial>
-  ): Mesh<SphereGeometry, MeshBasicMaterial> {
-    mast.position.set(0, -1 * (hull.geometry.parameters.radius + mast.geometry.parameters.height / 2), 0);
-    return hull.add(mast);
-  }
-
-  static attachShield(
-    mast: Mesh<CylinderGeometry, MeshBasicMaterial>,
-    shield: Mesh<CylinderGeometry, MeshBasicMaterial>
-  ): Mesh<CylinderGeometry, MeshBasicMaterial> {
-    shield.position.set(0, -0.5 * (mast.geometry.parameters.height + shield.geometry.parameters.height), 0);
-    return mast.add(shield);
-  }
-
-  // static attachLantern(
-  //   shield: Mesh<CylinderGeometry, MeshBasicMaterial>,
-  //   lantern: Lantern
-  // ): Mesh<CylinderGeometry, MeshBasicMaterial> {
-  //   lantern.lanternMesh.position.set(0, -1 * (lantern.lanternMesh.geometry.parameters.geometry.parameters.radius + shield.geometry.parameters.height / 2), 0);
-  //   return shield.add(lantern.lanternMesh);
-  // }
-
-  static createHull(hullDiameter: number): Mesh<SphereGeometry, MeshBasicMaterial> {
-    const hullGeometry: SphereGeometry = new SphereGeometry(hullDiameter / 2);
-    const hullMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'red'});
-    return new Mesh(hullGeometry, hullMaterial);
-  }
-
-  static createMast(mastDiameter: number, mastLength: number): Mesh<CylinderGeometry, MeshBasicMaterial> {
-    const mastGeometry: CylinderGeometry = new CylinderGeometry(mastDiameter / 2, mastDiameter / 2, mastLength);
-    const mastMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'yellow'});
-    return new Mesh(mastGeometry, mastMaterial);
-  }
-
-  static createShield(shieldDiameter: number, shieldLength: number): Mesh<CylinderGeometry, MeshBasicMaterial> {
-    const shieldGeometry: CylinderGeometry = new CylinderGeometry(shieldDiameter / 2, shieldDiameter / 2, shieldLength);
-    const shieldMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'lime'});
-    return new Mesh(shieldGeometry, shieldMaterial);
+    hull.attachMast(mast).attachShield(shield).attachLantern(lantern);
+    this.scene.add(hull.hullMesh);
   }
 
   private createScene() {

@@ -14,9 +14,8 @@ export class Shield {
     return this._shieldMesh;
   }
 
-  attachLantern(lantern: Lantern): this {
+  attachLantern(lantern: Lantern): void {
     lantern.lanternMesh.position.set(0, -1 * (lantern.lanternMesh.geometry.parameters.geometry.parameters.radius + this._shieldMesh.geometry.parameters.height / 2), 0);
     this._shieldMesh.add(lantern.lanternMesh);
-    return this;
   }
 }
