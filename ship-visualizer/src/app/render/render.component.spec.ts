@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {RenderComponent} from './render.component';
-import {SphereGeometry} from "three";
+import {MeshBasicMaterial, SphereGeometry} from "three";
 
 describe('RenderComponent', () => {
   let component: RenderComponent;
@@ -34,7 +34,6 @@ describe('RenderComponent', () => {
     describe('Hull Geometry', () => {
       const diameter: number = 50;
       const hullGeometry: SphereGeometry = RenderComponent.createHull(diameter).geometry;
-      console.log(hullGeometry.parameters);
 
       it('should have radius half the hull diameter', () => {
         const expectedValue: number = diameter / 2;
@@ -49,6 +48,17 @@ describe('RenderComponent', () => {
       it('should have a full range theta value', () => {
         expect(hullGeometry.parameters.thetaStart).toEqual(0);
         expect(hullGeometry.parameters.thetaLength).toEqual(Math.PI);
+      });
+    });
+
+    describe('Hull Material', () => {
+      const diameter: number = 50;
+      const hullMaterial: MeshBasicMaterial = RenderComponent.createHull(diameter).material;
+
+      it('should be colored red', () => {
+        expect(hullMaterial.color.r).toEqual(1);
+        expect(hullMaterial.color.g).toEqual(0);
+        expect(hullMaterial.color.b).toEqual(0);
       });
     });
   });
