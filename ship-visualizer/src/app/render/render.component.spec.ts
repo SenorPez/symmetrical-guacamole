@@ -69,32 +69,68 @@ describe('RenderComponent', () => {
       const mastDiameter: number = 2;
       const mastGeometry: CylinderGeometry = RenderComponent.createMast(mastDiameter, mastLength).geometry;
 
-      it('should have radius half the mast diameter', function () {
+      it('should have radius half the mast diameter', () => {
         const expectedValue: number = mastDiameter / 2;
         expect(mastGeometry.parameters.radiusTop).toEqual(expectedValue);
         expect(mastGeometry.parameters.radiusBottom).toEqual(expectedValue);
       });
 
-      it('should have height equal to the mast length', function () {
+      it('should have height equal to the mast length', () => {
         expect(mastGeometry.parameters.height).toEqual(mastLength);
       });
 
-      it('should have a full range theta value', function () {
+      it('should have a full range theta value', () => {
         expect(mastGeometry.parameters.thetaStart).toEqual(0);
         expect(mastGeometry.parameters.thetaLength).toEqual(Math.PI * 2);
       });
     });
 
-    describe('Mast Material', function () {
+    describe('Mast Material', () => {
       const mastLength: number = 50;
       const mastDiameter: number = 2;
       const mastMaterial: MeshBasicMaterial = RenderComponent.createMast(mastDiameter, mastLength).material;
 
-      it('should be colored orange', function () {
+      it('should be colored yellow', () => {
         expect(mastMaterial.color.r).toEqual(1);
-        expect(mastMaterial.color.g).toEqual(0.6470588235294118);
+        expect(mastMaterial.color.g).toEqual(1);
         expect(mastMaterial.color.b).toEqual(0);
       });
     });
-  })
+  });
+
+  describe('Shield', () => {
+    describe('Shield Geometry', () => {
+      const shieldLength: number = 50;
+      const shieldDiameter: number = 25;
+      const shieldGeometry: CylinderGeometry = RenderComponent.createShield(shieldDiameter, shieldLength).geometry;
+
+      it('should have radius half the shield diameter', () => {
+        const expectedValue: number = shieldDiameter / 2;
+        expect(shieldGeometry.parameters.radiusTop).toEqual(expectedValue);
+        expect(shieldGeometry.parameters.radiusBottom).toEqual(expectedValue);
+      });
+
+      it('should have height equal to the shield length', () => {
+        expect(shieldGeometry.parameters.height).toEqual(shieldLength);
+      });
+
+      it('should have a full range theta value', () => {
+        expect(shieldGeometry.parameters.thetaStart).toEqual(0);
+        expect(shieldGeometry.parameters.thetaLength).toEqual(Math.PI * 2);
+      });
+    });
+
+    describe('Shield Material', () => {
+      const shieldLength: number = 50;
+      const shieldDiameter: number = 25;
+      const shieldMaterial: MeshBasicMaterial = RenderComponent.createShield(shieldDiameter, shieldLength).material;
+      console.log(shieldMaterial);
+
+      it('should be color lime', () => {
+        expect(shieldMaterial.color.r).toEqual(0);
+        expect(shieldMaterial.color.g).toEqual(1);
+        expect(shieldMaterial.color.b).toEqual(0);
+      })
+    });
+  });
 });
