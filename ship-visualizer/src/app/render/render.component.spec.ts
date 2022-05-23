@@ -105,6 +105,24 @@ describe('RenderComponent', () => {
         expect(mastMaterial.color.b).toEqual(0);
       });
     });
+
+    describe('Shield Attachment', () => {
+      it('should have a shield with a local position offset', () => {
+        // TODO: Figure out what I'm doing wrong with spies that they don't work.
+        const shieldLength: number = 10;
+        const shieldDiameter: number = 25;
+        const shield: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createShield(shieldDiameter, shieldLength);
+
+        const mastLength: number = 74;
+        const mastDiameter: number = 5;
+        const mast: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createMast(mastDiameter, mastLength);
+
+        const expectedValue = new Vector3(0, -42, 0);
+        RenderComponent.attachShield(mast, shield);
+        const updatedMast = mast.children.pop();
+        expect(updatedMast?.position).toEqual(expectedValue);
+      });
+    });
   });
 
   describe('Shield', () => {

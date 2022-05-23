@@ -42,12 +42,22 @@ export class RenderComponent implements OnInit, AfterViewInit {
     shieldDiameter: number = 2.02292,
     lanternDiameter: number = 10.95445
   ) {
-    const hull: Mesh<SphereGeometry, MeshBasicMaterial> = RenderComponent.createHull(hullDiameter);
-    const mast: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createMast(mastDiameter, mastLength);
-    const shield: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createShield(shieldDiameter, shieldLength);
-    const lantern: Line<WireframeGeometry<SphereGeometry>, LineBasicMaterial> = RenderComponent.createLantern(lanternDiameter);
+    let hull: Mesh<SphereGeometry, MeshBasicMaterial> = RenderComponent.createHull(hullDiameter);
+    let mast: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createMast(mastDiameter, mastLength);
+    let shield: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createShield(shieldDiameter, shieldLength);
+    let lantern: Line<WireframeGeometry<SphereGeometry>, LineBasicMaterial> = RenderComponent.createLantern(lanternDiameter);
 
-    this.scene.add(RenderComponent.attachLantern(shield, lantern));
+    shield = RenderComponent.attachLantern(shield, lantern);
+    mast = RenderComponent.attachShield(mast, shield);
+    this.scene.add(mast);
+  }
+
+  static attachShield(
+    mast: Mesh<CylinderGeometry, MeshBasicMaterial>,
+    shield: Mesh<CylinderGeometry, MeshBasicMaterial>
+  ): Mesh<CylinderGeometry, MeshBasicMaterial> {
+    shield.position.set(0, -0.5 * (mast.geometry.parameters.height + shield.geometry.parameters.height), 0);
+    return mast.add(shield);
   }
 
   static attachLantern(
