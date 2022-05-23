@@ -133,58 +133,58 @@ describe('RenderComponent', () => {
       });
     });
   });
-
-  describe('Shield', () => {
-    describe('Shield Geometry', () => {
-      const shieldLength: number = 50;
-      const shieldDiameter: number = 25;
-      const shieldGeometry: CylinderGeometry = RenderComponent.createShield(shieldDiameter, shieldLength).geometry;
-
-      it('should have radius half the shield diameter', () => {
-        const expectedValue: number = shieldDiameter / 2;
-        expect(shieldGeometry.parameters.radiusTop).toEqual(expectedValue);
-        expect(shieldGeometry.parameters.radiusBottom).toEqual(expectedValue);
-      });
-
-      it('should have height equal to the shield length', () => {
-        expect(shieldGeometry.parameters.height).toEqual(shieldLength);
-      });
-
-      it('should have a full range theta value', () => {
-        expect(shieldGeometry.parameters.thetaStart).toEqual(0);
-        expect(shieldGeometry.parameters.thetaLength).toEqual(Math.PI * 2);
-      });
-    });
-
-    describe('Shield Material', () => {
-      const shieldLength: number = 50;
-      const shieldDiameter: number = 25;
-      const shieldMaterial: MeshBasicMaterial = RenderComponent.createShield(shieldDiameter, shieldLength).material;
-
-      it('should be color lime', () => {
-        expect(shieldMaterial.color.r).toEqual(0);
-        expect(shieldMaterial.color.g).toEqual(1);
-        expect(shieldMaterial.color.b).toEqual(0);
-      });
-    });
-
-    describe('Lantern Attachment', () => {
-      it('should have a lantern with a local position offset', () => {
-        // TODO: Figure out what I'm doing wrong with spies that they don't work.
-        // const lanternDiameter: number = 12;
-        // const lantern: Line<WireframeGeometry<SphereGeometry>, LineBasicMaterial> = RenderComponent.createLantern(lanternDiameter);
-        //
-        // const shieldLength: number = 10;
-        // const shieldDiameter: number = 25;
-        // const shield: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createShield(shieldDiameter, shieldLength);
-        //
-        // const expectedValue = new Vector3(0, -11, 0);
-        // RenderComponent.attachLantern(shield, lantern);
-        // const updatedLantern = shield.children.pop();
-        // expect(updatedLantern?.position).toEqual(expectedValue);
-      });
-    });
-  });
+  //
+  // describe('Shield', () => {
+  //   describe('Shield Geometry', () => {
+  //     const shieldLength: number = 50;
+  //     const shieldDiameter: number = 25;
+  //     const shieldGeometry: CylinderGeometry = RenderComponent.createShield(shieldDiameter, shieldLength).geometry;
+  //
+  //     it('should have radius half the shield diameter', () => {
+  //       const expectedValue: number = shieldDiameter / 2;
+  //       expect(shieldGeometry.parameters.radiusTop).toEqual(expectedValue);
+  //       expect(shieldGeometry.parameters.radiusBottom).toEqual(expectedValue);
+  //     });
+  //
+  //     it('should have height equal to the shield length', () => {
+  //       expect(shieldGeometry.parameters.height).toEqual(shieldLength);
+  //     });
+  //
+  //     it('should have a full range theta value', () => {
+  //       expect(shieldGeometry.parameters.thetaStart).toEqual(0);
+  //       expect(shieldGeometry.parameters.thetaLength).toEqual(Math.PI * 2);
+  //     });
+  //   });
+  //
+  //   describe('Shield Material', () => {
+  //     const shieldLength: number = 50;
+  //     const shieldDiameter: number = 25;
+  //     const shieldMaterial: MeshBasicMaterial = RenderComponent.createShield(shieldDiameter, shieldLength).material;
+  //
+  //     it('should be color lime', () => {
+  //       expect(shieldMaterial.color.r).toEqual(0);
+  //       expect(shieldMaterial.color.g).toEqual(1);
+  //       expect(shieldMaterial.color.b).toEqual(0);
+  //     });
+  //   });
+  //
+  //   describe('Lantern Attachment', () => {
+  //     it('should have a lantern with a local position offset', () => {
+  //       // TODO: Figure out what I'm doing wrong with spies that they don't work.
+  //       // const lanternDiameter: number = 12;
+  //       // const lantern: Line<WireframeGeometry<SphereGeometry>, LineBasicMaterial> = RenderComponent.createLantern(lanternDiameter);
+  //       //
+  //       // const shieldLength: number = 10;
+  //       // const shieldDiameter: number = 25;
+  //       // const shield: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createShield(shieldDiameter, shieldLength);
+  //       //
+  //       // const expectedValue = new Vector3(0, -11, 0);
+  //       // RenderComponent.attachLantern(shield, lantern);
+  //       // const updatedLantern = shield.children.pop();
+  //       // expect(updatedLantern?.position).toEqual(expectedValue);
+  //     });
+  //   });
+  // });
 
   // describe('Lantern', () => {
   //   describe('Lantern Wireframe', () => {
