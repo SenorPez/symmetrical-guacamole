@@ -1,6 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { RenderComponent } from './render.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {RenderComponent} from './render.component';
 
 describe('RenderComponent', () => {
   let component: RenderComponent;
@@ -8,9 +7,10 @@ describe('RenderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RenderComponent ]
-    })
-    .compileComponents();
+      declarations: [
+        RenderComponent
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -21,5 +21,11 @@ describe('RenderComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have a 500x500 canvas', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('canvas')?.width).toEqual(500);
+    expect(compiled.querySelector('canvas')?.height).toEqual(500);
   });
 });
