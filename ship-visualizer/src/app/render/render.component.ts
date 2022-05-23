@@ -4,17 +4,15 @@ import {
   Camera,
   Color,
   CylinderGeometry,
-  Line,
-  LineBasicMaterial,
   Mesh,
   MeshBasicMaterial,
   PerspectiveCamera,
   Scene,
   SphereGeometry,
-  WebGLRenderer,
-  WireframeGeometry
+  WebGLRenderer
 } from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
+import {Lantern} from "../lantern";
 
 @Component({
   selector: 'app-render',
@@ -45,7 +43,8 @@ export class RenderComponent implements OnInit, AfterViewInit {
     let hull: Mesh<SphereGeometry, MeshBasicMaterial> = RenderComponent.createHull(hullDiameter);
     let mast: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createMast(mastDiameter, mastLength);
     let shield: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createShield(shieldDiameter, shieldLength);
-    let lantern: Line<WireframeGeometry<SphereGeometry>, LineBasicMaterial> = RenderComponent.createLantern(lanternDiameter);
+    let lantern: Lantern = new Lantern(lanternDiameter);
+    // let lantern: Line<WireframeGeometry<SphereGeometry>, LineBasicMaterial> = RenderComponent.createLantern(lanternDiameter);
 
     shield = RenderComponent.attachLantern(shield, lantern);
     mast = RenderComponent.attachShield(mast, shield);
@@ -71,23 +70,11 @@ export class RenderComponent implements OnInit, AfterViewInit {
 
   static attachLantern(
     shield: Mesh<CylinderGeometry, MeshBasicMaterial>,
-    lantern: Line<WireframeGeometry<SphereGeometry>, LineBasicMaterial>
+    lantern: Lantern
   ): Mesh<CylinderGeometry, MeshBasicMaterial> {
-    lantern.position.set(0, -1 * (lantern.geometry.parameters.geometry.parameters.radius + shield.geometry.parameters.height / 2), 0);
-    return shield.add(lantern);
+    lantern.lanternMesh.position.set(0, -1 * (lantern.lanternMesh.geometry.parameters.geometry.parameters.radius + shield.geometry.parameters.height / 2), 0);
+    return shield.add(lantern.lanternMesh);
   }
-
-  // static assembleShip(
-  //   hull: Mesh<SphereGeometry, MeshBasicMaterial>,
-  //   mast: Mesh<CylinderGeometry, MeshBasicMaterial>,
-  //   shield: Mesh<CylinderGeometry, MeshBasicMaterial>,
-  //   lantern: Line<WireframeGeometry<SphereGeometry>, LineBasicMaterial>
-  // ): Mesh<SphereGeometry, MeshBasicMaterial> {
-  //   // Attach lantern to shield.
-  //   lantern.position.set(0, -1 * )
-  //
-  //   return hull;
-  // }
 
   static createHull(hullDiameter: number): Mesh<SphereGeometry, MeshBasicMaterial> {
     const hullGeometry: SphereGeometry = new SphereGeometry(hullDiameter / 2);
@@ -105,13 +92,6 @@ export class RenderComponent implements OnInit, AfterViewInit {
     const shieldGeometry: CylinderGeometry = new CylinderGeometry(shieldDiameter / 2, shieldDiameter / 2, shieldLength);
     const shieldMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'lime'});
     return new Mesh(shieldGeometry, shieldMaterial);
-  }
-
-  static createLantern(lanternDiameter: number) {
-    const lanternGeometry: SphereGeometry = new SphereGeometry(lanternDiameter / 2, 32, 8, 0, Math.PI * 2, 0, Math.PI / 2);
-    const lanternWireframe: WireframeGeometry<SphereGeometry> = new WireframeGeometry<SphereGeometry>(lanternGeometry);
-    const lanternMaterial = new LineBasicMaterial({color: 'cyan', linewidth: 30});
-    return new Line(lanternWireframe, lanternMaterial);
   }
 
   private createScene() {
