@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {RenderComponent} from './render.component';
-import {CylinderGeometry, MeshBasicMaterial, SphereGeometry} from "three";
+import {CylinderGeometry, LineBasicMaterial, MeshBasicMaterial, SphereGeometry, WireframeGeometry} from "three";
 
 describe('RenderComponent', () => {
   let component: RenderComponent;
@@ -124,13 +124,49 @@ describe('RenderComponent', () => {
       const shieldLength: number = 50;
       const shieldDiameter: number = 25;
       const shieldMaterial: MeshBasicMaterial = RenderComponent.createShield(shieldDiameter, shieldLength).material;
-      console.log(shieldMaterial);
 
       it('should be color lime', () => {
         expect(shieldMaterial.color.r).toEqual(0);
         expect(shieldMaterial.color.g).toEqual(1);
         expect(shieldMaterial.color.b).toEqual(0);
-      })
+      });
+    });
+
+    describe('Lantern', () => {
+      describe('Lantern Wireframe', () => {
+        const lanternDiameter: number = 20;
+        const lanternWireframe: WireframeGeometry<SphereGeometry> = RenderComponent.createLantern(lanternDiameter).geometry;
+
+        it('should have radius half the lantern diameter', () => {
+          const expectedValue = lanternDiameter / 2;
+          expect(lanternWireframe.parameters.geometry.parameters.radius).toEqual(expectedValue);
+        });
+
+        it('should have a half range phi value', () => {
+          expect(lanternWireframe.parameters.geometry.parameters.phiStart).toEqual(0);
+          expect(lanternWireframe.parameters.geometry.parameters.phiLength).toEqual(Math.PI);
+        });
+
+        it('should have a full range theta value', () => {
+          expect(lanternWireframe.parameters.geometry.parameters.thetaStart).toEqual(0);
+          expect(lanternWireframe.parameters.geometry.parameters.thetaLength).toEqual(Math.PI);
+        });
+      });
+
+      describe('Lantern Material', () => {
+        const lanternDiameter: number = 20;
+        const lanternMaterial: LineBasicMaterial = RenderComponent.createLantern(lanternDiameter).material;
+
+        it('should should be color cyan', () => {
+          expect(lanternMaterial.color.r).toEqual(0);
+          expect(lanternMaterial.color.g).toEqual(1);
+          expect(lanternMaterial.color.b).toEqual(1);
+        });
+
+        it('should have line width of 30, even if it doesn\'t render right', () => {
+          expect(lanternMaterial.linewidth).toEqual(30);
+        });
+      });
     });
   });
 });

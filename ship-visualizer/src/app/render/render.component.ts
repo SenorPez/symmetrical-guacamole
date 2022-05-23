@@ -45,52 +45,32 @@ export class RenderComponent implements OnInit, AfterViewInit {
     const hull: Mesh<SphereGeometry, MeshBasicMaterial> = RenderComponent.createHull(hullDiameter);
     const mast: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createMast(mastDiameter, mastLength);
     const shield: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createShield(shieldDiameter, shieldLength);
-    RenderComponent.createLantern(shield, lanternDiameter);
-
-    this.positionHull(hull);
+    const lantern: Line<WireframeGeometry<SphereGeometry>, LineBasicMaterial> = RenderComponent.createLantern(lanternDiameter);
   }
 
   static createHull(hullDiameter: number): Mesh<SphereGeometry, MeshBasicMaterial> {
-    let hullGeometry: SphereGeometry = new SphereGeometry(hullDiameter / 2);
-    let hullMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'red'});
+    const hullGeometry: SphereGeometry = new SphereGeometry(hullDiameter / 2);
+    const hullMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'red'});
     return new Mesh(hullGeometry, hullMaterial);
   }
 
-  positionHull(hull: Mesh): void {
-    hull.position.set(0, 0, 0);
-    this.scene.add(hull);
-  }
-
   static createMast(mastDiameter: number, mastLength: number): Mesh<CylinderGeometry, MeshBasicMaterial> {
-    let mastGeometry: CylinderGeometry = new CylinderGeometry(mastDiameter / 2, mastDiameter / 2, mastLength);
-    let mastMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'yellow'});
+    const mastGeometry: CylinderGeometry = new CylinderGeometry(mastDiameter / 2, mastDiameter / 2, mastLength);
+    const mastMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'yellow'});
     return new Mesh(mastGeometry, mastMaterial);
   }
 
   static createShield(shieldDiameter: number, shieldLength: number): Mesh<CylinderGeometry, MeshBasicMaterial> {
-    let shieldGeometry: CylinderGeometry = new CylinderGeometry(shieldDiameter / 2, shieldDiameter / 2, shieldLength);
-    let shieldMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'lime'});
+    const shieldGeometry: CylinderGeometry = new CylinderGeometry(shieldDiameter / 2, shieldDiameter / 2, shieldLength);
+    const shieldMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'lime'});
     return new Mesh(shieldGeometry, shieldMaterial);
   }
 
-
-  // private static createShield(mast: Mesh<CylinderGeometry, MeshBasicMaterial>, shieldDiameter: number, shieldLength: number): Mesh<CylinderGeometry, MeshBasicMaterial> {
-  //   let shieldGeometry: CylinderGeometry = new CylinderGeometry(shieldDiameter / 2, shieldDiameter / 2, shieldLength);
-  //   let shieldMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'yellow'});
-  //   let shield: Mesh<CylinderGeometry, MeshBasicMaterial> = new Mesh(shieldGeometry, shieldMaterial);
-  //   mast.add(shield);
-  //   shield.position.set(0, mast.geometry.parameters.height / 2 + shield.geometry.parameters.height / 2, 0);
-  //
-  //   return shield;
-  // }
-
-  private static createLantern(shield: Mesh<CylinderGeometry, MeshBasicMaterial>, lanternDiameter: number): void {
-    let lanternGeometry: SphereGeometry = new SphereGeometry(lanternDiameter / 2, 8, 6, 0, Math.PI);
-    let lanternWireframe: WireframeGeometry<SphereGeometry> = new WireframeGeometry(lanternGeometry);
-    let lantern = new Line(lanternWireframe, new LineBasicMaterial({color: 'green', linewidth: 30}));
-    shield.add(lantern);
-    lantern.rotateX(Math.PI / 2);
-    lantern.position.set(0, shield.geometry.parameters.height / 2 + lanternGeometry.parameters.radius, 0);
+  static createLantern(lanternDiameter: number) {
+    const lanternGeometry: SphereGeometry = new SphereGeometry(lanternDiameter / 2, 8, 6, 0, Math.PI);
+    const lanternWireframe: WireframeGeometry<SphereGeometry> = new WireframeGeometry<SphereGeometry>(lanternGeometry);
+    const lanternMaterial = new LineBasicMaterial({color: 'cyan', linewidth: 30});
+    return new Line(lanternWireframe, lanternMaterial);
   }
 
   private createScene() {
