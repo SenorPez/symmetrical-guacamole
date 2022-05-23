@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AxesHelper, Camera, Color, PerspectiveCamera, Scene, WebGLRenderer} from "three";
-import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {Lantern} from "../lantern";
 import {Shield} from "../shield";
 import {Hull} from "../hull";
 import {Mast} from "../mast";
+import {ArcballControls} from "three/examples/jsm/controls/ArcballControls";
 
 @Component({
   selector: 'app-render',
@@ -17,28 +17,31 @@ export class RenderComponent implements OnInit, AfterViewInit {
 
   private scene!: Scene;
   private camera!: Camera;
-  private controls!: OrbitControls;
+  private controls!: ArcballControls;
   private renderer!: WebGLRenderer;
+
+  private hull!: Hull;
 
   private get canvas(): HTMLCanvasElement {
     return this.renderRef.nativeElement;
   }
 
-  private createShip(
-    hullDiameter: number = 14.94895,
-    mastLength: number = 28.20816,
-    mastDiameter: number = mastLength / 50,
-    shieldLength: number = 2.64379,
-    shieldDiameter: number = 2.02292,
-    lanternDiameter: number = 10.95445
-  ) {
+  static createShip(
+    hullDiameter: number,
+    mastLength: number,
+    mastDiameter: number,
+    shieldLength: number,
+    shieldMaxDiameter: number,
+    shieldMinDiameter: number,
+    lanternDiameter: number
+  ): Hull {
     let hull: Hull = new Hull(hullDiameter);
     let mast: Mast = new Mast(mastDiameter, mastLength);
-    let shield: Shield = new Shield(shieldDiameter * 1.25, shieldDiameter, shieldLength);
+    let shield: Shield = new Shield(shieldMaxDiameter, shieldMinDiameter, shieldLength);
     let lantern: Lantern = new Lantern(lanternDiameter);
 
     hull.attachMast(mast).attachShield(shield).attachLantern(lantern);
-    this.scene.add(hull.hullMesh);
+    return hull;
   }
 
   private createScene() {
@@ -48,17 +51,28 @@ export class RenderComponent implements OnInit, AfterViewInit {
     const axesHelper = new AxesHelper(5);
     this.scene.add(axesHelper);
 
-    this.createShip();
+    const hullDiameter: number = 14.94895;
+    const mastLength: number = 28.20816;
+    const mastDiameter: number = mastLength / 50;
+    const shieldMaxDiameter: number = 2.02292;
+    const shieldMinDiameter: number = shieldMaxDiameter * 0.75;
+    const shieldLength: number = 2.64379;
+    const lanternDiameter: number = 10.95445;
+    const totalLength: number = hullDiameter + mastLength + shieldLength + lanternDiameter / 2;
+    this.hull = RenderComponent.createShip(
+      hullDiameter,
+      mastLength,
+      mastDiameter,
+      shieldLength,
+      shieldMaxDiameter,
+      shieldMinDiameter,
+      lanternDiameter
+    );
 
-    let hullDiameter: number = 14.94895;
-    let mastLength: number = 28.20816;
-    let shieldLength: number = 2.64379;
-    let lanternDiameter: number = 10.95445;
-
-    let totalLength: number = hullDiameter + mastLength + shieldLength + lanternDiameter / 2;
+    this.scene.add(this.hull.hullMesh);
 
     this.camera = new PerspectiveCamera(50, this.getAspectRatio());
-    this.camera.position.set(totalLength, totalLength, totalLength + totalLength / 2);
+    this.camera.position.set(totalLength * 2, 0, 0);
   }
 
   private getAspectRatio() {
@@ -70,7 +84,7 @@ export class RenderComponent implements OnInit, AfterViewInit {
     this.renderer.setPixelRatio(devicePixelRatio);
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
 
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls = new ArcballControls(this.camera, this.renderer.domElement);
     this.controls.update();
 
     let component: RenderComponent = this;
