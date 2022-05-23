@@ -81,58 +81,58 @@ describe('RenderComponent', () => {
 
   });
 
-  describe('Mast', () => {
-    describe('Mast Geometry', () => {
-      const mastLength: number = 50;
-      const mastDiameter: number = 2;
-      const mastGeometry: CylinderGeometry = RenderComponent.createMast(mastDiameter, mastLength).geometry;
-
-      it('should have radius half the mast diameter', () => {
-        const expectedValue: number = mastDiameter / 2;
-        expect(mastGeometry.parameters.radiusTop).toEqual(expectedValue);
-        expect(mastGeometry.parameters.radiusBottom).toEqual(expectedValue);
-      });
-
-      it('should have height equal to the mast length', () => {
-        expect(mastGeometry.parameters.height).toEqual(mastLength);
-      });
-
-      it('should have a full range theta value', () => {
-        expect(mastGeometry.parameters.thetaStart).toEqual(0);
-        expect(mastGeometry.parameters.thetaLength).toEqual(Math.PI * 2);
-      });
-    });
-
-    describe('Mast Material', () => {
-      const mastLength: number = 50;
-      const mastDiameter: number = 2;
-      const mastMaterial: MeshBasicMaterial = RenderComponent.createMast(mastDiameter, mastLength).material;
-
-      it('should be colored yellow', () => {
-        expect(mastMaterial.color.r).toEqual(1);
-        expect(mastMaterial.color.g).toEqual(1);
-        expect(mastMaterial.color.b).toEqual(0);
-      });
-    });
-
-    describe('Shield Attachment', () => {
-      it('should have a shield with a local position offset', () => {
-        // TODO: Figure out what I'm doing wrong with spies that they don't work.
-        const shieldLength: number = 10;
-        const shieldDiameter: number = 25;
-        const shield: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createShield(shieldDiameter, shieldLength);
-
-        const mastLength: number = 74;
-        const mastDiameter: number = 5;
-        const mast: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createMast(mastDiameter, mastLength);
-
-        const expectedValue = new Vector3(0, -42, 0);
-        RenderComponent.attachShield(mast, shield);
-        const updatedMast = mast.children.pop();
-        expect(updatedMast?.position).toEqual(expectedValue);
-      });
-    });
-  });
+  // describe('Mast', () => {
+  //   describe('Mast Geometry', () => {
+  //     const mastLength: number = 50;
+  //     const mastDiameter: number = 2;
+  //     const mastGeometry: CylinderGeometry = RenderComponent.createMast(mastDiameter, mastLength).geometry;
+  //
+  //     it('should have radius half the mast diameter', () => {
+  //       const expectedValue: number = mastDiameter / 2;
+  //       expect(mastGeometry.parameters.radiusTop).toEqual(expectedValue);
+  //       expect(mastGeometry.parameters.radiusBottom).toEqual(expectedValue);
+  //     });
+  //
+  //     it('should have height equal to the mast length', () => {
+  //       expect(mastGeometry.parameters.height).toEqual(mastLength);
+  //     });
+  //
+  //     it('should have a full range theta value', () => {
+  //       expect(mastGeometry.parameters.thetaStart).toEqual(0);
+  //       expect(mastGeometry.parameters.thetaLength).toEqual(Math.PI * 2);
+  //     });
+  //   });
+  //
+  //   describe('Mast Material', () => {
+  //     const mastLength: number = 50;
+  //     const mastDiameter: number = 2;
+  //     const mastMaterial: MeshBasicMaterial = RenderComponent.createMast(mastDiameter, mastLength).material;
+  //
+  //     it('should be colored yellow', () => {
+  //       expect(mastMaterial.color.r).toEqual(1);
+  //       expect(mastMaterial.color.g).toEqual(1);
+  //       expect(mastMaterial.color.b).toEqual(0);
+  //     });
+  //   });
+  //
+  //   describe('Shield Attachment', () => {
+  //     it('should have a shield with a local position offset', () => {
+  //       // TODO: Figure out what I'm doing wrong with spies that they don't work.
+  //       const shieldLength: number = 10;
+  //       const shieldDiameter: number = 25;
+  //       const shield: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createShield(shieldDiameter, shieldLength);
+  //
+  //       const mastLength: number = 74;
+  //       const mastDiameter: number = 5;
+  //       const mast: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createMast(mastDiameter, mastLength);
+  //
+  //       const expectedValue = new Vector3(0, -42, 0);
+  //       RenderComponent.attachShield(mast, shield);
+  //       const updatedMast = mast.children.pop();
+  //       expect(updatedMast?.position).toEqual(expectedValue);
+  //     });
+  //   });
+  // });
   //
   // describe('Shield', () => {
   //   describe('Shield Geometry', () => {
