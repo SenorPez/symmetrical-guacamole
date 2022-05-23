@@ -34,19 +34,41 @@ export class RenderComponent implements OnInit, AfterViewInit {
     return this.renderRef.nativeElement;
   }
 
-  private createShip() {
-    let hullDiameter: number = 14.94895;
-    let mastLength: number = 28.20816;
-    let mastDiameter: number = mastLength / 50;
-    let shieldLength: number = 2.64379;
-    let shieldDiameter: number = 2.02292;
-    let lanternDiameter: number = 10.95445;
-
+  private createShip(
+    hullDiameter: number = 14.94895,
+    mastLength: number = 28.20816,
+    mastDiameter: number = mastLength / 50,
+    shieldLength: number = 2.64379,
+    shieldDiameter: number = 2.02292,
+    lanternDiameter: number = 10.95445
+  ) {
     const hull: Mesh<SphereGeometry, MeshBasicMaterial> = RenderComponent.createHull(hullDiameter);
     const mast: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createMast(mastDiameter, mastLength);
     const shield: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createShield(shieldDiameter, shieldLength);
     const lantern: Line<WireframeGeometry<SphereGeometry>, LineBasicMaterial> = RenderComponent.createLantern(lanternDiameter);
+
+    this.scene.add(RenderComponent.attachLantern(shield, lantern));
   }
+
+  static attachLantern(
+    shield: Mesh<CylinderGeometry, MeshBasicMaterial>,
+    lantern: Line<WireframeGeometry<SphereGeometry>, LineBasicMaterial>
+  ): Mesh<CylinderGeometry, MeshBasicMaterial> {
+    lantern.position.set(0, -1 * (lantern.geometry.parameters.geometry.parameters.radius + shield.geometry.parameters.height / 2), 0);
+    return shield.add(lantern);
+  }
+
+  // static assembleShip(
+  //   hull: Mesh<SphereGeometry, MeshBasicMaterial>,
+  //   mast: Mesh<CylinderGeometry, MeshBasicMaterial>,
+  //   shield: Mesh<CylinderGeometry, MeshBasicMaterial>,
+  //   lantern: Line<WireframeGeometry<SphereGeometry>, LineBasicMaterial>
+  // ): Mesh<SphereGeometry, MeshBasicMaterial> {
+  //   // Attach lantern to shield.
+  //   lantern.position.set(0, -1 * )
+  //
+  //   return hull;
+  // }
 
   static createHull(hullDiameter: number): Mesh<SphereGeometry, MeshBasicMaterial> {
     const hullGeometry: SphereGeometry = new SphereGeometry(hullDiameter / 2);
@@ -67,7 +89,7 @@ export class RenderComponent implements OnInit, AfterViewInit {
   }
 
   static createLantern(lanternDiameter: number) {
-    const lanternGeometry: SphereGeometry = new SphereGeometry(lanternDiameter / 2, 8, 6, 0, Math.PI);
+    const lanternGeometry: SphereGeometry = new SphereGeometry(lanternDiameter / 2, 32, 8, 0, Math.PI * 2, 0, Math.PI / 2);
     const lanternWireframe: WireframeGeometry<SphereGeometry> = new WireframeGeometry<SphereGeometry>(lanternGeometry);
     const lanternMaterial = new LineBasicMaterial({color: 'cyan', linewidth: 30});
     return new Line(lanternWireframe, lanternMaterial);
