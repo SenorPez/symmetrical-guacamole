@@ -49,7 +49,16 @@ export class RenderComponent implements OnInit, AfterViewInit {
 
     shield = RenderComponent.attachLantern(shield, lantern);
     mast = RenderComponent.attachShield(mast, shield);
-    this.scene.add(mast);
+    hull = RenderComponent.attachMast(hull, mast);
+    this.scene.add(hull);
+  }
+
+  static attachMast(
+    hull: Mesh<SphereGeometry, MeshBasicMaterial>,
+    mast: Mesh<CylinderGeometry, MeshBasicMaterial>
+  ): Mesh<SphereGeometry, MeshBasicMaterial> {
+    mast.position.set(0, -1 * (hull.geometry.parameters.radius + mast.geometry.parameters.height / 2), 0);
+    return hull.add(mast);
   }
 
   static attachShield(

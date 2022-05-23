@@ -70,6 +70,24 @@ describe('RenderComponent', () => {
         expect(hullMaterial.color.b).toEqual(0);
       });
     });
+
+    describe('Mast Attachment', () => {
+      it('should have a mast with a local position offset', () => {
+        // TODO: Figure out what I'm doing wrong with spies that they don't work.
+        const mastLength: number = 74;
+        const mastDiameter: number = 5;
+        const mast: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createMast(mastDiameter, mastLength);
+
+        const hullDiameter: number = 64;
+        const hull: Mesh<SphereGeometry, MeshBasicMaterial> = RenderComponent.createHull(hullDiameter);
+
+        const expectedValue = new Vector3(0, -69, 0);
+        RenderComponent.attachMast(hull, mast);
+        const updatedHull = hull.children.pop();
+        expect(updatedHull?.position).toEqual(expectedValue);
+      });
+    });
+
   });
 
   describe('Mast', () => {
