@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {RenderComponent} from './render.component';
-import {MeshBasicMaterial, SphereGeometry} from "three";
+import {CylinderGeometry, MeshBasicMaterial, SphereGeometry} from "three";
 
 describe('RenderComponent', () => {
   let component: RenderComponent;
@@ -62,4 +62,39 @@ describe('RenderComponent', () => {
       });
     });
   });
+
+  describe('Mast', () => {
+    describe('Mast Geometry', () => {
+      const mastLength: number = 50;
+      const mastDiameter: number = 2;
+      const mastGeometry: CylinderGeometry = RenderComponent.createMast(mastDiameter, mastLength).geometry;
+
+      it('should have radius half the mast diameter', function () {
+        const expectedValue: number = mastDiameter / 2;
+        expect(mastGeometry.parameters.radiusTop).toEqual(expectedValue);
+        expect(mastGeometry.parameters.radiusBottom).toEqual(expectedValue);
+      });
+
+      it('should have height equal to the mast length', function () {
+        expect(mastGeometry.parameters.height).toEqual(mastLength);
+      });
+
+      it('should have a full range theta value', function () {
+        expect(mastGeometry.parameters.thetaStart).toEqual(0);
+        expect(mastGeometry.parameters.thetaLength).toEqual(Math.PI * 2);
+      });
+    });
+
+    describe('Mast Material', function () {
+      const mastLength: number = 50;
+      const mastDiameter: number = 2;
+      const mastMaterial: MeshBasicMaterial = RenderComponent.createMast(mastDiameter, mastLength).material;
+
+      it('should be colored orange', function () {
+        expect(mastMaterial.color.r).toEqual(1);
+        expect(mastMaterial.color.g).toEqual(0.6470588235294118);
+        expect(mastMaterial.color.b).toEqual(0);
+      });
+    });
+  })
 });

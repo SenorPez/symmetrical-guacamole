@@ -43,9 +43,7 @@ export class RenderComponent implements OnInit, AfterViewInit {
     let lanternDiameter: number = 10.95445;
 
     const hull: Mesh<SphereGeometry, MeshBasicMaterial> = RenderComponent.createHull(hullDiameter);
-
-
-    let mast: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createMast(hull, mastDiameter, mastLength);
+    const mast: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createMast(mastDiameter, mastLength);
     let shield: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createShield(mast, shieldDiameter, shieldLength);
     RenderComponent.createLantern(shield, lanternDiameter);
 
@@ -63,28 +61,22 @@ export class RenderComponent implements OnInit, AfterViewInit {
     this.scene.add(hull);
   }
 
-
-
-  // private static createHull(scene: Scene, hullDiameter: number): Mesh<SphereGeometry, MeshBasicMaterial> {
-  //   let hullGeometry: SphereGeometry = new SphereGeometry(hullDiameter / 2);
-  //   let hullMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'red'});
-  //   let hull: Mesh<SphereGeometry, MeshBasicMaterial> = new Mesh(hullGeometry, hullMaterial);
-  //   hull.position.set(0, 0, 0);
-  //
-  //   scene.add(hull);
-  //   return hull;
-  // }
-
-  private static createMast(hull: Mesh<SphereGeometry, MeshBasicMaterial>, mastDiameter: number, mastLength: number): Mesh<CylinderGeometry, MeshBasicMaterial> {
+  static createMast(mastDiameter: number, mastLength: number): Mesh<CylinderGeometry, MeshBasicMaterial> {
     let mastGeometry: CylinderGeometry = new CylinderGeometry(mastDiameter / 2, mastDiameter / 2, mastLength);
     let mastMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'orange'});
-    let mast: Mesh<CylinderGeometry, MeshBasicMaterial> = new Mesh(mastGeometry, mastMaterial);
-    hull.add(mast);
-    mast.rotateX(Math.PI / 2);
-    mast.position.set(0, 0, hull.geometry.parameters.radius + mast.geometry.parameters.height / 2);
-
-    return mast;
+    return new Mesh(mastGeometry, mastMaterial);
   }
+
+  // private static createMast(hull: Mesh<SphereGeometry, MeshBasicMaterial>, mastDiameter: number, mastLength: number): Mesh<CylinderGeometry, MeshBasicMaterial> {
+  //   let mastGeometry: CylinderGeometry = new CylinderGeometry(mastDiameter / 2, mastDiameter / 2, mastLength);
+  //   let mastMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'orange'});
+  //   let mast: Mesh<CylinderGeometry, MeshBasicMaterial> = new Mesh(mastGeometry, mastMaterial);
+  //   hull.add(mast);
+  //   mast.rotateX(Math.PI / 2);
+  //   mast.position.set(0, 0, hull.geometry.parameters.radius + mast.geometry.parameters.height / 2);
+  //
+  //   return mast;
+  // }
 
   private static createShield(mast: Mesh<CylinderGeometry, MeshBasicMaterial>, shieldDiameter: number, shieldLength: number): Mesh<CylinderGeometry, MeshBasicMaterial> {
     let shieldGeometry: CylinderGeometry = new CylinderGeometry(shieldDiameter / 2, shieldDiameter / 2, shieldLength);
