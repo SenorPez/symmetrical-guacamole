@@ -34,7 +34,7 @@ export class RenderComponent implements OnInit, AfterViewInit {
     return this.renderRef.nativeElement;
   }
 
-  private static createShip(scene: Scene) {
+  private createShip() {
     let hullDiameter: number = 14.94895;
     let mastLength: number = 28.20816;
     let mastDiameter: number = mastLength / 50;
@@ -42,21 +42,38 @@ export class RenderComponent implements OnInit, AfterViewInit {
     let shieldDiameter: number = 2.02292;
     let lanternDiameter: number = 10.95445;
 
-    let hull: Mesh<SphereGeometry, MeshBasicMaterial> = RenderComponent.createHull(scene, hullDiameter);
+    const hull: Mesh<SphereGeometry, MeshBasicMaterial> = RenderComponent.createHull(hullDiameter);
+
+
     let mast: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createMast(hull, mastDiameter, mastLength);
     let shield: Mesh<CylinderGeometry, MeshBasicMaterial> = RenderComponent.createShield(mast, shieldDiameter, shieldLength);
     RenderComponent.createLantern(shield, lanternDiameter);
+
+    this.positionHull(hull);
   }
 
-  private static createHull(scene: Scene, hullDiameter: number): Mesh<SphereGeometry, MeshBasicMaterial> {
+  static createHull(hullDiameter: number): Mesh<SphereGeometry, MeshBasicMaterial> {
     let hullGeometry: SphereGeometry = new SphereGeometry(hullDiameter / 2);
     let hullMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'red'});
-    let hull: Mesh<SphereGeometry, MeshBasicMaterial> = new Mesh(hullGeometry, hullMaterial);
-    hull.position.set(0, 0, 0);
-
-    scene.add(hull);
-    return hull;
+    return new Mesh(hullGeometry, hullMaterial);
   }
+
+  positionHull(hull: Mesh): void {
+    hull.position.set(0, 0, 0);
+    this.scene.add(hull);
+  }
+
+
+
+  // private static createHull(scene: Scene, hullDiameter: number): Mesh<SphereGeometry, MeshBasicMaterial> {
+  //   let hullGeometry: SphereGeometry = new SphereGeometry(hullDiameter / 2);
+  //   let hullMaterial: MeshBasicMaterial = new MeshBasicMaterial({color: 'red'});
+  //   let hull: Mesh<SphereGeometry, MeshBasicMaterial> = new Mesh(hullGeometry, hullMaterial);
+  //   hull.position.set(0, 0, 0);
+  //
+  //   scene.add(hull);
+  //   return hull;
+  // }
 
   private static createMast(hull: Mesh<SphereGeometry, MeshBasicMaterial>, mastDiameter: number, mastLength: number): Mesh<CylinderGeometry, MeshBasicMaterial> {
     let mastGeometry: CylinderGeometry = new CylinderGeometry(mastDiameter / 2, mastDiameter / 2, mastLength);
@@ -95,7 +112,7 @@ export class RenderComponent implements OnInit, AfterViewInit {
     const axesHelper = new AxesHelper(5);
     this.scene.add(axesHelper);
 
-    RenderComponent.createShip(this.scene);
+    this.createShip();
 
     let hullDiameter: number = 14.94895;
     let mastLength: number = 28.20816;
