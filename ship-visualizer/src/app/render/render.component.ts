@@ -1,10 +1,7 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AxesHelper, Camera, Color, PerspectiveCamera, Scene, WebGLRenderer} from "three";
-import {Lantern} from "../lantern";
-import {Shield} from "../shield";
-import {Hull} from "../hull";
-import {Mast} from "../mast";
 import {ArcballControls} from "three/examples/jsm/controls/ArcballControls";
+import {Ship} from "../ship";
 
 @Component({
   selector: 'app-render',
@@ -20,28 +17,10 @@ export class RenderComponent implements OnInit, AfterViewInit {
   private controls!: ArcballControls;
   private renderer!: WebGLRenderer;
 
-  private hull!: Hull;
+  private ship!: Ship;
 
   private get canvas(): HTMLCanvasElement {
     return this.renderRef.nativeElement;
-  }
-
-  static createShip(
-    hullDiameter: number,
-    mastLength: number,
-    mastDiameter: number,
-    shieldLength: number,
-    shieldMaxDiameter: number,
-    shieldMinDiameter: number,
-    lanternDiameter: number
-  ): Hull {
-    let hull: Hull = new Hull(hullDiameter);
-    let mast: Mast = new Mast(mastDiameter, mastLength);
-    let shield: Shield = new Shield(shieldMaxDiameter, shieldMinDiameter, shieldLength);
-    let lantern: Lantern = new Lantern(lanternDiameter);
-
-    hull.attachMast(mast).attachShield(shield).attachLantern(lantern);
-    return hull;
   }
 
   private createScene() {
@@ -59,7 +38,7 @@ export class RenderComponent implements OnInit, AfterViewInit {
     const shieldLength: number = 2.64379;
     const lanternDiameter: number = 10.95445;
     const totalLength: number = hullDiameter + mastLength + shieldLength + lanternDiameter / 2;
-    this.hull = RenderComponent.createShip(
+    this.ship = new Ship(
       hullDiameter,
       mastLength,
       mastDiameter,
@@ -69,7 +48,7 @@ export class RenderComponent implements OnInit, AfterViewInit {
       lanternDiameter
     );
 
-    this.scene.add(this.hull.hullMesh);
+    this.scene.add(this.ship.shipMesh);
 
     this.camera = new PerspectiveCamera(50, this.getAspectRatio());
     this.camera.position.set(totalLength * 2, 0, 0);

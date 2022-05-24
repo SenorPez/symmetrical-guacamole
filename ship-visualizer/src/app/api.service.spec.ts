@@ -30,15 +30,15 @@ describe('ApiService', () => {
   });
 
   describe('getShip', () => {
-    let expectedValue: Ship = {
-      hullDiameter: getRandomInteger(1, 101),
-      lanternDiameter: getRandomInteger(1, 101),
-      mastDiameter: getRandomInteger(1, 101),
-      mastLength: getRandomInteger(1, 101),
-      shieldDepth: getRandomInteger(1, 101),
-      shieldMaxDiameter: getRandomInteger(1, 101),
-      shieldMinDiameter: getRandomInteger(1, 101)
-    };
+    const expectedValue: Ship = new Ship(
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101)
+    );
 
     it('should return ship as expected', () => {
       service.getShip().subscribe({
