@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Ship} from "./ship";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,31 @@ export class ApiService {
 
   baseUrl = 'assets/ship.json';
 
-  getShip(): Observable<Ship> {
-    return this.http.get<Ship>(this.baseUrl);
+  mapToShip = map((value: ApiShip) => new Ship(
+    value.hullDiameter,
+    value.mastLength,
+    value.mastDiameter,
+    value.shieldThickness,
+    value.shieldMaxDiameter,
+    value.shieldMinDiameter,
+    value.lanternDiameter)
+  );
+
+  private getApiShip(): Observable<ApiShip> {
+    return this.http.get<ApiShip>(this.baseUrl);
   }
+
+  getShip(): Observable<Ship> {
+    return this.mapToShip(this.getApiShip());
+  }
+}
+
+export interface ApiShip {
+  "hullDiameter": number,
+  "mastLength": number,
+  "mastDiameter": number,
+  "shieldMaxDiameter": number,
+  "shieldMinDiameter": number,
+  "shieldThickness": number,
+  "lanternDiameter": number
 }

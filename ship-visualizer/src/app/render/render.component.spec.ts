@@ -1,16 +1,30 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {RenderComponent} from './render.component';
+import createSpyObj = jasmine.createSpyObj;
+import {ApiService} from "../api.service";
+import SpyObj = jasmine.SpyObj;
+import {Ship} from "../ship";
+import { of } from 'rxjs';
 
 describe('RenderComponent', () => {
   let component: RenderComponent;
   let fixture: ComponentFixture<RenderComponent>;
+  let apiServiceSpy: SpyObj<ApiService>;
 
   beforeEach(async () => {
+    const spy = createSpyObj('ApiService', ['getShip']);
+
     await TestBed.configureTestingModule({
       declarations: [
         RenderComponent
       ],
+      providers: [
+        {provide: ApiService, useValue: spy}
+      ]
     }).compileComponents();
+
+    apiServiceSpy = TestBed.inject(ApiService) as SpyObj<ApiService>;
+    apiServiceSpy.getShip.and.returnValue(of(new Ship(10, 10, 10, 10, 10, 10, 10)));
   });
 
   beforeEach(() => {

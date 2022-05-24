@@ -13,10 +13,10 @@ export class Ship {
   private _shieldMinDiameter: number;
   private _lanternDiameter: number;
 
-  private _hull: Hull;
-  private _mast: Mast;
-  private _shield: Shield;
-  private _lantern: Lantern;
+  private _hull!: Hull;
+  private _mast!: Mast;
+  private _shield!: Shield;
+  private _lantern!: Lantern;
 
   constructor(hullDiameter: number, mastLength: number, mastDiameter: number, shieldThickness: number, shieldMaxDiameter: number, shieldMinDiameter: number, lanternDiameter: number) {
     this._hullDiameter = hullDiameter;
@@ -27,15 +27,19 @@ export class Ship {
     this._shieldMinDiameter = shieldMinDiameter;
     this._lanternDiameter = lanternDiameter;
 
-    this._hull = new Hull(hullDiameter);
-    this._mast = new Mast(mastDiameter, mastLength);
-    this._shield = new Shield(shieldMaxDiameter, shieldMinDiameter, shieldThickness);
-    this._lantern = new Lantern(lanternDiameter);
+    this.createMeshes();
+  }
+
+  createMeshes() {
+    this._hull = new Hull(this.hullDiameter);
+    this._mast = new Mast(this.mastDiameter, this.mastLength);
+    this._shield = new Shield(this.shieldMaxDiameter, this.shieldMinDiameter, this.shieldThickness);
+    this._lantern = new Lantern(this.lanternDiameter);
 
     this._hull
-      .attachMast(this._mast)
-      .attachShield(this._shield)
-      .attachLantern(this._lantern);
+      .attachMast(this.mast)
+      .attachShield(this.shield)
+      .attachLantern(this.lantern);
   }
 
   get hullDiameter(): number {

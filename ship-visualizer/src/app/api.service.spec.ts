@@ -42,7 +42,15 @@ describe('ApiService', () => {
 
     it('should return ship as expected', () => {
       service.getShip().subscribe({
-        next: ship => expect(ship).toEqual(expectedValue),
+        next: ship => {
+          expect(ship.hullDiameter).toEqual(expectedValue.hullDiameter);
+          expect(ship.mastLength).toEqual(expectedValue.mastLength);
+          expect(ship.mastDiameter).toEqual(expectedValue.mastDiameter);
+          expect(ship.shieldThickness).toEqual(expectedValue.shieldThickness);
+          expect(ship.shieldMaxDiameter).toEqual(expectedValue.shieldMaxDiameter);
+          expect(ship.shieldMinDiameter).toEqual(expectedValue.shieldMinDiameter);
+          expect(ship.lanternDiameter).toEqual(expectedValue.lanternDiameter);
+        },
         error: fail
       });
 

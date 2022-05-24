@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import {AxesHelper, Camera, Color, PerspectiveCamera, Scene, WebGLRenderer} from "three";
 import {ArcballControls} from "three/examples/jsm/controls/ArcballControls";
 import {Ship} from "../ship";
+import {ApiService} from "../api.service";
 
 @Component({
   selector: 'app-render',
@@ -29,27 +30,9 @@ export class RenderComponent implements OnInit, AfterViewInit {
 
     const axesHelper = new AxesHelper(5);
     this.scene.add(axesHelper);
-
-    const hullDiameter: number = 14.94895;
-    const mastLength: number = 28.20816;
-    const mastDiameter: number = mastLength / 50;
-    const shieldMaxDiameter: number = 2.02292;
-    const shieldMinDiameter: number = shieldMaxDiameter * 0.75;
-    const shieldLength: number = 2.64379;
-    const lanternDiameter: number = 10.95445;
-    const totalLength: number = hullDiameter + mastLength + shieldLength + lanternDiameter / 2;
-    this.ship = new Ship(
-      hullDiameter,
-      mastLength,
-      mastDiameter,
-      shieldLength,
-      shieldMaxDiameter,
-      shieldMinDiameter,
-      lanternDiameter
-    );
-
     this.scene.add(this.ship.shipMesh);
 
+    const totalLength: number = this.ship.hullDiameter + this.ship.mastLength + this.ship.shieldThickness + this.ship.lanternDiameter / 2;
     this.camera = new PerspectiveCamera(50, this.getAspectRatio());
     this.camera.position.set(totalLength * 2, 0, 0);
   }
@@ -74,13 +57,18 @@ export class RenderComponent implements OnInit, AfterViewInit {
     }());
   }
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit() {
-    this.createScene();
-    this.startRenderingLoop();
+    this.apiService.getShip().subscribe({
+      next: (ship: Ship) => {
+        this.ship = ship;
+        this.createScene();
+        this.startRenderingLoop();
+      }
+    });
   }
 }
