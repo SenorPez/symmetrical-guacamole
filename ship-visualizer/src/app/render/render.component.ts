@@ -46,7 +46,7 @@ export class RenderComponent implements OnInit, AfterViewInit {
 
   private createScene() {
     this.scene = new Scene();
-    this.scene.background = new Color(0x000000);
+    this.scene.background = new Color('black');
 
     const axesHelper = new AxesHelper(5);
     this.scene.add(axesHelper);
