@@ -1,0 +1,20 @@
+<form [formGroup]="hullSpacesForm">
+  <tr>
+    <td><mat-slider id="hullSpacesSlider" min="25" max="500" thumbLabel tickInterval="1" [formControl]="hullSpacesSlider" style="width: 400px"></mat-slider></td>
+    <td>
+      <mat-form-field style="width: 100px">
+        <mat-label>Hull Spaces</mat-label>
+        <input matInput type="number" id="hullSpacesInput" [formControl]="hullSpacesInput">
+        <mat-error *ngIf="hullSpacesInput.hasError('min') && !hullSpacesInput.hasError('required')">
+          Hull Spaces must be <strong>at least 25</strong>
+        </mat-error>
+        <mat-error *ngIf="hullSpacesInput.hasError('max') && !hullSpacesInput.hasError('required')">
+          Hull Spaces must be <strong>no more than 500</strong>
+        </mat-error>
+        <mat-error *ngIf="hullSpacesInput.hasError('required')">
+          Hull Spaces is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </td>
+  </tr>
+</form>
