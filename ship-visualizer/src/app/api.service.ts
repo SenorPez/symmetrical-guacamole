@@ -30,8 +30,8 @@ export class ApiService {
     return this.mapToShip(this.getApiShip());
   }
 
-  patchShip(hullSpaces: number): Observable<Ship> {
-    const response: Observable<ApiShip> = this.http.patch<ApiShip>(this.baseUrl, {hullSpaces: hullSpaces});
+  putHullSpaces(hullSpaces: number): Observable<Ship> {
+    const response: Observable<ApiShip> = this.http.put<ApiShip>(this.baseUrl + "hullSpaces/", {hullSpaces: hullSpaces})
     return this.mapToShip(response);
   }
 }

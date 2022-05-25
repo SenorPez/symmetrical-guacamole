@@ -28,7 +28,7 @@ describe('ShipEditorComponent', () => {
   let apiServiceSpy: SpyObj<ApiService>;
 
   beforeEach(async () => {
-    const spy = createSpyObj('ApiService', ['patchShip']);
+    const spy = createSpyObj('ApiService', ['putHullSpaces']);
 
     await TestBed.configureTestingModule({
       imports: [MatFormFieldModule, MatInputModule, MatSliderModule, ReactiveFormsModule, NoopAnimationsModule],
@@ -40,7 +40,7 @@ describe('ShipEditorComponent', () => {
     .compileComponents();
 
     apiServiceSpy = TestBed.inject(ApiService) as SpyObj<ApiService>;
-    apiServiceSpy.patchShip.and.returnValue(of(new Ship(10, 10, 10, 10, 10, 10, 10)));
+    apiServiceSpy.putHullSpaces.and.returnValue(of(new Ship(10, 10, 10, 10, 10, 10, 10)));
 
     fixture = TestBed.createComponent(ShipEditorComponent);
     fixture.detectChanges();
@@ -120,7 +120,7 @@ describe('ShipEditorComponent', () => {
       sliderElement?.setAttribute('style', 'width: 1000px');
 
       await slider.setValue(randomHullSize);
-      expect(apiServiceSpy.patchShip).toHaveBeenCalledOnceWith(randomHullSize);
+      expect(apiServiceSpy.putHullSpaces).toHaveBeenCalledOnceWith(randomHullSize);
     });
   });
 
@@ -191,9 +191,9 @@ describe('ShipEditorComponent', () => {
           inputs.push(Number(s.slice(0, i).join('')));
         }
 
-        expect(apiServiceSpy.patchShip).toHaveBeenCalledTimes(inputs.length);
+        expect(apiServiceSpy.putHullSpaces).toHaveBeenCalledTimes(inputs.length);
         inputs.forEach(value => {
-          expect(apiServiceSpy.patchShip).toHaveBeenCalledWith(value);
+          expect(apiServiceSpy.putHullSpaces).toHaveBeenCalledWith(value);
         });
       });
     });

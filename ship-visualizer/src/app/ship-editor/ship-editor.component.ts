@@ -32,7 +32,7 @@ export class ShipEditorComponent implements OnInit {
     this.hullSpacesSlider.valueChanges.subscribe(value => this.hullSpacesInput.setValue(value, {emitEvent: false}));
     this.hullSpacesForm.valueChanges.subscribe(value => {
       if (value.hullSpacesInput !== null) {
-        this.shipPatchEvent.emit(this.apiService.patchShip(value.hullSpacesInput));
+        this.shipPatchEvent.emit(this.apiService.putHullSpaces(value.hullSpacesInput));
       }
     });
   }
