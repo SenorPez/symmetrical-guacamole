@@ -20,16 +20,44 @@ class ShipControllerTest {
     @Client("/")
     HttpClient client;
 
+    final double tolerance = 1e-5;
+
     @Test
-    void getHullLength() {
-        HttpRequest<String> request = HttpRequest.GET("/ship/hullLength");
+    void getShip() {
+        HttpRequest<String> request = HttpRequest.GET("/ship");
         String response = client.toBlocking().retrieve(request);
 
+        double expectedValue;
         JsonPath jsonPath = new JsonPath(response);
-        double hullLength = jsonPath.getDouble("hullLength");
-        double expectedValue = 16.01118d;
-        final double tolerance = 1e-5;
 
-        assertEquals(expectedValue, hullLength, tolerance);
+        double hullDiameter = jsonPath.getDouble("hullDiameter");
+        expectedValue = 14.94895d;
+        assertEquals(expectedValue, hullDiameter, tolerance);
+
+        double mastLength = jsonPath.getDouble("mastLength");
+        expectedValue = 28.20816d;
+        assertEquals(expectedValue, mastLength, tolerance);
+
+        double mastDiameter = jsonPath.getDouble("mastDiameter");
+        expectedValue = 1.88054d;
+        assertEquals(expectedValue, mastDiameter, tolerance);
+
+        double shieldMaxDiameter = jsonPath.getDouble("shieldMaxDiameter");
+        expectedValue = 2.99936d;
+        assertEquals(expectedValue, shieldMaxDiameter, tolerance);
+
+        double shieldMinDiameter = jsonPath.getDouble("shieldMinDiameter");
+        expectedValue = 2.02292d;
+        assertEquals(expectedValue, shieldMinDiameter, tolerance);
+
+        double shieldThickness = jsonPath.getDouble("shieldThickness");
+        expectedValue = 2.64379d;
+        assertEquals(expectedValue, shieldThickness, tolerance);
+
+        double lanternDiameter = jsonPath.getDouble("lanternDiameter");
+        expectedValue = 10.95445d;
+        assertEquals(expectedValue, lanternDiameter, tolerance);
+
+        Integer t = 1;
     }
 }

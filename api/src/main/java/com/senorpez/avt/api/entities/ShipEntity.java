@@ -17,7 +17,7 @@ public class ShipEntity {
         this.mastLength = ship.mastLength;
 
         this.hullLength = ship.getHullLength();
-        this.mastDiameter = ship.mastLength / 10;
+        this.mastDiameter = ship.mastLength / 15;
         this.shieldDiameter = ship.getShieldDiameter(ship.mastLength);
         this.shieldWidth = ship.getShieldWidth(ship.mastLength);
         this.lanternDiameter = ship.getLanternDiameter();

@@ -1,6 +1,9 @@
 micronaut:
   application:
     name: api
+  server:
+    cors:
+      enabled: true
   session:
     http:
       cookie: true
