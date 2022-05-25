@@ -14,10 +14,10 @@ public class Ship {
     private int hullSpaces = 25;
     private double thrust = 0.5;
 
-    public double mastLength; // TODO: Setter, make private
+    private double mastLength;
 
-    int externalArmor; // TODO: Systems object
-    int internalArmor; // TODO: Systems object
+    public int externalArmor; // TODO: Systems object
+    public int internalArmor; // TODO: Systems object
     int mastArmor; // TODO: Systems object
     int lanternArmor; // TODO: Systems object
     int armorShrink; // TODO: Systems object
@@ -68,12 +68,12 @@ public class Ship {
         return this;
     }
 
-    Ship setHullShape(final HullShape hullShape) {
+    public Ship setHullShape(final HullShape hullShape) {
         this.hullShape = hullShape;
         return this;
     }
 
-    Ship setHullSpaces(final int hullSpaces) {
+    public Ship setHullSpaces(final int hullSpaces) {
         this.hullSpaces = hullSpaces;
         this.mass = hullSpaces * 25;
         return this;
@@ -166,7 +166,7 @@ public class Ship {
     }
 
     private double getDifference(final double mastLength) {
-        return 100000 * getFigureOfMerit(mastLength) - 1000000 * getFigureOfMerit(mastLength + 0.1);
+        return 1000000 * getFigureOfMerit(mastLength) - 1000000 * getFigureOfMerit(mastLength + 0.1);
     }
 
     private double getFigureOfMerit(final double mastLength) {
@@ -190,18 +190,12 @@ public class Ship {
         return getDriveMass(mastLength) / mass;
     }
 
-//    public double getHullLength(final double mastLength) {
-    public double getHullLength() {
+    double getHullLength() {
         return hullShape.getHullLength(hullSpaces, getArmorFraction());
-//        double usableFraction = 1 - getArmorFraction() - getDriveFraction(mastLength);
-//        return hullShape.getHullLength(hullSpaces, usableFraction);
     }
 
-//    double getHullDiameter(final double mastLength) {
-    double getHullDiameter() {
+    public double getHullDiameter() {
         return hullShape.getHullDiameter(hullSpaces, getArmorFraction());
-//        double usableFraction = 1 - getArmorFraction() - getDriveFraction(mastLength);
-//        return hullShape.getHullLength(hullSpaces, usableFraction);
     }
 
     double getArmorFraction() {
@@ -250,17 +244,50 @@ public class Ship {
     }
 
     double getShieldCrossSection(final double mastLength) {
-        return 0.25 * Math.PI * Math.pow(getShieldDiameter(mastLength), 2);
+        return 0.25 * Math.PI * Math.pow(getShieldMinDiameter(mastLength), 2);
     }
 
-    public double getShieldDiameter(final double mastLength) {
-        return hullShape.getShieldDiameter(hullSpaces,
+    double getShieldMinDiameter(final double mastLength) {
+        return hullShape.getShieldMinDiameter(hullSpaces,
                 getArmorFraction(),
                 getLanternDiameter(),
                 mastLength);
     }
 
-    public double getShieldWidth(final double mastLength) {
+    public double getShieldMinDiameter() {
+        return getShieldMinDiameter(mastLength);
+    }
+
+    double getShieldMaxDiameter(final double mastLength) {
+        return hullShape.getShieldMaxDiameter(hullSpaces,
+                getArmorFraction(),
+                getLanternDiameter(),
+                mastLength,
+                getShieldThickness(mastLength));
+    }
+
+    public double getShieldMaxDiameter() {
+        return getShieldMaxDiameter(mastLength);
+    }
+
+    double getShieldThickness(final double mastLength) {
         return getShieldMass(mastLength) / getShieldCrossSection(mastLength) * 0.5;
+    }
+
+    public double getShieldThickness() {
+        return getShieldThickness(mastLength);
+    }
+
+    public double getMastLength() {
+        return mastLength;
+    }
+
+    Ship setMastLength(final double mastLength) {
+        this.mastLength = mastLength;
+        return this;
+    }
+
+    public double getMastDiameter() {
+        return mastLength / 15;
     }
 }

@@ -1,6 +1,6 @@
 package com.senorpez.avt.shipdesigner;
 
-enum HullShape {
+public enum HullShape {
     SPHERE(1.25d, 1.5d) {
 //        @Override
 //        double getHullLength(final int hullSpaces, final double usableFraction) {
@@ -38,12 +38,22 @@ enum HullShape {
         }
 
         @Override
-        double getShieldDiameter(final int hullSpaces,
-                                 final double armorFraction,
-                                 final double lanternDiameter,
-                                 final double mastLength) {
+        double getShieldMinDiameter(final int hullSpaces,
+                                    final double armorFraction,
+                                    final double lanternDiameter,
+                                    final double mastLength) {
             final double hullLength = getHullLength(hullSpaces, armorFraction);
             return lanternDiameter * Math.tan(Math.asin((hullLength / 2) / (mastLength + ((lanternDiameter + hullLength) / 2))));
+        }
+
+        @Override
+        double getShieldMaxDiameter(final int hullSpaces,
+                                    final double armorFraction,
+                                    final double lanternDiameter,
+                                    final double mastLength,
+                                    final double shieldThickness) {
+            final double hullLength = getHullLength(hullSpaces, armorFraction);
+            return ((lanternDiameter / 2 + shieldThickness) * Math.tan(Math.asin((hullLength / 2) / (mastLength + ((lanternDiameter + hullLength) / 2)))) * 2);
         }
     };
 
@@ -78,8 +88,14 @@ enum HullShape {
                                        final double mastArmorMass,
                                        final double mastMass);
 
-    abstract double getShieldDiameter(final int hullSpaces,
-                                      final double usableFraction,
-                                      final double lanternDiameter,
-                                      final double mastLength);
+    abstract double getShieldMinDiameter(final int hullSpaces,
+                                         final double usableFraction,
+                                         final double lanternDiameter,
+                                         final double mastLength);
+
+    abstract double getShieldMaxDiameter(final int hullSpaces,
+                                         final double usableFraction,
+                                         final double lanternDiameter,
+                                         final double mastLength,
+                                         final double shieldThickness);
 }
