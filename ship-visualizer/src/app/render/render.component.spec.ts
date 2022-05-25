@@ -6,6 +6,10 @@ import SpyObj = jasmine.SpyObj;
 import {Ship} from "../ship";
 import { of } from 'rxjs';
 
+function getRandomInteger(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 describe('RenderComponent', () => {
   let component: RenderComponent;
   let fixture: ComponentFixture<RenderComponent>;
@@ -41,5 +45,20 @@ describe('RenderComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('canvas')?.width).toEqual(500);
     expect(compiled.querySelector('canvas')?.height).toEqual(500);
+  });
+
+  it('should update the ship on a patch', async () => {
+    const expectedValue: Ship = new Ship(
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101)
+    );
+
+    await component.updateShip(of(expectedValue));
+    expect(component.ship).toEqual(expectedValue);
   });
 });

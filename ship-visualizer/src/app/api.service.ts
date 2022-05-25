@@ -10,7 +10,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  baseUrl = 'assets/ship.json';
+  baseUrl = '/assets/ship.json';
 
   mapToShip = map((value: ApiShip) => new Ship(
     value.hullDiameter,

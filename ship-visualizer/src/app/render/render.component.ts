@@ -3,6 +3,7 @@ import {AxesHelper, Camera, Color, PerspectiveCamera, Scene, WebGLRenderer} from
 import {ArcballControls} from "three/examples/jsm/controls/ArcballControls";
 import {Ship} from "../ship";
 import {ApiService} from "../api.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-render',
@@ -18,7 +19,7 @@ export class RenderComponent implements OnInit, AfterViewInit {
   private controls!: ArcballControls;
   private renderer!: WebGLRenderer;
 
-  private ship!: Ship;
+  ship!: Ship;
 
   private get canvas(): HTMLCanvasElement {
     return this.renderRef.nativeElement;
@@ -70,5 +71,9 @@ export class RenderComponent implements OnInit, AfterViewInit {
         this.startRenderingLoop();
       }
     });
+  }
+
+  updateShip($event: Observable<Ship>) {
+    $event.subscribe(ship => this.ship = ship);
   }
 }
