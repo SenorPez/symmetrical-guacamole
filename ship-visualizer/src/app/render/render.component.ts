@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {AxesHelper, Camera, Color, PerspectiveCamera, Scene, WebGLRenderer} from "three";
+import {AxesHelper, Camera, Color, Mesh, PerspectiveCamera, Scene, WebGLRenderer} from "three";
 import {ArcballControls} from "three/examples/jsm/controls/ArcballControls";
 import {Ship} from "../ship";
 import {ApiService} from "../api.service";
@@ -20,6 +20,7 @@ export class RenderComponent implements OnInit, AfterViewInit {
   private renderer!: WebGLRenderer;
 
   ship!: Ship;
+  private shipMesh!: Mesh;
 
   private get canvas(): HTMLCanvasElement {
     return this.renderRef.nativeElement;
@@ -31,7 +32,9 @@ export class RenderComponent implements OnInit, AfterViewInit {
 
     const axesHelper = new AxesHelper(5);
     this.scene.add(axesHelper);
-    this.scene.add(this.ship.shipMesh);
+    this.shipMesh = this.ship.shipMesh;
+
+    this.scene.add(this.shipMesh);
 
     const totalLength: number = this.ship.hullDiameter + this.ship.mastLength + this.ship.shieldThickness + this.ship.lanternDiameter / 2;
     this.camera = new PerspectiveCamera(50, this.getAspectRatio());
@@ -74,6 +77,11 @@ export class RenderComponent implements OnInit, AfterViewInit {
   }
 
   updateShip($event: Observable<Ship>) {
-    $event.subscribe(ship => this.ship = ship);
+    $event.subscribe(ship => {
+      this.ship = ship;
+      this.scene.remove(this.shipMesh);
+      this.shipMesh = this.ship.shipMesh;
+      this.scene.add(this.shipMesh);
+    });
   }
 }

@@ -31,7 +31,7 @@ export class ApiService {
   }
 
   putHullSpaces(hullSpaces: number): Observable<Ship> {
-    const response: Observable<ApiShip> = this.http.put<ApiShip>(this.baseUrl + "hullSpaces/", {hullSpaces: hullSpaces})
+    const response: Observable<ApiShip> = this.http.put<ApiShip>(this.baseUrl + "hullSpaces/", {hullSpaces: hullSpaces});
     return this.mapToShip(response);
   }
 }
