@@ -11,6 +11,11 @@ import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {MatFormFieldHarness} from "@angular/material/form-field/testing";
+import SpyObj = jasmine.SpyObj;
+import {ApiService} from "../api.service";
+import createSpyObj = jasmine.createSpyObj;
+import {Ship} from "../ship";
+import {of} from "rxjs";
 
 function getRandomInteger(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -20,13 +25,23 @@ describe('ShipEditorComponent', () => {
   let component: ShipEditorComponent;
   let fixture: ComponentFixture<ShipEditorComponent>;
   let loader: HarnessLoader;
+  let apiServiceSpy: SpyObj<ApiService>;
 
   beforeEach(async () => {
+    const spy = createSpyObj('ApiService', ['patchShip']);
+
     await TestBed.configureTestingModule({
       imports: [MatFormFieldModule, MatInputModule, MatSliderModule, ReactiveFormsModule, NoopAnimationsModule],
-      declarations: [ ShipEditorComponent ]
+      declarations: [ ShipEditorComponent ],
+      providers: [
+        {provide: ApiService, useValue: spy}
+      ]
     })
     .compileComponents();
+
+    apiServiceSpy = TestBed.inject(ApiService) as SpyObj<ApiService>;
+    apiServiceSpy.patchShip.and.returnValue(of(new Ship(10, 10, 10, 10, 10, 10, 10)));
+
     fixture = TestBed.createComponent(ShipEditorComponent);
     fixture.detectChanges();
     component = fixture.componentInstance;
@@ -96,6 +111,17 @@ describe('ShipEditorComponent', () => {
       }
       expect(component.hullSpacesForm.value).toEqual(expectedValue);
     });
+
+    it('should call the API with a patch', async () => {
+      const randomHullSize = getRandomInteger(25, 501);
+
+      const appShipEditor: HTMLElement = fixture.nativeElement;
+      const sliderElement = appShipEditor.querySelector('#hullSpacesSlider');
+      sliderElement?.setAttribute('style', 'width: 1000px');
+
+      await slider.setValue(randomHullSize);
+      expect(apiServiceSpy.patchShip).toHaveBeenCalledOnceWith(randomHullSize);
+    });
   });
 
   describe('Hull Spaces form field', () => {
@@ -152,6 +178,23 @@ describe('ShipEditorComponent', () => {
           hullSpacesInput: randomHullSize
         }
         expect(component.hullSpacesForm.value).toEqual(expectedValue);
+      });
+
+      it('should call the API with a patch', async () => {
+        const randomHullSize = getRandomInteger(25, 501);
+        await input.setValue(String(randomHullSize));
+
+        // Create step-through as it simulates keyboard input.
+        const s = String(randomHullSize).split("");
+        const inputs: number[] = [];
+        for (let i = 1; i <= s.length; i++) {
+          inputs.push(Number(s.slice(0, i).join('')));
+        }
+
+        expect(apiServiceSpy.patchShip).toHaveBeenCalledTimes(inputs.length);
+        inputs.forEach(value => {
+          expect(apiServiceSpy.patchShip).toHaveBeenCalledWith(value);
+        });
       });
     });
   });
