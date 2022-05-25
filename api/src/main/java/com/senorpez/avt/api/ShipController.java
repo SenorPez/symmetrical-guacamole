@@ -1,5 +1,6 @@
 package com.senorpez.avt.api;
 
+import com.senorpez.avt.api.entities.ShipEntity;
 import com.senorpez.avt.api.models.ShipModel;
 import com.senorpez.avt.shipdesigner.Ship;
 import io.micronaut.http.HttpResponse;
@@ -19,7 +20,8 @@ public class ShipController {
                     session.put(ATTR_SHIP, newShip);
                     return newShip;
                 });
-        ShipModel shipModel = new ShipModel();
+        ShipEntity shipEntity = new ShipEntity(ship);
+        ShipModel shipModel = new ShipModel(shipEntity);
         return HttpResponse.ok(shipModel);
     }
 }

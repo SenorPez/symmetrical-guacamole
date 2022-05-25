@@ -19,14 +19,14 @@ public class ShipModel {
     @JsonProperty
     private final double lanternDiameter;
 
-    public ShipModel() {
-        this.hullDiameter = 14.94895d;
-        this.mastLength = 28.20816d;
-        this.mastDiameter = 1.88054d;
-        this.shieldMaxDiameter = 2.99936d;
-        this.shieldMinDiameter = 2.02292d;
-        this.shieldThickness = 2.64379d;
-        this.lanternDiameter = 10.95445d;
+    public ShipModel(ShipEntity entity) {
+        this.hullDiameter = entity.getHullDiameter();
+        this.mastLength = entity.getMastLength();
+        this.mastDiameter = entity.getMastDiameter();
+        this.shieldMaxDiameter = entity.getShieldMaxDiameter();
+        this.shieldMinDiameter = entity.getShieldMinDiameter();
+        this.shieldThickness = entity.getShieldThickness();
+        this.lanternDiameter = entity.getLanternDiameter();
     }
 
     double getHullDiameter() {
