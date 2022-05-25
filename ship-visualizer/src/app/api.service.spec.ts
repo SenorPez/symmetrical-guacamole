@@ -60,4 +60,36 @@ describe('ApiService', () => {
       req.flush(expectedValue);
     });
   });
+
+  describe('patchShip', () => {
+    const expectedValue: Ship = new Ship(
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101),
+      getRandomInteger(1, 101)
+    );
+
+    it('should return a ship after patch', () => {
+      service.patchShip(getRandomInteger(25, 501)).subscribe({
+        next: ship => {
+          expect(ship.hullDiameter).toEqual(expectedValue.hullDiameter);
+          expect(ship.mastLength).toEqual(expectedValue.mastLength);
+          expect(ship.mastDiameter).toEqual(expectedValue.mastDiameter);
+          expect(ship.shieldThickness).toEqual(expectedValue.shieldThickness);
+          expect(ship.shieldMaxDiameter).toEqual(expectedValue.shieldMaxDiameter);
+          expect(ship.shieldMinDiameter).toEqual(expectedValue.shieldMinDiameter);
+          expect(ship.lanternDiameter).toEqual(expectedValue.lanternDiameter);
+        },
+        error: fail
+      });
+
+      const req = httpTestingController.expectOne(service.baseUrl);
+      expect(req.request.method).toEqual('PATCH');
+
+      req.flush(expectedValue);
+    });
+  });
 });

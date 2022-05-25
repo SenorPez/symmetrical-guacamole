@@ -29,6 +29,11 @@ export class ApiService {
   getShip(): Observable<Ship> {
     return this.mapToShip(this.getApiShip());
   }
+
+  patchShip(hullSpaces: number): Observable<Ship> {
+    const response: Observable<ApiShip> = this.http.patch<ApiShip>(this.baseUrl, {hullSpaces: hullSpaces});
+    return this.mapToShip(response);
+  }
 }
 
 export interface ApiShip {
