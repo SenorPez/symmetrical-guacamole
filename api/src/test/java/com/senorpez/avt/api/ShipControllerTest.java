@@ -61,7 +61,7 @@ class ShipControllerTest {
 
     @Test
     void putShipData() {
-        HttpRequest<String> request = HttpRequest.PUT("/ship/shipData", "{\"hullSpaces\": 225, \"driveGeneration\": 3.4}");
+        HttpRequest<String> request = HttpRequest.PUT("/ship/shipData", "{\"hullSpaces\": 225, \"driveGeneration\": 3.4, \"thrust\": 6.0}");
         String response = client.toBlocking().retrieve(request);
 
         double expectedValue;
