@@ -18,19 +18,19 @@
     </td>
   </tr>
   <tr>
-    <td><mat-slider id="engineGenerationSlider" min="1" max="9" step="0.1" thumbLabel tickInterval="0.1" [formControl]="engineGenerationSlider" style="width: 400px"></mat-slider> </td>
+    <td><mat-slider id="driveGenerationSlider" min="1" max="9" step="0.1" thumbLabel tickInterval="0.1" [formControl]="driveGenerationSlider" style="width: 400px"></mat-slider> </td>
     <td>
-      <mat-form-field id="engineGenerationFormField" style="width: 100px">
-        <mat-label>Engine Generation</mat-label>
-        <input matInput type="number" id="engineGenerationInput" [formControl]="engineGenerationInput">
-        <mat-error *ngIf="engineGenerationInput.hasError('min') && !hullSpacesInput.hasError('required')">
-          Engine Generation must be <strong>at least 1.0</strong>
+      <mat-form-field id="driveGenerationFormField" style="width: 100px">
+        <mat-label>Drive Generation</mat-label>
+        <input matInput type="number" id="driveGenerationInput" [formControl]="driveGenerationInput">
+        <mat-error *ngIf="driveGenerationInput.hasError('min') && !hullSpacesInput.hasError('required')">
+          Drive Generation must be <strong>at least 1.0</strong>
         </mat-error>
-        <mat-error *ngIf="engineGenerationInput.hasError('max') && !hullSpacesInput.hasError('required')">
-          Engine Generation must be <strong>no more than 9.0</strong>
+        <mat-error *ngIf="driveGenerationInput.hasError('max') && !hullSpacesInput.hasError('required')">
+          Drive Generation must be <strong>no more than 9.0</strong>
         </mat-error>
-        <mat-error *ngIf="engineGenerationInput.hasError('required')">
-          Engine Generation is <strong>required</strong>
+        <mat-error *ngIf="driveGenerationInput.hasError('required')">
+          Drive Generation is <strong>required</strong>
         </mat-error>
       </mat-form-field>
     </td>

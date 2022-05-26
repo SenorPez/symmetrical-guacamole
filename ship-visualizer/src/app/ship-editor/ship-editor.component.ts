@@ -19,8 +19,8 @@ export class ShipEditorComponent implements OnInit {
     Validators.max(500)
   ]);
 
-  engineGenerationSlider: FormControl = new FormControl(1);
-  engineGenerationInput: FormControl = new FormControl(1, [
+  driveGenerationSlider: FormControl = new FormControl(1);
+  driveGenerationInput: FormControl = new FormControl(1, [
     Validators.required,
     Validators.min(1),
     Validators.max(9)
@@ -29,8 +29,8 @@ export class ShipEditorComponent implements OnInit {
   shipEditorForm: FormGroup = new FormGroup({
     hullSpacesSlider: this.hullSpacesSlider,
     hullSpacesInput: this.hullSpacesInput,
-    engineGenerationSlider: this.engineGenerationSlider,
-    engineGenerationInput: this.engineGenerationInput
+    driveGenerationSlider: this.driveGenerationSlider,
+    driveGenerationInput: this.driveGenerationInput
   });
 
   constructor(private apiService: ApiService) { }
@@ -39,23 +39,23 @@ export class ShipEditorComponent implements OnInit {
     this.hullSpacesSlider.valueChanges.subscribe(value => this.hullSpacesInput.setValue(value, {emitEvent: false}));
     this.hullSpacesInput.valueChanges.subscribe(value => this.hullSpacesSlider.setValue(value, {emitEvent: false}));
 
-    this.engineGenerationSlider.valueChanges.subscribe(value => this.engineGenerationInput.setValue(value, {emitEvent: false}));
-    this.engineGenerationInput.valueChanges.subscribe(value => this.engineGenerationSlider.setValue(value, {emitEvent: false}));
+    this.driveGenerationSlider.valueChanges.subscribe(value => this.driveGenerationInput.setValue(value, {emitEvent: false}));
+    this.driveGenerationInput.valueChanges.subscribe(value => this.driveGenerationSlider.setValue(value, {emitEvent: false}));
 
     this.shipEditorForm.valueChanges.subscribe(value => {
       if (this.shipEditorForm.valid) {
         let hullSpaces = undefined;
-        let engineGeneration = undefined;
+        let driveGeneration = undefined;
 
         if (value.hullSpacesInput !== null && value.hullSpacesInput === value.hullSpacesSlider) {
           hullSpaces = value.hullSpacesInput;
         }
-        if (value.engineGenerationInput !== null && value.engineGenerationInput === value.engineGenerationSlider) {
-          engineGeneration = value.engineGenerationInput;
+        if (value.driveGenerationInput !== null && value.driveGenerationInput === value.driveGenerationSlider) {
+          driveGeneration = value.driveGenerationInput;
         }
 
-        if (hullSpaces && this.engineGenerationInput) {
-          this.shipPatchEvent.emit(this.apiService.putShipData(hullSpaces, engineGeneration));
+        if (hullSpaces && this.driveGenerationInput) {
+          this.shipPatchEvent.emit(this.apiService.putShipData(hullSpaces, driveGeneration));
         }
       }
     });

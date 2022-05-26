@@ -47,11 +47,12 @@ public class ShipController {
         return HttpResponse.ok(shipModel);
     }
 
-    @Put(value = "/hullSpaces", consumes = MediaType.APPLICATION_JSON)
-    HttpResponse<ShipModel> putHullSpaces(Session session, @Body String json) throws JsonProcessingException {
+    @Put(value = "/shipData", consumes = MediaType.APPLICATION_JSON)
+    HttpResponse<ShipModel> putShipData(Session session, @Body String json) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readTree(json);
         JsonNode hullSpaces = root.get("hullSpaces");
+        JsonNode driveGeneration = root.get("driveGeneration");
 
         Ship ship = session.get(ATTR_SHIP, Ship.class)
                 .orElseGet(() -> {
@@ -60,6 +61,7 @@ public class ShipController {
                     return newShip;
                 });
         ship.setHullSpaces(hullSpaces.asInt()).build();
+        ship.setDriveGeneration(driveGeneration.asDouble()).build();
         ShipEntity shipEntity = new ShipEntity(ship);
         ShipModel shipModel = new ShipModel(shipEntity);
         return HttpResponse.ok(shipModel);

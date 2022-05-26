@@ -30,10 +30,10 @@ export class ApiService {
     return this.mapToShip(this.getApiShip());
   }
 
-  putShipData(hullSpaces: number, engineGeneration: number): Observable<Ship> {
+  putShipData(hullSpaces: number, driveGeneration: number): Observable<Ship> {
     const response: Observable<ApiShip> = this.http.put<ApiShip>(this.baseUrl + "shipData/", {
       hullSpaces: hullSpaces,
-      engineGeneration: engineGeneration
+      driveGeneration: driveGeneration
     });
     return this.mapToShip(response);
   }

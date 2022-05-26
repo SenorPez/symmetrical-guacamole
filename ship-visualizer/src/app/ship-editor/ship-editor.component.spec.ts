@@ -108,8 +108,8 @@ describe('ShipEditorComponent', () => {
       const expectedValue = {
         hullSpacesSlider: randomHullSize,
         hullSpacesInput: randomHullSize,
-        engineGenerationSlider: 1,
-        engineGenerationInput: 1,
+        driveGenerationSlider: 1,
+        driveGenerationInput: 1,
       }
       expect(component.shipEditorForm.value).toEqual(expectedValue);
     });
@@ -178,8 +178,8 @@ describe('ShipEditorComponent', () => {
         const expectedValue = {
           hullSpacesSlider: randomHullSize,
           hullSpacesInput: randomHullSize,
-          engineGenerationSlider: 1,
-          engineGenerationInput: 1
+          driveGenerationSlider: 1,
+          driveGenerationInput: 1
         }
         expect(component.shipEditorForm.value).toEqual(expectedValue);
       });
@@ -205,11 +205,11 @@ describe('ShipEditorComponent', () => {
     });
   });
 
-  describe('Engine Generation slider', async () => {
+  describe('Drive Generation slider', async () => {
     let slider: MatSliderHarness;
 
     beforeEach(async () => {
-      slider = await loader.getHarness(MatSliderHarness.with({selector: "#engineGenerationSlider"}));
+      slider = await loader.getHarness(MatSliderHarness.with({selector: "#driveGenerationSlider"}));
     })
 
     it('should have a default value of 1', async () => {
@@ -233,7 +233,7 @@ describe('ShipEditorComponent', () => {
 
       // Need to make the slider wider so that harness has a single pixel to 'click' on.
       const appShipEditor: HTMLElement = fixture.nativeElement;
-      const sliderElement = appShipEditor.querySelector('#engineGenerationSlider');
+      const sliderElement = appShipEditor.querySelector('#driveGenerationSlider');
       sliderElement?.setAttribute('style', 'width: 1000px');
 
       await slider.setValue(expectedValue);
@@ -241,59 +241,59 @@ describe('ShipEditorComponent', () => {
     });
 
     it('should update the input and form group', async () => {
-      const randomEngineGeneration = getRandomInteger(1, 10);
+      const randomDriveGeneration = getRandomInteger(1, 10);
 
       const appShipEditor: HTMLElement = fixture.nativeElement;
-      const sliderElement = appShipEditor.querySelector('#engineGenerationSlider');
+      const sliderElement = appShipEditor.querySelector('#driveGenerationSlider');
       sliderElement?.setAttribute('style', 'width: 1000px');
 
-      await slider.setValue(randomEngineGeneration);
+      await slider.setValue(randomDriveGeneration);
       const expectedValue = {
         hullSpacesSlider: 25,
         hullSpacesInput: 25,
-        engineGenerationSlider: randomEngineGeneration,
-        engineGenerationInput: randomEngineGeneration,
+        driveGenerationSlider: randomDriveGeneration,
+        driveGenerationInput: randomDriveGeneration,
       }
       expect(component.shipEditorForm.value).toEqual(expectedValue);
     });
 
     it('should call the API with a patch', async () => {
-      const randomEngineGeneration = getRandomInteger(1, 10);
+      const randomDriveGeneration = getRandomInteger(1, 10);
 
       const appShipEditor: HTMLElement = fixture.nativeElement;
-      const sliderElement = appShipEditor.querySelector('#engineGenerationSlider');
+      const sliderElement = appShipEditor.querySelector('#driveGenerationSlider');
       sliderElement?.setAttribute('style', 'width: 1000px');
 
-      await slider.setValue(randomEngineGeneration);
-      expect(apiServiceSpy.putShipData).toHaveBeenCalledOnceWith(25, randomEngineGeneration);
+      await slider.setValue(randomDriveGeneration);
+      expect(apiServiceSpy.putShipData).toHaveBeenCalledOnceWith(25, randomDriveGeneration);
     });
   });
 
-  describe('Engine Generation form field', () => {
+  describe('Drive Generation form field', () => {
     let formField: MatFormFieldHarness;
     let input: MatInputHarness;
 
     beforeEach(async () => {
-      formField = await loader.getHarness(MatFormFieldHarness.with({selector: "#engineGenerationFormField"}));
+      formField = await loader.getHarness(MatFormFieldHarness.with({selector: "#driveGenerationFormField"}));
       input = await formField.getControl() as MatInputHarness;
     });
 
     it('should display a required error if blank', async () => {
       await input.setValue('');
       await input.blur();
-      expect(await formField.getTextErrors()).toEqual(['Engine Generation is required']);
+      expect(await formField.getTextErrors()).toEqual(['Drive Generation is required']);
     });
 
     it('should display a min value error if too low', async () => {
       await input.setValue('0');
       await input.blur();
-      expect(await formField.getTextErrors()).toEqual(['Engine Generation must be at least 1.0']);
+      expect(await formField.getTextErrors()).toEqual(['Drive Generation must be at least 1.0']);
     });
 
     it('should display a max value error if too low', async () => {
       await input.setValue('10');
       await input.blur();
-      expect(await formField.getTextErrors()).toEqual(['Engine Generation must be no more than 9.0']);
+      expect(await formField.getTextErrors()).toEqual(['Drive Generation must be no more than 9.0']);
     });
 
     describe('Hull Spaces input', () => {
@@ -316,23 +316,23 @@ describe('ShipEditorComponent', () => {
       });
 
       it('should update the slider and form group', async () => {
-        const randomEngineGeneration = getRandomInteger(1, 10);
-        await input.setValue(String(randomEngineGeneration));
+        const randomDriveGeneration = getRandomInteger(1, 10);
+        await input.setValue(String(randomDriveGeneration));
         const expectedValue = {
           hullSpacesSlider: 25,
           hullSpacesInput: 25,
-          engineGenerationSlider: randomEngineGeneration,
-          engineGenerationInput: randomEngineGeneration
+          driveGenerationSlider: randomDriveGeneration,
+          driveGenerationInput: randomDriveGeneration
         }
         expect(component.shipEditorForm.value).toEqual(expectedValue);
       });
 
       it('should call the API with a patch', async () => {
-        const randomEngineGeneration = getRandomInteger(1, 10);
-        await input.setValue(String(randomEngineGeneration));
+        const randomDriveGeneration = getRandomInteger(1, 10);
+        await input.setValue(String(randomDriveGeneration));
 
         // Create step-through as it simulates keyboard input.
-        const s = String(randomEngineGeneration).split("");
+        const s = String(randomDriveGeneration).split("");
         const inputs: number[] = [];
         for (let i = 1; i <= s.length; i++) {
           if (Number(s.slice(0, i).join('')) >= 1) {
