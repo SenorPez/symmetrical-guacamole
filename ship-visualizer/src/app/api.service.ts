@@ -30,8 +30,11 @@ export class ApiService {
     return this.mapToShip(this.getApiShip());
   }
 
-  putHullSpaces(hullSpaces: number): Observable<Ship> {
-    const response: Observable<ApiShip> = this.http.put<ApiShip>(this.baseUrl + "hullSpaces/", {hullSpaces: hullSpaces});
+  putShipData(hullSpaces: number, engineGeneration: number): Observable<Ship> {
+    const response: Observable<ApiShip> = this.http.put<ApiShip>(this.baseUrl + "shipData/", {
+      hullSpaces: hullSpaces,
+      engineGeneration: engineGeneration
+    });
     return this.mapToShip(response);
   }
 }

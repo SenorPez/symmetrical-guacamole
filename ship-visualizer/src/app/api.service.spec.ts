@@ -61,7 +61,7 @@ describe('ApiService', () => {
     });
   });
 
-  describe('putHullSpaces', () => {
+  describe('putShipData', () => {
     const expectedValue: Ship = new Ship(
       getRandomInteger(1, 101),
       getRandomInteger(1, 101),
@@ -72,8 +72,8 @@ describe('ApiService', () => {
       getRandomInteger(1, 101)
     );
 
-    it('should return a ship after putting hull spaces', () => {
-      service.putHullSpaces(getRandomInteger(25, 501)).subscribe({
+    it('should return a ship after putting ship data', () => {
+      service.putShipData(getRandomInteger(25, 501), getRandomInteger(1, 9)).subscribe({
         next: ship => {
           expect(ship.hullDiameter).toEqual(expectedValue.hullDiameter);
           expect(ship.mastLength).toEqual(expectedValue.mastLength);
@@ -86,7 +86,7 @@ describe('ApiService', () => {
         error: fail
       });
 
-      const req = httpTestingController.expectOne(service.baseUrl + 'hullSpaces/');
+      const req = httpTestingController.expectOne(service.baseUrl + 'shipData/');
       expect(req.request.method).toEqual('PUT');
 
       req.flush(expectedValue);
