@@ -122,7 +122,7 @@ describe('ShipEditorComponent', () => {
       sliderElement?.setAttribute('style', 'width: 1000px');
 
       await slider.setValue(randomHullSize);
-      expect(apiServiceSpy.putShipData).toHaveBeenCalledOnceWith(randomHullSize, 1);
+      expect(apiServiceSpy.putShipData).toHaveBeenCalledOnceWith(randomHullSize, 1, 0.5);
     });
   });
 
@@ -199,7 +199,7 @@ describe('ShipEditorComponent', () => {
 
         expect(apiServiceSpy.putShipData).toHaveBeenCalledTimes(inputs.length);
         inputs.forEach(value => {
-          expect(apiServiceSpy.putShipData).toHaveBeenCalledWith(value, 1);
+          expect(apiServiceSpy.putShipData).toHaveBeenCalledWith(value, 1, 0.5);
         });
       });
     });
@@ -265,7 +265,7 @@ describe('ShipEditorComponent', () => {
       sliderElement?.setAttribute('style', 'width: 1000px');
 
       await slider.setValue(randomDriveGeneration);
-      expect(apiServiceSpy.putShipData).toHaveBeenCalledOnceWith(25, randomDriveGeneration);
+      expect(apiServiceSpy.putShipData).toHaveBeenCalledOnceWith(25, randomDriveGeneration, 0.5);
     });
   });
 
@@ -342,7 +342,7 @@ describe('ShipEditorComponent', () => {
 
         expect(apiServiceSpy.putShipData).toHaveBeenCalledTimes(inputs.length);
         inputs.forEach(value => {
-          expect(apiServiceSpy.putShipData).toHaveBeenCalledWith(25, value);
+          expect(apiServiceSpy.putShipData).toHaveBeenCalledWith(25, value, 0.5);
         });
       });
     });

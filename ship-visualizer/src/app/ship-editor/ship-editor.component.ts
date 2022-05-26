@@ -55,7 +55,7 @@ export class ShipEditorComponent implements OnInit {
         }
 
         if (hullSpaces && this.driveGenerationInput) {
-          this.shipPatchEvent.emit(this.apiService.putShipData(hullSpaces, driveGeneration));
+          this.shipPatchEvent.emit(this.apiService.putShipData(hullSpaces, driveGeneration, 0.5));
         }
       }
     });

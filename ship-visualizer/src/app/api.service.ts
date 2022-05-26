@@ -12,7 +12,7 @@ export class ApiService {
 
   baseUrl = 'http://localhost:8080/ship/';
 
-  mapToShip = map((value: ApiShip) => new Ship(
+  mapToShip = map((value: ShipModel) => new Ship(
     value.hullDiameter,
     value.mastLength,
     value.mastDiameter,
@@ -22,24 +22,25 @@ export class ApiService {
     value.lanternDiameter)
   );
 
-  private getApiShip(): Observable<ApiShip> {
-    return this.http.get<ApiShip>(this.baseUrl);
+  private getApiShip(): Observable<ShipModel> {
+    return this.http.get<ShipModel>(this.baseUrl);
   }
 
   getShip(): Observable<Ship> {
     return this.mapToShip(this.getApiShip());
   }
 
-  putShipData(hullSpaces: number, driveGeneration: number): Observable<Ship> {
-    const response: Observable<ApiShip> = this.http.put<ApiShip>(this.baseUrl + "shipData/", {
+  putShipData(hullSpaces: number, driveGeneration: number, thrust: number): Observable<Ship> {
+    const response: Observable<ShipModel> = this.http.put<ShipModel>(this.baseUrl + "shipData/", {
       hullSpaces: hullSpaces,
-      driveGeneration: driveGeneration
+      driveGeneration: driveGeneration,
+      thrust: thrust
     });
     return this.mapToShip(response);
   }
 }
 
-export interface ApiShip {
+export interface ShipModel {
   "hullDiameter": number,
   "mastLength": number,
   "mastDiameter": number,

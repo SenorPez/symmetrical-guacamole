@@ -73,7 +73,7 @@ describe('ApiService', () => {
     );
 
     it('should return a ship after putting ship data', () => {
-      service.putShipData(getRandomInteger(25, 501), getRandomInteger(1, 9)).subscribe({
+      service.putShipData(getRandomInteger(25, 501), getRandomInteger(1, 9), getRandomInteger(1, 32) * 0.5).subscribe({
         next: ship => {
           expect(ship.hullDiameter).toEqual(expectedValue.hullDiameter);
           expect(ship.mastLength).toEqual(expectedValue.mastLength);
