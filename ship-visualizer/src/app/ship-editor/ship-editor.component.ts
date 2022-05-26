@@ -26,11 +26,20 @@ export class ShipEditorComponent implements OnInit {
     Validators.max(9)
   ]);
 
+  thrustSlider: FormControl = new FormControl(0.5);
+  thrustInput: FormControl = new FormControl(0.5, [
+    Validators.required,
+    Validators.min(0.5),
+    Validators.max(16.0)
+  ]);
+
   shipEditorForm: FormGroup = new FormGroup({
     hullSpacesSlider: this.hullSpacesSlider,
     hullSpacesInput: this.hullSpacesInput,
     driveGenerationSlider: this.driveGenerationSlider,
-    driveGenerationInput: this.driveGenerationInput
+    driveGenerationInput: this.driveGenerationInput,
+    thrustSlider: this.thrustSlider,
+    thrustInput: this.thrustInput
   });
 
   constructor(private apiService: ApiService) { }
@@ -42,10 +51,14 @@ export class ShipEditorComponent implements OnInit {
     this.driveGenerationSlider.valueChanges.subscribe(value => this.driveGenerationInput.setValue(value, {emitEvent: false}));
     this.driveGenerationInput.valueChanges.subscribe(value => this.driveGenerationSlider.setValue(value, {emitEvent: false}));
 
+    this.thrustSlider.valueChanges.subscribe(value => this.thrustInput.setValue(value, {emitEvent: false}));
+    this.thrustInput.valueChanges.subscribe(value => this.thrustSlider.setValue(value, {emitEvent: false}));
+
     this.shipEditorForm.valueChanges.subscribe(value => {
       if (this.shipEditorForm.valid) {
         let hullSpaces = undefined;
         let driveGeneration = undefined;
+        let thrust = undefined;
 
         if (value.hullSpacesInput !== null && value.hullSpacesInput === value.hullSpacesSlider) {
           hullSpaces = value.hullSpacesInput;
@@ -53,9 +66,12 @@ export class ShipEditorComponent implements OnInit {
         if (value.driveGenerationInput !== null && value.driveGenerationInput === value.driveGenerationSlider) {
           driveGeneration = value.driveGenerationInput;
         }
+        if (value.thrustInput !== null && value.thrustInput === value.thrustSlider) {
+          thrust = value.thrustInput;
+        }
 
-        if (hullSpaces && this.driveGenerationInput) {
-          this.shipPatchEvent.emit(this.apiService.putShipData(hullSpaces, driveGeneration, 0.5));
+        if (hullSpaces && driveGeneration && thrust) {
+          this.shipPatchEvent.emit(this.apiService.putShipData(hullSpaces, driveGeneration, thrust));
         }
       }
     });

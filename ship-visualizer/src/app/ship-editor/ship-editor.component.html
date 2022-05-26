@@ -35,4 +35,22 @@
       </mat-form-field>
     </td>
   </tr>
+  <tr>
+    <td><mat-slider id="thrustSlider" min="0.5" max="16" step="0.5" thumbLabel tickInterval="0.5" [formControl]="thrustSlider" style="width: 400px"></mat-slider> </td>
+    <td>
+      <mat-form-field id="thrustFormField" style="width: 100px">
+        <mat-label>Thrust</mat-label>
+        <input matInput type="number" id="thrustInput" [formControl]="thrustInput">
+        <mat-error *ngIf="thrustInput.hasError('min') && !thrustInput.hasError('required')">
+          Thrust must be <strong>at least 0.5</strong>
+        </mat-error>
+        <mat-error *ngIf="thrustInput.hasError('max') && !thrustInput.hasError('required')">
+          Thrust must be <strong>no more than 16.0</strong>
+        </mat-error>
+        <mat-error *ngIf="thrustInput.hasError('required')">
+          Thrust is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </td>
+  </tr>
 </form>

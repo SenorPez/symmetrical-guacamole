@@ -54,12 +54,12 @@ describe('ShipEditorComponent', () => {
 
   it('should load all slider harnesses', async () => {
     const sliders = await loader.getAllHarnesses(MatSliderHarness);
-    expect(sliders.length).toBe(2);
+    expect(sliders.length).toBe(3);
   });
 
   it('should load all form field harnesses', async () => {
     const inputs = await loader.getAllHarnesses(MatFormFieldHarness);
-    expect(inputs.length).toBe(2);
+    expect(inputs.length).toBe(3);
   });
 
   describe('Hull Spaces slider', async () => {
@@ -110,6 +110,8 @@ describe('ShipEditorComponent', () => {
         hullSpacesInput: randomHullSize,
         driveGenerationSlider: 1,
         driveGenerationInput: 1,
+        thrustSlider: 0.5,
+        thrustInput: 0.5
       }
       expect(component.shipEditorForm.value).toEqual(expectedValue);
     });
@@ -179,7 +181,9 @@ describe('ShipEditorComponent', () => {
           hullSpacesSlider: randomHullSize,
           hullSpacesInput: randomHullSize,
           driveGenerationSlider: 1,
-          driveGenerationInput: 1
+          driveGenerationInput: 1,
+          thrustSlider: 0.5,
+          thrustInput: 0.5
         }
         expect(component.shipEditorForm.value).toEqual(expectedValue);
       });
@@ -253,6 +257,8 @@ describe('ShipEditorComponent', () => {
         hullSpacesInput: 25,
         driveGenerationSlider: randomDriveGeneration,
         driveGenerationInput: randomDriveGeneration,
+        thrustSlider: 0.5,
+        thrustInput: 0.5
       }
       expect(component.shipEditorForm.value).toEqual(expectedValue);
     });
@@ -296,7 +302,7 @@ describe('ShipEditorComponent', () => {
       expect(await formField.getTextErrors()).toEqual(['Drive Generation must be no more than 9.0']);
     });
 
-    describe('Hull Spaces input', () => {
+    describe('Drive Generation input', () => {
       it('should have a default value of 1', async () => {
         expect(await input.getValue()).toBe('1');
       });
@@ -322,7 +328,9 @@ describe('ShipEditorComponent', () => {
           hullSpacesSlider: 25,
           hullSpacesInput: 25,
           driveGenerationSlider: randomDriveGeneration,
-          driveGenerationInput: randomDriveGeneration
+          driveGenerationInput: randomDriveGeneration,
+          thrustSlider: 0.5,
+          thrustInput: 0.5
         }
         expect(component.shipEditorForm.value).toEqual(expectedValue);
       });
@@ -343,6 +351,158 @@ describe('ShipEditorComponent', () => {
         expect(apiServiceSpy.putShipData).toHaveBeenCalledTimes(inputs.length);
         inputs.forEach(value => {
           expect(apiServiceSpy.putShipData).toHaveBeenCalledWith(25, value, 0.5);
+        });
+      });
+    });
+  });
+
+  describe('Thrust slider', async () => {
+    let slider: MatSliderHarness;
+
+    beforeEach(async () => {
+      slider = await loader.getHarness(MatSliderHarness.with({selector: "#thrustSlider"}));
+    })
+
+    it('should have a default value of 0.5', async () => {
+      expect(await slider.getValue()).toBe(0.5);
+    });
+
+    it('should get min value of slider', async () => {
+      expect(await slider.getMinValue()).toBe(0.5);
+    });
+
+    it('should get max value of slider', async () => {
+      expect(await slider.getMaxValue()).toBe(16.0);
+    });
+
+    it('should have a thumb label', async () => {
+      expect(await slider.getDisplayValue()).not.toBeNull();
+    });
+
+    it('should be able to set the value', async () => {
+      const expectedValue = getRandomInteger(1, 33) * 0.5;
+
+      // Need to make the slider wider so that harness has a single pixel to 'click' on.
+      const appShipEditor: HTMLElement = fixture.nativeElement;
+      const sliderElement = appShipEditor.querySelector('#thrustSlider');
+      sliderElement?.setAttribute('style', 'width: 1000px');
+
+      await slider.setValue(expectedValue);
+      expect(await slider.getValue()).toBe(expectedValue);
+    });
+
+    it('should update the input and form group', async () => {
+      const randomThrust = getRandomInteger(1, 33) * 0.5;
+
+      const appShipEditor: HTMLElement = fixture.nativeElement;
+      const sliderElement = appShipEditor.querySelector('#thrustSlider');
+      sliderElement?.setAttribute('style', 'width: 1000px');
+
+      await slider.setValue(randomThrust);
+      const expectedValue = {
+        hullSpacesSlider: 25,
+        hullSpacesInput: 25,
+        driveGenerationSlider: 1,
+        driveGenerationInput: 1,
+        thrustSlider: randomThrust,
+        thrustInput: randomThrust
+      }
+      expect(component.shipEditorForm.value).toEqual(expectedValue);
+    });
+
+    it('should call the API with a patch', async () => {
+      const randomThrust = getRandomInteger(1, 33) * 0.5;
+
+      const appShipEditor: HTMLElement = fixture.nativeElement;
+      const sliderElement = appShipEditor.querySelector('#thrustSlider');
+      sliderElement?.setAttribute('style', 'width: 1000px');
+
+      await slider.setValue(randomThrust);
+      expect(apiServiceSpy.putShipData).toHaveBeenCalledOnceWith(25, 1, randomThrust);
+    });
+  });
+
+  describe('Thrust form field', () => {
+    let formField: MatFormFieldHarness;
+    let input: MatInputHarness;
+
+    beforeEach(async () => {
+      formField = await loader.getHarness(MatFormFieldHarness.with({selector: "#thrustFormField"}));
+      input = await formField.getControl() as MatInputHarness;
+    });
+
+    it('should display a required error if blank', async () => {
+      await input.setValue('');
+      await input.blur();
+      expect(await formField.getTextErrors()).toEqual(['Thrust is required']);
+    });
+
+    it('should display a min value error if too low', async () => {
+      await input.setValue('0');
+      await input.blur();
+      expect(await formField.getTextErrors()).toEqual(['Thrust must be at least 0.5']);
+    });
+
+    it('should display a max value error if too low', async () => {
+      await input.setValue('20');
+      await input.blur();
+      expect(await formField.getTextErrors()).toEqual(['Thrust must be no more than 16.0']);
+    });
+
+    describe('Thrust input', () => {
+      it('should have a default value of 0.5', async () => {
+        expect(await input.getValue()).toBe('0.5');
+      });
+
+      it('should have a number type of input', async () => {
+        expect(await input.getType()).toBe('number');
+      });
+
+      it('should be able to set the value', async () => {
+        const expectedValue = String(getRandomInteger(1, 33) * 0.5);
+        await input.setValue(expectedValue);
+        expect(await input.getValue()).toBe(expectedValue)
+      });
+
+      it('should be required', async () => {
+        expect(await input.isRequired()).toBeTrue();
+      });
+
+      it('should update the slider and form group', async () => {
+        const randomThrust = getRandomInteger(1, 33) * 0.5;
+        await input.setValue(String(randomThrust));
+        const expectedValue = {
+          hullSpacesSlider: 25,
+          hullSpacesInput: 25,
+          driveGenerationSlider: 1,
+          driveGenerationInput: 1,
+          thrustSlider: randomThrust,
+          thrustInput: randomThrust
+        }
+        expect(component.shipEditorForm.value).toEqual(expectedValue);
+      });
+
+      it('should call the API with a patch', async () => {
+        // const randomThrust = getRandomInteger(1, 33) * 0.5;
+        const randomThrust = 13.5;
+        await input.setValue(String(randomThrust));
+        const inputs: number[] = [];
+
+        if (Number.isInteger(randomThrust)) {
+          // Create step-through as it simulates keyboard input (for integers)
+          const s = String(randomThrust).split("");
+          for (let i = 1; i <= s.length; i++) {
+            if (Number(s.slice(0, i).join('')) >= 0.5) {
+              inputs.push(Number(s.slice(0, i).join('')));
+            }
+          }
+        } else {
+          inputs.push(randomThrust);
+        }
+
+        expect(apiServiceSpy.putShipData).toHaveBeenCalledTimes(inputs.length);
+        inputs.forEach(value => {
+          expect(apiServiceSpy.putShipData).toHaveBeenCalledWith(25, 1, value);
         });
       });
     });
