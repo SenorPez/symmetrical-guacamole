@@ -51,8 +51,51 @@ public class Ship {
         valid = valid && thrustValidation.valid();
         validationErrors.addAll(thrustValidation.validationErrors());
 
+
         mastLength = calculateMastLength();
         return this;
+    }
+
+    public static void main(String[] args) {
+        Ship ship = new Ship()
+                .setHullShape(HullShape.SPHERE)
+                .setHullSpaces(25)
+                .setDriveGeneration(3.4)
+                .setThrust(6);
+//        ship.internalArmor = 4;
+        ship.build();
+
+        double lanternDiameter = ship.getLanternDiameter();
+
+        // Initial calculation results, using typical drive fraction.
+        double mastLength = ship.getMastLength();
+        double shieldDiameter = ship.getShieldMinDiameter();
+        double driveFraction = ship.getDriveFraction(mastLength);
+
+        // Actual results
+        double hullDiameterActual = HullShape.SPHERE.getHullLength(25, ship.getArmorFraction(), driveFraction);
+
+        double tanY = shieldDiameter / lanternDiameter;
+        double atanY = Math.atan(tanY);
+        double sinY = (ship.getHullDiameter() / 2) / (mastLength + ((lanternDiameter + ship.getHullDiameter()) / 2));
+        double asinY = Math.asin(sinY);
+
+        // Given the same mast length, what's the new shield minimum diameter?
+        double minShieldDiameter = lanternDiameter * Math.tan(Math.asin((hullDiameterActual / 2) / (mastLength + ((lanternDiameter + hullDiameterActual) / 2))));
+        // What's the difference?
+        double shieldDifference = shieldDiameter - minShieldDiameter;
+
+        // Given the same shield minimum diameter, what's the new mast length?
+        double angle = Math.atan(shieldDiameter / lanternDiameter);
+        double distance = (hullDiameterActual / 2) / Math.sin(angle);
+        double minMastLength = distance - hullDiameterActual / 2 - lanternDiameter / 2;
+        // What's the difference?
+        double mastDifference = mastLength - minMastLength;
+
+
+
+
+        System.out.printf("Shield Difference: %3.6f\nMast Difference: %3.6f\n", shieldDifference, mastDifference);
     }
 
     boolean isValid() {
@@ -97,6 +140,10 @@ public class Ship {
         return getMastMass(mastLength) + getLanternMass();
     }
 
+    double getDriveMass(final double mastLength, final double usableFraction) {
+        return getMastMass(mastLength, usableFraction) + getLanternMass();
+    }
+
     double getLanternMass() {
         return getLanternStructureMass() + getLanternArmorMass();
     }
@@ -132,36 +179,60 @@ public class Ship {
         return getMastStructureMass(mastLength) + getMastArmorMass(mastLength) + getShieldMass(mastLength);
     }
 
+    double getMastMass(final double mastLength, final double usableFraction) {
+        return getMastStructureMass(mastLength) + getMastArmorMass(mastLength) + getShieldMass(mastLength, usableFraction);
+    }
+
     double getMastStructureMass(final double mastLength) {
         return mass * acceleration / 70000 * 7.8 * mastLength * getMastMassModifier();
     }
 
-    double calculateMastLength() {
-        double mastLength;
-        if (hullSpaces < 100) mastLength = 25d;
-        else if (hullSpaces < 400) mastLength = 50d;
-        else if (hullSpaces < 1000) mastLength = 75d;
-        else mastLength = 100d;
-        double diff = getDifference(mastLength);
+    double calculateDriveMass(final double mastLength) {
+        double driveFraction = 0d;
+        double actualDriveFraction = 0.14d;
+        double driveMass = 0d;
+        final double armorFraction = getArmorFraction();
 
-        double step = 1;
-        final double target = 0.001d;
-        while (Math.abs(diff) > target) {
-            if (diff > 0) {
-                step *= -1;
-                while (diff > 0 && Math.abs(diff) > target) {
-                    mastLength += step;
-                    diff = getDifference(mastLength);
-                }
-                step *= -1;
-            } else {
-                while (diff < 0 && Math.abs(diff) > target) {
-                    mastLength += step;
-                    diff = getDifference(mastLength);
-                }
-            }
-            step /= 10;
+        while (Math.abs(driveFraction - actualDriveFraction) > 1e-8) {
+            driveFraction = actualDriveFraction;
+            final double usableHullFraction = 1 - driveFraction - armorFraction;
+            driveMass = getDriveMass(mastLength, usableHullFraction);
+            actualDriveFraction = driveMass / this.mass;
+            System.out.println(driveMass);
         }
+
+        return driveMass;
+    }
+
+    double calculateMastLength() {
+        double mastLength = 29.87323224d;
+        double driveMass = calculateDriveMass(mastLength);
+//        double mastLength;
+//        if (hullSpaces < 100) mastLength = 25d;
+//        else if (hullSpaces < 400) mastLength = 50d;
+//        else if (hullSpaces < 1000) mastLength = 75d;
+//        else mastLength = 100d;
+//        double diff = getDifference(mastLength);
+//
+//        double step = 1;
+//        final double target = 0.001d;
+//        while (Math.abs(diff) > target) {
+//            if (diff > 0) {
+//                step *= -1;
+//                while (diff > 0 && Math.abs(diff) > target) {
+//                    mastLength += step;
+//                    diff = getDifference(mastLength);
+//                }
+//                step *= -1;
+//            } else {
+//                while (diff < 0 && Math.abs(diff) > target) {
+//                    mastLength += step;
+//                    diff = getDifference(mastLength);
+//                }
+//            }
+//            step /= 10;
+//        }
+//        return mastLength;
         return mastLength;
     }
 
@@ -234,6 +305,10 @@ public class Ship {
         return (RAD_REDUCTION * (Math.log10(getNeutronFluxAtShield()) + 6) - Math.log10(getRadReductionDueToMast(mastLength))) * getShieldCrossSection(mastLength);
     }
 
+    double getShieldMass(final double mastLength, final double usableFraction) {
+        return (RAD_REDUCTION * (Math.log10(getNeutronFluxAtShield()) + 6) - Math.log10(getRadReductionDueToMast(mastLength))) * getShieldCrossSection(mastLength, usableFraction);
+    }
+
     double getNeutronFluxAtShield() {
         final double flux_kr_per_hour = (getDriveOutput() * 500000) / Math.pow(getLanternDiameter() / 2, 2);
         return flux_kr_per_hour * 24 * 365.25 / 1000;
@@ -247,6 +322,10 @@ public class Ship {
         return 0.25 * Math.PI * Math.pow(getShieldMinDiameter(mastLength), 2);
     }
 
+    double getShieldCrossSection(final double mastLength, final double usableFraction) {
+        return 0.25 * Math.PI * Math.pow(getShieldMinDiameter(mastLength, usableFraction), 2);
+    }
+
     double getShieldMinDiameter(final double mastLength) {
         return hullShape.getShieldMinDiameter(hullSpaces,
                 getArmorFraction(),
@@ -254,8 +333,15 @@ public class Ship {
                 mastLength);
     }
 
+    double getShieldMinDiameter(final double mastLength, final double usableFraction) {
+        return hullShape.getShieldMinDiameter(hullSpaces,
+                usableFraction,
+                getLanternDiameter(),
+                mastLength);
+    }
+
     public double getShieldMinDiameter() {
-        return getShieldMinDiameter(mastLength);
+        return getShieldMinDiameter(mastLength, 0.15d);
     }
 
     double getShieldMaxDiameter(final double mastLength) {

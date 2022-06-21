@@ -9,9 +9,8 @@ public enum HullShape {
 
 
         @Override
-        double getHullLength(final int hullSpaces, final double armorFraction) {
-            final double typicalDriveFraction = 0.1421d * Math.exp(-0.0005 * hullSpaces);
-            return Math.pow((100 * hullSpaces * (1 - armorFraction - typicalDriveFraction) / (Math.PI / 6)), 1 / 3d);
+        double getHullLength(final int hullSpaces, final double usableFraction) {
+            return Math.pow((100 * hullSpaces * usableFraction / (Math.PI / 6)), 1 / 3d);
         }
 
         @Override
@@ -39,10 +38,10 @@ public enum HullShape {
 
         @Override
         double getShieldMinDiameter(final int hullSpaces,
-                                    final double armorFraction,
+                                    final double usableFraction,
                                     final double lanternDiameter,
                                     final double mastLength) {
-            final double hullLength = getHullLength(hullSpaces, armorFraction);
+            final double hullLength = getHullLength(hullSpaces, usableFraction);
             return lanternDiameter * Math.tan(Math.asin((hullLength / 2) / (mastLength + ((lanternDiameter + hullLength) / 2))));
         }
 
@@ -73,9 +72,9 @@ public enum HullShape {
         return mastMassModifier;
     }
 
-//    abstract double getHullLength(final int hullSpaces, final double usableFraction);
+    abstract double getHullLength(final int hullSpaces, final double usableFraction);
 
-    abstract double getHullLength(final int hullSpaces, final double armorFraction);
+//    abstract double getHullLength(final int hullSpaces, final double armorFraction);
     abstract double getHullDiameter(final int hullSpaces, final double armorFraction);
 
     abstract double getMomentOfInertia(final int hullSpaces,
@@ -98,4 +97,12 @@ public enum HullShape {
                                          final double lanternDiameter,
                                          final double mastLength,
                                          final double shieldThickness);
+
+    double getHullLength(final int hullSpaces, final double armorFraction, final double driveFraction) {
+        return Math.pow((100 * hullSpaces * (1 - armorFraction - driveFraction) / (Math.PI / 6)), 1 / 3d);
+    }
+
+//    double getShieldDiameter(final double lanternDiameter, final double hullDiameter, final double mastLength) {
+//        return lanternDiameter * Math.tan(Math.asin((hullDiameter / 2) / (mastLength + (lanternDiameter + hullDiameter) / 2)));
+//    }
 }
