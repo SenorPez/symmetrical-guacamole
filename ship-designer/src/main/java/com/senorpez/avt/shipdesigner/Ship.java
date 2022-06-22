@@ -56,18 +56,6 @@ public class Ship {
         return this;
     }
 
-    public static void main(String[] args) {
-        Ship ship = new Ship()
-                .setHullShape(HullShape.SPHERE)
-                .setHullSpaces(25)
-                .setDriveGeneration(3.4)
-                .setThrust(6);
-        ship.internalArmor = 4;
-        ship.build();
-
-        System.out.println("Here");
-    }
-
     boolean isValid() {
         return valid;
     }
@@ -229,7 +217,7 @@ public class Ship {
 
     double getMomentOfInertia(final double mastLength, final double usableFraction) {
         return hullShape.getMomentOfInertia(hullSpaces,
-                getUsableFraction(mastLength),
+                usableFraction,
                 getDriveFraction(mastLength),
                 getLanternMass(),
                 getLanternDiameter(),
