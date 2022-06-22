@@ -2,26 +2,19 @@ package com.senorpez.avt.shipdesigner;
 
 public enum HullShape {
     SPHERE(1.25d, 1.5d) {
-//        @Override
-//        double getHullLength(final int hullSpaces, final double usableFraction) {
-//            return Math.pow(6 / Math.PI, 1 / 3d) * Math.pow(hullSpaces * 100 * usableFraction, 1 / 3d);
-//        }
-
-
         @Override
-        double getHullLength(final int hullSpaces, final double armorFraction) {
-            final double typicalDriveFraction = 0.1421d * Math.exp(-0.0005 * hullSpaces);
-            return Math.pow((100 * hullSpaces * (1 - armorFraction - typicalDriveFraction) / (Math.PI / 6)), 1 / 3d);
+        double getHullLength(final int hullSpaces, final double usableFraction) {
+            return Math.pow((100 * hullSpaces * usableFraction / (Math.PI / 6)), 1 / 3d);
         }
 
         @Override
-        double getHullDiameter(int hullSpaces, final double armorFraction) {
-            return getHullLength(hullSpaces, armorFraction);
+        double getHullDiameter(int hullSpaces, final double usableFraction) {
+            return getHullLength(hullSpaces, usableFraction);
         }
 
         @Override
         double getMomentOfInertia(final int hullSpaces,
-                                  final double armorFraction,
+                                  final double usableFraction,
                                   final double driveFraction,
                                   final double lanternMass,
                                   final double lanternDiameter,
@@ -29,7 +22,7 @@ public enum HullShape {
                                   final double mastStructureMass,
                                   final double mastArmorMass,
                                   final double mastMass) {
-            final double hullLength = getHullLength(hullSpaces, armorFraction);
+            final double hullLength = getHullLength(hullSpaces, usableFraction);
 
             return (1 - driveFraction) / 4 * hullSpaces * 25 * (Math.pow(hullLength, 2) * 0.4)
                     + driveFraction * (1 - driveFraction) * hullSpaces * 25 * Math.pow(hullLength / 2 + mastLength + lanternDiameter / 2, 2)
@@ -39,20 +32,20 @@ public enum HullShape {
 
         @Override
         double getShieldMinDiameter(final int hullSpaces,
-                                    final double armorFraction,
+                                    final double usableFraction,
                                     final double lanternDiameter,
                                     final double mastLength) {
-            final double hullLength = getHullLength(hullSpaces, armorFraction);
+            final double hullLength = getHullLength(hullSpaces, usableFraction);
             return lanternDiameter * Math.tan(Math.asin((hullLength / 2) / (mastLength + ((lanternDiameter + hullLength) / 2))));
         }
 
         @Override
         double getShieldMaxDiameter(final int hullSpaces,
-                                    final double armorFraction,
+                                    final double usableFraction,
                                     final double lanternDiameter,
                                     final double mastLength,
                                     final double shieldThickness) {
-            final double hullLength = getHullLength(hullSpaces, armorFraction);
+            final double hullLength = getHullLength(hullSpaces, usableFraction);
             return ((lanternDiameter / 2 + shieldThickness) * Math.tan(Math.asin((hullLength / 2) / (mastLength + ((lanternDiameter + hullLength) / 2)))) * 2);
         }
     };
@@ -73,10 +66,9 @@ public enum HullShape {
         return mastMassModifier;
     }
 
-//    abstract double getHullLength(final int hullSpaces, final double usableFraction);
+    abstract double getHullLength(final int hullSpaces, final double usableFraction);
 
-    abstract double getHullLength(final int hullSpaces, final double armorFraction);
-    abstract double getHullDiameter(final int hullSpaces, final double armorFraction);
+    abstract double getHullDiameter(final int hullSpaces, final double usableFraction);
 
     abstract double getMomentOfInertia(final int hullSpaces,
                                        final double usableFraction,
