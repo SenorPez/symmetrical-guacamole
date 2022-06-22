@@ -65,37 +65,7 @@ public class Ship {
 //        ship.internalArmor = 4;
         ship.build();
 
-        double lanternDiameter = ship.getLanternDiameter();
-
-        // Initial calculation results, using typical drive fraction.
-        double mastLength = ship.getMastLength();
-        double shieldDiameter = ship.getShieldMinDiameter();
-        double driveFraction = ship.getDriveFraction(mastLength);
-
-        // Actual results
-        double hullDiameterActual = HullShape.SPHERE.getHullLength(25, ship.getArmorFraction(), driveFraction);
-
-        double tanY = shieldDiameter / lanternDiameter;
-        double atanY = Math.atan(tanY);
-        double sinY = (ship.getHullDiameter() / 2) / (mastLength + ((lanternDiameter + ship.getHullDiameter()) / 2));
-        double asinY = Math.asin(sinY);
-
-        // Given the same mast length, what's the new shield minimum diameter?
-        double minShieldDiameter = lanternDiameter * Math.tan(Math.asin((hullDiameterActual / 2) / (mastLength + ((lanternDiameter + hullDiameterActual) / 2))));
-        // What's the difference?
-        double shieldDifference = shieldDiameter - minShieldDiameter;
-
-        // Given the same shield minimum diameter, what's the new mast length?
-        double angle = Math.atan(shieldDiameter / lanternDiameter);
-        double distance = (hullDiameterActual / 2) / Math.sin(angle);
-        double minMastLength = distance - hullDiameterActual / 2 - lanternDiameter / 2;
-        // What's the difference?
-        double mastDifference = mastLength - minMastLength;
-
-
-
-
-        System.out.printf("Shield Difference: %3.6f\nMast Difference: %3.6f\n", shieldDifference, mastDifference);
+        System.out.println("Here");
     }
 
     boolean isValid() {
@@ -187,52 +157,34 @@ public class Ship {
         return mass * acceleration / 70000 * 7.8 * mastLength * getMastMassModifier();
     }
 
-    double calculateDriveMass(final double mastLength) {
-        double driveFraction = 0d;
-        double actualDriveFraction = 0.14d;
-        double driveMass = 0d;
-        final double armorFraction = getArmorFraction();
-
-        while (Math.abs(driveFraction - actualDriveFraction) > 1e-8) {
-            driveFraction = actualDriveFraction;
-            final double usableHullFraction = 1 - driveFraction - armorFraction;
-            driveMass = getDriveMass(mastLength, usableHullFraction);
-            actualDriveFraction = driveMass / this.mass;
-            System.out.println(driveMass);
-        }
-
-        return driveMass;
-    }
-
     double calculateMastLength() {
-        double mastLength = 29.87323224d;
-        double driveMass = calculateDriveMass(mastLength);
-//        double mastLength;
-//        if (hullSpaces < 100) mastLength = 25d;
-//        else if (hullSpaces < 400) mastLength = 50d;
-//        else if (hullSpaces < 1000) mastLength = 75d;
-//        else mastLength = 100d;
-//        double diff = getDifference(mastLength);
-//
-//        double step = 1;
-//        final double target = 0.001d;
-//        while (Math.abs(diff) > target) {
-//            if (diff > 0) {
-//                step *= -1;
-//                while (diff > 0 && Math.abs(diff) > target) {
-//                    mastLength += step;
-//                    diff = getDifference(mastLength);
-//                }
-//                step *= -1;
-//            } else {
-//                while (diff < 0 && Math.abs(diff) > target) {
-//                    mastLength += step;
-//                    diff = getDifference(mastLength);
-//                }
-//            }
-//            step /= 10;
-//        }
-//        return mastLength;
+        double mastLength;
+        if (hullSpaces < 100) mastLength = 25d;
+        else if (hullSpaces < 400) mastLength = 50d;
+        else if (hullSpaces < 1000) mastLength = 75d;
+        else mastLength = 100d;
+
+        double diff = getDifference(mastLength);
+        double step = 1;
+        final double target = 0.001d;
+        while (Math.abs(diff) > target) {
+            if (diff > 0) {
+                step *= -1;
+                while (diff > 0 && Math.abs(diff) > target) {
+                    mastLength += step;
+                    diff = getDifference(mastLength);
+                    System.out.printf("MoI: %5.5f\n", getPivotAccel(mastLength));
+                }
+                step *= -1;
+            } else {
+                while (diff < 0 && Math.abs(diff) > target) {
+                    mastLength += step;
+                    diff = getDifference(mastLength);
+                    System.out.printf("MoI: %5.5f\n", getPivotAccel(mastLength));
+                }
+            }
+            step /= 10;
+        }
         return mastLength;
     }
 
@@ -245,7 +197,7 @@ public class Ship {
     }
 
     double getPivotAccel(final double mastLength) {
-        return (getPivotThrust() * 1000) * ((1 - getDriveFraction(mastLength)) * (mastLength + getHullLength() / 2) - (getDriveFraction(mastLength)) * (getLanternDiameter() / 2)) / (getMomentOfInertia(mastLength) * 1000) * ((3 / Math.PI) * 128 * 16);
+        return (getPivotThrust() * 1000) * ((1 - getDriveFraction(mastLength)) * (mastLength + getHullLength(mastLength) / 2) - (getDriveFraction(mastLength)) * (getLanternDiameter() / 2)) / (getMomentOfInertia(mastLength) * 1000) * ((3 / Math.PI) * 128 * 16);
     }
 
     double getPivotThrust() {
@@ -257,16 +209,29 @@ public class Ship {
         return hullShape.getPivotModifier();
     }
 
+
     double getDriveFraction(final double mastLength) {
-        return getDriveMass(mastLength) / mass;
+        double driveFraction = 0d;
+        double actualDriveFraction = 0.14d;
+        double driveMass = 0d;
+        final double armorFraction = getArmorFraction();
+
+        while (Math.abs(driveFraction - actualDriveFraction) > 1e-9) {
+            driveFraction = actualDriveFraction;
+            final double usableHullFraction = 1 - driveFraction - armorFraction;
+            driveMass = getDriveMass(mastLength, usableHullFraction);
+            actualDriveFraction = driveMass / this.mass;
+        }
+
+        return driveMass / mass;
     }
 
-    double getHullLength() {
-        return hullShape.getHullLength(hullSpaces, getArmorFraction());
+    double getHullLength(final double mastLength) {
+        return hullShape.getHullLength(hullSpaces, 1 - getArmorFraction() - getDriveFraction(mastLength));
     }
 
-    public double getHullDiameter() {
-        return hullShape.getHullDiameter(hullSpaces, getArmorFraction());
+    public double getHullDiameter(final double mastLength) {
+        return hullShape.getHullDiameter(hullSpaces, 1 - getArmorFraction() - getDriveFraction(mastLength));
     }
 
     double getArmorFraction() {
@@ -279,7 +244,7 @@ public class Ship {
 
     double getMomentOfInertia(final double mastLength) {
         return hullShape.getMomentOfInertia(hullSpaces,
-                getArmorFraction(),
+                getUsableFraction(mastLength),
                 getDriveFraction(mastLength),
                 getLanternMass(),
                 getLanternDiameter(),
@@ -328,7 +293,7 @@ public class Ship {
 
     double getShieldMinDiameter(final double mastLength) {
         return hullShape.getShieldMinDiameter(hullSpaces,
-                getArmorFraction(),
+                getUsableFraction(mastLength),
                 getLanternDiameter(),
                 mastLength);
     }
