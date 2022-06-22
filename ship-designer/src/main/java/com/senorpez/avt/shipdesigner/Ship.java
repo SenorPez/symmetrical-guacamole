@@ -98,16 +98,8 @@ public class Ship {
         return this;
     }
 
-    double getDriveHullSpaces() {
-        return getDriveMass() / 25d;
-    }
-
-    double getDriveMass() {
-        return getDriveMass(mastLength);
-    }
-
-    double getDriveMass(final double mastLength) {
-        return getMastMass(mastLength) + getLanternMass();
+    double getDriveHullSpaces(final double mastLength, final double usableFraction) {
+        return getDriveMass(mastLength, usableFraction) / 25d;
     }
 
     double getDriveMass(final double mastLength, final double usableFraction) {
@@ -145,10 +137,6 @@ public class Ship {
         return Math.sqrt(mass * acceleration / 125) * 20 / Math.sqrt(100 / (100d - RADIANT_DEFLECTION));
     }
 
-    double getMastMass(final double mastLength) {
-        return getMastStructureMass(mastLength) + getMastArmorMass(mastLength) + getShieldMass(mastLength);
-    }
-
     double getMastMass(final double mastLength, final double usableFraction) {
         return getMastStructureMass(mastLength) + getMastArmorMass(mastLength) + getShieldMass(mastLength, usableFraction);
     }
@@ -173,14 +161,12 @@ public class Ship {
                 while (diff > 0 && Math.abs(diff) > target) {
                     mastLength += step;
                     diff = getDifference(mastLength);
-                    System.out.printf("MoI: %5.5f\n", getPivotAccel(mastLength));
                 }
                 step *= -1;
             } else {
                 while (diff < 0 && Math.abs(diff) > target) {
                     mastLength += step;
                     diff = getDifference(mastLength);
-                    System.out.printf("MoI: %5.5f\n", getPivotAccel(mastLength));
                 }
             }
             step /= 10;
@@ -189,15 +175,15 @@ public class Ship {
     }
 
     private double getDifference(final double mastLength) {
-        return 1000000 * getFigureOfMerit(mastLength) - 1000000 * getFigureOfMerit(mastLength + 0.1);
+        return 1000000 * getFigureOfMerit(mastLength, getUsableFraction(mastLength)) - 1000000 * getFigureOfMerit(mastLength + 0.1, getUsableFraction(mastLength));
     }
 
-    private double getFigureOfMerit(final double mastLength) {
-        return Math.pow(getPivotAccel(mastLength), PIVOT_ACCEL_POWER) / Math.pow(getDriveMass(mastLength), DRIVE_MASS_POWER);
+    private double getFigureOfMerit(final double mastLength, final double usableFraction) {
+        return Math.pow(getPivotAccel(mastLength, usableFraction), PIVOT_ACCEL_POWER) / Math.pow(getDriveMass(mastLength, usableFraction), DRIVE_MASS_POWER);
     }
 
-    double getPivotAccel(final double mastLength) {
-        return (getPivotThrust() * 1000) * ((1 - getDriveFraction(mastLength)) * (mastLength + getHullLength(mastLength) / 2) - (getDriveFraction(mastLength)) * (getLanternDiameter() / 2)) / (getMomentOfInertia(mastLength) * 1000) * ((3 / Math.PI) * 128 * 16);
+    double getPivotAccel(final double mastLength, final double usableFraction) {
+        return (getPivotThrust() * 1000) * ((1 - getDriveFraction(mastLength)) * (mastLength + getHullLength(mastLength) / 2) - (getDriveFraction(mastLength)) * (getLanternDiameter() / 2)) / (getMomentOfInertia(mastLength, usableFraction) * 1000) * ((3 / Math.PI) * 128 * 16);
     }
 
     double getPivotThrust() {
@@ -241,7 +227,7 @@ public class Ship {
         return externalArmor + internalArmor;
     }
 
-    double getMomentOfInertia(final double mastLength) {
+    double getMomentOfInertia(final double mastLength, final double usableFraction) {
         return hullShape.getMomentOfInertia(hullSpaces,
                 getUsableFraction(mastLength),
                 getDriveFraction(mastLength),
@@ -250,7 +236,7 @@ public class Ship {
                 mastLength,
                 getMastStructureMass(mastLength),
                 getMastArmorMass(mastLength),
-                getMastMass(mastLength));
+                getMastMass(mastLength, usableFraction));
     }
 
     double getUsableFraction(final double mastLength) {
@@ -263,10 +249,6 @@ public class Ship {
 
     double getMastArmorMass(final double mastLength) {
         return ((1 / 15d) * Math.PI * Math.pow(mastLength, 2)) * mastArmor * 50 / (1000 + 50 * armorShrink);
-    }
-
-    double getShieldMass(final double mastLength) {
-        return (RAD_REDUCTION * (Math.log10(getNeutronFluxAtShield()) + 6) - Math.log10(getRadReductionDueToMast(mastLength))) * getShieldCrossSection(mastLength);
     }
 
     double getShieldMass(final double mastLength, final double usableFraction) {
@@ -282,19 +264,8 @@ public class Ship {
         return Math.pow((mastLength + getLanternDiameter() / 2) / (getLanternDiameter() / 2), 2);
     }
 
-    double getShieldCrossSection(final double mastLength) {
-        return 0.25 * Math.PI * Math.pow(getShieldMinDiameter(mastLength), 2);
-    }
-
     double getShieldCrossSection(final double mastLength, final double usableFraction) {
         return 0.25 * Math.PI * Math.pow(getShieldMinDiameter(mastLength, usableFraction), 2);
-    }
-
-    double getShieldMinDiameter(final double mastLength) {
-        return hullShape.getShieldMinDiameter(hullSpaces,
-                getUsableFraction(mastLength),
-                getLanternDiameter(),
-                mastLength);
     }
 
     double getShieldMinDiameter(final double mastLength, final double usableFraction) {
@@ -304,28 +275,16 @@ public class Ship {
                 mastLength);
     }
 
-    public double getShieldMinDiameter() {
-        return getShieldMinDiameter(mastLength, 0.15d);
-    }
-
-    double getShieldMaxDiameter(final double mastLength) {
+    double getShieldMaxDiameter(final double mastLength, final double usableFraction) {
         return hullShape.getShieldMaxDiameter(hullSpaces,
                 getArmorFraction(),
                 getLanternDiameter(),
                 mastLength,
-                getShieldThickness(mastLength));
+                getShieldThickness(mastLength, usableFraction));
     }
 
-    public double getShieldMaxDiameter() {
-        return getShieldMaxDiameter(mastLength);
-    }
-
-    double getShieldThickness(final double mastLength) {
-        return getShieldMass(mastLength) / getShieldCrossSection(mastLength) * 0.5;
-    }
-
-    public double getShieldThickness() {
-        return getShieldThickness(mastLength);
+    double getShieldThickness(final double mastLength, final double usableFraction) {
+        return getShieldMass(mastLength, usableFraction) / getShieldCrossSection(mastLength, usableFraction) * 0.5;
     }
 
     public double getMastLength() {
