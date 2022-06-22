@@ -62,7 +62,7 @@ public class Ship {
                 .setHullSpaces(25)
                 .setDriveGeneration(3.4)
                 .setThrust(6);
-//        ship.internalArmor = 4;
+        ship.internalArmor = 4;
         ship.build();
 
         System.out.println("Here");
@@ -214,11 +214,10 @@ public class Ship {
         double driveFraction = 0d;
         double actualDriveFraction = 0.14d;
         double driveMass = 0d;
-        final double armorFraction = getArmorFraction();
 
         while (Math.abs(driveFraction - actualDriveFraction) > 1e-9) {
             driveFraction = actualDriveFraction;
-            final double usableHullFraction = 1 - driveFraction - armorFraction;
+            final double usableHullFraction = 1 - driveFraction - getArmorFraction();
             driveMass = getDriveMass(mastLength, usableHullFraction);
             actualDriveFraction = driveMass / this.mass;
         }

@@ -271,7 +271,7 @@ class ShipTest {
         double tolerance = 1e-4;
         doReturn(151.25000d).when(instance).getPivotThrust();
         doReturn(0.1701217d).when(instance).getDriveFraction(anyDouble());
-        doReturn(14.94895d).when(instance).getHullLength();
+        doReturn(14.94895d).when(instance).getHullLength(mastLength);
         doReturn(10.95445d).when(instance).getLanternDiameter();
         doReturn(124730.07776d).when(instance).getMomentOfInertia(anyDouble());
 
@@ -303,11 +303,11 @@ class ShipTest {
     @Test
     void getDriveFraction() {
         double mastLength = 22.39590d;
-        doReturn(22.39590d).when(instance).calculateMastLength();
+        doReturn(0.1600000d).when(instance).getArmorFraction();
+        doReturn(97.61132d).when(instance).getDriveMass(anyDouble(), anyDouble());
         instance.setHullSpaces(25).build();
-        doReturn(106.32609d).when(instance).getDriveMass(anyDouble());
 
-        double expectedValue = 0.1701217d;
+        double expectedValue = 0.1561781d;
         assertEquals(expectedValue, instance.getDriveFraction(mastLength), tolerance);
     }
 
@@ -315,34 +315,30 @@ class ShipTest {
     void getHullLength() {
         double mastLength = 22.39590d;
         doReturn(22.39590d).when(instance).calculateMastLength();
+        doReturn(0.1600000d).when(instance).getArmorFraction();
+        doReturn(0.1518835d).when(instance).getDriveFraction(anyDouble());
         instance = instance
                 .setHullShape(SPHERE)
                 .setHullSpaces(25)
                 .build();
-        doReturn(0.1600000d).when(instance).getArmorFraction();
 
-        // TODO: Should be this value; using typical drive fraction to avoid circular reference.
-        // double expectedValue = 14.73372d;
-        double expectedValue = 14.94895d;
-
-        assertEquals(expectedValue, instance.getHullLength(), tolerance);
+        double expectedValue = 14.86624d;
+        assertEquals(expectedValue, instance.getHullLength(mastLength), tolerance);
     }
 
     @Test
     void getHullDiameter() {
         double mastLength = 22.39590d;
         doReturn(22.39590d).when(instance).calculateMastLength();
+        doReturn(0.1600000d).when(instance).getArmorFraction();
+        doReturn(0.1518835d).when(instance).getDriveFraction(anyDouble());
         instance = instance
                 .setHullShape(SPHERE)
                 .setHullSpaces(25)
                 .build();
-        doReturn(0.1600000d).when(instance).getArmorFraction();
 
-        // TODO: Should be this value; using typical drive fraction to avoid circular reference.
-        // double expectedValue = 14.73372d;
-        double expectedValue = 14.94895d;
-
-        assertEquals(expectedValue, instance.getHullDiameter(), tolerance);
+        double expectedValue = 14.86624d;
+        assertEquals(expectedValue, instance.getHullLength(mastLength), tolerance);
     }
 
     @Test
@@ -367,21 +363,19 @@ class ShipTest {
     void getMomentOfInertia() {
         final double tolerance = 1e-1;
         final double mastLength = 28.20816d;
-        doReturn(mastLength).when(instance).calculateMastLength();
-        doReturn(0.1600000d).when(instance).getArmorFraction();
+
+        doReturn(0.6882117d).when(instance).getUsableFraction(anyDouble());
+        doReturn(0.1522773d).when(instance).getDriveFraction(anyDouble());
         doReturn(73.51272d).when(instance).getLanternMass();
         doReturn(10.95445d).when(instance).getLanternDiameter();
-        doReturn(4.42012d).when(instance).getMastStructureMass(anyDouble());
+        doReturn(4.39897d).when(instance).getMastStructureMass(anyDouble());
         doReturn(0d).when(instance).getMastArmorMass(anyDouble());
-        doReturn(21.41449d).when(instance).getMastMass(anyDouble());
+        doReturn(21.35499d).when(instance).getMastMass(anyDouble());
         instance.setHullSpaces(25)
                 .setHullShape(SPHERE)
                 .build();
 
-        // TODO: Should be this value; using typical drive fraction to avoid circular reference.
-        // double expectedValue = 123728.46426d;
-        double expectedValue = 150495.05241d;
-
+        double expectedValue = 150370.46005d;
         assertEquals(expectedValue, instance.getMomentOfInertia(mastLength), tolerance);
     }
 
@@ -458,15 +452,13 @@ class ShipTest {
         final double mastLength = 28.20816d;
         doReturn(mastLength).when(instance).calculateMastLength();
         doReturn(0.1600000d).when(instance).getArmorFraction();
+        doReturn(0.1518835d).when(instance).getDriveFraction(anyDouble());
         doReturn(10.95445d).when(instance).getLanternDiameter();
         instance.setHullSpaces(25)
                 .setHullShape(SPHERE)
                 .build();
 
-        // TODO: Should be this value; using typical drive fraction to avoid circular reference.
-        // double expectedValue = 2.01344d;
-        double expectedValue = 2.02292d;
-
+        double expectedValue = 2.01344d;
         assertEquals(expectedValue, instance.getShieldMinDiameter(mastLength), tolerance);
     }
 }
