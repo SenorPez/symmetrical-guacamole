@@ -33,14 +33,6 @@ class ShipTest {
     @BeforeEach
     void setUp() {
         instance = spy(new Ship());
-//        instance.setHullSpaces(25)
-//                .setHullShape(SPHERE)
-//                .setDriveGeneration(3.4)
-//                .setThrust(6)
-//                .build();
-//        instance.internalArmor = 4;
-//        instance.mastArmor = 1;
-//        instance.lanternArmor = 1;
     }
 
     @DisplayName("Validate Hull Spaces")
