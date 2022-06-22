@@ -12,12 +12,14 @@ public class ShipEntity {
     private final double lanternDiameter;
 
     public ShipEntity(Ship ship) {
-        this.hullDiameter = ship.getHullDiameter();
         this.mastLength = ship.getMastLength();
+        final double usableFraction = ship.getUsableFraction(mastLength);
+
+        this.hullDiameter = ship.getHullDiameter(this.mastLength);
         this.mastDiameter = ship.getMastDiameter();
-        this.shieldMaxDiameter = ship.getShieldMaxDiameter();
-        this.shieldMinDiameter = ship.getShieldMinDiameter();
-        this.shieldThickness = ship.getShieldThickness();
+        this.shieldMaxDiameter = ship.getShieldMaxDiameter(this.mastLength, usableFraction);
+        this.shieldMinDiameter = ship.getShieldMinDiameter(this.mastLength, usableFraction);
+        this.shieldThickness = ship.getShieldThickness(this.mastLength, usableFraction);
         this.lanternDiameter = ship.getLanternDiameter();
     }
 

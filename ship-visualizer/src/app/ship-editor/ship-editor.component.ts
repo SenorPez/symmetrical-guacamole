@@ -19,15 +19,15 @@ export class ShipEditorComponent implements OnInit {
     Validators.max(500)
   ]);
 
-  driveGenerationSlider: FormControl = new FormControl(1);
-  driveGenerationInput: FormControl = new FormControl(1, [
+  driveGenerationSlider: FormControl = new FormControl(3.4);
+  driveGenerationInput: FormControl = new FormControl(3.4, [
     Validators.required,
     Validators.min(1),
     Validators.max(9)
   ]);
 
-  thrustSlider: FormControl = new FormControl(0.5);
-  thrustInput: FormControl = new FormControl(0.5, [
+  thrustSlider: FormControl = new FormControl(6);
+  thrustInput: FormControl = new FormControl(6, [
     Validators.required,
     Validators.min(0.5),
     Validators.max(16.0)

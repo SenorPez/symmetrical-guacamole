@@ -30,9 +30,10 @@ export class RenderComponent implements OnInit, AfterViewInit {
     this.scene = new Scene();
     this.scene.background = new Color('black');
 
-    const axesHelper = new AxesHelper(5);
-    this.scene.add(axesHelper);
+    const axesHelper = new AxesHelper(100);
+    // this.scene.add(axesHelper);
     this.shipMesh = this.ship.shipMesh;
+    this.shipMesh.rotateX(Math.PI / 2);
 
     this.scene.add(this.shipMesh);
 
@@ -51,6 +52,7 @@ export class RenderComponent implements OnInit, AfterViewInit {
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
 
     this.controls = new ArcballControls(this.camera, this.renderer.domElement);
+    this.controls.target = this.shipMesh.position;
     this.controls.update();
 
     let component: RenderComponent = this;
