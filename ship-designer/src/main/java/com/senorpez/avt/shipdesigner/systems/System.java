@@ -82,7 +82,8 @@ abstract class System {
     }
 
     int getEnhancedCost() {
-        return Double.valueOf(Math.ceil(getQuantity() * getCostPerSpace() * ShrinkCost.getSystemShrinkModifier(getShrink()))).intValue();
+        double val = getQuantity() * getCostPerSpace() * ShrinkCost.getSystemShrinkModifier(getShrink());
+        return Double.valueOf(Math.ceil(Math.round(val * 100000d) / 100000d)).intValue();
     }
 
     double getCrewRequirement() {

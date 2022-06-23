@@ -17,6 +17,7 @@ import static com.senorpez.avt.shipdesigner.HullShape.SPHERE;
 import static com.senorpez.avt.shipdesigner.systems.ProductionLevel.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,11 +26,9 @@ class HullTest {
     Ship ship;
 
     private Hull instance;
-    private final double tolerance = 1e-5;
 
     @BeforeEach
     void setUp() {
-        ship.setHullSpaces(300);
         instance = new Hull(ship, 0, STANDARD);
     }
 
@@ -107,10 +106,26 @@ class HullTest {
         assertEquals(expectedValue, instance.getCrewPerSpace());
     }
 
-    @Test
-    void getActualSpacesUsed() {
-        int expectedValue = 0;
+    @ParameterizedTest(name = "shrink {0} actual spaces {1}")
+    @MethodSource("actualSpacesUsedProvider")
+    void getActualSpacesUsed(final int shrink, final int expectedValue) {
+        instance = instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getActualSpacesUsed());
+    }
+
+    private static Stream<Arguments> actualSpacesUsedProvider() {
+        return Stream.of(
+                arguments(0, 0),
+                arguments(1, 0),
+                arguments(2, 0),
+                arguments(3, 0),
+                arguments(4, 0),
+                arguments(5, 0),
+                arguments(6, 0),
+                arguments(7, 0),
+                arguments(8, 0),
+                arguments(9, 0)
+        );
     }
 
     @Test
@@ -120,12 +135,28 @@ class HullTest {
         assertEquals(expectedValue, instance.getBaseCost());
     }
 
-    @Test
-    void getEnhancedCost() {
+    @ParameterizedTest(name = "shrink {0} base cost {1}")
+    @MethodSource("enhancedCostProvider")
+    void getEnhancedCost(final int shrink, final int expectedValue) {
         when(ship.getHullSpaces()).thenReturn(25);
         when(ship.getHullShape()).thenReturn(SPHERE);
-        int expectedValue = 25;
+        instance = instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getEnhancedCost());
+    }
+
+    private static Stream<Arguments> enhancedCostProvider() {
+        return Stream.of(
+                arguments(0, 25),
+                arguments(1, 28),
+                arguments(2, 32),
+                arguments(3, 37),
+                arguments(4, 45),
+                arguments(5, 54),
+                arguments(6, 65),
+                arguments(7, 79),
+                arguments(8, 94),
+                arguments(9, 110)
+        );
     }
 
     @Test
@@ -134,12 +165,28 @@ class HullTest {
         assertEquals(expectedValue, instance.getCrewRequirement());
     }
 
-    @Test
-    void getDuelCost() {
+    @ParameterizedTest(name = "shrink {0} duel cost {1}")
+    @MethodSource("duelCostProvider")
+    void getDuelCost(final int shrink, final int expectedValue) {
         when(ship.getHullSpaces()).thenReturn(25);
         when(ship.getHullShape()).thenReturn(SPHERE);
-        int expectedValue = 25;
+        instance = instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getDuelCost());
+    }
+
+    private static Stream<Arguments> duelCostProvider() {
+        return Stream.of(
+                arguments(0, 25),
+                arguments(1, 28),
+                arguments(2, 32),
+                arguments(3, 37),
+                arguments(4, 45),
+                arguments(5, 54),
+                arguments(6, 65),
+                arguments(7, 79),
+                arguments(8, 94),
+                arguments(9, 110)
+        );
     }
 
     @Test

@@ -296,4 +296,20 @@ public class Ship {
     public HullShape getHullShape() {
         return hullShape;
     }
+
+    public double getDriveGeneration() {
+        return driveGeneration;
+    }
+
+    double getDriveMassWithoutArmor(final double mastLength) {
+        return getMastStructureMass(mastLength) + getShieldMass(mastLength, getUsableFraction(mastLength)) + getLanternStructureMass();
+    }
+
+    public double getDriveSpacesWithoutArmor(final double mastLength) {
+        return getDriveMassWithoutArmor(mastLength) / 25d;
+    }
+
+    public double getThrust() {
+        return thrust;
+    }
 }
