@@ -15,9 +15,8 @@ import java.util.stream.Stream;
 
 import static com.senorpez.avt.shipdesigner.HullShape.SPHERE;
 import static com.senorpez.avt.shipdesigner.systems.ProductionLevel.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

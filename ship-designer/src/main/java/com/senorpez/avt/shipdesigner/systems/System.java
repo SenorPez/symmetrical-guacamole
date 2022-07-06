@@ -78,11 +78,11 @@ abstract class System {
     }
 
     int getBaseCost() {
-        return Double.valueOf(Math.ceil(getQuantity() * getCostPerSpace())).intValue();
+        return Double.valueOf(Math.ceil(getBasicSpacesUsed() * getCostPerSpace())).intValue();
     }
 
     int getEnhancedCost() {
-        double val = getQuantity() * getCostPerSpace() * ShrinkCost.getSystemShrinkModifier(getShrink());
+        double val = getBasicSpacesUsed() * getCostPerSpace() * ShrinkCost.getSystemShrinkModifier(getShrink());
         return Double.valueOf(Math.ceil(Math.round(val * 100000d) / 100000d)).intValue();
     }
 

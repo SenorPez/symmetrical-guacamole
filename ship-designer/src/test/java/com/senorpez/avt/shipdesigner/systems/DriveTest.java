@@ -32,38 +32,6 @@ class DriveTest {
     }
 
     @Test
-    void getExtraStructure() {
-        int expectedValue = 0;
-        assertEquals(expectedValue, instance.getExtraStructure());
-    }
-
-    @ParameterizedTest(name = "shrink {0} drive damage {1}")
-    @MethodSource("driveDamageProvider")
-    void getDriveDamage(final int shrink, final int expectedValue) {
-        when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
-        when(ship.getHullSpaces()).thenReturn(25);
-        when(ship.getThrust()).thenReturn(6d);
-        when(ship.getDriveGeneration()).thenReturn(3.4d);
-        instance = instance.setShrink(shrink);
-        assertEquals(expectedValue, instance.getDriveDamage());
-    }
-
-    private static Stream<Arguments> driveDamageProvider() {
-        return Stream.of(
-                arguments(0, 16),
-                arguments(1, 19),
-                arguments(2, 26),
-                arguments(3, 35),
-                arguments(4, 48),
-                arguments(5, 63),
-                arguments(6, 82),
-                arguments(7, 104),
-                arguments(8, 129),
-                arguments(9, 157)
-        );
-    }
-
-    @Test
     void getShip() {
         Ship expectedValue = ship;
         assertEquals(expectedValue, instance.getShip());
@@ -88,9 +56,55 @@ class DriveTest {
     }
 
     @Test
+    void getExtraStructure() {
+        int expectedValue = 0;
+        assertEquals(expectedValue, instance.getExtraDriveStructure());
+    }
+
+    @ParameterizedTest(name = "shrink {0} drive damage {1}")
+    @MethodSource("driveDamageProvider")
+    void getDriveDamage(final int extraDriveStructure, final int shrink, final int expectedValue) {
+        when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
+        when(ship.getHullSpaces()).thenReturn(25);
+        when(ship.getThrust()).thenReturn(6d);
+        when(ship.getDriveGeneration()).thenReturn(3.4d);
+        instance = instance.setExtraDriveStructure(extraDriveStructure).setShrink(shrink);
+        assertEquals(expectedValue, instance.getDriveDamage());
+    }
+
+    private static Stream<Arguments> driveDamageProvider() {
+        return Stream.of(
+                arguments(0, 0, 16),
+                arguments(0, 1, 19),
+                arguments(0, 2, 26),
+                arguments(0, 3, 35),
+                arguments(0, 4, 48),
+                arguments(0, 5, 63),
+                arguments(0, 6, 82),
+                arguments(0, 7, 104),
+                arguments(0, 8, 129),
+                arguments(0, 9, 157),
+                arguments(2, 0, 24),
+                arguments(2, 1, 29),
+                arguments(2, 2, 38),
+                arguments(2, 3, 52),
+                arguments(2, 4, 71),
+                arguments(2, 5, 95),
+                arguments(2, 6, 123),
+                arguments(2, 7, 156),
+                arguments(2, 8, 193),
+                arguments(2, 9, 236)
+        );
+    }
+
+    @Test
     void getBasicSpacesUsed() {
         when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
         int expectedValue = 4;
+        assertEquals(expectedValue, instance.getBasicSpacesUsed());
+
+        instance = instance.setExtraDriveStructure(2);
+        expectedValue = 6;
         assertEquals(expectedValue, instance.getBasicSpacesUsed());
     }
 
@@ -149,102 +163,147 @@ class DriveTest {
 
     @ParameterizedTest(name = "shrink {0} actual spaces {1}")
     @MethodSource("actualSpacesUsedProvider")
-    void getActualSpacesUsed(final int shrink, final int expectedValue) {
+    void getActualSpacesUsed(final int extraDriveStructure, final int shrink, final int expectedValue) {
         when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
-        instance = instance.setShrink(shrink);
+        instance = instance.setExtraDriveStructure(extraDriveStructure).setShrink(shrink);
         assertEquals(expectedValue, instance.getActualSpacesUsed());
     }
 
     private static Stream<Arguments> actualSpacesUsedProvider() {
         return Stream.of(
-                arguments(0, 4),
-                arguments(1, 4),
-                arguments(2, 4),
-                arguments(3, 4),
-                arguments(4, 4),
-                arguments(5, 4),
-                arguments(6, 4),
-                arguments(7, 4),
-                arguments(8, 4),
-                arguments(9, 4)
+                arguments(0, 0, 4),
+                arguments(0, 1, 4),
+                arguments(0, 2, 4),
+                arguments(0, 3, 4),
+                arguments(0, 4, 4),
+                arguments(0, 5, 4),
+                arguments(0, 6, 4),
+                arguments(0, 7, 4),
+                arguments(0, 8, 4),
+                arguments(0, 9, 4),
+                arguments(2, 0, 6),
+                arguments(2, 1, 6),
+                arguments(2, 2, 6),
+                arguments(2, 3, 6),
+                arguments(2, 4, 6),
+                arguments(2, 5, 6),
+                arguments(2, 6, 6),
+                arguments(2, 7, 6),
+                arguments(2, 8, 6),
+                arguments(2, 9, 6)
         );
     }
 
     @ParameterizedTest(name = "shrink {0} base cost {1}")
     @MethodSource("baseCostProvider")
-    void getBaseCost(final int shrink, final int expectedValue) {
+    void getBaseCost(final int extraDriveStructure, final int shrink, final int expectedValue) {
         when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
         when(ship.getDriveGeneration()).thenReturn(3.4d);
-        instance = instance.setShrink(shrink);
+        instance = instance.setExtraDriveStructure(extraDriveStructure).setShrink(shrink);
         assertEquals(expectedValue, instance.getBaseCost());
     }
 
     private static Stream<Arguments> baseCostProvider() {
         return Stream.of(
-                arguments(0, 79),
-                arguments(1, 86),
-                arguments(2, 102),
-                arguments(3, 126),
-                arguments(4, 157),
-                arguments(5, 196),
-                arguments(6, 243),
-                arguments(7, 298),
-                arguments(8, 360),
-                arguments(9, 430)
+                arguments(0, 0, 79),
+                arguments(0, 1, 86),
+                arguments(0, 2, 102),
+                arguments(0, 3, 126),
+                arguments(0, 4, 157),
+                arguments(0, 5, 196),
+                arguments(0, 6, 243),
+                arguments(0, 7, 298),
+                arguments(0, 8, 360),
+                arguments(0, 9, 430),
+                arguments(2, 0, 118),
+                arguments(2, 1, 129),
+                arguments(2, 2, 153),
+                arguments(2, 3, 188),
+                arguments(2, 4, 235),
+                arguments(2, 5, 294),
+                arguments(2, 6, 364),
+                arguments(2, 7, 446),
+                arguments(2, 8, 540),
+                arguments(2, 9, 645)
         );
     }
 
     @ParameterizedTest(name = "shrink {0} enhanced cost {1}")
     @MethodSource("enhancedCostProvider")
-    void getEnhancedCost(final int shrink, final int expectedValue) {
+    void getEnhancedCost(final int extraDriveStructure, final int shrink, final int expectedValue) {
         when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
         when(ship.getDriveGeneration()).thenReturn(3.4d);
-        instance = instance.setShrink(shrink);
+        instance = instance.setExtraDriveStructure(extraDriveStructure).setShrink(shrink);
         assertEquals(expectedValue, instance.getEnhancedCost());
     }
 
     private static Stream<Arguments> enhancedCostProvider() {
         return Stream.of(
-                arguments(0, 79),
-                arguments(1, 95),
-                arguments(2, 128),
-                arguments(3, 185),
-                arguments(4, 278),
-                arguments(5, 421),
-                arguments(6, 631),
-                arguments(7, 929),
-                arguments(8, 1340),
-                arguments(9, 1892)
+                arguments(0, 0, 79),
+                arguments(0, 1, 95),
+                arguments(0, 2, 128),
+                arguments(0, 3, 185),
+                arguments(0, 4, 278),
+                arguments(0, 5, 421),
+                arguments(0, 6, 631),
+                arguments(0, 7, 929),
+                arguments(0, 8, 1340),
+                arguments(0, 9, 1892),
+                arguments(2, 0, 118),
+                arguments(2, 1, 142),
+                arguments(2, 2, 191),
+                arguments(2, 3, 277),
+                arguments(2, 4, 417),
+                arguments(2, 5, 631),
+                arguments(2, 6, 946),
+                arguments(2, 7, 1393),
+                arguments(2, 8, 2010),
+                arguments(2, 9, 2838)
         );
     }
 
     @Test
     void getCrewRequired() {
-        int expectedValue = 0;
+        when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
+        double expectedValue = 2d;
+        assertEquals(expectedValue, instance.getCrewRequirement());
+
+        expectedValue = 3d;
+        instance = instance.setExtraDriveStructure(2);
         assertEquals(expectedValue, instance.getCrewRequirement());
     }
 
     @ParameterizedTest(name = "shrink {0} duel cost {1}")
     @MethodSource("duelCostProvider")
-    void getDuelCost(final int shrink, final int expectedValue) {
+    void getDuelCost(final int extraDriveStructure, final int shrink, final int expectedValue) {
         when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
         when(ship.getDriveGeneration()).thenReturn(3.4d);
-        instance = instance.setShrink(shrink);
+        instance = instance.setExtraDriveStructure(extraDriveStructure).setShrink(shrink);
         assertEquals(expectedValue, instance.getDuelCost());
     }
 
     private static Stream<Arguments> duelCostProvider() {
         return Stream.of(
-                arguments(0, 79),
-                arguments(1, 95),
-                arguments(2, 128),
-                arguments(3, 185),
-                arguments(4, 278),
-                arguments(5, 421),
-                arguments(6, 631),
-                arguments(7, 929),
-                arguments(8, 1340),
-                arguments(9, 1892)
+                arguments(0, 0, 79),
+                arguments(0, 1, 95),
+                arguments(0, 2, 128),
+                arguments(0, 3, 185),
+                arguments(0, 4, 278),
+                arguments(0, 5, 421),
+                arguments(0, 6, 631),
+                arguments(0, 7, 929),
+                arguments(0, 8, 1340),
+                arguments(0, 9, 1892),
+                arguments(2, 0, 118),
+                arguments(2, 1, 142),
+                arguments(2, 2, 191),
+                arguments(2, 3, 277),
+                arguments(2, 4, 417),
+                arguments(2, 5, 631),
+                arguments(2, 6, 946),
+                arguments(2, 7, 1393),
+                arguments(2, 8, 2010),
+                arguments(2, 9, 2838)
         );
     }
 

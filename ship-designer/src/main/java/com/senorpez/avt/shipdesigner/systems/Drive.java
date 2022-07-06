@@ -5,7 +5,7 @@ import com.senorpez.avt.shipdesigner.Ship;
 import static com.senorpez.avt.shipdesigner.systems.ShrinkCost.getDriveShrinkModifier;
 
 class Drive extends System {
-    private final int extraStructure;
+    private int extraDriveStructure;
 
     private final static String name = "Drive";
     private final static int spacesPerSystem = 1;
@@ -15,7 +15,7 @@ class Drive extends System {
     Drive(final Ship ship,
           final int shrink,
           final ProductionLevel productionLevel,
-          final int extraStructure) {
+          final int extraDriveStructure) {
         super(ship,
                 0,
                 shrink,
@@ -25,15 +25,20 @@ class Drive extends System {
                 0,
                 crewPerSpace,
                 maintenanceRate);
-        this.extraStructure = extraStructure;
+        this.extraDriveStructure = extraDriveStructure;
     }
 
-    int getExtraStructure() {
-        return extraStructure;
+    int getExtraDriveStructure() {
+        return extraDriveStructure;
+    }
+
+    Drive setExtraDriveStructure(final int extraDriveStructure) {
+        this.extraDriveStructure = extraDriveStructure;
+        return this;
     }
 
     int getDriveDamage() {
-        return Double.valueOf(Math.ceil((getQuantity() + getExtraStructure()) / ((ship.getHullSpaces() / 50d) * (ship.getThrust() * 0.25) * (ship.getDriveGeneration() / 10)) * (((getDriveShrinkModifier(getShrink()) - 1) * 2) + 1))).intValue();
+        return Double.valueOf(Math.ceil((getQuantity() + getExtraDriveStructure()) / ((ship.getHullSpaces() / 50d) * (ship.getThrust() * 0.25) * (ship.getDriveGeneration() / 10)) * (((getDriveShrinkModifier(getShrink()) - 1) * 2) + 1))).intValue();
     }
 
     @Override
@@ -51,12 +56,17 @@ class Drive extends System {
     }
 
     @Override
+    int getBasicSpacesUsed() {
+        return (getQuantity() + getExtraDriveStructure()) * getSpacesPerSystem();
+    }
+
+    @Override
     double getCostPerSpace() {
         return 4.5 * Math.pow(ship.getDriveGeneration(), 1.2) * getDriveShrinkModifier(getShrink());
     }
 
     @Override
     int getActualSpacesUsed() {
-        return getQuantity() + getExtraStructure();
+        return getQuantity() + getExtraDriveStructure();
     }
 }
