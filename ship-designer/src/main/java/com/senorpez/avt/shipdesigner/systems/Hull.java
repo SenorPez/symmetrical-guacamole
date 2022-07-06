@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.Ship;
 
 class Hull extends System {
     private final static String name = "Hull";
-    private final static int spacesPerSystem = 0;
+    private final static int spacesPerSystem = 1;
     private final static double crewPerSpace = 0;
     private final static double maintenanceRate = 0.15d;
 

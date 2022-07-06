@@ -57,7 +57,8 @@ class HullTest {
 
     @Test
     void getBasicSpacesUsed() {
-        int expectedValue = 0;
+        int expectedValue = 25;
+        when(ship.getHullSpaces()).thenReturn(expectedValue);
         assertEquals(expectedValue, instance.getBasicSpacesUsed());
     }
 
@@ -69,7 +70,7 @@ class HullTest {
 
     @Test
     void getSpacesPerSystem() {
-        int expectedValue = 0;
+        int expectedValue = 1;
         assertEquals(expectedValue, instance.getSpacesPerSystem());
     }
 
@@ -94,6 +95,7 @@ class HullTest {
         assertEquals(expectedValue, instance.getCostPerSpace());
 
         // TODO: Verify changes when ship shape changes (when you implement other shapes)
+
 //        expectedValue = 0.9d;
 //        ship.setHullShape(null); // CONICAL
 //        assertEquals(expectedValue, instance.getCostPerSpace());
@@ -129,8 +131,9 @@ class HullTest {
 
     @Test
     void getBaseCost() {
+        when(ship.getHullSpaces()).thenReturn(25);
         when(ship.getHullShape()).thenReturn(SPHERE);
-        int expectedValue = 0;
+        int expectedValue = 25;
         assertEquals(expectedValue, instance.getBaseCost());
     }
 

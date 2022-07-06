@@ -85,13 +85,27 @@ class FrameReinforcementTest {
         assertEquals(expectedValue, instance.getSpacesPerSystem());
     }
 
+    @ParameterizedTest(name = "{0} cost per space {1}")
+    @MethodSource("costPerSpaceProvider")
+    void getCostPerSpace(final HullShape shape, final double expectedValue) {
+        when(ship.getHullShape()).thenReturn(shape);
+        assertEquals(expectedValue, instance.getCostPerSpace());
+    }
+
+    private static Stream<Arguments> costPerSpaceProvider() {
+        return Stream.of(
+                arguments(SPHERE, 2)
+        );
+    }
+
     @Test
-    void getCostPerSystem() {
+    void getCostPerSpace() {
         when(ship.getHullShape()).thenReturn(SPHERE);
-        int expectedValue = 2;
+        double expectedValue = 2d;
         assertEquals(expectedValue, instance.getCostPerSpace());
 
-        // TODO: Verify changes when ship shape changes (when you implement other shapes)
+    // TODO: Verify changes when ship shape changes (when you implement other shapes)
+
 //        expectedValue = 1.8d;
 //        ship.setHullShape(null); // CONICAL
 //        assertEquals(expectedValue, instance.getCostPerSpace());
