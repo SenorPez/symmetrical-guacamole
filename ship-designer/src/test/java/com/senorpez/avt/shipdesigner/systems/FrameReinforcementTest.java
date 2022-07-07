@@ -70,7 +70,7 @@ class FrameReinforcementTest {
     }
 
     @Test
-    void getShrinkEnhancement() {
+    void getShrink() {
         int expectedValue = 0;
         assertEquals(expectedValue, instance.getShrink());
 
