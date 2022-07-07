@@ -70,7 +70,7 @@ abstract class System {
     }
 
     int getActualSpacesUsed() {
-        if (getBasicSpacesUsed() > 1) {
+        if (getBasicSpacesUsed() > 0) {
             return Math.max(1, Double.valueOf(Math.floor(getBasicSpacesUsed() * (1 - getShrink() * 0.05))).intValue());
         } else {
             return 0;

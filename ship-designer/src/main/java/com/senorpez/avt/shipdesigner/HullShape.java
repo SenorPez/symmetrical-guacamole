@@ -48,6 +48,11 @@ public enum HullShape {
             final double hullLength = getHullLength(hullSpaces, usableFraction);
             return ((lanternDiameter / 2 + shieldThickness) * Math.tan(Math.asin((hullLength / 2) / (mastLength + ((lanternDiameter + hullLength) / 2)))) * 2);
         }
+
+        @Override
+        public int getImprovedAccesswaysRequirement(final int hullSpaces) {
+            return Long.valueOf(Math.round(hullSpaces / 50d)).intValue();
+        }
     };
 
     private final double pivotModifier;
@@ -96,4 +101,6 @@ public enum HullShape {
                                          final double lanternDiameter,
                                          final double mastLength,
                                          final double shieldThickness);
+
+    public abstract int getImprovedAccesswaysRequirement(final int hullSpaces);
 }
