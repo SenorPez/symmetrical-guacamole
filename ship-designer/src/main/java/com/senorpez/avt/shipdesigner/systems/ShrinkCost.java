@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-public record ShrinkCost() {
+record ShrinkCost() {
     static final private Map<Integer, Double> systemShrinkModifierLookup = new HashMap<>();
     static final private Map<Integer, Double> driveShrinkModifierLookup = new HashMap<>();
     static {

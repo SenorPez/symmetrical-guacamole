@@ -2,7 +2,7 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-public class DriveAndMastArmor extends System {
+class DriveAndMastArmor extends System {
     private int driveArmor;
     private int mastArmor;
     private ArmorShrink armorShrink;

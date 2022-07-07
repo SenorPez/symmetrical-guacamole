@@ -5,7 +5,6 @@ import com.senorpez.avt.shipdesigner.validators.HullSpacesValidator;
 import com.senorpez.avt.shipdesigner.validators.ThrustValidator;
 import com.senorpez.avt.shipdesigner.validators.ValidationResult;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 

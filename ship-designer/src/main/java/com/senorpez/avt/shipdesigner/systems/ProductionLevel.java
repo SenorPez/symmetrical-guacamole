@@ -1,6 +1,6 @@
 package com.senorpez.avt.shipdesigner.systems;
 
-public enum ProductionLevel {
+enum ProductionLevel {
     PROTOTYPE(4d),
     LIMITED(2d),
     STANDARD(1d),
