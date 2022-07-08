@@ -22,7 +22,7 @@ class ArmorShrinkTest {
     @Test
     void setArmorShrink() {
         int expectedValue = 2;
-        instance = instance.setShrink(2);
+        instance.setShrink(2);
         assertEquals(expectedValue, instance.getShrink());
     }
 }

@@ -2,7 +2,7 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-class FrameReinforcement extends System {
+class FrameReinforcement extends StandardSystem {
     private final static String name = "Frame Reinforcement";
     private final static int spacesPerSystem = 1;
     private final static double crewPerSpace = 0d;
@@ -27,15 +27,13 @@ class FrameReinforcement extends System {
         return getQuantity() * Double.valueOf(Math.ceil(val)).intValue();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    FrameReinforcement setShrink(final int shrink) {
-        // Shrink is immutable at 0.
-        return this;
+    public double getCostPerSpace() {
+        return 2 * ship.getHullShape().getCostPerHullSpace();
     }
 
     @Override
-    double getCostPerSpace() {
-        return 2 * ship.getHullShape().getCostPerHullSpace();
+    public void setShrink(final int shrink) {
+        // Shrink is immutable;
     }
 }

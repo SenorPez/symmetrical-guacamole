@@ -11,8 +11,7 @@ class ArmorShrink {
         return shrink;
     }
 
-    ArmorShrink setShrink(final int shrink) {
+    void setShrink(final int shrink) {
         this.shrink = shrink;
-        return this;
     }
 }

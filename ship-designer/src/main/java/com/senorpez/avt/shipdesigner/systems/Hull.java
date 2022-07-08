@@ -2,7 +2,7 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-class Hull extends System {
+class Hull extends StandardSystem {
     private final static String name = "Hull";
     private final static int spacesPerSystem = 1;
     private final static double crewPerSpace = 0;
@@ -23,20 +23,18 @@ class Hull extends System {
     }
 
     @Override
-    int getQuantity() {
+    public int getQuantity() {
         // Quantity comes from the ship object
         return ship.getHullSpaces();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    Hull setQuantity(final int quantity) {
-        // Hull quantity is immutable.
-        return this;
+    public double getCostPerSpace() {
+        return ship.getHullShape().getCostPerHullSpace();
     }
 
     @Override
-    double getCostPerSpace() {
-        return ship.getHullShape().getCostPerHullSpace();
+    public void setQuantity(final int quantity) {
+        // Quantity is immutable
     }
 }

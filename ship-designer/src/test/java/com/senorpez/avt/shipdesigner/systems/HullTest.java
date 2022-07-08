@@ -110,7 +110,7 @@ class HullTest {
     @ParameterizedTest(name = "shrink {0} actual spaces {1}")
     @MethodSource("actualSpacesUsedProvider")
     void getActualSpacesUsed(final int shrink, final int expectedValue) {
-        instance = instance.setShrink(shrink);
+        instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getActualSpacesUsed());
     }
 
@@ -142,7 +142,7 @@ class HullTest {
     void getEnhancedCost(final int shrink, final int expectedValue) {
         when(ship.getHullSpaces()).thenReturn(25);
         when(ship.getHullShape()).thenReturn(SPHERE);
-        instance = instance.setShrink(shrink);
+        instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getEnhancedCost());
     }
 
@@ -172,7 +172,7 @@ class HullTest {
     void getDuelCost(final int shrink, final int expectedValue) {
         when(ship.getHullSpaces()).thenReturn(25);
         when(ship.getHullShape()).thenReturn(SPHERE);
-        instance = instance.setShrink(shrink);
+        instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getDuelCost());
     }
 
@@ -226,7 +226,7 @@ class HullTest {
     void getMaintenanceCost(final ProductionLevel productionLevel, final double expectedValue) {
         when(ship.getHullSpaces()).thenReturn(25);
         when(ship.getHullShape()).thenReturn(SPHERE);
-        instance = instance.setProductionLevel(productionLevel);
+        instance.setProductionLevel(productionLevel);
         assertEquals(expectedValue, instance.getMaintenanceCost());
     }
 

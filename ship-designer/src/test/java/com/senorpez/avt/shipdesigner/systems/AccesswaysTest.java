@@ -42,11 +42,11 @@ class AccesswaysTest {
         int expectedValue = 0;
         assertEquals(expectedValue, instance.getQuantity());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         expectedValue = 1;
         assertEquals(expectedValue, instance.getQuantity());
 
-        instance = instance.setQuantity(42);
+        instance.setQuantity(42);
         // Should be immutable
         assertEquals(expectedValue, instance.getQuantity());
     }
@@ -58,7 +58,7 @@ class AccesswaysTest {
         int expectedValue = 0;
         assertEquals(expectedValue, instance.getBasicSpacesUsed());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         expectedValue = 1;
         assertEquals(expectedValue, instance.getBasicSpacesUsed());
     }
@@ -68,10 +68,10 @@ class AccesswaysTest {
         int expectedValue = 0;
         assertEquals(expectedValue, instance.getShrink());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         assertEquals(expectedValue, instance.getShrink());
 
-        instance = instance.setShrink(9);
+        instance.setShrink(9);
         // Should be immutable
         assertEquals(expectedValue, instance.getShrink());
     }
@@ -83,7 +83,7 @@ class AccesswaysTest {
         int expectedValue = 1;
         assertEquals(expectedValue, instance.getSpacesPerSystem());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         assertEquals(expectedValue, instance.getSpacesPerSystem());
 
         // TODO: Parameterize once other hull shapes are implemented.
@@ -94,7 +94,7 @@ class AccesswaysTest {
         int expectedValue = 0;
         assertEquals(expectedValue, instance.getCostPerSpace());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         assertEquals(expectedValue, instance.getCostPerSpace());
     }
 
@@ -103,7 +103,7 @@ class AccesswaysTest {
         int expectedValue = 0;
         assertEquals(expectedValue, instance.getCrewPerSpace());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         assertEquals(expectedValue, instance.getCrewPerSpace());
     }
 
@@ -114,7 +114,7 @@ class AccesswaysTest {
         int expectedValue = 0;
         assertEquals(expectedValue, instance.getActualSpacesUsed());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         expectedValue = 1;
         assertEquals(expectedValue, instance.getActualSpacesUsed());
     }
@@ -126,7 +126,7 @@ class AccesswaysTest {
         int expectedValue = 0;
         assertEquals(expectedValue, instance.getBaseCost());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         assertEquals(expectedValue, instance.getBaseCost());
     }
 
@@ -137,7 +137,7 @@ class AccesswaysTest {
         int expectedValue = 0;
         assertEquals(expectedValue, instance.getEnhancedCost());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         assertEquals(expectedValue, instance.getEnhancedCost());
     }
 
@@ -148,7 +148,7 @@ class AccesswaysTest {
         int expectedValue = 0;
         assertEquals(expectedValue, instance.getCrewRequirement());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         assertEquals(expectedValue, instance.getCrewRequirement());
     }
 
@@ -159,7 +159,7 @@ class AccesswaysTest {
         int expectedValue = 0;
         assertEquals(expectedValue, instance.getDuelCost());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         assertEquals(expectedValue, instance.getDuelCost());
     }
 
@@ -168,11 +168,11 @@ class AccesswaysTest {
         ProductionLevel expectedValue = STANDARD;
         assertEquals(expectedValue, instance.getProductionLevel());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         assertEquals(expectedValue, instance.getProductionLevel());
 
 
-        instance = instance.setProductionLevel(PROTOTYPE);
+        instance.setProductionLevel(PROTOTYPE);
         // Should be immutable
         assertEquals(expectedValue, instance.getProductionLevel());
     }
@@ -184,7 +184,7 @@ class AccesswaysTest {
         int expectedValue = 0;
         assertEquals(expectedValue, instance.getEconomicCost());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         assertEquals(expectedValue, instance.getEconomicCost());
     }
 
@@ -193,7 +193,7 @@ class AccesswaysTest {
         double expectedValue = 0d;
         assertEquals(expectedValue, instance.getMaintenanceRate());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         assertEquals(expectedValue, instance.getMaintenanceRate());
     }
 
@@ -204,7 +204,7 @@ class AccesswaysTest {
         double expectedValue = 0d;
         assertEquals(expectedValue, instance.getMaintenanceCost());
 
-        instance = instance.setImprovedAccessways(true);
+        instance.setImprovedAccessways(true);
         assertEquals(expectedValue, instance.getMaintenanceCost());
     }
 }

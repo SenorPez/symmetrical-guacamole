@@ -2,7 +2,7 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-class DriveAndMastArmor extends System {
+class DriveAndMastArmor extends StandardSystem {
     private int driveArmor;
     private int mastArmor;
     private ArmorShrink armorShrink;
@@ -38,58 +38,48 @@ class DriveAndMastArmor extends System {
         return driveArmor;
     }
 
-    DriveAndMastArmor setDriveArmor(final int driveArmor) {
+    void setDriveArmor(final int driveArmor) {
         this.driveArmor = driveArmor;
-        return this;
     }
 
     int getMastArmor() {
         return mastArmor;
     }
 
-    DriveAndMastArmor setMastArmor(final int mastArmor) {
+    void setMastArmor(final int mastArmor) {
         this.mastArmor = mastArmor;
-        return this;
     }
 
     @Override
-    int getShrink() {
+    public int getShrink() {
         return armorShrink.getShrink();
     }
 
-    DriveAndMastArmor setArmorShrink(final ArmorShrink armorShrink) {
+    void setArmorShrink(final ArmorShrink armorShrink) {
         this.armorShrink = armorShrink;
-        return this;
     }
 
     @Override
-    ProductionLevel getProductionLevel() {
+    public ProductionLevel getProductionLevel() {
         return armorProductionLevel.getProductionLevel();
     }
 
-    DriveAndMastArmor setArmorProductionLevel(final ArmorProductionLevel armorProductionLevel) {
+    void setArmorProductionLevel(final ArmorProductionLevel armorProductionLevel) {
         this.armorProductionLevel = armorProductionLevel;
-        return this;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    DriveAndMastArmor setQuantity(final int quantity) {
-        // Quantity is immutable.
-        return this;
+    public void setQuantity(final int quantity) {
+        // Quantity is immutable; set Drive Armor and Mast Armor
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    DriveAndMastArmor setShrink(final int shrink) {
-        // Shrink is immutable; change via the ArmorShrink object.
-        return this;
+    public void setShrink(final int shrink) {
+        // Shrink is immutable; change via the ArmorShrink object
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    DriveAndMastArmor setProductionLevel(final ProductionLevel productionLevel) {
-        // Production level is immutable; change via the ArmorProductionLevel object.
-        return this;
+    public void setProductionLevel(final ProductionLevel productionLevel) {
+        // Production Level is immutable; change via the ArmorProductionLevel object
     }
 }

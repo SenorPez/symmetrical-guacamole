@@ -68,7 +68,8 @@ class DriveTest {
         when(ship.getHullSpaces()).thenReturn(25);
         when(ship.getThrust()).thenReturn(6d);
         when(ship.getDriveGeneration()).thenReturn(3.4d);
-        instance = instance.setExtraDriveStructure(extraDriveStructure).setShrink(shrink);
+        instance.setExtraDriveStructure(extraDriveStructure);
+        instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getDriveDamage());
     }
 
@@ -103,7 +104,7 @@ class DriveTest {
         int expectedValue = 4;
         assertEquals(expectedValue, instance.getBasicSpacesUsed());
 
-        instance = instance.setExtraDriveStructure(2);
+        instance.setExtraDriveStructure(2);
         expectedValue = 6;
         assertEquals(expectedValue, instance.getBasicSpacesUsed());
     }
@@ -124,7 +125,7 @@ class DriveTest {
     @MethodSource("costPerSpaceProvider")
     void getCostPerSpace(final int shrink, final double expectedValue) {
         when(ship.getDriveGeneration()).thenReturn(3.4d);
-        instance = instance.setShrink(shrink);
+        instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getCostPerSpace(), tolerance);
     }
 
@@ -165,7 +166,8 @@ class DriveTest {
     @MethodSource("actualSpacesUsedProvider")
     void getActualSpacesUsed(final int extraDriveStructure, final int shrink, final int expectedValue) {
         when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
-        instance = instance.setExtraDriveStructure(extraDriveStructure).setShrink(shrink);
+        instance.setExtraDriveStructure(extraDriveStructure);
+        instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getActualSpacesUsed());
     }
 
@@ -199,7 +201,8 @@ class DriveTest {
     void getBaseCost(final int extraDriveStructure, final int shrink, final int expectedValue) {
         when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
         when(ship.getDriveGeneration()).thenReturn(3.4d);
-        instance = instance.setExtraDriveStructure(extraDriveStructure).setShrink(shrink);
+        instance.setExtraDriveStructure(extraDriveStructure);
+        instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getBaseCost());
     }
 
@@ -233,7 +236,8 @@ class DriveTest {
     void getEnhancedCost(final int extraDriveStructure, final int shrink, final int expectedValue) {
         when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
         when(ship.getDriveGeneration()).thenReturn(3.4d);
-        instance = instance.setExtraDriveStructure(extraDriveStructure).setShrink(shrink);
+        instance.setExtraDriveStructure(extraDriveStructure);
+        instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getEnhancedCost());
     }
 
@@ -269,7 +273,7 @@ class DriveTest {
         assertEquals(expectedValue, instance.getCrewRequirement());
 
         expectedValue = 3d;
-        instance = instance.setExtraDriveStructure(2);
+        instance.setExtraDriveStructure(2);
         assertEquals(expectedValue, instance.getCrewRequirement());
     }
 
@@ -278,7 +282,8 @@ class DriveTest {
     void getDuelCost(final int extraDriveStructure, final int shrink, final int expectedValue) {
         when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
         when(ship.getDriveGeneration()).thenReturn(3.4d);
-        instance = instance.setExtraDriveStructure(extraDriveStructure).setShrink(shrink);
+        instance.setExtraDriveStructure(extraDriveStructure);
+        instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getDuelCost());
     }
 
@@ -342,7 +347,7 @@ class DriveTest {
     void getMaintenanceCost(final int shrink, final double expectedValue) {
         when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
         when(ship.getDriveGeneration()).thenReturn(3.4d);
-        instance = instance.setShrink(shrink);
+        instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getMaintenanceCost(), tolerance);
     }
 

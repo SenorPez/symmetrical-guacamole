@@ -24,7 +24,7 @@ class ArmorProductionLevelTest {
     @Test
     void setArmorShrink() {
         ProductionLevel expectedValue = PROTOTYPE;
-        instance = instance.setProductionLevel(expectedValue);
+        instance.setProductionLevel(expectedValue);
         assertEquals(expectedValue, instance.getProductionLevel());
     }
 }

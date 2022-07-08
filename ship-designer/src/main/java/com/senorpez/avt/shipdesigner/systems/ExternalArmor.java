@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.Ship;
 
 import static com.senorpez.avt.shipdesigner.systems.ProductionLevel.STANDARD;
 
-class ExternalArmor extends System {
+class ExternalArmor extends StandardSystem {
     // TODO: Add validation against Frame Reinforcement
 
     private ArmorShrink armorShrink;
@@ -33,50 +33,37 @@ class ExternalArmor extends System {
         this.armorProductionLevel = armorProductionLevel;
     }
 
-    ArmorShrink getArmorShrink() {
-        return armorShrink;
-    }
-
-    ExternalArmor setArmorShrink(final ArmorShrink armorShrink) {
-        this.armorShrink = armorShrink;
-        return this;
-    }
-
-    ArmorProductionLevel getArmorProductionLevel() {
-        return armorProductionLevel;
-    }
-
-    ExternalArmor setArmorProductionLevel(final ArmorProductionLevel armorProductionLevel) {
-        this.armorProductionLevel = armorProductionLevel;
-        return this;
-    }
-
     int getExternalArmorPoints() {
         final double val = (getQuantity() * 5) / (1 - 0.05d * getShrink());
         return Double.valueOf(Math.ceil(val)).intValue();
     }
 
     @Override
-    int getShrink() {
-        return getArmorShrink().getShrink();
+    public int getShrink() {
+        return armorShrink.getShrink();
+    }
+
+
+    void setArmorShrink(final ArmorShrink armorShrink) {
+        this.armorShrink = armorShrink;
     }
 
     @Override
-    ProductionLevel getProductionLevel() {
-        return getArmorProductionLevel().getProductionLevel();
+    public ProductionLevel getProductionLevel() {
+        return armorProductionLevel.getProductionLevel();
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    ExternalArmor setShrink(final int shrink) {
-        // Shrink is immutable; change via the ArmorShrink object.
-        return this;
+    void setArmorProductionLevel(final ArmorProductionLevel armorProductionLevel) {
+        this.armorProductionLevel = armorProductionLevel;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    ExternalArmor setProductionLevel(final ProductionLevel productionLevel) {
-        // Production level is immutable; change via the ArmorProductionLevel object.
-        return this;
+    public void setShrink(final int shrink) {
+        // Shrink is immutable; change via the ArmorShrink object
+    }
+
+    @Override
+    public void setProductionLevel(final ProductionLevel productionLevel) {
+        // Production Level is immutable; change via the ArmorProductionLevel object
     }
 }

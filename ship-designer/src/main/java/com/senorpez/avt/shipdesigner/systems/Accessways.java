@@ -2,7 +2,7 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-class Accessways extends System {
+class Accessways extends StandardSystem {
     private boolean improvedAccessways;
 
     private final static String name = "Accessways";
@@ -28,39 +28,32 @@ class Accessways extends System {
         return improvedAccessways;
     }
 
-    Accessways setImprovedAccessways(final boolean improvedAccessways) {
+    void setImprovedAccessways(final boolean improvedAccessways) {
         this.improvedAccessways = improvedAccessways;
-        return this;
     }
 
     @Override
-    int getQuantity() {
+    public int getQuantity() {
         return hasImprovedAccessways() ? 1 : 0;
     }
 
     @Override
-    int getSpacesPerSystem() {
+    public int getSpacesPerSystem() {
         return getShip().getHullShape().getImprovedAccesswaysRequirement(getShip().getHullSpaces());
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    Accessways setQuantity(final int quantity) {
-        // Quantity is immutable.
-        return this;
+    public void setQuantity(final int quantity) {
+        // Quantity is immutable
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    Accessways setShrink(final int shrink) {
-        // Shrink is immutable.
-        return this;
+    public void setShrink(final int shrink) {
+        // Shrink is immutable
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    Accessways setProductionLevel(final ProductionLevel productionLevel) {
-        // Production level is immutable.
-        return this;
+    public void setProductionLevel(final ProductionLevel productionLevel) {
+        // Production Level is immutable
     }
 }

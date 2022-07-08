@@ -11,8 +11,7 @@ class ArmorProductionLevel {
         return productionLevel;
     }
 
-    ArmorProductionLevel setProductionLevel(final ProductionLevel productionLevel) {
+    void setProductionLevel(final ProductionLevel productionLevel) {
         this.productionLevel = productionLevel;
-        return this;
     }
 }

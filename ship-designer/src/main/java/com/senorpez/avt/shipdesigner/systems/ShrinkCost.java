@@ -1,6 +1,5 @@
 package com.senorpez.avt.shipdesigner.systems;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 

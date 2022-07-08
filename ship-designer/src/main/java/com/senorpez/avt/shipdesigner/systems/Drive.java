@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.Ship;
 
 import static com.senorpez.avt.shipdesigner.systems.ShrinkCost.getDriveShrinkModifier;
 
-class Drive extends System {
+class Drive extends StandardSystem {
     private int extraDriveStructure;
 
     private final static String name = "Drive";
@@ -32,9 +32,8 @@ class Drive extends System {
         return extraDriveStructure;
     }
 
-    Drive setExtraDriveStructure(final int extraDriveStructure) {
+    void setExtraDriveStructure(final int extraDriveStructure) {
         this.extraDriveStructure = extraDriveStructure;
-        return this;
     }
 
     int getDriveDamage() {
@@ -42,31 +41,29 @@ class Drive extends System {
     }
 
     @Override
-    int getQuantity() {
+    public int getQuantity() {
         // Quantity comes from the ship object
         final double mastLength = ship.getMastLength();
         return Double.valueOf(Math.ceil(ship.getDriveSpacesWithoutArmor(mastLength))).intValue();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    Drive setQuantity(final int quantity) {
-        // Drive quantity is immutable.
-        return this;
-    }
-
-    @Override
-    int getBasicSpacesUsed() {
-        return (getQuantity() + getExtraDriveStructure()) * getSpacesPerSystem();
-    }
-
-    @Override
-    double getCostPerSpace() {
+    public double getCostPerSpace() {
         return 4.5 * Math.pow(ship.getDriveGeneration(), 1.2) * getDriveShrinkModifier(getShrink());
     }
 
     @Override
-    int getActualSpacesUsed() {
+    public int getBasicSpacesUsed() {
+        return (getQuantity() + getExtraDriveStructure()) * getSpacesPerSystem();
+    }
+
+    @Override
+    public int getActualSpacesUsed() {
         return getQuantity() + getExtraDriveStructure();
+    }
+
+    @Override
+    public void setQuantity(final int quantity) {
+        // Drive quantity is immutable.
     }
 }
