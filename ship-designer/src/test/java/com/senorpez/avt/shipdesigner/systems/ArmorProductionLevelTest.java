@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.senorpez.avt.shipdesigner.systems.ProductionLevel.PROTOTYPE;
 import static com.senorpez.avt.shipdesigner.systems.ProductionLevel.STANDARD;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ArmorProductionLevelTest {
     private ArmorProductionLevel instance;

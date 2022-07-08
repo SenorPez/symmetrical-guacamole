@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.Ship;
 
 import static com.senorpez.avt.shipdesigner.systems.ShrinkCost.getDriveShrinkModifier;
 
-class Drive extends StandardSystem {
+public class Drive extends StandardSystem {
     private int extraDriveStructure;
 
     private final static String name = "Drive";
@@ -12,10 +12,10 @@ class Drive extends StandardSystem {
     private final static double crewPerSpace = 0.5d;
     private final static double maintenanceRate = 0.2d;
 
-    Drive(final Ship ship,
-          final int shrink,
-          final ProductionLevel productionLevel,
-          final int extraDriveStructure) {
+    public Drive(final Ship ship,
+                 final int shrink,
+                 final ProductionLevel productionLevel,
+                 final int extraDriveStructure) {
         super(ship,
                 0,
                 shrink,
@@ -43,8 +43,7 @@ class Drive extends StandardSystem {
     @Override
     public int getQuantity() {
         // Quantity comes from the ship object
-        final double mastLength = ship.getMastLength();
-        return Double.valueOf(Math.ceil(ship.getDriveSpacesWithoutArmor(mastLength))).intValue();
+        return Double.valueOf(Math.ceil(ship.getDriveSpacesWithoutArmor())).intValue();
     }
 
     @Override

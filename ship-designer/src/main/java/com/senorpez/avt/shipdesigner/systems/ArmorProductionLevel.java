@@ -1,9 +1,9 @@
 package com.senorpez.avt.shipdesigner.systems;
 
-class ArmorProductionLevel {
+public class ArmorProductionLevel {
     private ProductionLevel productionLevel;
 
-    ArmorProductionLevel(final ProductionLevel productionLevel) {
+    public ArmorProductionLevel(final ProductionLevel productionLevel) {
         this.productionLevel = productionLevel;
     }
 

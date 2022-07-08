@@ -2,7 +2,7 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-class InternalArmor extends StandardSystem {
+public class InternalArmor extends StandardSystem {
     // TODO: Add validation against Frame Reinforcement
 
     private ArmorShrink armorShrink;
@@ -14,10 +14,10 @@ class InternalArmor extends StandardSystem {
     private final static double crewPerSpace = 0d;
     private final static double maintenanceRate = 0.05d;
 
-    InternalArmor(final Ship ship,
-                  final int quantity,
-                  final ArmorShrink armorShrink,
-                  final ArmorProductionLevel armorProductionLevel) {
+    public InternalArmor(final Ship ship,
+                         final int quantity,
+                         final ArmorShrink armorShrink,
+                         final ArmorProductionLevel armorProductionLevel) {
         super(ship,
                 quantity,
                 0,

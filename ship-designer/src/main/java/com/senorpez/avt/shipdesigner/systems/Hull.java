@@ -2,15 +2,15 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-class Hull extends StandardSystem {
+public class Hull extends StandardSystem {
     private final static String name = "Hull";
     private final static int spacesPerSystem = 1;
     private final static double crewPerSpace = 0;
     private final static double maintenanceRate = 0.15d;
 
-    Hull(Ship ship,
-         int shrink,
-         ProductionLevel productionLevel) {
+    public Hull(Ship ship,
+                int shrink,
+                ProductionLevel productionLevel) {
         super(ship,
                 0,
                 shrink,

@@ -1,13 +1,13 @@
 package com.senorpez.avt.shipdesigner.systems;
 
-class ArmorShrink {
+public class ArmorShrink {
     private int shrink;
 
-    ArmorShrink(final int shrink) {
+    public ArmorShrink(final int shrink) {
         this.shrink = shrink;
     }
 
-    int getShrink() {
+    public int getShrink() {
         return shrink;
     }
 

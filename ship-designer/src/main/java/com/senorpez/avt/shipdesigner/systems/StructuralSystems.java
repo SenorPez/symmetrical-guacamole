@@ -40,13 +40,13 @@ public class StructuralSystems {
         );
     }
 
-    StructuralSystems(final Hull hull,
-                      final Drive drive,
-                      final FrameReinforcement frameReinforcement,
-                      final DriveAndMastArmor driveAndMastArmor,
-                      final ExternalArmor externalArmor,
-                      final InternalArmor internalArmor,
-                      final Accessways accessways) {
+    public StructuralSystems(final Hull hull,
+                             final Drive drive,
+                             final FrameReinforcement frameReinforcement,
+                             final DriveAndMastArmor driveAndMastArmor,
+                             final ExternalArmor externalArmor,
+                             final InternalArmor internalArmor,
+                             final Accessways accessways) {
         this.hull = hull;
         this.drive = drive;
         this.frameReinforcement = frameReinforcement;

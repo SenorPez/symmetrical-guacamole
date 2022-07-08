@@ -2,7 +2,7 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-class DriveAndMastArmor extends StandardSystem {
+public class DriveAndMastArmor extends StandardSystem {
     private int driveArmor;
     private int mastArmor;
     private ArmorShrink armorShrink;
@@ -14,11 +14,11 @@ class DriveAndMastArmor extends StandardSystem {
     private final static double crewPerSpace = 0d;
     private final static double maintenanceRate = 0.05d;
 
-    DriveAndMastArmor(final Ship ship,
-                      final int driveArmor,
-                      final int mastArmor,
-                      final ArmorShrink armorShrink,
-                      final ArmorProductionLevel armorProductionLevel) {
+    public DriveAndMastArmor(final Ship ship,
+                             final int driveArmor,
+                             final int mastArmor,
+                             final ArmorShrink armorShrink,
+                             final ArmorProductionLevel armorProductionLevel) {
         super(ship,
                 0,
                 0,
@@ -34,7 +34,7 @@ class DriveAndMastArmor extends StandardSystem {
         this.armorProductionLevel = armorProductionLevel;
     }
 
-    int getDriveArmor() {
+    public int getDriveArmor() {
         return driveArmor;
     }
 
@@ -42,7 +42,7 @@ class DriveAndMastArmor extends StandardSystem {
         this.driveArmor = driveArmor;
     }
 
-    int getMastArmor() {
+    public int getMastArmor() {
         return mastArmor;
     }
 

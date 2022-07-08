@@ -4,7 +4,7 @@ import com.senorpez.avt.shipdesigner.Ship;
 
 import static com.senorpez.avt.shipdesigner.systems.ProductionLevel.STANDARD;
 
-class ExternalArmor extends StandardSystem {
+public class ExternalArmor extends StandardSystem {
     // TODO: Add validation against Frame Reinforcement
 
     private ArmorShrink armorShrink;
@@ -16,10 +16,10 @@ class ExternalArmor extends StandardSystem {
     private final static double crewPerSpace = 0d;
     private final static double maintenanceRate = 0.05d;
 
-    ExternalArmor(final Ship ship,
-                  final int quantity,
-                  final ArmorShrink armorShrink,
-                  final ArmorProductionLevel armorProductionLevel) {
+    public ExternalArmor(final Ship ship,
+                         final int quantity,
+                         final ArmorShrink armorShrink,
+                         final ArmorProductionLevel armorProductionLevel) {
         super(ship,
                 quantity,
                 0,

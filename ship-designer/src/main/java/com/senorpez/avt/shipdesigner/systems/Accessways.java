@@ -2,7 +2,7 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-class Accessways extends StandardSystem {
+public class Accessways extends StandardSystem {
     private boolean improvedAccessways;
 
     private final static String name = "Accessways";
@@ -10,8 +10,8 @@ class Accessways extends StandardSystem {
     private final static double crewPerSpace = 0d;
     private final static double maintenanceRate = 0d;
 
-    Accessways(final Ship ship,
-               final boolean improvedAccessways) {
+    public Accessways(final Ship ship,
+                      final boolean improvedAccessways) {
         super(ship,
                 0,
                 0,

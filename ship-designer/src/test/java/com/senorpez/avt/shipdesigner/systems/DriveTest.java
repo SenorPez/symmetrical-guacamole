@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 import static com.senorpez.avt.shipdesigner.systems.ProductionLevel.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -46,12 +45,12 @@ class DriveTest {
     @Test
     void getQuantity() {
         double expectedValue = 4d;
-        when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(expectedValue);
+        when(ship.getDriveSpacesWithoutArmor()).thenReturn(expectedValue);
         assertEquals(expectedValue, instance.getQuantity());
 
         // Should change when changed on the ship
         expectedValue = 25d;
-        when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(expectedValue);
+        when(ship.getDriveSpacesWithoutArmor()).thenReturn(expectedValue);
         assertEquals(expectedValue, instance.getQuantity());
     }
 
@@ -64,7 +63,7 @@ class DriveTest {
     @ParameterizedTest(name = "shrink {0} drive damage {1}")
     @MethodSource("driveDamageProvider")
     void getDriveDamage(final int extraDriveStructure, final int shrink, final int expectedValue) {
-        when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
+        when(ship.getDriveSpacesWithoutArmor()).thenReturn(4d);
         when(ship.getHullSpaces()).thenReturn(25);
         when(ship.getThrust()).thenReturn(6d);
         when(ship.getDriveGeneration()).thenReturn(3.4d);
@@ -100,7 +99,7 @@ class DriveTest {
 
     @Test
     void getBasicSpacesUsed() {
-        when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
+        when(ship.getDriveSpacesWithoutArmor()).thenReturn(4d);
         int expectedValue = 4;
         assertEquals(expectedValue, instance.getBasicSpacesUsed());
 
@@ -165,7 +164,7 @@ class DriveTest {
     @ParameterizedTest(name = "shrink {0} actual spaces {1}")
     @MethodSource("actualSpacesUsedProvider")
     void getActualSpacesUsed(final int extraDriveStructure, final int shrink, final int expectedValue) {
-        when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
+        when(ship.getDriveSpacesWithoutArmor()).thenReturn(4d);
         instance.setExtraDriveStructure(extraDriveStructure);
         instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getActualSpacesUsed());
@@ -199,7 +198,7 @@ class DriveTest {
     @ParameterizedTest(name = "shrink {0} base cost {1}")
     @MethodSource("baseCostProvider")
     void getBaseCost(final int extraDriveStructure, final int shrink, final int expectedValue) {
-        when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
+        when(ship.getDriveSpacesWithoutArmor()).thenReturn(4d);
         when(ship.getDriveGeneration()).thenReturn(3.4d);
         instance.setExtraDriveStructure(extraDriveStructure);
         instance.setShrink(shrink);
@@ -234,7 +233,7 @@ class DriveTest {
     @ParameterizedTest(name = "shrink {0} enhanced cost {1}")
     @MethodSource("enhancedCostProvider")
     void getEnhancedCost(final int extraDriveStructure, final int shrink, final int expectedValue) {
-        when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
+        when(ship.getDriveSpacesWithoutArmor()).thenReturn(4d);
         when(ship.getDriveGeneration()).thenReturn(3.4d);
         instance.setExtraDriveStructure(extraDriveStructure);
         instance.setShrink(shrink);
@@ -268,7 +267,7 @@ class DriveTest {
 
     @Test
     void getCrewRequired() {
-        when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
+        when(ship.getDriveSpacesWithoutArmor()).thenReturn(4d);
         double expectedValue = 2d;
         assertEquals(expectedValue, instance.getCrewRequirement());
 
@@ -280,7 +279,7 @@ class DriveTest {
     @ParameterizedTest(name = "shrink {0} duel cost {1}")
     @MethodSource("duelCostProvider")
     void getDuelCost(final int extraDriveStructure, final int shrink, final int expectedValue) {
-        when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
+        when(ship.getDriveSpacesWithoutArmor()).thenReturn(4d);
         when(ship.getDriveGeneration()).thenReturn(3.4d);
         instance.setExtraDriveStructure(extraDriveStructure);
         instance.setShrink(shrink);
@@ -321,7 +320,7 @@ class DriveTest {
     @ParameterizedTest(name = "{0} economic cost {1}")
     @MethodSource("economicCostProvider")
     void getEconomicCost(final ProductionLevel productionLevel, final int expectedValue) {
-        when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
+        when(ship.getDriveSpacesWithoutArmor()).thenReturn(4d);
         when(ship.getDriveGeneration()).thenReturn(3.4d);
         instance.setProductionLevel(productionLevel);
         assertEquals(expectedValue, instance.getEconomicCost());
@@ -345,7 +344,7 @@ class DriveTest {
     @ParameterizedTest(name = "shrink {0} maintenance cost {1}")
     @MethodSource("maintenanceCostProvider")
     void getMaintenanceCost(final int shrink, final double expectedValue) {
-        when(ship.getDriveSpacesWithoutArmor(anyDouble())).thenReturn(4d);
+        when(ship.getDriveSpacesWithoutArmor()).thenReturn(4d);
         when(ship.getDriveGeneration()).thenReturn(3.4d);
         instance.setShrink(shrink);
         assertEquals(expectedValue, instance.getMaintenanceCost(), tolerance);

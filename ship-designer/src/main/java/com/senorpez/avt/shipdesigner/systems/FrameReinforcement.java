@@ -2,15 +2,15 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-class FrameReinforcement extends StandardSystem {
+public class FrameReinforcement extends StandardSystem {
     private final static String name = "Frame Reinforcement";
     private final static int spacesPerSystem = 1;
     private final static double crewPerSpace = 0d;
     private final static double maintenanceRate = 0.1d;
 
-    FrameReinforcement(final Ship ship,
-                       final int quantity,
-                       final ProductionLevel productionLevel) {
+    public FrameReinforcement(final Ship ship,
+                              final int quantity,
+                              final ProductionLevel productionLevel) {
         super(ship,
                 quantity,
                 0,
