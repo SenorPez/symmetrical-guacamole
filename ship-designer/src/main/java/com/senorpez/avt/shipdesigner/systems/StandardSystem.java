@@ -15,7 +15,7 @@ abstract class StandardSystem implements System {
     private final double crewPerSpace;
     private final double maintenanceRate;
 
-    protected StandardSystem(final Ship ship,
+    StandardSystem(final Ship ship,
                              final int quantity,
                              final int shrink,
                              final ProductionLevel productionLevel,
