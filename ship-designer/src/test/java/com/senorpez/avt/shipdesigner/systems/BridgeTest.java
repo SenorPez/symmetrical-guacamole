@@ -10,22 +10,24 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static com.senorpez.avt.shipdesigner.systems.ProductionLevel.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class LifeSupportTest {
+class BridgeTest {
     @Mock
     Ship ship;
 
-    private LifeSupport instance;
+    private Bridge instance;
 
     @BeforeEach
     void setUp() {
-        instance = new LifeSupport(ship, 1, 0, 2, STANDARD);
+        instance = new Bridge(ship, 1, 0, 3, STANDARD);
     }
 
     @Test
@@ -36,7 +38,7 @@ class LifeSupportTest {
 
     @Test
     void getName() {
-        String expectedValue = "Life Support";
+        String expectedValue = "Bridge";
         assertEquals(expectedValue, instance.getName());
     }
 
@@ -60,13 +62,13 @@ class LifeSupportTest {
 
     @Test
     void getCostPerSpace() {
-        double expectedValue = 1d;
+        double expectedValue = 3d;
         assertEquals(expectedValue, instance.getCostPerSpace());
     }
 
     @Test
     void getCrewPerSpace() {
-        double expectedValue = 0.5d;
+        double expectedValue = 1d;
         assertEquals(expectedValue, instance.getCrewPerSpace());
     }
 
@@ -78,7 +80,7 @@ class LifeSupportTest {
 
     @Test
     void getMaintenanceRate() {
-        double expectedValue = 0.2d;
+        double expectedValue = 0.25d;
         assertEquals(expectedValue, instance.getMaintenanceRate());
     }
 
@@ -112,7 +114,7 @@ class LifeSupportTest {
 
     @Test
     void getBaseCost() {
-        int expectedValue = 1;
+        int expectedValue = 3;
         assertEquals(expectedValue, instance.getBaseCost());
     }
 
@@ -125,22 +127,22 @@ class LifeSupportTest {
 
     private static Stream<Arguments> enhancedCostProvider() {
         return Stream.of(
-                arguments(0, 1),
-                arguments(1, 2),
-                arguments(2, 2),
-                arguments(3, 2),
-                arguments(4, 2),
-                arguments(5, 3),
-                arguments(6, 3),
-                arguments(7, 4),
-                arguments(8, 4),
-                arguments(9, 5)
+                arguments(0, 3),
+                arguments(1, 4),
+                arguments(2, 4),
+                arguments(3, 5),
+                arguments(4, 6),
+                arguments(5, 7),
+                arguments(6, 8),
+                arguments(7, 10),
+                arguments(8, 12),
+                arguments(9, 14)
         );
     }
 
     @Test
     void getCrewRequirement() {
-        double expectedValue = 0.5d;
+        double expectedValue = 1d;
         assertEquals(expectedValue, instance.getCrewRequirement());
     }
 
@@ -153,16 +155,16 @@ class LifeSupportTest {
 
     private static Stream<Arguments> duelCostProvider() {
         return Stream.of(
-                arguments(0, 1),
-                arguments(1, 2),
-                arguments(2, 2),
-                arguments(3, 2),
-                arguments(4, 2),
-                arguments(5, 3),
-                arguments(6, 3),
-                arguments(7, 4),
-                arguments(8, 4),
-                arguments(9, 5)
+                arguments(0, 3),
+                arguments(1, 4),
+                arguments(2, 4),
+                arguments(3, 5),
+                arguments(4, 6),
+                arguments(5, 7),
+                arguments(6, 8),
+                arguments(7, 10),
+                arguments(8, 12),
+                arguments(9, 14)
         );
     }
 
@@ -175,10 +177,10 @@ class LifeSupportTest {
 
     private static Stream<Arguments> economicCostProvider() {
         return Stream.of(
-                arguments(PROTOTYPE, 4),
-                arguments(LIMITED, 2),
-                arguments(STANDARD, 1),
-                arguments(MASS, 1)
+                arguments(PROTOTYPE, 12),
+                arguments(LIMITED, 6),
+                arguments(STANDARD, 3),
+                arguments(MASS, 2)
         );
     }
 
@@ -191,16 +193,16 @@ class LifeSupportTest {
 
     private static Stream<Arguments> maintenanceCostProvider() {
         return Stream.of(
-                arguments(PROTOTYPE, 0.8d),
-                arguments(LIMITED, 0.4d),
-                arguments(STANDARD, 0.2d),
-                arguments(MASS, 0.2d)
+                arguments(PROTOTYPE, 3d),
+                arguments(LIMITED, 1.5d),
+                arguments(STANDARD, 0.75d),
+                arguments(MASS, 0.5d)
         );
     }
 
     @Test
     void getArmorLevel() {
-        int expectedValue = 0;
+        int expectedValue = 3;
         assertEquals(expectedValue, instance.getArmorLevel());
     }
 
@@ -224,9 +226,50 @@ class LifeSupportTest {
         );
     }
 
-    @Test
-    void getCrewSupport() {
-        int expectedValue = 200;
-        assertEquals(expectedValue, instance.getCrewSupport());
+    @ParameterizedTest(name = "minimum crew {0} flex points {1}")
+    @MethodSource("flexPointsProvider")
+    void getFlexPoints(final int minimumCrew, final int expectedValue) {
+        when(ship.getMinimumCrew()).thenReturn(minimumCrew);
+        instance.setQuantity(5);
+        assertEquals(expectedValue, instance.getFlexPoints());
+    }
+
+    private static Stream<Arguments> flexPointsProvider() {
+        return Stream.of(
+                arguments(10, 5),
+                arguments(20, 5),
+                arguments(30, 4),
+                arguments(40, 3),
+                arguments(50, 3),
+                arguments(60, 2),
+                arguments(70, 2),
+                arguments(80, 2),
+                arguments(90, 1),
+                arguments(100, 1)
+        );
+    }
+
+    @ParameterizedTest(name = "minimum crew {0} flex points at {1}")
+    @MethodSource("flexPointsAtProvider")
+    void getFlexPointsAt(final int minimumCrew, final List<Integer> expectedValue) {
+        when(ship.getMinimumCrew()).thenReturn(minimumCrew);
+        if (minimumCrew > 25) when(ship.getHullSpaces()).thenReturn(200);
+        instance.setQuantity(5);
+        assertEquals(expectedValue, instance.getFlexPointsAt());
+    }
+
+    private static Stream<Arguments> flexPointsAtProvider() {
+        return Stream.of(
+                arguments(10, List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
+                arguments(20, List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
+                arguments(30, List.of(1, 2, 3, 5, 6, 7, 8, 9, 11)),
+                arguments(40, List.of(1, 3, 4, 6, 8, 9, 11, 12, 14)),
+                arguments(50, List.of(1, 3, 5, 7, 9, 11, 13, 15, 17)),
+                arguments(60, List.of(2, 4, 6, 9, 11, 14, 16, 18, 21)),
+                arguments(70, List.of(2, 5, 7, 10, 13, 16, 19, 21, 24)),
+                arguments(80, List.of(2, 5, 8, 12, 15, 18, 21, 24, 28)),
+                arguments(90, List.of(2, 6, 9, 13, 17, 20, 24, 27, 31)),
+                arguments(100, List.of(2, 6, 10, 14, 18, 22, 26, 30, 34))
+        );
     }
 }

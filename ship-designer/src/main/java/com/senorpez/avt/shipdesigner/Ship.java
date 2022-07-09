@@ -480,4 +480,9 @@ public class Ship {
                 getMastArmorMass(mastLength),
                 getMastMass(mastLength, usableFraction));
     }
+
+    public int getMinimumCrew() {
+        // TODO: Calculate once all systems are in place.
+        return 0;
+    }
 }
