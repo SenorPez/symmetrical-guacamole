@@ -5,18 +5,18 @@ import com.senorpez.avt.shipdesigner.Ship;
 import java.util.List;
 import java.util.stream.DoubleStream;
 
-class Bridge extends StandardArmoredSystem {
+public class Bridge extends StandardArmoredSystem {
     private final static String name = "Bridge";
     private final static int spacesPerSystem = 1;
     private final static double costPerSpace = 3d;
     private final static double crewPerSpace = 1d;
     private final static double maintenanceRate = 0.25d;
 
-    Bridge(final Ship ship,
-           final int quantity,
-           final int shrink,
-           final int armorLevel,
-           final ProductionLevel productionLevel) {
+    public Bridge(final Ship ship,
+                  final int quantity,
+                  final int shrink,
+                  final int armorLevel,
+                  final ProductionLevel productionLevel) {
         super(ship,
                 quantity,
                 shrink,

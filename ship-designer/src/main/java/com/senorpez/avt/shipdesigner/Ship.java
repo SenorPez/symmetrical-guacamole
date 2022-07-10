@@ -24,6 +24,20 @@ public class Ship {
     private InternalArmor internalArmor = null;
     private Accessways accessways = null;
 
+    // Core Systems
+    private CoreSystems coreSystems = null;
+    private LifeSupport lifeSupport = null;
+    private Bridge bridge = null;
+    private FlagBridge flagBridge = null;
+    private BetaHyperdrive betaHyperdrive = null;
+    private GammaHyperdrive gammaHyperdrive = null;
+    private DeltaHyperdrive deltaHyperdrive = null;
+    private EpsilonHyperdrive epsilonHyperdrive = null;
+    private ZetaHyperdrive zetaHyperdrive = null;
+    private ECM ecm = null;
+    private ECCM eccm = null;
+    private HIRTS hirts = null;
+
     // Constants
     private static final int DRIVE_MASS_POWER = 1;
     private static final int PIVOT_ACCEL_POWER = 1;
@@ -153,6 +167,116 @@ public class Ship {
 
     Ship setAccessways(final boolean improvedAccessways) {
         this.accessways = new Accessways(this, improvedAccessways);
+        return this;
+    }
+
+    Ship setLifeSupport(final LifeSupport lifeSupport) {
+        this.lifeSupport = lifeSupport;
+        return this;
+    }
+
+    Ship setLifeSupport(final int quantity, final int shrink, final int armorLevel, final ProductionLevel productionLevel) {
+        this.lifeSupport = new LifeSupport(this, quantity, shrink, armorLevel, productionLevel);
+        return this;
+    }
+
+    Ship setBridge(final Bridge bridge) {
+        this.bridge = bridge;
+        return this;
+    }
+
+    Ship setBridge(final int quantity, final int shrink, final int armorLevel, final ProductionLevel productionLevel) {
+        this.bridge = new Bridge(this, quantity, shrink, armorLevel, productionLevel);
+        return this;
+    }
+
+    Ship setFlagBridge(final FlagBridge flagBridge) {
+        this.flagBridge = flagBridge;
+        return this;
+    }
+
+    Ship setFlagBridge(final int quantity, final int shrink, final int armorLevel, final ProductionLevel productionLevel) {
+        this.flagBridge = new FlagBridge(this, quantity, shrink, armorLevel, productionLevel);
+        return this;
+    }
+
+    Ship setBetaHyperdrive(final BetaHyperdrive betaHyperdrive) {
+        this.betaHyperdrive = betaHyperdrive;
+        return this;
+    }
+
+    Ship setBetaHyperdrive(final int quantity, final int shrink, final int armorLevel, final ProductionLevel productionLevel) {
+        this.betaHyperdrive = new BetaHyperdrive(this, quantity, shrink, armorLevel, productionLevel);
+        return this;
+    }
+
+    Ship setGammaHyperdrive(final GammaHyperdrive gammaHyperdrive) {
+        this.gammaHyperdrive = gammaHyperdrive;
+        return this;
+    }
+
+    Ship setGammaHyperdrive(final int quantity, final int shrink, final int armorLevel, final ProductionLevel productionLevel) {
+        this.gammaHyperdrive = new GammaHyperdrive(this, quantity, shrink, armorLevel, productionLevel);
+        return this;
+    }
+
+    Ship setDeltaHyperdrive(final DeltaHyperdrive deltaHyperdrive) {
+        this.deltaHyperdrive = deltaHyperdrive;
+        return this;
+    }
+
+    Ship setDeltaHyperdrive(final int quantity, final int shrink, final int armorLevel, final ProductionLevel productionLevel) {
+        this.deltaHyperdrive = new DeltaHyperdrive(this, quantity, shrink, armorLevel, productionLevel);
+        return this;
+    }
+
+    Ship setEpsilonHyperdrive(final EpsilonHyperdrive epsilonHyperdrive) {
+        this.epsilonHyperdrive = epsilonHyperdrive;
+        return this;
+    }
+
+    Ship setEpsilonHyperdrive(final int quantity, final int shrink, final int armorLevel, final ProductionLevel productionLevel) {
+        this.epsilonHyperdrive = new EpsilonHyperdrive(this, quantity, shrink, armorLevel, productionLevel);
+        return this;
+    }
+
+    Ship setZetaHyperdrive(final ZetaHyperdrive zetaHyperdrive) {
+        this.zetaHyperdrive = zetaHyperdrive;
+        return this;
+    }
+
+    Ship setZetaHyperdrive(final int quantity, final int shrink, final int armorLevel, final ProductionLevel productionLevel) {
+        this.zetaHyperdrive = new ZetaHyperdrive(this, quantity, shrink, armorLevel, productionLevel);
+        return this;
+    }
+
+    Ship setECM(final ECM ecm) {
+        this.ecm = ecm;
+        return this;
+    }
+
+    Ship setECM(final int quantity, final int shrink, final ProductionLevel productionLevel) {
+        this.ecm = new ECM(this, quantity, shrink, productionLevel);
+        return this;
+    }
+
+    Ship setECCM(final ECCM eccm) {
+        this.eccm = eccm;
+        return this;
+    }
+
+    Ship setECCM(final int quantity, final int shrink, final ProductionLevel productionLevel) {
+        this.eccm = new ECCM(this, quantity, shrink, productionLevel);
+        return this;
+    }
+
+    Ship setHIRTS(final HIRTS hirts) {
+        this.hirts = hirts;
+        return this;
+    }
+
+    Ship setHIRTS(final int shrink, final ProductionLevel productionLevel) {
+        this.hirts = new HIRTS(this, shrink, productionLevel);
         return this;
     }
 

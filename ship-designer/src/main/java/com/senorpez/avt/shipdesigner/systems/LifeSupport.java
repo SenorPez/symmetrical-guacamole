@@ -2,7 +2,7 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-class LifeSupport extends StandardArmoredSystem {
+public class LifeSupport extends StandardArmoredSystem {
     private final static String name = "Life Support";
     private final static int spacesPerSystem = 1;
     private final static double costPerSpace = 1d;

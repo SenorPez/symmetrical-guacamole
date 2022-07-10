@@ -5,18 +5,18 @@ import com.senorpez.avt.shipdesigner.Ship;
 import java.util.ArrayList;
 import java.util.List;
 
-class FlagBridge extends StandardArmoredSystem {
+public class FlagBridge extends StandardArmoredSystem {
     private final static String name = "Flag Bridge";
     private final static int spacesPerSystem = 1;
     private final static double costPerSpace = 3d;
     private final static double crewPerSpace = 1d;
     private final static double maintenanceRate = 0.25d;
 
-    FlagBridge(final Ship ship,
-               final int quantity,
-               final int shrink,
-               final int armorLevel,
-               final ProductionLevel productionLevel) {
+    public FlagBridge(final Ship ship,
+                      final int quantity,
+                      final int shrink,
+                      final int armorLevel,
+                      final ProductionLevel productionLevel) {
         super(ship,
                 quantity,
                 shrink,

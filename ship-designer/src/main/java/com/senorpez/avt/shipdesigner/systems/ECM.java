@@ -2,15 +2,15 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-class ECM extends StandardSystem {
+public class ECM extends StandardSystem {
     private final static String name = "ECM";
     private final static double crewPerSpace = 1d;
     private final static double maintenanceRate = 0.25d;
 
-    ECM(final Ship ship,
-        final int quantity,
-        final int shrink,
-        final ProductionLevel productionLevel) {
+    public ECM(final Ship ship,
+               final int quantity,
+               final int shrink,
+               final ProductionLevel productionLevel) {
         super(ship,
                 quantity,
                 shrink,

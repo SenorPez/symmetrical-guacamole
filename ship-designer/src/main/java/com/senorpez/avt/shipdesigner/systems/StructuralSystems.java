@@ -3,10 +3,8 @@ package com.senorpez.avt.shipdesigner.systems;
 import com.senorpez.avt.shipdesigner.Ship;
 
 import java.util.List;
-import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntFunction;
 
-public class StructuralSystems {
+public class StructuralSystems implements SystemsSummary {
     private Hull hull;
     private Drive drive;
     private FrameReinforcement frameReinforcement;
@@ -66,46 +64,6 @@ public class StructuralSystems {
         );
     }
 
-    int getBasicSpacesUsed() {
-        return systemsSum(System::getBasicSpacesUsed);
-    }
-
-    int getActualSpacesUsed() {
-        return systemsSum(System::getActualSpacesUsed);
-    }
-
-    int getBaseCost() {
-        return systemsSum(System::getBaseCost);
-    }
-
-    int getEnhancedCost() {
-        return systemsSum(System::getEnhancedCost);
-    }
-
-    int getArmorPointsUsed() {
-        return 0;
-    }
-
-    int getDuelCost() {
-        return systemsSum(System::getDuelCost);
-    }
-
-    int getEconomicCost() {
-        return systemsSum(System::getEconomicCost);
-    }
-
-    double getMaintenanceCost() {
-        return systemsSum(System::getMaintenanceCost);
-    }
-
-    private int systemsSum(final ToIntFunction<System> f) {
-        return getSystems().stream().mapToInt(f).sum();
-    }
-
-    private double systemsSum(final ToDoubleFunction<System> f) {
-        return getSystems().stream().mapToDouble(f).sum();
-    }
-
     Hull getHull() {
         return hull;
     }
@@ -162,7 +120,7 @@ public class StructuralSystems {
         this.accessways = accessways;
     }
 
-    private List<System> getSystems() {
+    public List<System> getSystems() {
         return systems;
     }
 }

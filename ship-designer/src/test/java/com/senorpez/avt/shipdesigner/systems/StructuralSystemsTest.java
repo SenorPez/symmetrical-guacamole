@@ -1,6 +1,5 @@
 package com.senorpez.avt.shipdesigner.systems;
 
-import com.senorpez.avt.shipdesigner.Ship;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -11,8 +10,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class StructuralSystemsTest {
-    @Mock
-    Ship ship;
     @Mock
     Hull hull;
     @Mock
@@ -101,7 +98,6 @@ class StructuralSystemsTest {
         assertEquals(1, instance.getActualSpacesUsed());
         assertEquals(30, instance.getBaseCost());
         assertEquals(30, instance.getEnhancedCost());
-        assertEquals(0, instance.getArmorPointsUsed());
         assertEquals(30, instance.getDuelCost());
         assertEquals(30, instance.getEconomicCost());
         assertEquals(4.75d, instance.getMaintenanceCost());
@@ -178,7 +174,6 @@ class StructuralSystemsTest {
         assertEquals(8, instance.getActualSpacesUsed());
         assertEquals(112, instance.getBaseCost());
         assertEquals(112, instance.getEnhancedCost());
-        assertEquals(0, instance.getArmorPointsUsed());
         assertEquals(112, instance.getDuelCost());
         assertEquals(112, instance.getEconomicCost());
         assertEquals(19.95d, instance.getMaintenanceCost());
