@@ -13,19 +13,21 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.stream.Stream;
 
 import static com.senorpez.avt.shipdesigner.systems.ProductionLevel.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @ExtendWith(MockitoExtension.class)
-class LifeSupportTest {
+class BetaHyperdriveTest {
     @Mock
     Ship ship;
 
-    private LifeSupport instance;
+    private BetaHyperdrive instance;
+    private double tolerance;
 
     @BeforeEach
     void setUp() {
-        instance = new LifeSupport(ship, 1, 0, 2, STANDARD);
+        instance = new BetaHyperdrive(ship, 1, 0, 0, STANDARD);
+        tolerance = 1e-5;
     }
 
     @Test
@@ -36,7 +38,7 @@ class LifeSupportTest {
 
     @Test
     void getName() {
-        String expectedValue = "Life Support";
+        String expectedValue = "Beta Hyperdrive";
         assertEquals(expectedValue, instance.getName());
     }
 
@@ -54,13 +56,13 @@ class LifeSupportTest {
 
     @Test
     void getSpacesPerSystem() {
-        int expectedValue = 1;
+        int expectedValue = 2;
         assertEquals(expectedValue, instance.getSpacesPerSystem());
     }
 
     @Test
     void getCostPerSpace() {
-        double expectedValue = 1d;
+        double expectedValue = 3d;
         assertEquals(expectedValue, instance.getCostPerSpace());
     }
 
@@ -84,7 +86,7 @@ class LifeSupportTest {
 
     @Test
     void getBasicSpacesUsed() {
-        int expectedValue = 1;
+        int expectedValue = 2;
         assertEquals(expectedValue, instance.getBasicSpacesUsed());
     }
 
@@ -97,7 +99,7 @@ class LifeSupportTest {
 
     private static Stream<Arguments> actualSpacesUsedProvider() {
         return Stream.of(
-                arguments(0, 1),
+                arguments(0, 2),
                 arguments(1, 1),
                 arguments(2, 1),
                 arguments(3, 1),
@@ -112,7 +114,7 @@ class LifeSupportTest {
 
     @Test
     void getBaseCost() {
-        int expectedValue = 1;
+        int expectedValue = 6;
         assertEquals(expectedValue, instance.getBaseCost());
     }
 
@@ -125,22 +127,22 @@ class LifeSupportTest {
 
     private static Stream<Arguments> enhancedCostProvider() {
         return Stream.of(
-                arguments(0, 1),
-                arguments(1, 2),
-                arguments(2, 2),
-                arguments(3, 2),
-                arguments(4, 2),
-                arguments(5, 3),
-                arguments(6, 3),
-                arguments(7, 4),
-                arguments(8, 4),
-                arguments(9, 5)
+                arguments(0, 6),
+                arguments(1, 7),
+                arguments(2, 8),
+                arguments(3, 9),
+                arguments(4, 11),
+                arguments(5, 13),
+                arguments(6, 16),
+                arguments(7, 19),
+                arguments(8, 23),
+                arguments(9, 27)
         );
     }
 
     @Test
     void getCrewRequirement() {
-        double expectedValue = 0.5d;
+        double expectedValue = 1d;
         assertEquals(expectedValue, instance.getCrewRequirement());
     }
 
@@ -153,16 +155,16 @@ class LifeSupportTest {
 
     private static Stream<Arguments> duelCostProvider() {
         return Stream.of(
-                arguments(0, 1),
-                arguments(1, 2),
-                arguments(2, 2),
-                arguments(3, 2),
-                arguments(4, 2),
-                arguments(5, 3),
-                arguments(6, 3),
-                arguments(7, 4),
-                arguments(8, 4),
-                arguments(9, 5)
+                arguments(0, 6),
+                arguments(1, 7),
+                arguments(2, 8),
+                arguments(3, 9),
+                arguments(4, 11),
+                arguments(5, 13),
+                arguments(6, 16),
+                arguments(7, 19),
+                arguments(8, 23),
+                arguments(9, 27)
         );
     }
 
@@ -175,10 +177,10 @@ class LifeSupportTest {
 
     private static Stream<Arguments> economicCostProvider() {
         return Stream.of(
-                arguments(PROTOTYPE, 4),
-                arguments(LIMITED, 2),
-                arguments(STANDARD, 1),
-                arguments(MASS, 1)
+                arguments(PROTOTYPE, 24),
+                arguments(LIMITED, 12),
+                arguments(STANDARD, 6),
+                arguments(MASS, 3)
         );
     }
 
@@ -186,21 +188,21 @@ class LifeSupportTest {
     @MethodSource("maintenanceCostProvider")
     void getMaintenanceCost(final ProductionLevel productionLevel, final double expectedValue) {
         instance.setProductionLevel(productionLevel);
-        assertEquals(expectedValue, instance.getMaintenanceCost());
+        assertEquals(expectedValue, instance.getMaintenanceCost(), tolerance);
     }
 
     private static Stream<Arguments> maintenanceCostProvider() {
         return Stream.of(
-                arguments(PROTOTYPE, 0.8d),
-                arguments(LIMITED, 0.4d),
-                arguments(STANDARD, 0.2d),
-                arguments(MASS, 0.2d)
+                arguments(PROTOTYPE, 4.8d),
+                arguments(LIMITED, 2.4d),
+                arguments(STANDARD, 1.2d),
+                arguments(MASS, 0.6d)
         );
     }
 
     @Test
     void getArmorLevel() {
-        int expectedValue = 2;
+        int expectedValue = 0;
         assertEquals(expectedValue, instance.getArmorLevel());
     }
 
@@ -214,19 +216,13 @@ class LifeSupportTest {
     private static Stream<Arguments> armorPointsUsedProvider() {
         return Stream.of(
                 arguments(0, 0d),
-                arguments(1, 0.5d),
-                arguments(2, 1),
-                arguments(3, 2),
-                arguments(4, 3.5),
-                arguments(5, 5),
-                arguments(6, 7),
-                arguments(7, 9)
+                arguments(1, 1d),
+                arguments(2, 2d),
+                arguments(3, 4d),
+                arguments(4, 7d),
+                arguments(5, 10d),
+                arguments(6, 14d),
+                arguments(7, 18d)
         );
-    }
-
-    @Test
-    void getCrewSupport() {
-        int expectedValue = 200;
-        assertEquals(expectedValue, instance.getCrewSupport());
     }
 }
