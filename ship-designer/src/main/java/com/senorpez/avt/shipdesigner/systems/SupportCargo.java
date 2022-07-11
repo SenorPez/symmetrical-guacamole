@@ -2,14 +2,11 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-public class SupportCargo extends SharedArmoredSystem implements Cargo {
+public class SupportCargo extends CargoSystem {
     private int cruiseDuration;
 
     private final static String name = "Support Cargo";
     private final static int spacesPerSystem = 1;
-    private final static double costPerSpace = 1d;
-    private final static double crewPerSpace = 0.125d;
-    private final static double maintenanceRate = 0.05d;
 
     SupportCargo(final Ship ship,
                  final int cruiseDuration,
@@ -17,13 +14,9 @@ public class SupportCargo extends SharedArmoredSystem implements Cargo {
                  final ProductionLevel productionLevel) {
         super(ship,
                 calculateQuantity(ship, cruiseDuration),
-                0,
                 productionLevel,
                 name,
                 spacesPerSystem,
-                costPerSpace,
-                crewPerSpace,
-                maintenanceRate,
                 cargoArmorLevel);
         this.cruiseDuration = cruiseDuration;
     }
@@ -62,10 +55,5 @@ public class SupportCargo extends SharedArmoredSystem implements Cargo {
     @Override
     public void setQuantity(final int quantity) {
         // Quantity is immutable; change cruise duration instead
-    }
-
-    @Override
-    public void setShrink(final int shrink) {
-        // Shrink is immutable.
     }
 }
