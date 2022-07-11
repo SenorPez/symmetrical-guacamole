@@ -2,7 +2,7 @@ package com.senorpez.avt.shipdesigner.systems;
 
 import com.senorpez.avt.shipdesigner.Ship;
 
-public class SupportCargo extends SharedArmoredSystem {
+public class SupportCargo extends SharedArmoredSystem implements Cargo {
     private int cruiseDuration;
 
     private final static String name = "Support Cargo";
