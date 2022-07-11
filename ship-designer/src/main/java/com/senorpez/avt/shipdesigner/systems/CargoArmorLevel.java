@@ -6,9 +6,9 @@ public class CargoArmorLevel implements ArmorLevel {
     private int armorLevel;
     private List<System> systems;
 
-    CargoArmorLevel(final int armorLevel, final SupportCargo supportCargo, final RepairCargo repairCargo) {
+    CargoArmorLevel(final int armorLevel, final List<System> systems) {
         this.armorLevel = armorLevel;
-        this.systems = List.of(supportCargo, repairCargo);
+        this.systems = systems;
     }
 
     @Override
