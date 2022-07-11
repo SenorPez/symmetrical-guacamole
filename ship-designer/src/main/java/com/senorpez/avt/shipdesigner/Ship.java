@@ -609,4 +609,9 @@ public class Ship {
         // TODO: Calculate once all systems are in place.
         return 0;
     }
+
+    public double getNonSupplyCrew() {
+        // TODO: Calculate once all systems are in place.
+        return 0;
+    }
 }
